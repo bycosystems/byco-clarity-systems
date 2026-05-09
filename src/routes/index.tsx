@@ -78,7 +78,7 @@ function Hero() {
               <span className="size-1.5 rounded-full bg-brand-soft" />
               Operational systems for service businesses
             </span>
-            <h1 className="mt-6 text-4xl md:text-5xl lg:text-6xl font-semibold tracking-tight leading-[1.05]">
+            <h1 className="mt-6 text-4xl md:text-5xl lg:text-6xl font-medium tracking-tight leading-[1.05]">
               Practical business web apps, dashboards and workflow tools.
             </h1>
             <p className="mt-6 text-lg text-white/70 max-w-xl leading-relaxed">
@@ -119,7 +119,7 @@ function CoreOffer() {
     <section id="offer" className="py-24 md:py-32">
       <div className="mx-auto max-w-4xl px-6 text-center">
         <span className="text-xs font-semibold uppercase tracking-[0.2em] text-brand">Core offer</span>
-        <h2 className="mt-4 text-3xl md:text-4xl font-semibold text-navy-deep">
+        <h2 className="mt-4 text-3xl md:text-4xl font-medium text-navy-deep">
           Operational systems built for clarity and execution
         </h2>
         <p className="mt-6 text-lg text-muted-foreground leading-relaxed">
@@ -155,7 +155,7 @@ function Services() {
       <div className="mx-auto max-w-7xl px-6">
         <div className="max-w-2xl">
           <span className="text-xs font-semibold uppercase tracking-[0.2em] text-brand">Services</span>
-          <h2 className="mt-4 text-3xl md:text-4xl font-semibold text-navy-deep">
+          <h2 className="mt-4 text-3xl md:text-4xl font-medium text-navy-deep">
             What we build for service-based businesses
           </h2>
         </div>
@@ -168,7 +168,7 @@ function Services() {
               <div className="size-11 rounded-lg bg-navy-gradient grid place-items-center mb-5">
                 <Icon className="size-5 text-white" />
               </div>
-              <h3 className="text-lg font-semibold text-navy-deep">{title}</h3>
+              <h3 className="text-lg font-medium text-navy-deep">{title}</h3>
               <p className="mt-2 text-sm text-muted-foreground leading-relaxed">{desc}</p>
             </div>
           ))}
@@ -194,7 +194,7 @@ function FeaturedDemo() {
         <div className="grid lg:grid-cols-12 gap-12 items-center">
           <div className="lg:col-span-5">
             <span className="text-xs font-semibold uppercase tracking-[0.2em] text-brand">Featured Demo</span>
-            <h2 className="mt-4 text-3xl md:text-4xl font-semibold text-navy-deep">ReadyFlow Manager</h2>
+            <h2 className="mt-4 text-3xl md:text-4xl font-medium text-navy-deep">ReadyFlow Manager</h2>
             <p className="mt-5 text-muted-foreground leading-relaxed">
               A modern operations dashboard demo built for property managers, maintenance teams, short-stay businesses
               and other service-based operations.
@@ -248,7 +248,7 @@ function Process() {
       <div className="relative mx-auto max-w-7xl px-6">
         <div className="max-w-2xl">
           <span className="text-xs font-semibold uppercase tracking-[0.2em] text-brand-soft">Process</span>
-          <h2 className="mt-4 text-3xl md:text-4xl font-semibold">
+          <h2 className="mt-4 text-3xl md:text-4xl font-medium">
             How projects move from idea to usable system
           </h2>
         </div>
@@ -256,7 +256,7 @@ function Process() {
           {steps.map(({ n, title, desc }) => (
             <div key={n} className="rounded-xl p-6 border border-white/10 bg-white/5 backdrop-blur-sm">
               <div className="text-brand-soft text-sm font-mono font-semibold">{n}</div>
-              <h3 className="mt-3 font-semibold text-lg leading-snug">{title}</h3>
+              <h3 className="mt-3 font-medium text-lg leading-snug">{title}</h3>
               <p className="mt-2 text-sm text-white/60 leading-relaxed">{desc}</p>
             </div>
           ))}
@@ -323,12 +323,12 @@ function Contact() {
       <div className="mx-auto max-w-6xl px-6 grid lg:grid-cols-2 gap-16 items-start">
         <div>
           <span className="text-xs font-semibold uppercase tracking-[0.2em] text-brand">Contact</span>
-          <h2 className="mt-4 text-3xl md:text-4xl font-semibold text-navy-deep">Request a Demo</h2>
+          <h2 className="mt-4 text-3xl md:text-4xl font-medium text-navy-deep">Request a Demo</h2>
           <p className="mt-5 text-lg text-muted-foreground leading-relaxed">
             Need a simple business app, dashboard or intake system?
           </p>
           <div className="mt-8 p-5 rounded-lg border border-border bg-secondary/50">
-            <div className="text-xs uppercase tracking-wider text-muted-foreground font-semibold">Main demo</div>
+            <div className="text-sm text-muted-foreground font-medium">Explore the live ReadyFlow demo</div>
             <a
               href={DEMO_URL}
               target="_blank"
