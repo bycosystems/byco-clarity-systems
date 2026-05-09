@@ -72,14 +72,18 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: "Lovable App" },
-      { name: "description", content: "Lovable Generated Project" },
+      { title: "ByCo Systems" },
+      { name: "description", content: "Practical business web apps, dashboards and workflow tools for service-based businesses." },
       { name: "author", content: "Lovable" },
-      { property: "og:title", content: "Lovable App" },
-      { property: "og:description", content: "Lovable Generated Project" },
+      { property: "og:title", content: "ByCo Systems" },
+      { property: "og:description", content: "Practical business web apps, dashboards and workflow tools for service-based businesses." },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary" },
       { name: "twitter:site", content: "@Lovable" },
+      { name: "twitter:title", content: "ByCo Systems" },
+      { name: "twitter:description", content: "Practical business web apps, dashboards and workflow tools for service-based businesses." },
+      { property: "og:image", content: "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/e1220005-4f62-45e4-b348-047d08231ead/id-preview-620e989e--4599e786-fd9d-4023-811b-53b7bb1f1ffb.lovable.app-1778355958118.png" },
+      { name: "twitter:image", content: "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/e1220005-4f62-45e4-b348-047d08231ead/id-preview-620e989e--4599e786-fd9d-4023-811b-53b7bb1f1ffb.lovable.app-1778355958118.png" },
     ],
     links: [
       {
