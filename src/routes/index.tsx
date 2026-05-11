@@ -13,6 +13,9 @@ import {
   ListChecks,
   Eye,
   Inbox,
+  Clock,
+  PhoneOff,
+  UserCheck,
 } from "lucide-react";
 import { DashboardMockup } from "@/components/DashboardMockup";
 
@@ -186,6 +189,72 @@ const demoFeatures = [
   { icon: Eye, label: "Operational visibility" },
   { icon: Inbox, label: "Request management" },
 ];
+
+const intakeBenefits = [
+  { icon: Clock, title: "Respond to visitors 24/7" },
+  { icon: PhoneOff, title: "Reduce repetitive calls and messages" },
+  { icon: UserCheck, title: "Receive more qualified customer requests" },
+];
+
+function SmartIntakeDemo() {
+  return (
+    <section id="smart-intake" className="py-24 md:py-32">
+      <div className="mx-auto max-w-6xl px-6">
+        <div className="max-w-3xl">
+          <span className="text-xs font-semibold uppercase tracking-[0.2em] text-brand">
+            24/7 Smart Intake Demo
+          </span>
+          <h2 className="mt-4 text-3xl md:text-4xl font-medium text-navy-deep">
+            See how a 24/7 smart intake can work for a real business
+          </h2>
+          <p className="mt-5 text-base md:text-lg text-muted-foreground leading-relaxed">
+            This example shows how a business can receive, guide and qualify customer requests
+            automatically before human intervention.
+          </p>
+        </div>
+
+        <div className="mt-12 grid lg:grid-cols-12 gap-10 items-start">
+          <div className="lg:col-span-7">
+            <div className="relative rounded-2xl overflow-hidden border border-border bg-navy-deep shadow-elevated mx-auto" style={{ maxWidth: 380 }}>
+              <div className="relative w-full" style={{ aspectRatio: "9 / 16" }}>
+                <iframe
+                  src="https://www.youtube.com/embed/AuMUrZfECKA"
+                  title="24/7 Smart Intake Demo"
+                  loading="lazy"
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                  allowFullScreen
+                  className="absolute inset-0 w-full h-full"
+                />
+              </div>
+            </div>
+          </div>
+          <div className="lg:col-span-5">
+            <ul className="grid gap-4">
+              {intakeBenefits.map(({ icon: Icon, title }) => (
+                <li
+                  key={title}
+                  className="flex items-start gap-4 p-5 rounded-xl border border-border bg-white hover:border-brand/40 hover:shadow-elevated transition-all"
+                >
+                  <span className="size-10 shrink-0 rounded-lg bg-brand/10 grid place-items-center">
+                    <Icon className="size-5 text-brand" />
+                  </span>
+                  <span className="text-base font-normal text-navy-deep leading-snug pt-1.5">
+                    {title}
+                  </span>
+                </li>
+              ))}
+            </ul>
+          </div>
+        </div>
+
+        <p className="mt-10 text-sm text-muted-foreground italic">
+          Example adapted for service businesses such as garages, rentals, local shops and service
+          providers.
+        </p>
+      </div>
+    </section>
+  );
+}
 
 function FeaturedDemo() {
   return (
@@ -380,6 +449,7 @@ function HomePage() {
         <Hero />
         <CoreOffer />
         <Services />
+        <SmartIntakeDemo />
         <FeaturedDemo />
         <Process />
         <Contact />
