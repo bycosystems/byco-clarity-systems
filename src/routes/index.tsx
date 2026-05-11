@@ -200,57 +200,68 @@ function SmartIntakeDemo() {
   return (
     <section id="smart-intake" className="py-24 md:py-32">
       <div className="mx-auto max-w-6xl px-6">
-        <div className="max-w-3xl">
-          <span className="text-xs font-semibold uppercase tracking-[0.2em] text-brand">
-            24/7 Smart Intake Demo
-          </span>
-          <h2 className="mt-4 text-3xl md:text-4xl font-medium text-navy-deep">
-            See how a 24/7 smart intake can work for a real business
-          </h2>
-          <p className="mt-5 text-base md:text-lg text-muted-foreground leading-relaxed">
-            This example shows how a business can receive, guide and qualify customer requests
-            automatically before human intervention.
-          </p>
-        </div>
+        <div className="grid lg:grid-cols-12 gap-12 lg:gap-16 items-center">
+          <div className="lg:col-span-7 order-2 lg:order-1">
+            <span className="text-xs font-semibold uppercase tracking-[0.2em] text-brand">
+              24/7 Smart Intake Demo
+            </span>
+            <h2 className="mt-4 text-3xl md:text-4xl font-medium text-navy-deep">
+              See how a 24/7 smart intake can work for a real business
+            </h2>
+            <p className="mt-5 text-base md:text-lg text-muted-foreground leading-relaxed">
+              This example shows how a business can receive, guide and qualify customer requests
+              automatically before human intervention.
+            </p>
 
-        <div className="mt-12 grid lg:grid-cols-12 gap-10 items-start">
-          <div className="lg:col-span-7">
-            <div className="relative rounded-2xl overflow-hidden border border-border bg-navy-deep shadow-elevated mx-auto" style={{ maxWidth: 380 }}>
-              <div className="relative w-full" style={{ aspectRatio: "9 / 16" }}>
-                <iframe
-                  src="https://www.youtube.com/embed/AuMUrZfECKA"
-                  title="24/7 Smart Intake Demo"
-                  loading="lazy"
-                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                  allowFullScreen
-                  className="absolute inset-0 w-full h-full"
-                />
-              </div>
-            </div>
-          </div>
-          <div className="lg:col-span-5">
-            <ul className="grid gap-4">
+            <ul className="mt-8 grid gap-3">
               {intakeBenefits.map(({ icon: Icon, title }) => (
                 <li
                   key={title}
-                  className="flex items-start gap-4 p-5 rounded-xl border border-border bg-white hover:border-brand/40 hover:shadow-elevated transition-all"
+                  className="flex items-center gap-4 p-4 rounded-xl border border-border bg-white hover:border-brand/40 hover:shadow-elevated transition-all"
                 >
                   <span className="size-10 shrink-0 rounded-lg bg-brand/10 grid place-items-center">
                     <Icon className="size-5 text-brand" />
                   </span>
-                  <span className="text-base font-normal text-navy-deep leading-snug pt-1.5">
+                  <span className="text-base font-normal text-navy-deep leading-snug">
                     {title}
                   </span>
                 </li>
               ))}
             </ul>
+
+            <a
+              href="#contact"
+              className="mt-8 inline-flex items-center gap-2 px-5 py-3 rounded-md bg-navy text-white font-medium hover:bg-navy-deep transition"
+            >
+              Request a similar system <ArrowRight className="size-4" />
+            </a>
+
+            <p className="mt-8 text-sm text-muted-foreground italic">
+              Example adapted for service businesses such as garages, rentals, local shops and
+              service providers.
+            </p>
+          </div>
+
+          <div className="lg:col-span-5 order-1 lg:order-2">
+            <div className="mx-auto w-full" style={{ maxWidth: 300 }}>
+              <div className="relative rounded-2xl overflow-hidden border border-border bg-navy-deep shadow-elevated">
+                <div className="relative w-full" style={{ aspectRatio: "9 / 16" }}>
+                  <iframe
+                    src="https://www.youtube.com/embed/AuMUrZfECKA"
+                    title="24/7 Smart Intake Demo"
+                    loading="lazy"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                    allowFullScreen
+                    className="absolute inset-0 w-full h-full"
+                  />
+                </div>
+              </div>
+              <p className="mt-3 text-center text-xs uppercase tracking-[0.18em] text-muted-foreground">
+                French demo video
+              </p>
+            </div>
           </div>
         </div>
-
-        <p className="mt-10 text-sm text-muted-foreground italic">
-          Example adapted for service businesses such as garages, rentals, local shops and service
-          providers.
-        </p>
       </div>
     </section>
   );
