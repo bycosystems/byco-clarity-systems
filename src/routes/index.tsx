@@ -270,8 +270,7 @@ function FeaturedDemo() {
             <span className="text-xs font-semibold uppercase tracking-[0.2em] text-brand">Featured Demo</span>
             <h2 className="mt-4 text-3xl md:text-4xl font-medium text-navy-deep">ReadyFlow Manager</h2>
             <p className="mt-5 text-muted-foreground leading-relaxed">
-              A modern operations dashboard demo built for property managers, maintenance teams, short-stay businesses
-              and other service-based operations.
+              A modern operations dashboard demo built for service businesses that need better task tracking, team coordination and operational visibility.
             </p>
 
             <ul className="mt-8 grid grid-cols-2 gap-3">
