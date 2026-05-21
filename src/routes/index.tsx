@@ -82,7 +82,9 @@ function Hero() {
               Operational systems for service businesses
             </span>
             <h1 className="mt-6 text-4xl md:text-5xl lg:text-6xl font-medium tracking-tight leading-[1.05]">
-              Practical business web apps, dashboards and workflow tools.
+              Capture requests.<br />
+              Track operations.<br />
+              Stay organized.
             </h1>
             <p className="mt-6 text-lg text-white/70 max-w-xl leading-relaxed">
               ByCo Systems turns messy operations into simple digital systems for service-based businesses.
