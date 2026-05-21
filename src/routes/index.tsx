@@ -290,7 +290,7 @@ function FeaturedDemo() {
               rel="noopener noreferrer"
               className="mt-10 inline-flex items-center gap-2 px-5 py-3 rounded-md bg-navy text-white font-medium hover:bg-navy-deep transition"
             >
-              View ReadyFlow Demo <ExternalLink className="size-4" />
+              Open operations demo <ExternalLink className="size-4" />
             </a>
           </div>
           <div className="lg:col-span-7">
