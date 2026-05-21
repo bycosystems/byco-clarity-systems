@@ -87,7 +87,7 @@ function Hero() {
               Stay organized.
             </h1>
             <p className="mt-6 text-lg text-white/70 max-w-xl leading-relaxed">
-              ByCo Systems turns messy operations into simple digital systems for service-based businesses.
+              Capture requests, follow operations and keep your team aligned from one clear workspace.
             </p>
             <div className="mt-8 flex flex-wrap gap-3">
               <a
