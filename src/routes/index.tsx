@@ -267,7 +267,7 @@ function FeaturedDemo() {
       <div className="mx-auto max-w-7xl px-6">
         <div className="grid lg:grid-cols-12 gap-12 items-center">
           <div className="lg:col-span-5">
-            <span className="text-xs font-semibold uppercase tracking-[0.2em] text-brand">Featured Demo</span>
+            <span className="text-xs font-semibold uppercase tracking-[0.2em] text-brand">OPERATIONS SYSTEM</span>
             <h2 className="mt-4 text-3xl md:text-4xl font-medium text-navy-deep">ReadyFlow Manager</h2>
             <p className="mt-5 text-muted-foreground leading-relaxed">
               A modern operations dashboard demo built for service businesses that need better task tracking, team coordination and operational visibility.
