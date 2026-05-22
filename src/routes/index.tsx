@@ -216,13 +216,18 @@ function SmartIntakeIntro() {
             </ul>
 
             <a
-              href={DEMO_URL}
-              target="_blank"
-              rel="noopener noreferrer"
+              href="#contact"
+              onClick={(e) => {
+                e.preventDefault();
+                document.getElementById("contact")?.scrollIntoView({ behavior: "smooth" });
+              }}
               className="mt-10 inline-flex items-center gap-2 px-5 py-3 rounded-md bg-navy text-white font-medium hover:bg-navy-deep transition"
             >
-              Open Smart Intake Demo <ArrowRight className="size-4" />
+              Request AI intake demo <ArrowRight className="size-4" />
             </a>
+            <p className="mt-3 text-sm text-muted-foreground">
+              Private workflow demo available on request.
+            </p>
           </div>
 
           <div className="lg:col-span-6">
