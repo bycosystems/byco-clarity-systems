@@ -189,11 +189,6 @@ const smartIntakeBenefits = [
 ];
 
 function SmartIntakeIntro() {
-  const handleScroll = (e: React.MouseEvent<HTMLAnchorElement>) => {
-    e.preventDefault();
-    document.getElementById("smart-intake")?.scrollIntoView({ behavior: "smooth" });
-  };
-
   return (
     <section id="smart-intake-intro" className="py-24 md:py-32">
       <div className="mx-auto max-w-7xl px-6">
@@ -221,11 +216,12 @@ function SmartIntakeIntro() {
             </ul>
 
             <a
-              href="#smart-intake"
-              onClick={handleScroll}
+              href={DEMO_URL}
+              target="_blank"
+              rel="noopener noreferrer"
               className="mt-10 inline-flex items-center gap-2 px-5 py-3 rounded-md bg-navy text-white font-medium hover:bg-navy-deep transition"
             >
-              See smart intake demo <ArrowRight className="size-4" />
+              Open Smart Intake Demo <ArrowRight className="size-4" />
             </a>
           </div>
 
