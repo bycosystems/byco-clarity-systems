@@ -568,6 +568,7 @@ function HomePage() {
         <Hero />
         <CoreOffer />
         <Services />
+        <SmartIntakeIntro />
         <SmartIntakeDemo />
         <FeaturedDemo />
         <Process />
