@@ -148,7 +148,7 @@ const services = [
   },
   {
     icon: Bot,
-    title: "Smart 24/7 Business Intake",
+    title: "24/7 Smart Intake",
     desc: "Add an intelligent assistant to guide visitors, qualify requests and simplify first contact.",
   },
 ];
