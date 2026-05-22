@@ -87,7 +87,7 @@ function Hero() {
               Stay organized.
             </h1>
             <p className="mt-6 text-lg text-white/70 max-w-xl leading-relaxed">
-              Capture requests, follow operations and keep your team aligned from one clear workspace.
+              Operational systems built around real operations.
             </p>
             <div className="mt-8 flex flex-wrap gap-3">
               <a
