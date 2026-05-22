@@ -206,7 +206,7 @@ function SmartIntakeDemo() {
             24/7 Smart Intake Demo
           </span>
           <h2 className="mt-4 text-3xl md:text-4xl font-medium text-navy-deep leading-tight">
-            See how a 24/7 smart intake can work for a real business
+            See how a 24/7 smart intake handles real customer requests
           </h2>
           <p className="mt-5 text-base md:text-lg text-muted-foreground leading-relaxed">
             This example shows how a business can receive, guide and qualify customer requests
