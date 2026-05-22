@@ -128,8 +128,7 @@ function CoreOffer() {
           Operational systems built for clarity and execution
         </h2>
         <p className="mt-6 text-lg text-muted-foreground leading-relaxed">
-          Practical web apps and dashboards are built to organize requests, tasks, clients, teams and workflows in one
-          clear place.
+          Organize requests, coordinate teams and keep daily operations moving.
         </p>
       </div>
     </section>
