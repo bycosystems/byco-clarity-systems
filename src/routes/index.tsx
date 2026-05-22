@@ -218,7 +218,7 @@ function SmartIntakeDemo() {
           <div className="relative rounded-2xl overflow-hidden border border-border bg-white shadow-elevated">
             <div className="relative w-full" style={{ aspectRatio: "9 / 16" }}>
               <iframe
-                src="https://www.youtube.com/embed/AuMUrZfECKA"
+                src="https://www.youtube.com/embed/2EpGBEWniqM"
                 title="24/7 Smart Intake Demo"
                 loading="lazy"
                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
