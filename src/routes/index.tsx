@@ -1,4 +1,4 @@
-import { createFileRoute } from "@tanstack/react-router";
+fimport { createFileRoute } from "@tanstack/react-router";
 import { useState } from "react";
 import {
   LayoutDashboard,
@@ -457,14 +457,21 @@ function Process() {
 
 function ContactForm() {
   const [submitted, setSubmitted] = useState(false);
+
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    const form = e.currentTarget;
+    const data = new FormData(form);
+    const response = await fetch("https://formspree.io/f/mbdbpvyz", {
+      method: "POST",
+      body: data,
+      headers: { Accept: "application/json" },
+    });
+    if (response.ok) setSubmitted(true);
+  };
+
   return (
-    <form
-      onSubmit={(e) => {
-        e.preventDefault();
-        setSubmitted(true);
-      }}
-      className="grid gap-4"
-    >
+    <form onSubmit={handleSubmit} className="grid gap-4">
       <div className="grid sm:grid-cols-2 gap-4">
         <Field label="Name" name="name" />
         <Field label="Business" name="business" />
@@ -486,7 +493,7 @@ function ContactForm() {
         Send request <ArrowRight className="size-4" />
       </button>
       {submitted && (
-        <p className="text-sm text-brand font-medium">Thanks — your request has been noted.</p>
+        <p className="text-sm text-brand font-medium">Thanks — we'll be in touch soon!</p>
       )}
     </form>
   );
