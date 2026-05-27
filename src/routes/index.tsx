@@ -458,7 +458,7 @@ function Process() {
 function ContactForm() {
   const [submitted, setSubmitted] = useState(false);
 
-  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: any) => {
     e.preventDefault();
     const form = e.currentTarget;
     const data = new FormData(form);
