@@ -39,7 +39,7 @@ export const Route = createFileRoute("/")({
   component: HomePage,
 });
 
-const DEMO_URL = "https://readyflow-manager-demo.lovable.app";
+const DEMO_URL = "#contact";
 
 function Header() {
   return (
