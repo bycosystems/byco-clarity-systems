@@ -22,7 +22,7 @@ import { DashboardMockup } from "@/components/DashboardMockup";
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
-      { title: "ByCo Systems — Practical business web apps & dashboards" },
+     { title: "ByCo Systems — Operational systems for service businesses" },
       {
         name: "description",
         content:
