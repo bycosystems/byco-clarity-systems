@@ -1,4 +1,4 @@
-fimport { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute } from "@tanstack/react-router";
 import React, { useState } from "react";
 import {
   LayoutDashboard,
