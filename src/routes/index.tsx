@@ -603,6 +603,7 @@ function HomePage() {
         <Hero />
         <CoreOffer />
         <Services />
+        <WhoWeServe />
         <SmartIntakeIntro />
         <SmartIntakeDemo />
         <FeaturedDemo />
