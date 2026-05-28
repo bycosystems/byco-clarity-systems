@@ -187,7 +187,39 @@ const smartIntakeBenefits = [
   { icon: UserCheck, label: "Request qualification" },
   { icon: Workflow, label: "Faster response coordination" },
 ];
+function WhoWeServe() {
+  const sectors = [
+    { icon: Building2, label: "Property & Real Estate" },
+    { icon: Users, label: "Cleaning & Maintenance" },
+    { icon: ClipboardList, label: "Healthcare & Clinics" },
+    { icon: Workflow, label: "Logistics & Delivery" },
+    { icon: LayoutDashboard, label: "Agencies & Consultants" },
+    { icon: Bot, label: "Any service-based business" },
+  ];
 
+  return (
+    <section className="py-16 border-b border-border">
+      <div className="mx-auto max-w-7xl px-6">
+        <div className="text-center mb-10">
+          <span className="text-xs font-semibold uppercase tracking-[0.2em] text-brand">Who we build for</span>
+          <h2 className="mt-4 text-2xl md:text-3xl font-medium text-navy-deep">
+            Built for service businesses that need clarity
+          </h2>
+        </div>
+        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
+          {sectors.map(({ icon: Icon, label }) => (
+            <div key={label} className="flex flex-col items-center gap-3 p-4 rounded-xl border border-border bg-white hover:border-brand/40 hover:shadow-sm transition-all text-center">
+              <span className="size-10 rounded-lg bg-brand/10 grid place-items-center">
+                <Icon className="size-5 text-brand" />
+              </span>
+              <span className="text-xs font-medium text-navy-deep leading-snug">{label}</span>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
 function SmartIntakeIntro() {
   return (
     <section id="smart-intake-intro" className="py-24 md:py-32">
