@@ -524,15 +524,10 @@ function Contact() {
             Need a simple business app, dashboard or intake system?
           </p>
           <div className="mt-8 p-5 rounded-lg border border-border bg-secondary/50">
-            <div className="text-sm text-muted-foreground font-medium">Explore the live ReadyFlow demo</div>
-            <a
-              href={DEMO_URL}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="mt-1 inline-flex items-center gap-1.5 text-navy-deep font-medium hover:text-brand transition break-all"
-            >
-              {DEMO_URL} <ExternalLink className="size-3.5 shrink-0" />
-            </a>
+            <div className="text-sm text-muted-foreground font-medium">Response within 24 hours</div>
+            <p className="mt-1 text-sm text-navy-deep font-medium">
+              We review every request and get back to you with a clear proposal.
+            </p>
           </div>
         </div>
         <div className="bg-white border border-border rounded-2xl p-7 shadow-elevated">
