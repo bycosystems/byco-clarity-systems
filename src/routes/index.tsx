@@ -118,7 +118,28 @@ function Hero() {
     </section>
   );
 }
-
+function StatsBar() {
+  const stats = [
+    { value: "48h", label: "Average setup time" },
+    { value: "6+", label: "Industries served" },
+    { value: "24/7", label: "Zero missed requests" },
+    { value: "100%", label: "Built around your workflow" },
+  ];
+  return (
+    <section className="py-10 border-b border-border bg-white">
+      <div className="mx-auto max-w-7xl px-6">
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
+          {stats.map(({ value, label }) => (
+            <div key={label}>
+              <div className="text-3xl font-bold text-navy-deep">{value}</div>
+              <div className="mt-1 text-sm text-muted-foreground">{label}</div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
 function CoreOffer() {
   const pillars = [
     {
