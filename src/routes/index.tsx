@@ -120,16 +120,58 @@ function Hero() {
 }
 
 function CoreOffer() {
+  const pillars = [
+    {
+      icon: Workflow,
+      title: "Built around your workflow",
+      desc: "We map how your team actually works before writing a single line of code.",
+    },
+    {
+      icon: LayoutDashboard,
+      title: "Clear and usable from day one",
+      desc: "No oversized platforms. Focused systems your team will actually use.",
+    },
+    {
+      icon: Bot,
+      title: "Automated where it matters",
+      desc: "Smart intake, request routing and 24/7 availability — without hiring extra staff.",
+    },
+  ];
+
   return (
     <section id="offer" className="py-24 md:py-32">
-      <div className="mx-auto max-w-4xl px-6 text-center">
-        <span className="text-xs font-semibold uppercase tracking-[0.2em] text-brand">Core offer</span>
-        <h2 className="mt-4 text-3xl md:text-4xl font-medium text-navy-deep">
-          Operational systems built for clarity and execution
-        </h2>
-        <p className="mt-6 text-lg text-muted-foreground leading-relaxed">
-          Organize requests, coordinate teams and keep daily operations moving.
-        </p>
+      <div className="mx-auto max-w-7xl px-6">
+        <div className="max-w-3xl mx-auto text-center">
+          <span className="text-xs font-semibold uppercase tracking-[0.2em] text-brand">Core offer</span>
+          <h2 className="mt-4 text-3xl md:text-4xl font-medium text-navy-deep">
+            Operational systems built for clarity and execution
+          </h2>
+          <p className="mt-6 text-lg text-muted-foreground leading-relaxed">
+            Organize requests, coordinate teams and keep daily operations moving.
+          </p>
+        </div>
+        <div className="mt-16 grid md:grid-cols-3 gap-8">
+          {pillars.map(({ icon: Icon, title, desc }) => (
+            <div key={title} className="text-center">
+              <span className="mx-auto size-12 rounded-xl bg-brand/10 grid place-items-center mb-5">
+                <Icon className="size-6 text-brand" />
+              </span>
+              <h3 className="text-lg font-medium text-navy-deep">{title}</h3>
+              <p className="mt-2 text-sm text-muted-foreground leading-relaxed">{desc}</p>
+            </div>
+          ))}
+        </div>
+        <div className="mt-14 text-center">
+          
+            href="https://readyflow-manager-demo.lovable.app/dashboard"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex items-center gap-2 px-6 py-3 rounded-md bg-navy text-white font-medium hover:bg-navy-deep transition"
+          >
+            Explore live dashboard <ExternalLink className="size-4" />
+          </a>
+          <p className="mt-3 text-sm text-muted-foreground">Live demo — explore freely, no login required.</p>
+        </div>
       </div>
     </section>
   );
