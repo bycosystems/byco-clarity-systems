@@ -184,7 +184,7 @@ function CoreOffer() {
         </div>
         <div className="mt-14 text-center">
           
-            href="https://readyflow-manager-demo.lovable.app/dashboard"
+           <a href="https://readyflow-manager-demo.lovable.app/dashboard"
             target="_blank"
             rel="noopener noreferrer"
             className="inline-flex items-center gap-2 px-6 py-3 rounded-md bg-navy text-white font-medium hover:bg-navy-deep transition"
