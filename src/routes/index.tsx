@@ -675,6 +675,7 @@ function HomePage() {
       <Header />
       <main className="flex-1">
         <Hero />
+        <StatsBar />
         <CoreOffer />
         <Services />
         <WhoWeServe />
