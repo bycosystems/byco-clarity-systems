@@ -404,9 +404,12 @@ const demoFeatures = [
 ];
 
 const intakeBenefits = [
-  { icon: Clock, title: "Respond to visitors 24/7" },
-  { icon: PhoneOff, title: "Reduce repetitive calls and messages" },
-  { icon: UserCheck, title: "Receive more qualified customer requests" },
+  { icon: Clock, title: "24/7 Availability", desc: "Your intake process never sleeps. Capture business while you rest, without extra headcount." },
+  { icon: PhoneOff, title: "Multi-Channel Sync", desc: "Integrate with WhatsApp, Email, and your website with one centralized smart dashboard." },
+  { icon: UserCheck, title: "Smart Qualification", desc: "AI automatically scores and categorizes requests based on urgency, priority, and business fit." },
+  { icon: Bot, title: "AI Intake Assistant", desc: "Conversational AI that captures request details and provides immediate feedback to customers." },
+  { icon: Eye, title: "Unified Analytics", desc: "Get real-time insights into request volume, lead quality, and conversion performance." },
+  { icon: ListChecks, title: "Enterprise Security", desc: "Data encryption ensures your customer information is always safe and compliant." },
 ];
 
 function SmartIntakeDemo() {
