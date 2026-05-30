@@ -444,16 +444,17 @@ function SmartIntakeDemo() {
           </div>
         </div>
 
-        <div className="mt-14 grid gap-5 md:grid-cols-3">
-          {intakeBenefits.map(({ icon: Icon, title }) => (
+        <div className="mt-14 grid gap-5 md:grid-cols-2 lg:grid-cols-3">
+          {intakeBenefits.map(({ icon: Icon, title, desc }) => (
             <div
               key={title}
-              className="bg-white rounded-xl p-6 border border-border shadow-sm hover:shadow-elevated hover:border-brand/40 transition-all text-center"
+              className="bg-white rounded-xl p-6 border border-border shadow-sm hover:shadow-elevated hover:border-brand/40 transition-all"
             >
-              <span className="mx-auto size-11 rounded-lg bg-brand/10 grid place-items-center mb-4">
+              <span className="size-11 rounded-lg bg-brand/10 grid place-items-center mb-4">
                 <Icon className="size-5 text-brand" />
               </span>
               <p className="text-base font-medium text-navy-deep leading-snug">{title}</p>
+              <p className="mt-2 text-sm text-muted-foreground leading-relaxed">{desc}</p>
             </div>
           ))}
         </div>
