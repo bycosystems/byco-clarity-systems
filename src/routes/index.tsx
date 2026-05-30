@@ -459,6 +459,19 @@ function SmartIntakeDemo() {
           ))}
         </div>
 
+        <div className="mt-16 grid md:grid-cols-3 gap-6 text-center">
+          {[
+            { n: "01", title: "Capture", desc: "AI collects requests from WhatsApp, email, or your website instantly." },
+            { n: "02", title: "Process", desc: "Advanced AI extracts intent, urgency and priority in milliseconds." },
+            { n: "03", title: "Organize", desc: "Request is assigned to the right team with a clear AI summary." },
+          ].map(({ n, title, desc }) => (
+            <div key={n} className="rounded-xl p-6 border border-border bg-white">
+              <div className="text-brand text-sm font-mono font-semibold mb-3">{n}</div>
+              <h3 className="text-lg font-medium text-navy-deep">{title}</h3>
+              <p className="mt-2 text-sm text-muted-foreground leading-relaxed">{desc}</p>
+            </div>
+          ))}
+        </div>
         <div className="mt-12 flex justify-center">
           <a
             href="#contact"
