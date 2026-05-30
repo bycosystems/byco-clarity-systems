@@ -618,7 +618,7 @@ function Contact() {
           <p className="mt-5 text-lg text-muted-foreground leading-relaxed">
             Need a simple business app, dashboard or intake system?
           </p>
-          <a href="https://wa.me/237677035874"
+          <a href="https://wa.me/447366482754"
   target="_blank"
   rel="noopener noreferrer"
   className="mt-6 inline-flex items-center gap-3 px-5 py-3 rounded-md bg-green-500 text-white font-medium hover:bg-green-600 transition"
