@@ -1,5 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
-import React, { useState } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import {
   LayoutDashboard,
   ClipboardList,
@@ -16,22 +16,25 @@ import {
   Clock,
   PhoneOff,
   UserCheck,
+  Phone,
+  MessageSquare,
+  Zap,
 } from "lucide-react";
 import { DashboardMockup } from "@/components/DashboardMockup";
 
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
-     { title: "ByCo Systems — Operational systems for service businesses" },
+      { title: "ByCo Systems — Smart Reception & Automation for Service Businesses" },
       {
         name: "description",
         content:
-          "ByCo Systems builds practical web apps, operations dashboards and workflow tools for service-based businesses.",
+          "ByCo Systems builds smart reception systems, WhatsApp automation, booking flows and intelligent phone intake for service businesses.",
       },
-      { property: "og:title", content: "ByCo Systems — Operational systems for service businesses" },
+      { property: "og:title", content: "ByCo Systems — Smart Reception & Automation for Service Businesses" },
       {
         property: "og:description",
-        content: "Dashboards, intake systems and workflow tools that turn messy operations into clear digital systems.",
+        content: "Never miss a client again. Smart reception systems that run 24/7 for clinics, salons, agencies and every service business.",
       },
       { property: "og:type", content: "website" },
     ],
@@ -40,6 +43,66 @@ export const Route = createFileRoute("/")({
 });
 
 const DEMO_URL = "https://readyflow-manager-demo.lovable.app/dashboard";
+
+// ─── Parallax Section Title ───────────────────────────────────────────────────
+function ParallaxTitle({ word, children }: { word: string; children: React.ReactNode }) {
+  const ref = useRef<HTMLDivElement>(null);
+  const bgRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const el = ref.current;
+    const bg = bgRef.current;
+    if (!el || !bg) return;
+    const handleMove = (e: MouseEvent) => {
+      const rect = el.getBoundingClientRect();
+      const x = (e.clientX - rect.left) / rect.width;
+      const offsetX = (x - 0.5) * 50;
+      bg.style.transform = `translate(calc(-50% + ${offsetX}px), -50%)`;
+    };
+    const handleLeave = () => {
+      bg.style.transition = "transform 0.5s ease";
+      bg.style.transform = "translate(-50%, -50%)";
+    };
+    const handleEnter = () => {
+      bg.style.transition = "transform 0.1s linear";
+    };
+    el.addEventListener("mousemove", handleMove);
+    el.addEventListener("mouseleave", handleLeave);
+    el.addEventListener("mouseenter", handleEnter);
+    return () => {
+      el.removeEventListener("mousemove", handleMove);
+      el.removeEventListener("mouseleave", handleLeave);
+      el.removeEventListener("mouseenter", handleEnter);
+    };
+  }, []);
+
+  return (
+    <div ref={ref} style={{ position: "relative", overflow: "hidden", paddingTop: "1rem", paddingBottom: "0.5rem" }}>
+      <div
+        ref={bgRef}
+        style={{
+          position: "absolute",
+          top: "50%",
+          left: "50%",
+          transform: "translate(-50%, -50%)",
+          fontSize: "clamp(60px, 12vw, 130px)",
+          fontWeight: 800,
+          color: "transparent",
+          WebkitTextStroke: "1px rgba(0,0,0,0.06)",
+          whiteSpace: "nowrap",
+          pointerEvents: "none",
+          letterSpacing: "0.05em",
+          userSelect: "none",
+          zIndex: 0,
+          transition: "transform 0.5s ease",
+        }}
+      >
+        {word}
+      </div>
+      <div style={{ position: "relative", zIndex: 1 }}>{children}</div>
+    </div>
+  );
+}
 
 function Header() {
   return (
@@ -54,6 +117,7 @@ function Header() {
         <nav className="hidden md:flex items-center gap-8 text-sm text-muted-foreground">
           <a href="#offer" className="hover:text-navy-deep transition">What we build</a>
           <a href="#services" className="hover:text-navy-deep transition">Services</a>
+          <a href="#pricing" className="hover:text-navy-deep transition">Pricing</a>
           <a href="#demo" className="hover:text-navy-deep transition">Demo</a>
           <a href="#process" className="hover:text-navy-deep transition">Process</a>
           <a href="#contact" className="hover:text-navy-deep transition">Contact</a>
@@ -79,15 +143,15 @@ function Hero() {
           <div className="lg:col-span-6">
             <span className="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-medium bg-white/10 border border-white/15 text-brand-soft">
               <span className="size-1.5 rounded-full bg-brand-soft" />
-              Operational systems for service businesses
+              Smart reception & automation for service businesses
             </span>
             <h1 className="mt-6 text-4xl md:text-5xl lg:text-6xl font-medium tracking-tight leading-[1.05]">
-              Capture requests.<br />
-              Track operations.<br />
-              Stay organized.
+              Never miss<br />
+              a client again.<br />
+              <span className="text-brand-soft">24/7.</span>
             </h1>
             <p className="mt-6 text-lg text-white/70 max-w-xl leading-relaxed">
-              Operational systems built around real operations.
+              Smart phone reception, WhatsApp automation, booking flows and follow-up systems — built for clinics, salons, agencies and every service business.
             </p>
             <div className="mt-8 flex flex-wrap gap-3">
               <a
@@ -106,8 +170,9 @@ function Hero() {
               </a>
             </div>
             <div className="mt-10 flex flex-wrap gap-6 text-xs text-white/50">
-              <span className="flex items-center gap-2"><CheckCircle2 className="size-4 text-brand-soft" /> Built around your workflow</span>
-              <span className="flex items-center gap-2"><CheckCircle2 className="size-4 text-brand-soft" /> Clear and usable systems</span>
+              <span className="flex items-center gap-2"><CheckCircle2 className="size-4 text-brand-soft" /> Zero missed calls</span>
+              <span className="flex items-center gap-2"><CheckCircle2 className="size-4 text-brand-soft" /> WhatsApp automation</span>
+              <span className="flex items-center gap-2"><CheckCircle2 className="size-4 text-brand-soft" /> Fast setup — 48h</span>
             </div>
           </div>
           <div className="lg:col-span-6">
@@ -118,12 +183,13 @@ function Hero() {
     </section>
   );
 }
+
 function StatsBar() {
   const stats = [
     { value: "48h", label: "Average setup time" },
+    { value: "24/7", label: "Smart phone reception" },
+    { value: "100%", label: "Zero missed clients" },
     { value: "6+", label: "Industries served" },
-    { value: "24/7", label: "Zero missed requests" },
-    { value: "100%", label: "Built around your workflow" },
   ];
   return (
     <section className="py-10 border-b border-border bg-white">
@@ -140,37 +206,40 @@ function StatsBar() {
     </section>
   );
 }
+
 function CoreOffer() {
   const pillars = [
     {
-      icon: Workflow,
-      title: "Built around your workflow",
-      desc: "We map how your team actually works before writing a single line of code.",
+      icon: Phone,
+      title: "Intelligent phone reception",
+      desc: "Never miss a call again. Your smart receptionist answers, qualifies and routes every call automatically.",
     },
     {
-      icon: LayoutDashboard,
-      title: "Clear and usable from day one",
-      desc: "No oversized platforms. Focused systems your team will actually use.",
+      icon: MessageSquare,
+      title: "WhatsApp & multi-channel automation",
+      desc: "Instant greetings, appointment confirmations and follow-ups on WhatsApp — without lifting a finger.",
     },
     {
-      icon: Bot,
-      title: "Automated where it matters",
-      desc: "Smart intake, request routing and 24/7 availability — without hiring extra staff.",
+      icon: Zap,
+      title: "Automated booking & follow-up",
+      desc: "Clients book, get confirmed and receive reminders automatically. Your calendar fills itself.",
     },
   ];
 
   return (
     <section id="offer" className="py-24 md:py-32">
       <div className="mx-auto max-w-7xl px-6">
-        <div className="max-w-3xl mx-auto text-center">
-          <span className="text-xs font-semibold uppercase tracking-[0.2em] text-brand">Core offer</span>
-          <h2 className="mt-4 text-3xl md:text-4xl font-medium text-navy-deep">
-            Operational systems built for clarity and execution
-          </h2>
-          <p className="mt-6 text-lg text-muted-foreground leading-relaxed">
-            Organize requests, coordinate teams and keep daily operations moving.
-          </p>
-        </div>
+        <ParallaxTitle word="RECEPTION">
+          <div className="max-w-3xl mx-auto text-center">
+            <span className="text-xs font-semibold uppercase tracking-[0.2em] text-brand">Core offer</span>
+            <h2 className="mt-4 text-3xl md:text-4xl font-medium text-navy-deep">
+              Your front desk, running 24/7 without extra staff
+            </h2>
+            <p className="mt-6 text-lg text-muted-foreground leading-relaxed">
+              Every missed call, unanswered WhatsApp or forgotten follow-up is a client your competitor just won.
+            </p>
+          </div>
+        </ParallaxTitle>
         <div className="mt-16 grid md:grid-cols-3 gap-8">
           {pillars.map(({ icon: Icon, title, desc }) => (
             <div key={title} className="text-center">
@@ -183,8 +252,7 @@ function CoreOffer() {
           ))}
         </div>
         <div className="mt-14 text-center">
-          
-           <a href="https://readyflow-manager-demo.lovable.app/dashboard"
+          <a href="https://readyflow-manager-demo.lovable.app/dashboard"
             target="_blank"
             rel="noopener noreferrer"
             className="inline-flex items-center gap-2 px-6 py-3 rounded-md bg-navy text-white font-medium hover:bg-navy-deep transition"
@@ -200,19 +268,34 @@ function CoreOffer() {
 
 const services = [
   {
-    icon: LayoutDashboard,
-    title: "Operations Dashboards",
-    desc: "Track tasks, teams, requests and daily operations from one clear interface.",
+    icon: Phone,
+    title: "Smart Phone Reception",
+    desc: "Intelligent phone intake that answers, qualifies and routes calls automatically — 24/7, no extra staff.",
+  },
+  {
+    icon: MessageSquare,
+    title: "WhatsApp Automation",
+    desc: "Instant greetings, appointment confirmations, lead capture and follow-up sequences on WhatsApp.",
   },
   {
     icon: ClipboardList,
-    title: "Client Intake Systems",
-    desc: "Collect, organize and manage client requests with simple digital workflows.",
+    title: "Booking & Intake Systems",
+    desc: "Clients book online, get confirmed instantly, receive reminders automatically. Zero manual work.",
+  },
+  {
+    icon: LayoutDashboard,
+    title: "Operations Dashboards",
+    desc: "Track requests, teams and daily operations from one clear interface.",
   },
   {
     icon: Bot,
-    title: "24/7 Smart Intake",
-    desc: "Add an intelligent assistant to guide visitors, qualify requests and simplify first contact.",
+    title: "AI Client Assistant",
+    desc: "Conversational AI that guides visitors, qualifies requests and provides immediate responses.",
+  },
+  {
+    icon: Workflow,
+    title: "Custom Automation Flows",
+    desc: "Connect your tools, automate repetitive tasks and keep your business running while you focus on delivery.",
   },
 ];
 
@@ -220,12 +303,14 @@ function Services() {
   return (
     <section id="services" className="py-24 bg-secondary/40 border-y border-border">
       <div className="mx-auto max-w-7xl px-6">
-        <div className="max-w-2xl">
-          <span className="text-xs font-semibold uppercase tracking-[0.2em] text-brand">Services</span>
-          <h2 className="mt-4 text-3xl md:text-4xl font-medium text-navy-deep">
-            What we build for service-based businesses
-          </h2>
-        </div>
+        <ParallaxTitle word="SERVICES">
+          <div className="max-w-2xl">
+            <span className="text-xs font-semibold uppercase tracking-[0.2em] text-brand">Services</span>
+            <h2 className="mt-4 text-3xl md:text-4xl font-medium text-navy-deep">
+              Everything your front desk should do — automated
+            </h2>
+          </div>
+        </ParallaxTitle>
         <div className="mt-12 grid md:grid-cols-3 gap-6">
           {services.map(({ icon: Icon, title, desc }) => (
             <div
@@ -250,25 +335,28 @@ const smartIntakeBenefits = [
   { icon: UserCheck, label: "Request qualification" },
   { icon: Workflow, label: "Faster response coordination" },
 ];
+
 function WhoWeServe() {
   const sectors = [
-    { icon: Building2, label: "Property & Real Estate" },
-    { icon: Users, label: "Cleaning & Maintenance" },
-    { icon: ClipboardList, label: "Healthcare & Clinics" },
-    { icon: Workflow, label: "Logistics & Delivery" },
-    { icon: LayoutDashboard, label: "Agencies & Consultants" },
-    { icon: Bot, label: "Any service-based business" },
+    { icon: Building2, label: "Clinics & Healthcare" },
+    { icon: Users, label: "Salons & Beauty" },
+    { icon: ClipboardList, label: "Law Firms & Notaries" },
+    { icon: Workflow, label: "Agencies & Consultants" },
+    { icon: LayoutDashboard, label: "Hotels & Hospitality" },
+    { icon: Bot, label: "Any service business" },
   ];
 
   return (
     <section className="py-16 border-b border-border">
       <div className="mx-auto max-w-7xl px-6">
-        <div className="text-center mb-10">
-          <span className="text-xs font-semibold uppercase tracking-[0.2em] text-brand">Who we build for</span>
-          <h2 className="mt-4 text-2xl md:text-3xl font-medium text-navy-deep">
-            Built for service businesses that need clarity
-          </h2>
-        </div>
+        <ParallaxTitle word="CLIENTS">
+          <div className="text-center mb-10">
+            <span className="text-xs font-semibold uppercase tracking-[0.2em] text-brand">Who we build for</span>
+            <h2 className="mt-4 text-2xl md:text-3xl font-medium text-navy-deep">
+              Built for every service business that wants to stop losing clients
+            </h2>
+          </div>
+        </ParallaxTitle>
         <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
           {sectors.map(({ icon: Icon, label }) => (
             <div key={label} className="flex flex-col items-center gap-3 p-4 rounded-xl border border-border bg-white hover:border-brand/40 hover:shadow-sm transition-all text-center">
@@ -283,6 +371,7 @@ function WhoWeServe() {
     </section>
   );
 }
+
 function SmartIntakeIntro() {
   return (
     <section id="smart-intake-intro" className="py-24 md:py-32">
@@ -293,12 +382,11 @@ function SmartIntakeIntro() {
               ByCo Smart Intake
             </span>
             <h2 className="mt-4 text-3xl md:text-4xl font-medium text-navy-deep leading-tight">
-              ByCo Smart Intake
+              Your 24/7 intelligent receptionist
             </h2>
             <p className="mt-5 text-lg text-muted-foreground leading-relaxed">
-              An intelligent intake system that captures, qualifies and routes customer requests automatically.
+              Captures, qualifies and routes every client request automatically — by phone, WhatsApp or web form.
             </p>
-
             <ul className="mt-8 space-y-3">
               {smartIntakeBenefits.map(({ icon: Icon, label }) => (
                 <li key={label} className="flex items-center gap-3 text-sm text-foreground">
@@ -309,7 +397,6 @@ function SmartIntakeIntro() {
                 </li>
               ))}
             </ul>
-
             <a
               href="#contact"
               onClick={(e) => {
@@ -324,7 +411,6 @@ function SmartIntakeIntro() {
               Private workflow demo available on request.
             </p>
           </div>
-
           <div className="lg:col-span-6">
             <div className="relative">
               <div className="absolute -inset-4 bg-brand/10 rounded-3xl blur-2xl" />
@@ -340,7 +426,6 @@ function SmartIntakeIntro() {
                     Smart Intake · Online
                   </div>
                 </div>
-
                 <div className="p-5 space-y-4 bg-white">
                   <div className="flex gap-2.5">
                     <div className="size-8 rounded-full bg-navy-gradient grid place-items-center shrink-0">
@@ -350,13 +435,11 @@ function SmartIntakeIntro() {
                       Hi! How can we help you today?
                     </div>
                   </div>
-
                   <div className="flex gap-2.5 justify-end">
                     <div className="rounded-2xl rounded-tr-sm bg-navy text-white px-4 py-2.5 text-sm max-w-[85%]">
                       I need a quote for a service appointment next week.
                     </div>
                   </div>
-
                   <div className="flex gap-2.5">
                     <div className="size-8 rounded-full bg-navy-gradient grid place-items-center shrink-0">
                       <Bot className="size-4 text-white" />
@@ -365,7 +448,6 @@ function SmartIntakeIntro() {
                       Got it. Could you share your name, contact and preferred day?
                     </div>
                   </div>
-
                   <div className="mt-4 rounded-lg border border-border bg-secondary/30 p-3.5">
                     <div className="flex items-center justify-between text-xs">
                       <span className="font-semibold uppercase tracking-wider text-brand">Qualified request</span>
@@ -416,19 +498,19 @@ function SmartIntakeDemo() {
   return (
     <section id="smart-intake" className="py-24 md:py-32 bg-secondary/30 border-y border-border">
       <div className="mx-auto max-w-5xl px-6">
-        <div className="text-center max-w-3xl mx-auto">
-          <span className="text-xs font-semibold uppercase tracking-[0.2em] text-brand">
-            24/7 Smart Intake Demo
-          </span>
-          <h2 className="mt-4 text-3xl md:text-4xl font-medium text-navy-deep leading-tight">
-            See how a 24/7 smart intake handles real customer requests
-          </h2>
-          <p className="mt-5 text-base md:text-lg text-muted-foreground leading-relaxed">
-            This example shows how a business can receive, guide and qualify customer requests
-            automatically before human intervention.
-          </p>
-        </div>
-
+        <ParallaxTitle word="AUTOMATION">
+          <div className="text-center max-w-3xl mx-auto">
+            <span className="text-xs font-semibold uppercase tracking-[0.2em] text-brand">
+              24/7 Smart Intake Demo
+            </span>
+            <h2 className="mt-4 text-3xl md:text-4xl font-medium text-navy-deep leading-tight">
+              See how a 24/7 smart intake handles real customer requests
+            </h2>
+            <p className="mt-5 text-base md:text-lg text-muted-foreground leading-relaxed">
+              This example shows how a business can receive, guide and qualify customer requests automatically before human intervention.
+            </p>
+          </div>
+        </ParallaxTitle>
         <div className="mt-12 mx-auto w-full" style={{ maxWidth: 340 }}>
           <div className="relative rounded-2xl overflow-hidden border border-border bg-white shadow-elevated">
             <div className="relative w-full" style={{ aspectRatio: "9 / 16" }}>
@@ -443,13 +525,9 @@ function SmartIntakeDemo() {
             </div>
           </div>
         </div>
-
         <div className="mt-14 grid gap-5 md:grid-cols-2 lg:grid-cols-3">
           {intakeBenefits.map(({ icon: Icon, title, desc }) => (
-            <div
-              key={title}
-              className="bg-white rounded-xl p-6 border border-border shadow-sm hover:shadow-elevated hover:border-brand/40 transition-all"
-            >
+            <div key={title} className="bg-white rounded-xl p-6 border border-border shadow-sm hover:shadow-elevated hover:border-brand/40 transition-all">
               <span className="size-11 rounded-lg bg-brand/10 grid place-items-center mb-4">
                 <Icon className="size-5 text-brand" />
               </span>
@@ -458,10 +536,9 @@ function SmartIntakeDemo() {
             </div>
           ))}
         </div>
-
         <div className="mt-16 grid md:grid-cols-3 gap-6 text-center">
           {[
-            { n: "01", title: "Capture", desc: "AI collects requests from WhatsApp, email, or your website instantly." },
+            { n: "01", title: "Capture", desc: "AI collects requests from WhatsApp, phone or your website instantly." },
             { n: "02", title: "Process", desc: "Advanced AI extracts intent, urgency and priority in milliseconds." },
             { n: "03", title: "Organize", desc: "Request is assigned to the right team with a clear AI summary." },
           ].map(({ n, title, desc }) => (
@@ -473,16 +550,12 @@ function SmartIntakeDemo() {
           ))}
         </div>
         <div className="mt-12 flex justify-center">
-          <a
-            href="#contact"
-            className="inline-flex items-center gap-2 px-6 py-3 rounded-md bg-navy text-white font-medium hover:bg-navy-deep transition"
-          >
+          <a href="#contact" className="inline-flex items-center gap-2 px-6 py-3 rounded-md bg-navy text-white font-medium hover:bg-navy-deep transition">
             Request a similar system <ArrowRight className="size-4" />
           </a>
         </div>
-
         <p className="mt-6 text-center text-sm text-muted-foreground italic">
-          French demo video — example adaptable to garages, rentals, local shops and service providers.
+          French demo video — example adaptable to clinics, salons, agencies and any service business.
         </p>
       </div>
     </section>
@@ -500,7 +573,6 @@ function FeaturedDemo() {
             <p className="mt-5 text-muted-foreground leading-relaxed">
               Operational workspace for service businesses handling requests, teams, tasks and day-to-day coordination.
             </p>
-
             <ul className="mt-8 grid grid-cols-2 gap-3">
               {demoFeatures.map(({ icon: Icon, label }) => (
                 <li key={label} className="flex items-center gap-2.5 text-sm text-foreground">
@@ -511,11 +583,7 @@ function FeaturedDemo() {
                 </li>
               ))}
             </ul>
-
-            <a
-              href={DEMO_URL}
-              target="_blank"
-              rel="noopener noreferrer"
+            <a href={DEMO_URL} target="_blank" rel="noopener noreferrer"
               className="mt-10 inline-flex items-center gap-2 px-5 py-3 rounded-md bg-navy text-white font-medium hover:bg-navy-deep transition"
             >
               Explore workspace <ExternalLink className="size-4" />
@@ -524,12 +592,127 @@ function FeaturedDemo() {
           <div className="lg:col-span-7">
             <div className="relative">
               <div className="absolute -inset-4 bg-brand/10 rounded-3xl blur-2xl" />
-              <div className="relative">
-                <DashboardMockup />
-              </div>
+              <div className="relative"><DashboardMockup /></div>
             </div>
           </div>
         </div>
+      </div>
+    </section>
+  );
+}
+
+// ─── PRICING ─────────────────────────────────────────────────────────────────
+const pricingPlans = [
+  {
+    name: "Starter",
+    price: "495€",
+    subtitle: "Full smart reception system",
+    desc: "For businesses with no website. We build everything from scratch — site, smart intake, WhatsApp automation and booking flow.",
+    features: [
+      "Professional website included",
+      "Smart phone reception setup",
+      "WhatsApp automation flow",
+      "Booking & confirmation system",
+      "Client follow-up sequences",
+      "Operations dashboard",
+    ],
+    cta: "Request this system",
+    highlight: false,
+  },
+  {
+    name: "Integration",
+    price: "295€",
+    subtitle: "Grafted onto your existing site",
+    desc: "You already have a website. We add an intelligent reception layer directly on top — no rebuild needed.",
+    features: [
+      "Smart intake on your existing site",
+      "WhatsApp automation flow",
+      "Booking & confirmation system",
+      "Client follow-up sequences",
+      "Operations dashboard",
+      "Setup in 48h",
+    ],
+    cta: "Request this system",
+    highlight: true,
+  },
+  {
+    name: "Dashboard",
+    price: "155€",
+    subtitle: "Internal tracking & client portal",
+    desc: "A clean internal dashboard to track requests, manage clients and monitor your operations — all in one place.",
+    features: [
+      "Client request tracking",
+      "Team task management",
+      "Internal operations dashboard",
+      "Status updates & notifications",
+      "Simple and usable from day one",
+      "Setup in 24h",
+    ],
+    cta: "Request this system",
+    highlight: false,
+  },
+];
+
+function Pricing() {
+  return (
+    <section id="pricing" className="py-24 md:py-32 bg-secondary/30 border-y border-border">
+      <div className="mx-auto max-w-7xl px-6">
+        <ParallaxTitle word="PRICING">
+          <div className="max-w-2xl mx-auto text-center">
+            <span className="text-xs font-semibold uppercase tracking-[0.2em] text-brand">Pricing</span>
+            <h2 className="mt-4 text-3xl md:text-4xl font-medium text-navy-deep">
+              Simple, transparent pricing
+            </h2>
+            <p className="mt-5 text-lg text-muted-foreground leading-relaxed">
+              One-time setup. No monthly fees. No surprises.
+            </p>
+          </div>
+        </ParallaxTitle>
+        <div className="mt-14 grid md:grid-cols-3 gap-6">
+          {pricingPlans.map(({ name, price, subtitle, desc, features, cta, highlight }) => (
+            <div
+              key={name}
+              className={`relative rounded-2xl p-8 border transition-all flex flex-col ${
+                highlight
+                  ? "border-brand bg-navy text-white shadow-elevated scale-[1.02]"
+                  : "border-border bg-white hover:border-brand/40 hover:shadow-elevated"
+              }`}
+            >
+              {highlight && (
+                <div className="absolute -top-3 left-1/2 -translate-x-1/2 px-4 py-1 rounded-full bg-brand text-white text-xs font-semibold">
+                  Most popular
+                </div>
+              )}
+              <div>
+                <div className={`text-xs font-semibold uppercase tracking-[0.2em] ${highlight ? "text-brand-soft" : "text-brand"}`}>{name}</div>
+                <div className={`mt-3 text-4xl font-bold ${highlight ? "text-white" : "text-navy-deep"}`}>{price}</div>
+                <div className={`mt-1 text-sm font-medium ${highlight ? "text-white/70" : "text-muted-foreground"}`}>{subtitle}</div>
+                <p className={`mt-4 text-sm leading-relaxed ${highlight ? "text-white/60" : "text-muted-foreground"}`}>{desc}</p>
+              </div>
+              <ul className="mt-6 space-y-2.5 flex-1">
+                {features.map((f) => (
+                  <li key={f} className={`flex items-center gap-2.5 text-sm ${highlight ? "text-white/80" : "text-foreground"}`}>
+                    <CheckCircle2 className={`size-4 shrink-0 ${highlight ? "text-brand-soft" : "text-brand"}`} />
+                    {f}
+                  </li>
+                ))}
+              </ul>
+              <a
+                href="#contact"
+                className={`mt-8 inline-flex justify-center items-center gap-2 px-5 py-3 rounded-md font-medium transition ${
+                  highlight
+                    ? "bg-white text-navy-deep hover:bg-white/90"
+                    : "bg-navy text-white hover:bg-navy-deep"
+                }`}
+              >
+                {cta} <ArrowRight className="size-4" />
+              </a>
+            </div>
+          ))}
+        </div>
+        <p className="mt-8 text-center text-sm text-muted-foreground">
+          Need a custom system? <a href="#contact" className="text-brand font-medium hover:underline">Talk to us</a> — we adapt to every service business.
+        </p>
       </div>
     </section>
   );
@@ -539,7 +722,7 @@ const steps = [
   { n: "01", title: "Understand the workflow", desc: "We map how your team actually works today." },
   { n: "02", title: "Build a practical first version", desc: "A focused, usable system — not an oversized platform." },
   { n: "03", title: "Adapt the system to the business", desc: "Refine details based on real day-to-day usage." },
-  { n: "04", title: "Deliver a clear and usable operational tool", desc: "A system your team can rely on." },
+  { n: "04", title: "Deliver a clear and usable operational tool", desc: "A system your team can rely on from day one." },
 ];
 
 function Process() {
@@ -547,12 +730,14 @@ function Process() {
     <section id="process" className="py-24 bg-navy-gradient text-white relative overflow-hidden">
       <div className="absolute inset-0 grid-bg opacity-50" />
       <div className="relative mx-auto max-w-7xl px-6">
-        <div className="max-w-2xl">
-          <span className="text-xs font-semibold uppercase tracking-[0.2em] text-brand-soft">Process</span>
-          <h2 className="mt-4 text-3xl md:text-4xl font-medium">
-            How projects move from idea to usable system
-          </h2>
-        </div>
+        <ParallaxTitle word="PROCESS">
+          <div className="max-w-2xl">
+            <span className="text-xs font-semibold uppercase tracking-[0.2em] text-brand-soft">Process</span>
+            <h2 className="mt-4 text-3xl md:text-4xl font-medium text-white">
+              How projects move from idea to usable system
+            </h2>
+          </div>
+        </ParallaxTitle>
         <div className="mt-14 grid md:grid-cols-2 lg:grid-cols-4 gap-6">
           {steps.map(({ n, title, desc }) => (
             <div key={n} className="rounded-xl p-6 border border-white/10 bg-white/5 backdrop-blur-sm">
@@ -569,7 +754,6 @@ function Process() {
 
 function ContactForm() {
   const [submitted, setSubmitted] = useState(false);
-
   const handleSubmit = async (e: any) => {
     e.preventDefault();
     const form = e.currentTarget;
@@ -581,7 +765,6 @@ function ContactForm() {
     });
     if (response.ok) setSubmitted(true);
   };
-
   return (
     <form onSubmit={handleSubmit} className="grid gap-4">
       <div className="grid sm:grid-cols-2 gap-4">
@@ -591,22 +774,16 @@ function ContactForm() {
       <Field label="Email" name="email" type="email" />
       <div>
         <label className="block text-sm font-medium text-navy-deep mb-1.5">Message</label>
-        <textarea
-          name="message"
-          required
-          rows={5}
+        <textarea name="message" required rows={5}
           className="w-full rounded-md border border-border bg-white px-3.5 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-brand/40 focus:border-brand transition"
         />
       </div>
-      <button
-        type="submit"
+      <button type="submit"
         className="mt-2 inline-flex justify-center items-center gap-2 px-5 py-3 rounded-md bg-navy text-white font-medium hover:bg-navy-deep transition"
       >
         Send request <ArrowRight className="size-4" />
       </button>
-      {submitted && (
-        <p className="text-sm text-brand font-medium">Thanks — we'll be in touch soon!</p>
-      )}
+      {submitted && <p className="text-sm text-brand font-medium">Thanks — we'll be in touch soon!</p>}
     </form>
   );
 }
@@ -615,10 +792,7 @@ function Field({ label, name, type = "text" }: { label: string; name: string; ty
   return (
     <div>
       <label className="block text-sm font-medium text-navy-deep mb-1.5">{label}</label>
-      <input
-        required
-        type={type}
-        name={name}
+      <input required type={type} name={name}
         className="w-full rounded-md border border-border bg-white px-3.5 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-brand/40 focus:border-brand transition"
       />
     </div>
@@ -633,19 +807,17 @@ function Contact() {
           <span className="text-xs font-semibold uppercase tracking-[0.2em] text-brand">Contact</span>
           <h2 className="mt-4 text-3xl md:text-4xl font-medium text-navy-deep">Request a Demo</h2>
           <p className="mt-5 text-lg text-muted-foreground leading-relaxed">
-            Need a simple business app, dashboard or intake system?
+            Tell us your biggest reception headache. We'll show you exactly what we can automate.
           </p>
-          <a href="https://wa.me/447366482754"
-  target="_blank"
-  rel="noopener noreferrer"
-  className="mt-6 inline-flex items-center gap-3 px-5 py-3 rounded-md bg-green-500 text-white font-medium hover:bg-green-600 transition"
->
-  <svg xmlns="http://www.w3.org/2000/svg" className="size-5 shrink-0" viewBox="0 0 24 24" fill="currentColor">
-    <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/>
-    <path d="M12 0C5.373 0 0 5.373 0 12c0 2.123.554 4.118 1.528 5.855L0 24l6.335-1.502A11.954 11.954 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 21.818a9.818 9.818 0 01-5.003-1.368l-.36-.214-3.732.885.936-3.617-.235-.373A9.818 9.818 0 1112 21.818z"/>
-  </svg>
-  Chat with us on WhatsApp
-</a>
+          <a href="https://wa.me/447366482754" target="_blank" rel="noopener noreferrer"
+            className="mt-6 inline-flex items-center gap-3 px-5 py-3 rounded-md bg-green-500 text-white font-medium hover:bg-green-600 transition"
+          >
+            <svg xmlns="http://www.w3.org/2000/svg" className="size-5 shrink-0" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/>
+              <path d="M12 0C5.373 0 0 5.373 0 12c0 2.123.554 4.118 1.528 5.855L0 24l6.335-1.502A11.954 11.954 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 21.818a9.818 9.818 0 01-5.003-1.368l-.36-.214-3.732.885.936-3.617-.235-.373A9.818 9.818 0 1112 21.818z"/>
+            </svg>
+            Chat with us on WhatsApp
+          </a>
           <div className="mt-8 p-5 rounded-lg border border-border bg-secondary/50">
             <div className="text-sm text-muted-foreground font-medium">Response within 24 hours</div>
             <p className="mt-1 text-sm text-navy-deep font-medium">
@@ -674,7 +846,7 @@ function Footer() {
               <span className="text-white font-semibold tracking-tight">ByCo Systems</span>
             </div>
             <p className="mt-3 text-sm max-w-md">
-              Operational dashboards, workflow systems and practical business web apps.
+              Smart reception systems, WhatsApp automation and operational dashboards for service businesses.
             </p>
           </div>
           <div className="text-sm text-white/40">
@@ -699,6 +871,7 @@ function HomePage() {
         <SmartIntakeIntro />
         <SmartIntakeDemo />
         <FeaturedDemo />
+        <Pricing />
         <Process />
         <Contact />
       </main>
