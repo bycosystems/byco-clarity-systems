@@ -45,7 +45,7 @@ export const Route = createFileRoute("/")({
 const DEMO_URL = "https://readyflow-manager-demo.lovable.app/dashboard";
 
 // ─── Parallax Section Title ───────────────────────────────────────────────────
-function ParallaxTitle({ word, children }: { word: string; children: React.ReactNode }) {
+function ParallaxTitle({ word, children, dark = false }: { word: string; children: React.ReactNode; dark?: boolean }) {
   const ref = useRef<HTMLDivElement>(null);
   const bgRef = useRef<HTMLDivElement>(null);
 
@@ -76,6 +76,10 @@ function ParallaxTitle({ word, children }: { word: string; children: React.React
     };
   }, []);
 
+  const stroke = dark
+    ? "1px rgba(255,255,255,0.13)"
+    : "1px rgba(59,130,246,0.22)";
+
   return (
     <div ref={ref} style={{ position: "relative", overflow: "hidden", paddingTop: "1rem", paddingBottom: "0.5rem" }}>
       <div
@@ -88,7 +92,7 @@ function ParallaxTitle({ word, children }: { word: string; children: React.React
           fontSize: "clamp(60px, 12vw, 130px)",
           fontWeight: 800,
           color: "transparent",
-          WebkitTextStroke: "1px rgba(0,0,0,0.06)",
+          WebkitTextStroke: stroke,
           whiteSpace: "nowrap",
           pointerEvents: "none",
           letterSpacing: "0.05em",
@@ -730,7 +734,7 @@ function Process() {
     <section id="process" className="py-24 bg-navy-gradient text-white relative overflow-hidden">
       <div className="absolute inset-0 grid-bg opacity-50" />
       <div className="relative mx-auto max-w-7xl px-6">
-        <ParallaxTitle word="PROCESS">
+        <ParallaxTitle word="PROCESS" dark={true}>
           <div className="max-w-2xl">
             <span className="text-xs font-semibold uppercase tracking-[0.2em] text-brand-soft">Process</span>
             <h2 className="mt-4 text-3xl md:text-4xl font-medium text-white">
