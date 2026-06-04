@@ -721,7 +721,7 @@ function Pricing() {
   return (
     <section id="pricing" className="py-24 md:py-32 bg-secondary/30 border-y border-border">
       <div className="mx-auto max-w-7xl px-6">
-        <ParallaxTitle word="PRICING" center={true}>
+        <ParallaxTitle word="PLANS" center={true}>
           <div className="max-w-2xl mx-auto text-center">
             <h2 className="text-3xl md:text-4xl font-medium text-navy-deep">
               Simple, transparent pricing
