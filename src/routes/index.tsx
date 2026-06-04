@@ -45,7 +45,7 @@ export const Route = createFileRoute("/")({
 const DEMO_URL = "https://readyflow-manager-demo.lovable.app/dashboard";
 
 // ─── Parallax Section Title ───────────────────────────────────────────────────
-function ParallaxTitle({ word, children, dark = false }: { word: string; children: React.ReactNode; dark?: boolean }) {
+function ParallaxTitle({ word, children, dark = false, center = false }: { word: string; children: React.ReactNode; dark?: boolean; center?: boolean }) {
   const ref = useRef<HTMLDivElement>(null);
   const bgRef = useRef<HTMLDivElement>(null);
   const animRef = useRef<number>(0);
@@ -68,37 +68,32 @@ function ParallaxTitle({ word, children, dark = false }: { word: string; childre
         posRef.current += 0.15 * dirRef.current;
         if (posRef.current > 18) dirRef.current = -1;
         if (posRef.current < -18) dirRef.current = 1;
-        bg.style.transform = `translateX(calc(-50% + ${posRef.current}px))`;
+        bg.style.transform = center
+          ? `translateX(calc(-50% + ${posRef.current}px))`
+          : `translateX(${posRef.current}px)`;
         animRef.current = requestAnimationFrame(animate);
       };
       const observer = new IntersectionObserver(
         ([entry]) => {
-          if (entry.isIntersecting) {
-            active = true;
-            animate();
-          } else {
-            active = false;
-            cancelAnimationFrame(animRef.current);
-          }
+          if (entry.isIntersecting) { active = true; animate(); }
+          else { active = false; cancelAnimationFrame(animRef.current); }
         },
         { threshold: 0.2 }
       );
       observer.observe(el);
-      return () => {
-        observer.disconnect();
-        cancelAnimationFrame(animRef.current);
-      };
+      return () => { observer.disconnect(); cancelAnimationFrame(animRef.current); };
     } else {
       const handleMove = (e: MouseEvent) => {
         const rect = el.getBoundingClientRect();
-        const x = (e.clientX - rect.left) / rect.width;
-        const offsetX = (x - 0.5) * 40;
+        const offset = ((e.clientX - rect.left) / rect.width - 0.5) * 26;
         bg.style.transition = "transform 0.1s linear";
-        bg.style.transform = `translateX(calc(-50% + ${offsetX}px))`;
+        bg.style.transform = center
+          ? `translateX(calc(-50% + ${offset}px))`
+          : `translateX(${offset}px)`;
       };
       const handleLeave = () => {
         bg.style.transition = "transform 0.5s ease";
-        bg.style.transform = "translateX(-50%)";
+        bg.style.transform = center ? "translateX(-50%)" : "translateX(0px)";
       };
       el.addEventListener("mousemove", handleMove);
       el.addEventListener("mouseleave", handleLeave);
@@ -109,33 +104,33 @@ function ParallaxTitle({ word, children, dark = false }: { word: string; childre
     }
   }, []);
 
-  const color = dark
-    ? "rgba(255,255,255,0.12)"
-    : "rgba(59,130,246,0.16)";
+  const color = dark ? "rgba(255,255,255,0.10)" : "rgba(59,130,246,0.15)";
+  const leftStyle = center ? "50%" : "0";
+  const baseTransform = center ? "translateX(-50%)" : "translateX(0px)";
 
   return (
-    <div ref={ref} style={{ position: "relative", overflow: "visible", paddingTop: "0.5rem", paddingBottom: "0.25rem" }}>
+    <div ref={ref} style={{ position: "relative", overflow: "visible" }}>
       <div
         ref={bgRef}
         style={{
           position: "absolute",
-          bottom: "-0.1em",
-          left: "50%",
-          transform: "translateX(-50%)",
-          fontSize: "clamp(55px, 7vw, 88px)",
+          top: 0,
+          left: leftStyle,
+          transform: baseTransform,
+          fontSize: "clamp(52px, 6.5vw, 80px)",
           fontWeight: 800,
+          lineHeight: 1,
           color: color,
           whiteSpace: "nowrap",
           pointerEvents: "none",
-          letterSpacing: "0.03em",
+          letterSpacing: "0.02em",
           userSelect: "none",
           zIndex: 0,
-          lineHeight: 1,
         }}
       >
         {displayWord}
       </div>
-      <div style={{ position: "relative", zIndex: 1 }}>{children}</div>
+      <div style={{ position: "relative", zIndex: 1, paddingTop: "2.6rem" }}>{children}</div>
     </div>
   );
 }
@@ -385,7 +380,7 @@ function WhoWeServe() {
   return (
     <section className="py-16 border-b border-border">
       <div className="mx-auto max-w-7xl px-6">
-        <ParallaxTitle word="CLIENTS">
+        <ParallaxTitle word="CLIENTS" center={true}>
           <div className="text-center mb-10">
             <span className="text-xs font-semibold uppercase tracking-[0.2em] text-brand">Who we build for</span>
             <h2 className="mt-4 text-2xl md:text-3xl font-medium text-navy-deep">
@@ -534,7 +529,7 @@ function SmartIntakeDemo() {
   return (
     <section id="smart-intake" className="py-24 md:py-32 bg-secondary/30 border-y border-border">
       <div className="mx-auto max-w-5xl px-6">
-        <ParallaxTitle word="AUTOMATION">
+        <ParallaxTitle word="AUTOMATION" center={true}>
           <div className="text-center max-w-3xl mx-auto">
             <span className="text-xs font-semibold uppercase tracking-[0.2em] text-brand">
               24/7 Smart Intake Demo
@@ -693,7 +688,7 @@ function Pricing() {
   return (
     <section id="pricing" className="py-24 md:py-32 bg-secondary/30 border-y border-border">
       <div className="mx-auto max-w-7xl px-6">
-        <ParallaxTitle word="PRICING">
+        <ParallaxTitle word="PRICING" center={true}>
           <div className="max-w-2xl mx-auto text-center">
             <span className="text-xs font-semibold uppercase tracking-[0.2em] text-brand">Pricing</span>
             <h2 className="mt-4 text-3xl md:text-4xl font-medium text-navy-deep">
