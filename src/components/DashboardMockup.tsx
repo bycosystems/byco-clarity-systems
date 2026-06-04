@@ -1,9 +1,54 @@
 import { CheckCircle2, Clock, AlertCircle, TrendingUp, Users, ClipboardList } from "lucide-react";
+import React, { useEffect, useRef, useState } from "react";
+
+function useCountUp(target: number, duration: number = 1000) {
+  const [count, setCount] = useState(0);
+  const ref = useRef<HTMLDivElement>(null);
+  const started = useRef(false);
+
+  useEffect(() => {
+    const el = ref.current;
+    if (!el) return;
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting && !started.current) {
+          started.current = true;
+          const startTime = performance.now();
+          const tick = (now: number) => {
+            const elapsed = now - startTime;
+            const progress = Math.min(elapsed / duration, 1);
+            const eased = 1 - Math.pow(1 - progress, 3);
+            setCount(Math.round(eased * target));
+            if (progress < 1) requestAnimationFrame(tick);
+          };
+          requestAnimationFrame(tick);
+        }
+      },
+      { threshold: 0.3 }
+    );
+    observer.observe(el);
+    return () => observer.disconnect();
+  }, [target, duration]);
+
+  return { count, ref };
+}
+
+function KpiCard({ label, target, icon: Icon }: { label: string; target: number; icon: any }) {
+  const { count, ref } = useCountUp(target, 1000);
+  return (
+    <div ref={ref} className="rounded-lg border border-border p-3 bg-white">
+      <div className="flex items-center justify-between">
+        <span className="text-[10px] uppercase tracking-wider text-muted-foreground">{label}</span>
+        <Icon className="size-3.5 text-brand" />
+      </div>
+      <div className="mt-1 text-xl font-semibold text-navy-deep">{count}</div>
+    </div>
+  );
+}
 
 export function DashboardMockup() {
   return (
     <div className="relative rounded-2xl bg-white shadow-elevated border border-border overflow-hidden">
-      {/* Top bar */}
       <div className="flex items-center gap-2 px-4 py-3 border-b border-border bg-secondary/60">
         <div className="flex gap-1.5">
           <span className="size-2.5 rounded-full bg-[oklch(0.78_0.13_25)]" />
@@ -14,7 +59,6 @@ export function DashboardMockup() {
       </div>
 
       <div className="grid grid-cols-12 gap-4 p-5">
-        {/* Sidebar */}
         <div className="col-span-3 hidden md:flex flex-col gap-1 text-xs">
           {["Overview", "Tasks", "Units", "Team", "Requests", "Reports"].map((item, i) => (
             <div
@@ -26,26 +70,13 @@ export function DashboardMockup() {
           ))}
         </div>
 
-        {/* Main */}
         <div className="col-span-12 md:col-span-9 flex flex-col gap-4">
-          {/* KPI cards */}
           <div className="grid grid-cols-3 gap-3">
-            {[
-              { label: "Open tasks", value: "24", icon: ClipboardList },
-              { label: "In progress", value: "12", icon: Clock },
-              { label: "Completed", value: "186", icon: CheckCircle2 },
-            ].map(({ label, value, icon: Icon }) => (
-              <div key={label} className="rounded-lg border border-border p-3 bg-white">
-                <div className="flex items-center justify-between">
-                  <span className="text-[10px] uppercase tracking-wider text-muted-foreground">{label}</span>
-                  <Icon className="size-3.5 text-brand" />
-                </div>
-                <div className="mt-1 text-xl font-semibold text-navy-deep">{value}</div>
-              </div>
-            ))}
+            <KpiCard label="Open tasks" target={24} icon={ClipboardList} />
+            <KpiCard label="In progress" target={12} icon={Clock} />
+            <KpiCard label="Completed" target={186} icon={CheckCircle2} />
           </div>
 
-          {/* Chart placeholder */}
           <div className="rounded-lg border border-border p-4 bg-white">
             <div className="flex items-center justify-between mb-3">
               <div>
@@ -65,7 +96,6 @@ export function DashboardMockup() {
             </div>
           </div>
 
-          {/* Task list */}
           <div className="rounded-lg border border-border bg-white">
             <div className="px-4 py-2 border-b border-border flex items-center justify-between">
               <span className="text-xs font-semibold text-navy-deep">Active requests</span>
