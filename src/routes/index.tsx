@@ -134,7 +134,7 @@ function ParallaxTitle({ word, children, dark = false, center = false }: { word:
     }
   }, []);
 
-  const color = dark ? "rgba(255,255,255,0.18)" : "rgba(59,130,246,0.28)";
+  const color = dark ? "#1e3a5f" : "#dbeafe";
 
   return (
     <div ref={ref} style={{ position: "relative", overflow: "visible" }}>
