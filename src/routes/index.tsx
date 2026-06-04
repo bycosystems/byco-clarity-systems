@@ -298,10 +298,9 @@ function CoreOffer() {
   return (
     <section id="offer" className="py-24 md:py-32">
       <div className="mx-auto max-w-7xl px-6">
-        <ParallaxTitle word="RECEPTION">
+        <ParallaxTitle word="OFFER" center={true}>
           <div className="max-w-3xl mx-auto text-center">
-            <span className="text-xs font-semibold uppercase tracking-[0.2em] text-brand">Core offer</span>
-            <h2 className="mt-4 text-3xl md:text-4xl font-medium text-navy-deep">
+            <h2 className="text-3xl md:text-4xl font-medium text-navy-deep">
               Your front desk, running 24/7 without extra staff
             </h2>
             <p className="mt-6 text-lg text-muted-foreground leading-relaxed">
@@ -374,8 +373,7 @@ function Services() {
       <div className="mx-auto max-w-7xl px-6">
         <ParallaxTitle word="SERVICES">
           <div className="max-w-2xl">
-            <span className="text-xs font-semibold uppercase tracking-[0.2em] text-brand">Services</span>
-            <h2 className="mt-4 text-3xl md:text-4xl font-medium text-navy-deep">
+            <h2 className="text-3xl md:text-4xl font-medium text-navy-deep">
               Everything your front desk should do — automated
             </h2>
           </div>
@@ -420,8 +418,7 @@ function WhoWeServe() {
       <div className="mx-auto max-w-7xl px-6">
         <ParallaxTitle word="CLIENTS" center={true}>
           <div className="text-center mb-10">
-            <span className="text-xs font-semibold uppercase tracking-[0.2em] text-brand">Who we build for</span>
-            <h2 className="mt-4 text-2xl md:text-3xl font-medium text-navy-deep">
+            <h2 className="text-2xl md:text-3xl font-medium text-navy-deep">
               Built for every service business that wants to stop losing clients
             </h2>
           </div>
@@ -447,12 +444,11 @@ function SmartIntakeIntro() {
       <div className="mx-auto max-w-7xl px-6">
         <div className="grid lg:grid-cols-12 gap-12 items-center">
           <div className="lg:col-span-6">
-            <span className="text-xs font-semibold uppercase tracking-[0.2em] text-brand">
-              ByCo Smart Intake
-            </span>
-            <h2 className="mt-4 text-3xl md:text-4xl font-medium text-navy-deep leading-tight">
-              Your 24/7 intelligent receptionist
-            </h2>
+            <ParallaxTitle word="DEMO">
+              <h2 className="text-3xl md:text-4xl font-medium text-navy-deep leading-tight">
+                Your 24/7 intelligent receptionist
+              </h2>
+            </ParallaxTitle>
             <p className="mt-5 text-lg text-muted-foreground leading-relaxed">
               Captures, qualifies and routes every client request automatically — by phone, WhatsApp or web form.
             </p>
@@ -569,10 +565,7 @@ function SmartIntakeDemo() {
       <div className="mx-auto max-w-5xl px-6">
         <ParallaxTitle word="AUTOMATION" center={true}>
           <div className="text-center max-w-3xl mx-auto">
-            <span className="text-xs font-semibold uppercase tracking-[0.2em] text-brand">
-              24/7 Smart Intake Demo
-            </span>
-            <h2 className="mt-4 text-3xl md:text-4xl font-medium text-navy-deep leading-tight">
+            <h2 className="text-3xl md:text-4xl font-medium text-navy-deep leading-tight">
               See how a 24/7 smart intake handles real customer requests
             </h2>
             <p className="mt-5 text-base md:text-lg text-muted-foreground leading-relaxed">
@@ -637,8 +630,9 @@ function FeaturedDemo() {
       <div className="mx-auto max-w-7xl px-6">
         <div className="grid lg:grid-cols-12 gap-12 items-center">
           <div className="lg:col-span-5">
-            <span className="text-xs font-semibold uppercase tracking-[0.2em] text-brand">OPERATIONS SYSTEM</span>
-            <h2 className="mt-4 text-3xl md:text-4xl font-medium text-navy-deep">ReadyFlow Manager</h2>
+            <ParallaxTitle word="GUIDE">
+              <h2 className="text-3xl md:text-4xl font-medium text-navy-deep">ReadyFlow Manager</h2>
+            </ParallaxTitle>
             <p className="mt-5 text-muted-foreground leading-relaxed">
               Operational workspace for service businesses handling requests, teams, tasks and day-to-day coordination.
             </p>
@@ -728,8 +722,7 @@ function Pricing() {
       <div className="mx-auto max-w-7xl px-6">
         <ParallaxTitle word="PRICING" center={true}>
           <div className="max-w-2xl mx-auto text-center">
-            <span className="text-xs font-semibold uppercase tracking-[0.2em] text-brand">Pricing</span>
-            <h2 className="mt-4 text-3xl md:text-4xl font-medium text-navy-deep">
+            <h2 className="text-3xl md:text-4xl font-medium text-navy-deep">
               Simple, transparent pricing
             </h2>
             <p className="mt-5 text-lg text-muted-foreground leading-relaxed">
@@ -801,8 +794,7 @@ function Process() {
       <div className="relative mx-auto max-w-7xl px-6">
         <ParallaxTitle word="PROCESS" dark={true}>
           <div className="max-w-2xl">
-            <span className="text-xs font-semibold uppercase tracking-[0.2em] text-brand-soft">Process</span>
-            <h2 className="mt-4 text-3xl md:text-4xl font-medium text-white">
+            <h2 className="text-3xl md:text-4xl font-medium text-white">
               How projects move from idea to usable system
             </h2>
           </div>
@@ -873,8 +865,9 @@ function Contact() {
     <section id="contact" className="py-24 md:py-32">
       <div className="mx-auto max-w-6xl px-6 grid lg:grid-cols-2 gap-16 items-start">
         <div>
-          <span className="text-xs font-semibold uppercase tracking-[0.2em] text-brand">Contact</span>
-          <h2 className="mt-4 text-3xl md:text-4xl font-medium text-navy-deep">Request a Demo</h2>
+          <ParallaxTitle word="CONTACT">
+            <h2 className="text-3xl md:text-4xl font-medium text-navy-deep">Request a Demo</h2>
+          </ParallaxTitle>
           <p className="mt-5 text-lg text-muted-foreground leading-relaxed">
             Tell us your biggest reception headache. We'll show you exactly what we can automate.
           </p>
