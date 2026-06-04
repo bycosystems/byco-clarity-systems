@@ -157,6 +157,10 @@ function ParallaxTitle({ word, children, dark = false, center = false }: { word:
           zIndex: 0,
           transform: "translateX(0px) translateZ(0)",
           willChange: "transform",
+          WebkitFontSmoothing: "antialiased",
+          MozOsxFontSmoothing: "grayscale",
+          backfaceVisibility: "hidden",
+          WebkitBackfaceVisibility: "hidden",
         }}
       >
         {displayWord}
