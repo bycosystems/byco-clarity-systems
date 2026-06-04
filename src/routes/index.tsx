@@ -52,6 +52,8 @@ function ParallaxTitle({ word, children, dark = false }: { word: string; childre
   const posRef = useRef<number>(0);
   const dirRef = useRef<number>(1);
 
+  const displayWord = word.charAt(0).toUpperCase() + word.slice(1).toLowerCase();
+
   useEffect(() => {
     const el = ref.current;
     const bg = bgRef.current;
@@ -63,10 +65,10 @@ function ParallaxTitle({ word, children, dark = false }: { word: string; childre
       let active = false;
       const animate = () => {
         if (!active) return;
-        posRef.current += 0.18 * dirRef.current;
-        if (posRef.current > 22) dirRef.current = -1;
-        if (posRef.current < -22) dirRef.current = 1;
-        bg.style.transform = `translate(calc(-50% + ${posRef.current}px), 0%)`;
+        posRef.current += 0.15 * dirRef.current;
+        if (posRef.current > 18) dirRef.current = -1;
+        if (posRef.current < -18) dirRef.current = 1;
+        bg.style.transform = `translateX(calc(-50% + ${posRef.current}px))`;
         animRef.current = requestAnimationFrame(animate);
       };
       const observer = new IntersectionObserver(
@@ -90,13 +92,13 @@ function ParallaxTitle({ word, children, dark = false }: { word: string; childre
       const handleMove = (e: MouseEvent) => {
         const rect = el.getBoundingClientRect();
         const x = (e.clientX - rect.left) / rect.width;
-        const offsetX = (x - 0.5) * 50;
+        const offsetX = (x - 0.5) * 40;
         bg.style.transition = "transform 0.1s linear";
-        bg.style.transform = `translate(calc(-50% + ${offsetX}px), 0%)`;
+        bg.style.transform = `translateX(calc(-50% + ${offsetX}px))`;
       };
       const handleLeave = () => {
         bg.style.transition = "transform 0.5s ease";
-        bg.style.transform = "translate(-50%, 0%)";
+        bg.style.transform = "translateX(-50%)";
       };
       el.addEventListener("mousemove", handleMove);
       el.addEventListener("mouseleave", handleLeave);
@@ -108,30 +110,30 @@ function ParallaxTitle({ word, children, dark = false }: { word: string; childre
   }, []);
 
   const color = dark
-    ? "rgba(255,255,255,0.10)"
-    : "rgba(59,130,246,0.13)";
+    ? "rgba(255,255,255,0.12)"
+    : "rgba(59,130,246,0.16)";
 
   return (
-    <div ref={ref} style={{ position: "relative", overflow: "hidden", paddingTop: "0rem", paddingBottom: "0.5rem" }}>
+    <div ref={ref} style={{ position: "relative", overflow: "visible", paddingTop: "0.5rem", paddingBottom: "0.25rem" }}>
       <div
         ref={bgRef}
         style={{
           position: "absolute",
-          bottom: "0.2em",
+          bottom: "-0.1em",
           left: "50%",
-          transform: "translate(-50%, 0%)",
-          fontSize: "clamp(80px, 16vw, 160px)",
-          fontWeight: 900,
+          transform: "translateX(-50%)",
+          fontSize: "clamp(55px, 7vw, 88px)",
+          fontWeight: 800,
           color: color,
           whiteSpace: "nowrap",
           pointerEvents: "none",
-          letterSpacing: "0.04em",
+          letterSpacing: "0.03em",
           userSelect: "none",
           zIndex: 0,
           lineHeight: 1,
         }}
       >
-        {word}
+        {displayWord}
       </div>
       <div style={{ position: "relative", zIndex: 1 }}>{children}</div>
     </div>
