@@ -45,6 +45,40 @@ export const Route = createFileRoute("/")({
 const DEMO_URL = "https://readyflow-manager-demo.lovable.app/dashboard";
 
 // ─── Parallax Section Title ───────────────────────────────────────────────────
+// ─── Animated Counter Hook ───────────────────────────────────────────────────
+function useCountUp(target: number, duration: number = 1000) {
+  const [count, setCount] = React.useState(0);
+  const ref = useRef<HTMLSpanElement>(null);
+  const started = useRef(false);
+
+  useEffect(() => {
+    const el = ref.current;
+    if (!el) return;
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting && !started.current) {
+          started.current = true;
+          const startTime = performance.now();
+          const tick = (now: number) => {
+            const elapsed = now - startTime;
+            const progress = Math.min(elapsed / duration, 1);
+            const eased = 1 - Math.pow(1 - progress, 3);
+            setCount(Math.round(eased * target));
+            if (progress < 1) requestAnimationFrame(tick);
+          };
+          requestAnimationFrame(tick);
+        }
+      },
+      { threshold: 0.3 }
+    );
+    observer.observe(el);
+    return () => observer.disconnect();
+  }, [target, duration]);
+
+  return { count, ref };
+}
+
+// ─── Parallax Title ───────────────────────────────────────────────────────────
 function ParallaxTitle({ word, children, dark = false, center = false }: { word: string; children: React.ReactNode; dark?: boolean; center?: boolean }) {
   const ref = useRef<HTMLDivElement>(null);
   const bgRef = useRef<HTMLDivElement>(null);
@@ -104,7 +138,7 @@ function ParallaxTitle({ word, children, dark = false, center = false }: { word:
     }
   }, []);
 
-  const color = dark ? "rgba(255,255,255,0.10)" : "rgba(59,130,246,0.15)";
+  const color = dark ? "rgba(255,255,255,0.18)" : "rgba(59,130,246,0.28)";
   const leftStyle = center ? "50%" : "0";
   const baseTransform = center ? "translateX(-50%)" : "translateX(0px)";
 
@@ -215,23 +249,27 @@ function Hero() {
   );
 }
 
+function AnimatedStat({ num, suffix, label }: { num: number; suffix: string; label: string }) {
+  const { count, ref } = useCountUp(num, 1000);
+  return (
+    <div>
+      <div className="text-3xl font-bold text-navy-deep">
+        <span ref={ref}>{count}</span>{suffix}
+      </div>
+      <div className="mt-1 text-sm text-muted-foreground">{label}</div>
+    </div>
+  );
+}
+
 function StatsBar() {
-  const stats = [
-    { value: "48h", label: "Average setup time" },
-    { value: "24/7", label: "Smart phone reception" },
-    { value: "100%", label: "Zero missed clients" },
-    { value: "6+", label: "Industries served" },
-  ];
   return (
     <section className="py-10 border-b border-border bg-white">
       <div className="mx-auto max-w-7xl px-6">
         <div className="grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
-          {stats.map(({ value, label }) => (
-            <div key={label}>
-              <div className="text-3xl font-bold text-navy-deep">{value}</div>
-              <div className="mt-1 text-sm text-muted-foreground">{label}</div>
-            </div>
-          ))}
+          <AnimatedStat num={48} suffix="h" label="Average setup time" />
+          <AnimatedStat num={24} suffix="/7" label="Smart phone reception" />
+          <AnimatedStat num={100} suffix="%" label="Zero missed clients" />
+          <AnimatedStat num={6} suffix="+" label="Industries served" />
         </div>
       </div>
     </section>
