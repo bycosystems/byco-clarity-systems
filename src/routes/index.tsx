@@ -102,9 +102,7 @@ function ParallaxTitle({ word, children, dark = false, center = false }: { word:
         posRef.current += 0.15 * dirRef.current;
         if (posRef.current > 18) dirRef.current = -1;
         if (posRef.current < -18) dirRef.current = 1;
-        bg.style.transform = center
-          ? `translateX(calc(-50% + ${posRef.current}px))`
-          : `translateX(${posRef.current}px)`;
+        bg.style.transform = `translateX(${posRef.current}px) translateZ(0)`;
         animRef.current = requestAnimationFrame(animate);
       };
       const observer = new IntersectionObserver(
@@ -121,13 +119,11 @@ function ParallaxTitle({ word, children, dark = false, center = false }: { word:
         const rect = el.getBoundingClientRect();
         const offset = ((e.clientX - rect.left) / rect.width - 0.5) * 26;
         bg.style.transition = "transform 0.1s linear";
-        bg.style.transform = center
-          ? `translateX(calc(-50% + ${offset}px))`
-          : `translateX(${offset}px)`;
+        bg.style.transform = `translateX(${offset}px) translateZ(0)`;
       };
       const handleLeave = () => {
         bg.style.transition = "transform 0.5s ease";
-        bg.style.transform = center ? "translateX(-50%)" : "translateX(0px)";
+        bg.style.transform = "translateX(0px) translateZ(0)";
       };
       el.addEventListener("mousemove", handleMove);
       el.addEventListener("mouseleave", handleLeave);
@@ -139,8 +135,6 @@ function ParallaxTitle({ word, children, dark = false, center = false }: { word:
   }, []);
 
   const color = dark ? "rgba(255,255,255,0.18)" : "rgba(59,130,246,0.28)";
-  const leftStyle = center ? "50%" : "0";
-  const baseTransform = center ? "translateX(-50%)" : "translateX(0px)";
 
   return (
     <div ref={ref} style={{ position: "relative", overflow: "visible" }}>
@@ -149,8 +143,9 @@ function ParallaxTitle({ word, children, dark = false, center = false }: { word:
         style={{
           position: "absolute",
           top: 0,
-          left: leftStyle,
-          transform: baseTransform,
+          left: 0,
+          right: 0,
+          textAlign: center ? "center" : "left",
           fontSize: "clamp(52px, 6.5vw, 80px)",
           fontWeight: 800,
           lineHeight: 1,
@@ -160,6 +155,8 @@ function ParallaxTitle({ word, children, dark = false, center = false }: { word:
           letterSpacing: "0.02em",
           userSelect: "none",
           zIndex: 0,
+          transform: "translateX(0px) translateZ(0)",
+          willChange: "transform",
         }}
       >
         {displayWord}
