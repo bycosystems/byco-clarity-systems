@@ -48,57 +48,87 @@ const DEMO_URL = "https://readyflow-manager-demo.lovable.app/dashboard";
 function ParallaxTitle({ word, children, dark = false }: { word: string; children: React.ReactNode; dark?: boolean }) {
   const ref = useRef<HTMLDivElement>(null);
   const bgRef = useRef<HTMLDivElement>(null);
+  const animRef = useRef<number>(0);
+  const posRef = useRef<number>(0);
+  const dirRef = useRef<number>(1);
 
   useEffect(() => {
     const el = ref.current;
     const bg = bgRef.current;
     if (!el || !bg) return;
-    const handleMove = (e: MouseEvent) => {
-      const rect = el.getBoundingClientRect();
-      const x = (e.clientX - rect.left) / rect.width;
-      const offsetX = (x - 0.5) * 50;
-      bg.style.transform = `translate(calc(-50% + ${offsetX}px), -50%)`;
-    };
-    const handleLeave = () => {
-      bg.style.transition = "transform 0.5s ease";
-      bg.style.transform = "translate(-50%, -50%)";
-    };
-    const handleEnter = () => {
-      bg.style.transition = "transform 0.1s linear";
-    };
-    el.addEventListener("mousemove", handleMove);
-    el.addEventListener("mouseleave", handleLeave);
-    el.addEventListener("mouseenter", handleEnter);
-    return () => {
-      el.removeEventListener("mousemove", handleMove);
-      el.removeEventListener("mouseleave", handleLeave);
-      el.removeEventListener("mouseenter", handleEnter);
-    };
+
+    const isMobile = window.matchMedia("(pointer: coarse)").matches;
+
+    if (isMobile) {
+      let active = false;
+      const animate = () => {
+        if (!active) return;
+        posRef.current += 0.18 * dirRef.current;
+        if (posRef.current > 22) dirRef.current = -1;
+        if (posRef.current < -22) dirRef.current = 1;
+        bg.style.transform = `translate(calc(-50% + ${posRef.current}px), 0%)`;
+        animRef.current = requestAnimationFrame(animate);
+      };
+      const observer = new IntersectionObserver(
+        ([entry]) => {
+          if (entry.isIntersecting) {
+            active = true;
+            animate();
+          } else {
+            active = false;
+            cancelAnimationFrame(animRef.current);
+          }
+        },
+        { threshold: 0.2 }
+      );
+      observer.observe(el);
+      return () => {
+        observer.disconnect();
+        cancelAnimationFrame(animRef.current);
+      };
+    } else {
+      const handleMove = (e: MouseEvent) => {
+        const rect = el.getBoundingClientRect();
+        const x = (e.clientX - rect.left) / rect.width;
+        const offsetX = (x - 0.5) * 50;
+        bg.style.transition = "transform 0.1s linear";
+        bg.style.transform = `translate(calc(-50% + ${offsetX}px), 0%)`;
+      };
+      const handleLeave = () => {
+        bg.style.transition = "transform 0.5s ease";
+        bg.style.transform = "translate(-50%, 0%)";
+      };
+      el.addEventListener("mousemove", handleMove);
+      el.addEventListener("mouseleave", handleLeave);
+      return () => {
+        el.removeEventListener("mousemove", handleMove);
+        el.removeEventListener("mouseleave", handleLeave);
+      };
+    }
   }, []);
 
-  const stroke = dark
-    ? "1px rgba(255,255,255,0.13)"
-    : "1px rgba(59,130,246,0.22)";
+  const color = dark
+    ? "rgba(255,255,255,0.10)"
+    : "rgba(59,130,246,0.13)";
 
   return (
-    <div ref={ref} style={{ position: "relative", overflow: "hidden", paddingTop: "1rem", paddingBottom: "0.5rem" }}>
+    <div ref={ref} style={{ position: "relative", overflow: "hidden", paddingTop: "0rem", paddingBottom: "0.5rem" }}>
       <div
         ref={bgRef}
         style={{
           position: "absolute",
-          top: "50%",
+          bottom: "0.2em",
           left: "50%",
-          transform: "translate(-50%, -50%)",
-          fontSize: "clamp(60px, 12vw, 130px)",
-          fontWeight: 800,
-          color: "transparent",
-          WebkitTextStroke: stroke,
+          transform: "translate(-50%, 0%)",
+          fontSize: "clamp(80px, 16vw, 160px)",
+          fontWeight: 900,
+          color: color,
           whiteSpace: "nowrap",
           pointerEvents: "none",
-          letterSpacing: "0.05em",
+          letterSpacing: "0.04em",
           userSelect: "none",
           zIndex: 0,
-          transition: "transform 0.5s ease",
+          lineHeight: 1,
         }}
       >
         {word}
@@ -608,49 +638,49 @@ function FeaturedDemo() {
 // ─── PRICING ─────────────────────────────────────────────────────────────────
 const pricingPlans = [
   {
-    name: "Starter",
-    price: "495€",
-    subtitle: "Full smart reception system",
+    name: "Essential",
+    price: "490€",
+    subtitle: "Internal dashboard & tracking",
     desc: "For businesses with no website. We build everything from scratch — site, smart intake, WhatsApp automation and booking flow.",
     features: [
-      "Professional website included",
-      "Smart phone reception setup",
-      "WhatsApp automation flow",
-      "Booking & confirmation system",
-      "Client follow-up sequences",
-      "Operations dashboard",
+      "Internal operations dashboard",
+      "Client request tracking",
+      "Team task management",
+      "Status updates & notifications",
+      "Simple and usable from day one",
+      "Setup in 24h",
     ],
     cta: "Request this system",
     highlight: false,
   },
   {
-    name: "Integration",
-    price: "295€",
-    subtitle: "Grafted onto your existing site",
+    name: "Business",
+    price: "990€",
+    subtitle: "Complete smart reception system",
     desc: "You already have a website. We add an intelligent reception layer directly on top — no rebuild needed.",
     features: [
-      "Smart intake on your existing site",
+      "Professional website included",
+      "Smart phone reception",
       "WhatsApp automation flow",
       "Booking & confirmation system",
       "Client follow-up sequences",
-      "Operations dashboard",
       "Setup in 48h",
     ],
     cta: "Request this system",
     highlight: true,
   },
   {
-    name: "Dashboard",
-    price: "155€",
-    subtitle: "Internal tracking & client portal",
+    name: "Premium",
+    price: "1 490€",
+    subtitle: "Premium — full system + AI phone + 30-day support",
     desc: "A clean internal dashboard to track requests, manage clients and monitor your operations — all in one place.",
     features: [
-      "Client request tracking",
-      "Team task management",
-      "Internal operations dashboard",
-      "Status updates & notifications",
-      "Simple and usable from day one",
-      "Setup in 24h",
+      "Everything in Business",
+      "AI phone reception setup",
+      "Custom voice & script",
+      "30-day follow-up & support",
+      "Priority delivery",
+      "Setup in 72h",
     ],
     cta: "Request this system",
     highlight: false,
