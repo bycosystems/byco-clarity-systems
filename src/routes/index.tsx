@@ -42,7 +42,7 @@ export const Route = createFileRoute("/")({
   component: HomePage,
 });
 
-const DEMO_URL = "https://readyflow-manager-demo.lovable.app/dashboard";
+const DEMO_URL = "/readyflow-manager.html";
 
 // ─── Parallax Section Title ───────────────────────────────────────────────────
 // ─── Animated Counter Hook ───────────────────────────────────────────────────
@@ -321,9 +321,7 @@ function CoreOffer() {
           ))}
         </div>
         <div className="mt-14 text-center">
-          <a href="https://readyflow-manager-demo.lovable.app/dashboard"
-            target="_blank"
-            rel="noopener noreferrer"
+          <a href="/readyflow-manager.html"
             className="inline-flex items-center gap-2 px-6 py-3 rounded-md bg-navy text-white font-medium hover:bg-navy-deep transition"
           >
             Explore live dashboard <ExternalLink className="size-4" />
@@ -647,7 +645,7 @@ function FeaturedDemo() {
                 </li>
               ))}
             </ul>
-            <a href={DEMO_URL} target="_blank" rel="noopener noreferrer"
+            <a href={DEMO_URL}
               className="mt-10 inline-flex items-center gap-2 px-5 py-3 rounded-md bg-navy text-white font-medium hover:bg-navy-deep transition"
             >
               Explore workspace <ExternalLink className="size-4" />
