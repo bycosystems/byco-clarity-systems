@@ -1,0 +1,1272 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ReadyFlow Manager — Operations Dashboard</title>
+  <meta name="description" content="Track projects, assign tasks, follow status, and prepare deliverables faster. Built for service teams and operations." />
+  <meta property="og:title" content="ReadyFlow Manager — Operations Dashboard" />
+  <meta property="og:description" content="Turn messy service operations into one clear workspace" />
+  <meta property="og:type" content="website" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --navy: #0d1f35;
+      --navy-mid: #1e3a5f;
+      --navy-light: #2a4f7c;
+      --cyan: #22d3ee;
+      --cyan-dim: rgba(34,211,238,0.12);
+      --cyan-border: rgba(34,211,238,0.25);
+      --white: #f0f6ff;
+      --muted: #7a9bbf;
+      --card-bg: rgba(30,58,95,0.45);
+      --card-border: rgba(255,255,255,0.07);
+      --success: #34d399;
+      --warning: #fbbf24;
+      --danger: #f87171;
+      --purple: #a78bfa;
+    }
+
+    * { margin:0; padding:0; box-sizing:border-box; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--navy);
+      color: var(--white);
+      font-family: 'DM Sans', sans-serif;
+      overflow-x: hidden;
+    }
+
+    /* ─── BACKGROUND MESH ─── */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background:
+        radial-gradient(ellipse 80% 60% at 20% 10%, rgba(34,211,238,0.06) 0%, transparent 60%),
+        radial-gradient(ellipse 60% 50% at 80% 80%, rgba(30,58,95,0.8) 0%, transparent 60%);
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    /* ─── TOPNAV ─── */
+    nav {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 48px;
+      height: 64px;
+      background: rgba(13,31,53,0.85);
+      backdrop-filter: blur(16px);
+      border-bottom: 1px solid var(--card-border);
+    }
+
+    .nav-brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      text-decoration: none;
+      color: var(--white);
+      font-family: 'Syne', sans-serif;
+      font-weight: 700;
+      font-size: 15px;
+    }
+
+    .nav-brand .back-arrow {
+      color: var(--muted);
+      font-size: 13px;
+      font-family: 'DM Sans', sans-serif;
+      font-weight: 400;
+    }
+
+    .brand-logo {
+      width: 32px;
+      height: 32px;
+      background: linear-gradient(135deg, var(--cyan), var(--navy-light));
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 14px;
+      font-weight: 800;
+      color: var(--navy);
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 32px;
+      list-style: none;
+    }
+
+    .nav-links a {
+      color: var(--muted);
+      text-decoration: none;
+      font-size: 14px;
+      transition: color 0.2s;
+    }
+
+    .nav-links a:hover { color: var(--white); }
+
+    .nav-actions {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .btn-ghost {
+      padding: 8px 16px;
+      border: 1px solid var(--card-border);
+      border-radius: 8px;
+      color: var(--white);
+      background: transparent;
+      text-decoration: none;
+      font-size: 14px;
+      cursor: pointer;
+      transition: border-color 0.2s, background 0.2s;
+    }
+
+    .btn-ghost:hover {
+      border-color: var(--cyan-border);
+      background: var(--cyan-dim);
+    }
+
+    .btn-cta {
+      padding: 8px 20px;
+      background: var(--cyan);
+      color: var(--navy);
+      border-radius: 8px;
+      text-decoration: none;
+      font-size: 14px;
+      font-weight: 700;
+      cursor: pointer;
+      border: none;
+      transition: opacity 0.2s, transform 0.15s;
+    }
+
+    .btn-cta:hover { opacity: 0.9; transform: translateY(-1px); }
+
+    /* ─── SECTIONS ─── */
+    section { position: relative; z-index: 1; }
+
+    /* ─── HERO ─── */
+    .hero {
+      min-height: 92vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: 80px 80px 60px;
+      max-width: 1280px;
+      margin: auto;
+    }
+
+    .hero-tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 7px 16px;
+      border: 1px solid var(--cyan-border);
+      border-radius: 999px;
+      color: var(--cyan);
+      background: var(--cyan-dim);
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      margin-bottom: 36px;
+      width: fit-content;
+    }
+
+    .hero-tag::before {
+      content: '';
+      width: 6px;
+      height: 6px;
+      background: var(--cyan);
+      border-radius: 50%;
+      animation: pulse 2s infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.4; transform: scale(0.8); }
+    }
+
+    .hero h1 {
+      font-family: 'Syne', sans-serif;
+      font-size: clamp(42px, 6vw, 76px);
+      font-weight: 800;
+      line-height: 1.02;
+      max-width: 860px;
+      letter-spacing: -0.03em;
+    }
+
+    .hero h1 span {
+      color: var(--cyan);
+    }
+
+    .hero p {
+      margin-top: 28px;
+      font-size: 20px;
+      color: var(--muted);
+      max-width: 620px;
+      line-height: 1.75;
+    }
+
+    .hero-buttons {
+      display: flex;
+      gap: 16px;
+      margin-top: 48px;
+      flex-wrap: wrap;
+    }
+
+    .btn-primary {
+      padding: 16px 32px;
+      background: var(--cyan);
+      color: var(--navy);
+      border-radius: 12px;
+      text-decoration: none;
+      font-weight: 700;
+      font-size: 15px;
+      transition: transform 0.15s, box-shadow 0.15s;
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 32px rgba(34,211,238,0.3);
+    }
+
+    .btn-secondary {
+      padding: 16px 32px;
+      border: 1px solid var(--card-border);
+      color: var(--white);
+      border-radius: 12px;
+      text-decoration: none;
+      font-size: 15px;
+      transition: border-color 0.2s, background 0.2s;
+    }
+
+    .btn-secondary:hover {
+      border-color: var(--cyan-border);
+      background: var(--cyan-dim);
+    }
+
+    /* ─── METRICS BAR ─── */
+    .metrics-bar {
+      display: flex;
+      gap: 0;
+      max-width: 1280px;
+      margin: 0 auto 80px;
+      padding: 0 80px;
+    }
+
+    .metric-item {
+      flex: 1;
+      padding: 28px 32px;
+      border: 1px solid var(--card-border);
+      background: var(--card-bg);
+      backdrop-filter: blur(8px);
+    }
+
+    .metric-item:first-child { border-radius: 16px 0 0 16px; }
+    .metric-item:last-child { border-radius: 0 16px 16px 0; border-left: none; }
+    .metric-item:not(:first-child):not(:last-child) { border-left: none; }
+
+    .metric-num {
+      font-family: 'Syne', sans-serif;
+      font-size: 36px;
+      font-weight: 800;
+      color: var(--cyan);
+      line-height: 1;
+    }
+
+    .metric-label {
+      font-size: 13px;
+      color: var(--muted);
+      margin-top: 6px;
+    }
+
+    /* ─── DASHBOARD PREVIEW ─── */
+    .dashboard-preview {
+      max-width: 1280px;
+      margin: 0 auto 100px;
+      padding: 0 80px;
+    }
+
+    .dashboard-frame {
+      background: rgba(13,31,53,0.9);
+      border: 1px solid var(--card-border);
+      border-radius: 20px;
+      overflow: hidden;
+      box-shadow: 0 40px 80px rgba(0,0,0,0.4);
+    }
+
+    .frame-bar {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 14px 20px;
+      background: rgba(255,255,255,0.03);
+      border-bottom: 1px solid var(--card-border);
+    }
+
+    .frame-dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+    }
+
+    .frame-url {
+      flex: 1;
+      text-align: center;
+      font-size: 12px;
+      color: var(--muted);
+      font-family: monospace;
+    }
+
+    .dash-layout {
+      display: flex;
+      height: 480px;
+    }
+
+    .dash-sidebar {
+      width: 220px;
+      border-right: 1px solid var(--card-border);
+      padding: 24px 0;
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .dash-sidebar-header {
+      padding: 0 20px 16px;
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--muted);
+      border-bottom: 1px solid var(--card-border);
+      margin-bottom: 8px;
+    }
+
+    .dash-nav-item {
+      padding: 9px 20px;
+      font-size: 13px;
+      color: var(--muted);
+      cursor: pointer;
+      transition: all 0.15s;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .dash-nav-item:hover { background: var(--cyan-dim); color: var(--white); }
+    .dash-nav-item.active { background: var(--cyan-dim); color: var(--cyan); border-right: 2px solid var(--cyan); }
+
+    .dash-nav-icon { font-size: 15px; }
+
+    .dash-workspace {
+      padding: 8px 20px 12px;
+      margin-top: auto;
+      border-top: 1px solid var(--card-border);
+    }
+
+    .workspace-label {
+      font-size: 11px;
+      font-weight: 700;
+      color: var(--white);
+    }
+
+    .workspace-sub {
+      font-size: 10px;
+      color: var(--muted);
+      margin-top: 2px;
+    }
+
+    .dash-main {
+      flex: 1;
+      padding: 24px;
+      overflow-y: auto;
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    .dash-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .dash-title {
+      font-family: 'Syne', sans-serif;
+      font-size: 16px;
+      font-weight: 700;
+    }
+
+    .dash-subtitle {
+      font-size: 11px;
+      color: var(--muted);
+      margin-top: 2px;
+    }
+
+    .dash-actions {
+      display: flex;
+      gap: 8px;
+    }
+
+    .dash-btn {
+      padding: 6px 12px;
+      font-size: 11px;
+      border-radius: 7px;
+      border: 1px solid var(--card-border);
+      background: transparent;
+      color: var(--muted);
+      cursor: pointer;
+    }
+
+    .dash-btn.primary {
+      background: var(--cyan);
+      color: var(--navy);
+      border-color: var(--cyan);
+      font-weight: 700;
+    }
+
+    .stats-row {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 10px;
+    }
+
+    .stat-card {
+      background: rgba(255,255,255,0.03);
+      border: 1px solid var(--card-border);
+      border-radius: 10px;
+      padding: 12px;
+      text-align: center;
+    }
+
+    .stat-icon { font-size: 18px; margin-bottom: 6px; }
+
+    .stat-num {
+      font-family: 'Syne', sans-serif;
+      font-size: 22px;
+      font-weight: 800;
+      color: var(--cyan);
+    }
+
+    .stat-label { font-size: 10px; color: var(--muted); margin-top: 3px; }
+
+    .projects-table {
+      background: rgba(255,255,255,0.02);
+      border: 1px solid var(--card-border);
+      border-radius: 10px;
+      overflow: hidden;
+    }
+
+    .table-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 10px 14px;
+      border-bottom: 1px solid var(--card-border);
+    }
+
+    .table-title { font-size: 12px; font-weight: 600; }
+    .table-link { font-size: 11px; color: var(--cyan); cursor: pointer; }
+
+    .table-row {
+      display: grid;
+      grid-template-columns: 2fr 1.2fr 0.8fr 1fr 0.8fr 1fr;
+      align-items: center;
+      padding: 8px 14px;
+      font-size: 11px;
+      border-bottom: 1px solid rgba(255,255,255,0.03);
+      gap: 8px;
+    }
+
+    .table-row:last-child { border-bottom: none; }
+    .table-row.head { color: var(--muted); font-weight: 600; font-size: 10px; letter-spacing: 0.05em; }
+
+    .project-name { font-weight: 600; font-size: 12px; }
+    .project-team { font-size: 10px; color: var(--muted); }
+
+    .badge-status {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      padding: 3px 8px;
+      border-radius: 99px;
+      font-size: 10px;
+      font-weight: 600;
+      white-space: nowrap;
+    }
+
+    .badge-pending { background: rgba(251,191,36,0.15); color: var(--warning); }
+    .badge-progress { background: rgba(34,211,238,0.12); color: var(--cyan); }
+    .badge-ready { background: rgba(52,211,153,0.12); color: var(--success); }
+    .badge-scheduled { background: rgba(167,139,250,0.12); color: var(--purple); }
+    .badge-done { background: rgba(52,211,153,0.08); color: var(--success); }
+
+    .badge-priority {
+      padding: 2px 7px;
+      border-radius: 99px;
+      font-size: 10px;
+      font-weight: 700;
+    }
+
+    .priority-high { background: rgba(248,113,113,0.15); color: var(--danger); }
+    .priority-medium { background: rgba(251,191,36,0.12); color: var(--warning); }
+    .priority-low { background: rgba(100,116,139,0.2); color: #94a3b8; }
+    .priority-urgent { background: rgba(248,113,113,0.2); color: var(--danger); border: 1px solid rgba(248,113,113,0.3); }
+
+    .avatar {
+      width: 22px;
+      height: 22px;
+      border-radius: 50%;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 8px;
+      font-weight: 700;
+      background: var(--navy-light);
+      color: var(--white);
+    }
+
+    .progress-bar {
+      height: 4px;
+      background: rgba(255,255,255,0.08);
+      border-radius: 99px;
+      overflow: hidden;
+    }
+
+    .progress-fill {
+      height: 100%;
+      background: linear-gradient(90deg, var(--cyan), var(--navy-light));
+      border-radius: 99px;
+    }
+
+    /* ─── PROBLEM SECTION ─── */
+    .section-block {
+      max-width: 1280px;
+      margin: 0 auto 100px;
+      padding: 0 80px;
+    }
+
+    .section-label {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--cyan);
+      margin-bottom: 20px;
+    }
+
+    .section-block h2 {
+      font-family: 'Syne', sans-serif;
+      font-size: clamp(32px, 4vw, 52px);
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      margin-bottom: 20px;
+      max-width: 700px;
+    }
+
+    .section-block > p {
+      font-size: 18px;
+      color: var(--muted);
+      max-width: 620px;
+      line-height: 1.75;
+      margin-bottom: 52px;
+    }
+
+    .problems-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 16px;
+    }
+
+    .problem-card {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 16px;
+      padding: 28px;
+      backdrop-filter: blur(8px);
+      transition: border-color 0.2s, transform 0.2s;
+    }
+
+    .problem-card:hover {
+      border-color: var(--cyan-border);
+      transform: translateY(-3px);
+    }
+
+    .problem-icon {
+      font-size: 28px;
+      margin-bottom: 16px;
+    }
+
+    .problem-card h3 {
+      font-family: 'Syne', sans-serif;
+      font-size: 16px;
+      font-weight: 700;
+      margin-bottom: 10px;
+    }
+
+    .problem-card p {
+      font-size: 14px;
+      color: var(--muted);
+      line-height: 1.65;
+    }
+
+    /* ─── HOW IT WORKS ─── */
+    .steps-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 20px;
+      position: relative;
+    }
+
+    .steps-grid::before {
+      content: '';
+      position: absolute;
+      top: 36px;
+      left: 12.5%;
+      right: 12.5%;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, var(--cyan-border), var(--cyan-border), transparent);
+    }
+
+    .step-card {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 16px;
+      padding: 28px 24px;
+      backdrop-filter: blur(8px);
+      position: relative;
+    }
+
+    .step-num {
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      background: var(--cyan-dim);
+      border: 1px solid var(--cyan-border);
+      color: var(--cyan);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'Syne', sans-serif;
+      font-weight: 800;
+      font-size: 14px;
+      margin-bottom: 20px;
+    }
+
+    .step-card h3 {
+      font-family: 'Syne', sans-serif;
+      font-size: 15px;
+      font-weight: 700;
+      margin-bottom: 10px;
+    }
+
+    .step-card p {
+      font-size: 13px;
+      color: var(--muted);
+      line-height: 1.65;
+    }
+
+    /* ─── CTA FINAL ─── */
+    .cta-section {
+      max-width: 1280px;
+      margin: 0 auto 100px;
+      padding: 0 80px;
+    }
+
+    .cta-box {
+      background: linear-gradient(135deg, rgba(30,58,95,0.8), rgba(13,31,53,0.95));
+      border: 1px solid var(--cyan-border);
+      border-radius: 28px;
+      padding: 72px 64px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .cta-box::before {
+      content: '';
+      position: absolute;
+      top: -60px;
+      right: -60px;
+      width: 300px;
+      height: 300px;
+      background: radial-gradient(circle, rgba(34,211,238,0.08) 0%, transparent 70%);
+      pointer-events: none;
+    }
+
+    .cta-box h2 {
+      font-family: 'Syne', sans-serif;
+      font-size: clamp(28px, 3.5vw, 48px);
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      margin-bottom: 20px;
+      max-width: 700px;
+    }
+
+    .cta-box > p {
+      font-size: 18px;
+      color: var(--muted);
+      max-width: 620px;
+      line-height: 1.75;
+      margin-bottom: 40px;
+    }
+
+    .cta-perks {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      margin-bottom: 40px;
+    }
+
+    .cta-perk {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 15px;
+      color: var(--muted);
+    }
+
+    .cta-perk::before {
+      content: '✓';
+      color: var(--success);
+      font-weight: 700;
+    }
+
+    .cta-buttons {
+      display: flex;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+
+    /* ─── FOOTER ─── */
+    footer {
+      border-top: 1px solid var(--card-border);
+      padding: 32px 80px;
+      max-width: 1280px;
+      margin: auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-size: 13px;
+      color: var(--muted);
+      position: relative;
+      z-index: 1;
+    }
+
+    footer a {
+      color: var(--cyan);
+      text-decoration: none;
+    }
+
+    /* ─── TASK LIST SECTION ─── */
+    .tasks-section {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 24px;
+    }
+
+    .task-list-card {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 16px;
+      padding: 24px;
+      backdrop-filter: blur(8px);
+    }
+
+    .task-list-title {
+      font-family: 'Syne', sans-serif;
+      font-size: 16px;
+      font-weight: 700;
+      margin-bottom: 18px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .task-count {
+      font-size: 12px;
+      color: var(--muted);
+      font-family: 'DM Sans', sans-serif;
+    }
+
+    .task-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      padding: 10px 0;
+      border-bottom: 1px solid rgba(255,255,255,0.04);
+      font-size: 13px;
+    }
+
+    .task-item:last-child { border-bottom: none; }
+
+    .task-check {
+      width: 16px;
+      height: 16px;
+      border: 1.5px solid var(--card-border);
+      border-radius: 4px;
+      flex-shrink: 0;
+      margin-top: 1px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .task-check.done {
+      background: var(--success);
+      border-color: var(--success);
+      color: white;
+      font-size: 9px;
+    }
+
+    .task-info { flex: 1; }
+    .task-name { font-weight: 500; }
+    .task-meta { font-size: 11px; color: var(--muted); margin-top: 2px; }
+
+    /* ─── SCHEDULE ─── */
+    .schedule-list {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .schedule-item {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      padding: 12px 16px;
+      background: rgba(255,255,255,0.02);
+      border: 1px solid rgba(255,255,255,0.04);
+      border-radius: 10px;
+      font-size: 13px;
+    }
+
+    .schedule-time {
+      font-family: 'Syne', sans-serif;
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--cyan);
+      min-width: 48px;
+    }
+
+    .schedule-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--cyan-border);
+      flex-shrink: 0;
+    }
+
+    /* ─── RESPONSIVE ─── */
+    @media (max-width: 900px) {
+      nav { padding: 0 24px; }
+      .nav-links { display: none; }
+      .hero, .section-block, .dashboard-preview, .metrics-bar, .cta-section { padding-left: 24px; padding-right: 24px; }
+      .steps-grid { grid-template-columns: 1fr 1fr; }
+      .steps-grid::before { display: none; }
+      .tasks-section { grid-template-columns: 1fr; }
+      .stats-row { grid-template-columns: repeat(3, 1fr); }
+      .table-row { grid-template-columns: 1fr 1fr; }
+      .table-row > *:nth-child(n+3) { display: none; }
+      footer { flex-direction: column; gap: 12px; text-align: center; padding: 24px; }
+      .cta-box { padding: 40px 28px; }
+    }
+
+    @media (max-width: 600px) {
+      .steps-grid { grid-template-columns: 1fr; }
+      .problems-grid { grid-template-columns: 1fr; }
+      .dash-layout { height: auto; flex-direction: column; }
+      .dash-sidebar { width: 100%; flex-direction: row; overflow-x: auto; }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- NAV -->
+  <nav>
+    <a href="https://bycosystems.xyz" class="nav-brand">
+      <div class="brand-logo">B</div>
+      <span>ByCo Systems</span>
+    </a>
+    <ul class="nav-links">
+      <li><a href="#problem">Problem</a></li>
+      <li><a href="#workflow">Workflow</a></li>
+      <li><a href="#dashboard">Dashboard</a></li>
+    </ul>
+    <div class="nav-actions">
+      <a href="#dashboard" class="btn-ghost">Live demo</a>
+      <a href="#cta" class="btn-cta">Request a Demo</a>
+    </div>
+  </nav>
+
+  <!-- HERO -->
+  <section>
+    <div class="hero">
+      <div class="hero-tag">ByCo Systems — ReadyFlow Manager</div>
+      <h1>Turn messy service operations into <span>one clear workspace</span></h1>
+      <p>ReadyFlow Manager organizes requests, coordinates teams and keeps day-to-day operations moving from a single dashboard — built for modern service businesses.</p>
+      <div class="hero-buttons">
+        <a href="#cta" class="btn-primary">Request a Demo</a>
+        <a href="#dashboard" class="btn-secondary">See the system</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- METRICS -->
+  <div class="metrics-bar" id="metrics-bar">
+    <div class="metric-item">
+      <div class="metric-num"><span class="countup" data-target="48" data-suffix="%">0%</span></div>
+      <div class="metric-label">Faster operations</div>
+    </div>
+    <div class="metric-item">
+      <div class="metric-num"><span class="countup" data-target="48" data-suffix="">0</span></div>
+      <div class="metric-label">Active workflows</div>
+    </div>
+    <div class="metric-item">
+      <div class="metric-num"><span class="countup" data-target="9" data-suffix="">0</span></div>
+      <div class="metric-label">Tasks completed today</div>
+    </div>
+    <div class="metric-item">
+      <div class="metric-num">24/7</div>
+      <div class="metric-label">Operations visibility</div>
+    </div>
+  </div>
+
+  <!-- DASHBOARD PREVIEW -->
+  <section id="dashboard">
+    <div class="dashboard-preview">
+      <div class="section-label" style="margin-bottom:16px;">Live Dashboard Preview</div>
+      <div class="dashboard-frame">
+        <div class="frame-bar">
+          <div class="frame-dot" style="background:#f87171;"></div>
+          <div class="frame-dot" style="background:#fbbf24;"></div>
+          <div class="frame-dot" style="background:#34d399;"></div>
+          <div class="frame-url">app.readyflow.io / dashboard</div>
+        </div>
+        <div class="dash-layout">
+          <!-- Sidebar -->
+          <div class="dash-sidebar">
+            <div class="dash-sidebar-header">Workspace</div>
+            <div class="dash-nav-item active"><span class="dash-nav-icon">⊞</span> Overview</div>
+            <div class="dash-nav-item"><span class="dash-nav-icon">◫</span> Projects</div>
+            <div class="dash-nav-item"><span class="dash-nav-icon">✓</span> Tasks</div>
+            <div class="dash-nav-item"><span class="dash-nav-icon">◷</span> Schedule</div>
+            <div class="dash-nav-item"><span class="dash-nav-icon">◎</span> Team</div>
+            <div class="dash-nav-item"><span class="dash-nav-icon">↗</span> Reports</div>
+            <div class="dash-workspace">
+              <div class="workspace-label">Demo workspace</div>
+              <div class="workspace-sub">Sample data — explore freely.</div>
+            </div>
+          </div>
+          <!-- Main -->
+          <div class="dash-main">
+            <div class="dash-header">
+              <div>
+                <div class="dash-title">Operations overview</div>
+                <div class="dash-subtitle">Live snapshot of your portfolio readiness.</div>
+              </div>
+              <div class="dash-actions">
+                <button class="dash-btn">Filter</button>
+                <button class="dash-btn primary">+ New task</button>
+              </div>
+            </div>
+            <!-- Stats -->
+            <div class="stats-row" id="dash-stats">
+              <div class="stat-card">
+                <div class="stat-icon">⚡</div>
+                <div class="stat-num"><span class="countup" data-target="48" data-suffix="">0</span></div>
+                <div class="stat-label">Active workflows</div>
+              </div>
+              <div class="stat-card">
+                <div class="stat-icon">✓</div>
+                <div class="stat-num"><span class="countup" data-target="21" data-suffix="">0</span></div>
+                <div class="stat-label">Completed</div>
+              </div>
+              <div class="stat-card">
+                <div class="stat-icon">⚙</div>
+                <div class="stat-num"><span class="countup" data-target="19" data-suffix="">0</span></div>
+                <div class="stat-label">Operations running</div>
+              </div>
+              <div class="stat-card">
+                <div class="stat-icon">⚑</div>
+                <div class="stat-num"><span class="countup" data-target="6" data-suffix="">0</span></div>
+                <div class="stat-label">Priority tasks</div>
+              </div>
+              <div class="stat-card">
+                <div class="stat-icon">◷</div>
+                <div class="stat-num"><span class="countup" data-target="5" data-suffix="">0</span></div>
+                <div class="stat-label">Today's ops</div>
+              </div>
+            </div>
+            <!-- Projects table -->
+            <div class="projects-table">
+              <div class="table-header">
+                <span class="table-title">Live team operations</span>
+                <span class="table-link">View all</span>
+              </div>
+              <div class="table-row head">
+                <span>Project</span><span>Status</span><span>Priority</span><span>Assigned</span><span>Due</span><span>Progress</span>
+              </div>
+              <div class="table-row">
+                <div><div class="project-name">Client Alpha</div><div class="project-team">Operations Team</div></div>
+                <span><span class="badge-status badge-pending">Pending review</span></span>
+                <span><span class="badge-priority priority-high">High</span></span>
+                <span><span class="avatar">SK</span></span>
+                <span style="font-size:11px;color:var(--muted);">Today 4pm</span>
+                <div><div class="progress-bar"><div class="progress-fill" style="width:35%"></div></div><div style="font-size:10px;color:var(--muted);margin-top:3px;">35%</div></div>
+              </div>
+              <div class="table-row">
+                <div><div class="project-name">Support Queue</div><div class="project-team">Support Team</div></div>
+                <span><span class="badge-status badge-progress">In progress</span></span>
+                <span><span class="badge-priority priority-medium">Medium</span></span>
+                <span><span class="avatar">MD</span></span>
+                <span style="font-size:11px;color:var(--muted);">Tomorrow</span>
+                <div><div class="progress-bar"><div class="progress-fill" style="width:60%"></div></div><div style="font-size:10px;color:var(--muted);margin-top:3px;">60%</div></div>
+              </div>
+              <div class="table-row">
+                <div><div class="project-name">Marketing Ops</div><div class="project-team">Marketing Team</div></div>
+                <span><span class="badge-status badge-ready">Ready</span></span>
+                <span><span class="badge-priority priority-low">Low</span></span>
+                <span><span class="avatar">EW</span></span>
+                <span style="font-size:11px;color:var(--muted);">Today 6pm</span>
+                <div><div class="progress-bar"><div class="progress-fill" style="width:90%"></div></div><div style="font-size:10px;color:var(--muted);margin-top:3px;">90%</div></div>
+              </div>
+              <div class="table-row">
+                <div><div class="project-name">Client Success</div><div class="project-team">CS Team</div></div>
+                <span><span class="badge-status badge-scheduled">Scheduled</span></span>
+                <span><span class="badge-priority priority-urgent">Urgent</span></span>
+                <span><span class="avatar">LP</span></span>
+                <span style="font-size:11px;color:var(--muted);">Today 2pm</span>
+                <div><div class="progress-bar"><div class="progress-fill" style="width:75%"></div></div><div style="font-size:10px;color:var(--muted);margin-top:3px;">75%</div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PROBLEM -->
+  <section id="problem">
+    <div class="section-block">
+      <div class="section-label">The Problem</div>
+      <h2>Business operations break in the same five places</h2>
+      <p>Spreadsheets and group chats weren't built to coordinate teams and projects across a growing organization.</p>
+      <div class="problems-grid">
+        <div class="problem-card">
+          <div class="problem-icon">💬</div>
+          <h3>Scattered messages</h3>
+          <p>Updates lost across dozens of group chats with no single source of truth.</p>
+        </div>
+        <div class="problem-card">
+          <div class="problem-icon">🔧</div>
+          <h3>Missed tasks</h3>
+          <p>Repairs and action items slip through the cracks until it's too late.</p>
+        </div>
+        <div class="problem-card">
+          <div class="problem-icon">🔍</div>
+          <h3>Unclear status</h3>
+          <p>Teams lack real-time visibility on what's running, what's stuck, and what's done.</p>
+        </div>
+        <div class="problem-card">
+          <div class="problem-icon">⏱</div>
+          <h3>Delayed coordination</h3>
+          <p>Delays impact delivery timelines and team performance without anyone noticing early enough.</p>
+        </div>
+        <div class="problem-card">
+          <div class="problem-icon">📊</div>
+          <h3>No manager visibility</h3>
+          <p>Owners can't see what's happening without a phone call or chasing their team.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- TASKS & SCHEDULE -->
+  <section id="workflow">
+    <div class="section-block">
+      <div class="section-label">Task Management</div>
+      <h2>Every task, assigned clearly and delivered on time</h2>
+      <p>Assign tasks, track priorities and keep every team aligned in one workspace.</p>
+      <div class="tasks-section">
+        <div class="task-list-card">
+          <div class="task-list-title">Active tasks <span class="task-count">6 tasks</span></div>
+          <div class="task-item">
+            <div class="task-check"></div>
+            <div class="task-info">
+              <div class="task-name">Client onboarding</div>
+              <div class="task-meta">Client Alpha · Sara Khalil · Today</div>
+            </div>
+            <span class="badge-priority priority-high">High</span>
+          </div>
+          <div class="task-item">
+            <div class="task-check"></div>
+            <div class="task-info">
+              <div class="task-name">System update</div>
+              <div class="task-meta">Support Queue · Marco Diaz · Tomorrow</div>
+            </div>
+            <span class="badge-priority priority-medium">Medium</span>
+          </div>
+          <div class="task-item">
+            <div class="task-check done">✓</div>
+            <div class="task-info">
+              <div class="task-name" style="text-decoration:line-through;opacity:0.5;">Campaign review</div>
+              <div class="task-meta">Marketing Ops · Emma Wright · Today</div>
+            </div>
+            <span class="badge-priority priority-low">Low</span>
+          </div>
+          <div class="task-item">
+            <div class="task-check"></div>
+            <div class="task-info">
+              <div class="task-name">Data sync</div>
+              <div class="task-meta">Client Success · Liam Park · Today</div>
+            </div>
+            <span class="badge-priority priority-urgent">Urgent</span>
+          </div>
+          <div class="task-item">
+            <div class="task-check"></div>
+            <div class="task-info">
+              <div class="task-name">Project delivery</div>
+              <div class="task-meta">Client Success · Liam Park · Today</div>
+            </div>
+            <span class="badge-priority priority-urgent">Urgent</span>
+          </div>
+        </div>
+        <div class="task-list-card">
+          <div class="task-list-title">Today's schedule <span class="task-count">5 operations</span></div>
+          <div class="schedule-list">
+            <div class="schedule-item">
+              <span class="schedule-time">10:30</span>
+              <div class="schedule-dot"></div>
+              <span>Client onboarding — Client Alpha</span>
+            </div>
+            <div class="schedule-item">
+              <span class="schedule-time">12:00</span>
+              <div class="schedule-dot"></div>
+              <span>System update — Support Queue</span>
+            </div>
+            <div class="schedule-item">
+              <span class="schedule-time">14:00</span>
+              <div class="schedule-dot"></div>
+              <span>Client follow-up — Client Success</span>
+            </div>
+            <div class="schedule-item">
+              <span class="schedule-time">16:00</span>
+              <div class="schedule-dot"></div>
+              <span>Quality review — Marketing Ops</span>
+            </div>
+            <div class="schedule-item">
+              <span class="schedule-time">18:30</span>
+              <div class="schedule-dot"></div>
+              <span>Project delivery — Client Success</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- HOW IT WORKS -->
+  <section>
+    <div class="section-block">
+      <div class="section-label">How it works</div>
+      <h2>From new project to delivery in four steps</h2>
+      <p style="margin-bottom:52px;">A simple, repeatable process that keeps every project on track from start to finish.</p>
+      <div class="steps-grid">
+        <div class="step-card">
+          <div class="step-num">1</div>
+          <h3>Add project</h3>
+          <p>Create projects, campaigns or operational tasks with full details and context.</p>
+        </div>
+        <div class="step-card">
+          <div class="step-num">2</div>
+          <h3>Assign tasks</h3>
+          <p>Assign tasks and updates to the right teammate with priority and deadline.</p>
+        </div>
+        <div class="step-card">
+          <div class="step-num">3</div>
+          <h3>Track progress</h3>
+          <p>See live status, blockers and ETAs across the entire portfolio in real time.</p>
+        </div>
+        <div class="step-card">
+          <div class="step-num">4</div>
+          <h3>Complete workflow</h3>
+          <p>Confirm delivery and notify the team automatically when a workflow closes.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section id="cta">
+    <div class="cta-section">
+      <div class="cta-box">
+        <div class="section-label">ByCo Systems</div>
+        <h2>Want this adapted for your business?</h2>
+        <p>We'll tailor ReadyFlow Manager to your projects, teams and processes — and walk you through a live demo personalized to your operations.</p>
+        <div class="cta-perks">
+          <div class="cta-perk">Personalized walkthrough on your portfolio</div>
+          <div class="cta-perk">Custom workflow mapping for your team</div>
+          <div class="cta-perk">No commitment — demo concept only</div>
+        </div>
+        <div class="cta-buttons">
+          <a href="https://wa.me/447366482754?text=Hello%20ByCo%20Systems%2C%20I%20would%20like%20a%20demo%20of%20ReadyFlow%20Manager." class="btn-primary">Chat on WhatsApp</a>
+          <a href="https://bycosystems.xyz/#contact" class="btn-secondary">Send an Email</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <span>ReadyFlow Manager · Service operations, simplified.</span>
+    <span>© 2026 · <a href="https://bycosystems.xyz">Powered by ByCo Systems</a></span>
+  </footer>
+
+  <script>
+    function animateCountUp(el) {
+      const target = parseInt(el.dataset.target);
+      const suffix = el.dataset.suffix || '';
+      const duration = 900;
+      const startTime = performance.now();
+      const tick = (now) => {
+        const elapsed = now - startTime;
+        const progress = Math.min(elapsed / duration, 1);
+        const eased = 1 - Math.pow(1 - progress, 3);
+        el.textContent = Math.round(eased * target) + suffix;
+        if (progress < 1) requestAnimationFrame(tick);
+      };
+      requestAnimationFrame(tick);
+    }
+
+    function observeSection(sectionId) {
+      const section = document.getElementById(sectionId) || document.querySelector('.metrics-bar');
+      if (!section) return;
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.querySelectorAll('.countup').forEach(animateCountUp);
+            observer.unobserve(entry.target);
+          }
+        });
+      }, { threshold: 0.3 });
+      observer.observe(section);
+    }
+
+    observeSection('metrics-bar');
+    observeSection('dash-stats');
+  </script>
+</body>
+</html>
