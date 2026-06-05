@@ -870,7 +870,7 @@ function Contact() {
           <p className="mt-5 text-lg text-muted-foreground leading-relaxed">
             Tell us your biggest reception headache. We'll show you exactly what we can automate.
           </p>
-          <a href="https://wa.me/447366482754" target="_blank" rel="noopener noreferrer"
+          <a href="https://wa.me/447366479402" target="_blank" rel="noopener noreferrer"
             className="mt-6 inline-flex items-center gap-3 px-5 py-3 rounded-md bg-green-500 text-white font-medium hover:bg-green-600 transition"
           >
             <svg xmlns="http://www.w3.org/2000/svg" className="size-5 shrink-0" viewBox="0 0 24 24" fill="currentColor">
