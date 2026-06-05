@@ -324,7 +324,7 @@ function CoreOffer() {
           <a href="/readyflow-manager.html"
             className="inline-flex items-center gap-2 px-6 py-3 rounded-md bg-navy text-white font-medium hover:bg-navy-deep transition"
           >
-            Explore live dashboard <ExternalLink className="size-4" />
+            Explore live dashboard
           </a>
           <p className="mt-3 text-sm text-muted-foreground">Live demo — explore freely, no login required.</p>
         </div>
@@ -648,7 +648,7 @@ function FeaturedDemo() {
             <a href={DEMO_URL}
               className="mt-10 inline-flex items-center gap-2 px-5 py-3 rounded-md bg-navy text-white font-medium hover:bg-navy-deep transition"
             >
-              Explore workspace <ExternalLink className="size-4" />
+              Explore workspace
             </a>
           </div>
           <div className="lg:col-span-7">
