@@ -44,8 +44,8 @@ export const Route = createFileRoute("/")({
 
 const DEMO_URL = "/readyflow-manager.html";
 
-// âââ Parallax Section Title âââââââââââââââââââââââââââââââââââââââââââââââââââ
-// âââ Animated Counter Hook âââââââââââââââââââââââââââââââââââââââââââââââââââ
+// --- Parallax Section Title ---
+// --- Animated Counter Hook ---
 function useCountUp(target: number, duration: number = 1000) {
   const [count, setCount] = React.useState(0);
   const ref = useRef<HTMLSpanElement>(null);
@@ -78,7 +78,7 @@ function useCountUp(target: number, duration: number = 1000) {
   return { count, ref };
 }
 
-// âââ Parallax Title âââââââââââââââââââââââââââââââââââââââââââââââââââââââââââ
+// --- Parallax Title ---
 function ParallaxTitle({ word, children, dark = false, center = false }: { word: string; children: React.ReactNode; dark?: boolean; center?: boolean }) {
   const ref = useRef<HTMLDivElement>(null);
   const bgRef = useRef<HTMLDivElement>(null);
@@ -663,11 +663,11 @@ function FeaturedDemo() {
   );
 }
 
-// âââ PRICING âââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââ
+// --- PRICING ---
 const pricingPlans = [
   {
     name: "Essential",
-    price: "490â¬",
+    price: "490€",
     subtitle: "Internal dashboard & tracking",
     desc: "For businesses with no website. We build everything from scratch - site, smart intake, WhatsApp automation and booking flow.",
     features: [
@@ -683,7 +683,7 @@ const pricingPlans = [
   },
   {
     name: "Business",
-    price: "990â¬",
+    price: "990€",
     subtitle: "Complete smart reception system",
     desc: "You already have a website. We add an intelligent reception layer directly on top - no rebuild needed.",
     features: [
@@ -699,7 +699,7 @@ const pricingPlans = [
   },
   {
     name: "Premium",
-    price: "1 490â¬",
+    price: "1 490€",
     subtitle: "Premium - full system + AI phone + 30-day support",
     desc: "A clean internal dashboard to track requests, manage clients and monitor your operations - all in one place.",
     features: [
