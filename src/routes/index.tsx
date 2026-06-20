@@ -25,13 +25,13 @@ import { DashboardMockup } from "@/components/DashboardMockup";
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
-      { title: "ByCo Systems â Smart Reception & Automation for Service Businesses" },
+      { title: "ByCo Systems - Smart Reception & Automation for Service Businesses" },
       {
         name: "description",
         content:
           "ByCo Systems builds smart reception systems, WhatsApp automation, booking flows and intelligent phone intake for service businesses.",
       },
-      { property: "og:title", content: "ByCo Systems â Smart Reception & Automation for Service Businesses" },
+      { property: "og:title", content: "ByCo Systems - Smart Reception & Automation for Service Businesses" },
       {
         property: "og:description",
         content: "Never miss a client again. Smart reception systems that run 24/7 for clinics, salons, agencies and every service business.",
@@ -217,7 +217,7 @@ function Hero() {
               <span className="text-brand-soft">24/7.</span>
             </h1>
             <p className="mt-6 text-lg text-white/70 max-w-xl leading-relaxed">
-              Smart phone reception, WhatsApp automation, booking flows and follow-up systems â built for clinics, salons, agencies and every service business.
+              Smart phone reception, WhatsApp automation, booking flows and follow-up systems - built for clinics, salons, agencies and every service business.
             </p>
             <div className="mt-8 flex flex-wrap gap-3">
               <a
@@ -238,7 +238,7 @@ function Hero() {
             <div className="mt-10 flex flex-wrap gap-6 text-xs text-white/50">
               <span className="flex items-center gap-2"><CheckCircle2 className="size-4 text-brand-soft" /> Zero missed calls</span>
               <span className="flex items-center gap-2"><CheckCircle2 className="size-4 text-brand-soft" /> WhatsApp automation</span>
-              <span className="flex items-center gap-2"><CheckCircle2 className="size-4 text-brand-soft" /> Fast setup â 48h</span>
+              <span className="flex items-center gap-2"><CheckCircle2 className="size-4 text-brand-soft" /> Fast setup - 48h</span>
             </div>
           </div>
           <div className="lg:col-span-6">
@@ -287,7 +287,7 @@ function CoreOffer() {
     {
       icon: MessageSquare,
       title: "WhatsApp & multi-channel automation",
-      desc: "Instant greetings, appointment confirmations and follow-ups on WhatsApp â without lifting a finger.",
+      desc: "Instant greetings, appointment confirmations and follow-ups on WhatsApp - without lifting a finger.",
     },
     {
       icon: Zap,
@@ -326,7 +326,7 @@ function CoreOffer() {
           >
             Explore live dashboard
           </a>
-          <p className="mt-3 text-sm text-muted-foreground">Live demo â explore freely, no login required.</p>
+          <p className="mt-3 text-sm text-muted-foreground">Live demo - explore freely, no login required.</p>
         </div>
       </div>
     </section>
@@ -337,7 +337,7 @@ const services = [
   {
     icon: Phone,
     title: "Smart Phone Reception",
-    desc: "Intelligent phone intake that answers, qualifies and routes calls automatically â 24/7, no extra staff.",
+    desc: "Intelligent phone intake that answers, qualifies and routes calls automatically - 24/7, no extra staff.",
   },
   {
     icon: MessageSquare,
@@ -373,7 +373,7 @@ function Services() {
         <ParallaxTitle word="SERVICES">
           <div className="max-w-2xl">
             <h2 className="text-3xl md:text-4xl font-medium text-navy-deep">
-              Everything your front desk should do â automated
+              Everything your front desk should do - automated
             </h2>
           </div>
         </ParallaxTitle>
@@ -449,7 +449,7 @@ function SmartIntakeIntro() {
               </h2>
             </ParallaxTitle>
             <p className="mt-5 text-lg text-muted-foreground leading-relaxed">
-              Captures, qualifies and routes every client request automatically â by phone, WhatsApp or web form.
+              Captures, qualifies and routes every client request automatically - by phone, WhatsApp or web form.
             </p>
             <ul className="mt-8 space-y-3">
               {smartIntakeBenefits.map(({ icon: Icon, label }) => (
@@ -616,7 +616,7 @@ function SmartIntakeDemo() {
           </a>
         </div>
         <p className="mt-6 text-center text-sm text-muted-foreground italic">
-          French demo video â example adaptable to clinics, salons, agencies and any service business.
+          French demo video - example adaptable to clinics, salons, agencies and any service business.
         </p>
       </div>
     </section>
@@ -669,7 +669,7 @@ const pricingPlans = [
     name: "Essential",
     price: "490â¬",
     subtitle: "Internal dashboard & tracking",
-    desc: "For businesses with no website. We build everything from scratch â site, smart intake, WhatsApp automation and booking flow.",
+    desc: "For businesses with no website. We build everything from scratch - site, smart intake, WhatsApp automation and booking flow.",
     features: [
       "Internal operations dashboard",
       "Client request tracking",
@@ -685,7 +685,7 @@ const pricingPlans = [
     name: "Business",
     price: "990â¬",
     subtitle: "Complete smart reception system",
-    desc: "You already have a website. We add an intelligent reception layer directly on top â no rebuild needed.",
+    desc: "You already have a website. We add an intelligent reception layer directly on top - no rebuild needed.",
     features: [
       "Professional website included",
       "Smart phone reception",
@@ -700,8 +700,8 @@ const pricingPlans = [
   {
     name: "Premium",
     price: "1 490â¬",
-    subtitle: "Premium â full system + AI phone + 30-day support",
-    desc: "A clean internal dashboard to track requests, manage clients and monitor your operations â all in one place.",
+    subtitle: "Premium - full system + AI phone + 30-day support",
+    desc: "A clean internal dashboard to track requests, manage clients and monitor your operations - all in one place.",
     features: [
       "Everything in Business",
       "AI phone reception setup",
@@ -772,7 +772,7 @@ function Pricing() {
           ))}
         </div>
         <p className="mt-8 text-center text-sm text-muted-foreground">
-          Need a custom system? <a href="#contact" className="text-brand font-medium hover:underline">Talk to us</a> â we adapt to every service business.
+          Need a custom system? <a href="#contact" className="text-brand font-medium hover:underline">Talk to us</a> - we adapt to every service business.
         </p>
       </div>
     </section>
@@ -781,7 +781,7 @@ function Pricing() {
 
 const steps = [
   { n: "01", title: "Understand the workflow", desc: "We map how your team actually works today." },
-  { n: "02", title: "Build a practical first version", desc: "A focused, usable system â not an oversized platform." },
+  { n: "02", title: "Build a practical first version", desc: "A focused, usable system - not an oversized platform." },
   { n: "03", title: "Adapt the system to the business", desc: "Refine details based on real day-to-day usage." },
   { n: "04", title: "Deliver a clear and usable operational tool", desc: "A system your team can rely on from day one." },
 ];
@@ -843,7 +843,7 @@ function ContactForm() {
       >
         Send request <ArrowRight className="size-4" />
       </button>
-      {submitted && <p className="text-sm text-brand font-medium">Thanks â we'll be in touch soon!</p>}
+      {submitted && <p className="text-sm text-brand font-medium">Thanks - we'll be in touch soon!</p>}
     </form>
   );
 }
