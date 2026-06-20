@@ -3,9 +3,9 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>ReadyFlow Manager â Operations Dashboard</title>
+  <title>ReadyFlow Manager - Operations Dashboard</title>
   <meta name="description" content="Track projects, assign tasks, follow status, and prepare deliverables faster. Built for service teams and operations." />
-  <meta property="og:title" content="ReadyFlow Manager â Operations Dashboard" />
+  <meta property="og:title" content="ReadyFlow Manager - Operations Dashboard" />
   <meta property="og:description" content="Turn messy service operations into one clear workspace" />
   <meta property="og:type" content="website" />
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -40,7 +40,7 @@
       overflow-x: hidden;
     }
 
-    /* âââ BACKGROUND MESH âââ */
+  /* --- BACKGROUND MESH --- */
     body::before {
       content: '';
       position: fixed;
@@ -52,7 +52,7 @@
       z-index: 0;
     }
 
-    /* âââ TOPNAV âââ */
+  /* --- TOPNAV --- */
     nav {
       position: sticky;
       top: 0;
@@ -152,10 +152,10 @@
 
     .btn-cta:hover { opacity: 0.9; transform: translateY(-1px); }
 
-    /* âââ SECTIONS âââ */
+  /* --- SECTIONS --- */
     section { position: relative; z-index: 1; }
 
-    /* âââ HERO âââ */
+  /* --- HERO --- */
     .hero {
       min-height: 92vh;
       display: flex;
@@ -256,7 +256,7 @@
       background: var(--cyan-dim);
     }
 
-    /* âââ METRICS BAR âââ */
+  /* --- METRICS BAR --- */
     .metrics-bar {
       display: flex;
       gap: 0;
@@ -291,7 +291,7 @@
       margin-top: 6px;
     }
 
-    /* âââ DASHBOARD PREVIEW âââ */
+  /* --- DASHBOARD PREVIEW --- */
     .dashboard-preview {
       max-width: 1280px;
       margin: 0 auto 100px;
@@ -551,7 +551,7 @@
       border-radius: 99px;
     }
 
-    /* âââ PROBLEM SECTION âââ */
+  /* --- PROBLEM SECTION --- */
     .section-block {
       max-width: 1280px;
       margin: 0 auto 100px;
@@ -622,7 +622,7 @@
       line-height: 1.65;
     }
 
-    /* âââ HOW IT WORKS âââ */
+  /* --- HOW IT WORKS --- */
     .steps-grid {
       display: grid;
       grid-template-columns: repeat(4, 1fr);
@@ -678,7 +678,7 @@
       line-height: 1.65;
     }
 
-    /* âââ CTA FINAL âââ */
+  /* --- CTA FINAL --- */
     .cta-section {
       max-width: 1280px;
       margin: 0 auto 100px;
@@ -738,7 +738,7 @@
     }
 
     .cta-perk::before {
-      content: 'â';
+      content: '✓';
       color: var(--success);
       font-weight: 700;
     }
@@ -749,7 +749,7 @@
       flex-wrap: wrap;
     }
 
-    /* âââ FOOTER âââ */
+  /* --- FOOTER --- */
     footer {
       border-top: 1px solid var(--card-border);
       padding: 32px 80px;
@@ -769,7 +769,7 @@
       text-decoration: none;
     }
 
-    /* âââ TASK LIST SECTION âââ */
+  /* --- TASK LIST SECTION --- */
     .tasks-section {
       display: grid;
       grid-template-columns: 1fr 1fr;
@@ -834,7 +834,7 @@
     .task-name { font-weight: 500; }
     .task-meta { font-size: 11px; color: var(--muted); margin-top: 2px; }
 
-    /* âââ SCHEDULE âââ */
+  /* --- SCHEDULE --- */
     .schedule-list {
       display: flex;
       flex-direction: column;
@@ -868,7 +868,7 @@
       flex-shrink: 0;
     }
 
-    /* âââ RESPONSIVE âââ */
+  /* --- RESPONSIVE --- */
     @media (max-width: 900px) {
       nav { padding: 0 24px; }
       .nav-links { display: none; }
@@ -914,9 +914,9 @@
   <!-- HERO -->
   <section>
     <div class="hero">
-      <div class="hero-tag">ByCo Systems â ReadyFlow Manager</div>
+      <div class="hero-tag">ByCo Systems - ReadyFlow Manager</div>
       <h1>Turn messy service operations into <span>one clear workspace</span></h1>
-      <p>ReadyFlow Manager organizes requests, coordinates teams and keeps day-to-day operations moving from a single dashboard â built for modern service businesses.</p>
+      <p>ReadyFlow Manager organizes requests, coordinates teams and keeps day-to-day operations moving from a single dashboard - built for modern service businesses.</p>
       <div class="hero-buttons">
         <a href="#cta" class="btn-primary">Request a Demo</a>
         <a href="#dashboard" class="btn-secondary">See the system</a>
@@ -959,15 +959,15 @@
           <!-- Sidebar -->
           <div class="dash-sidebar">
             <div class="dash-sidebar-header">Workspace</div>
-            <div class="dash-nav-item active"><span class="dash-nav-icon">â</span> Overview</div>
-            <div class="dash-nav-item"><span class="dash-nav-icon">â«</span> Projects</div>
-            <div class="dash-nav-item"><span class="dash-nav-icon">â</span> Tasks</div>
-            <div class="dash-nav-item"><span class="dash-nav-icon">â·</span> Schedule</div>
-            <div class="dash-nav-item"><span class="dash-nav-icon">â</span> Team</div>
-            <div class="dash-nav-item"><span class="dash-nav-icon">â</span> Reports</div>
+            <div class="dash-nav-item active"><span class="dash-nav-icon">⊞</span> Overview</div>
+            <div class="dash-nav-item"><span class="dash-nav-icon">◫</span> Projects</div>
+            <div class="dash-nav-item"><span class="dash-nav-icon">✓</span> Tasks</div>
+            <div class="dash-nav-item"><span class="dash-nav-icon">◷</span> Schedule</div>
+            <div class="dash-nav-item"><span class="dash-nav-icon">◎</span> Team</div>
+            <div class="dash-nav-item"><span class="dash-nav-icon">↗</span> Reports</div>
             <div class="dash-workspace">
               <div class="workspace-label">Demo workspace</div>
-              <div class="workspace-sub">Sample data â explore freely.</div>
+              <div class="workspace-sub">Sample data - explore freely.</div>
             </div>
           </div>
           <!-- Main -->
@@ -985,27 +985,27 @@
             <!-- Stats -->
             <div class="stats-row" id="dash-stats">
               <div class="stat-card">
-                <div class="stat-icon">â¡</div>
+                <div class="stat-icon">⚡</div>
                 <div class="stat-num"><span class="countup" data-target="48" data-suffix="">0</span></div>
                 <div class="stat-label">Active workflows</div>
               </div>
               <div class="stat-card">
-                <div class="stat-icon">â</div>
+                <div class="stat-icon">✓</div>
                 <div class="stat-num"><span class="countup" data-target="21" data-suffix="">0</span></div>
                 <div class="stat-label">Completed</div>
               </div>
               <div class="stat-card">
-                <div class="stat-icon">â</div>
+                <div class="stat-icon">⚙</div>
                 <div class="stat-num"><span class="countup" data-target="19" data-suffix="">0</span></div>
                 <div class="stat-label">Operations running</div>
               </div>
               <div class="stat-card">
-                <div class="stat-icon">â</div>
+                <div class="stat-icon">⚑</div>
                 <div class="stat-num"><span class="countup" data-target="6" data-suffix="">0</span></div>
                 <div class="stat-label">Priority tasks</div>
               </div>
               <div class="stat-card">
-                <div class="stat-icon">â·</div>
+                <div class="stat-icon">◷</div>
                 <div class="stat-num"><span class="countup" data-target="5" data-suffix="">0</span></div>
                 <div class="stat-label">Today's ops</div>
               </div>
@@ -1066,27 +1066,27 @@
       <p>Spreadsheets and group chats weren't built to coordinate teams and projects across a growing organization.</p>
       <div class="problems-grid">
         <div class="problem-card">
-          <div class="problem-icon">ð¬</div>
+          <div class="problem-icon">💬</div>
           <h3>Scattered messages</h3>
           <p>Updates lost across dozens of group chats with no single source of truth.</p>
         </div>
         <div class="problem-card">
-          <div class="problem-icon">ð§</div>
+          <div class="problem-icon">🔧</div>
           <h3>Missed tasks</h3>
           <p>Repairs and action items slip through the cracks until it's too late.</p>
         </div>
         <div class="problem-card">
-          <div class="problem-icon">ð</div>
+          <div class="problem-icon">🔍</div>
           <h3>Unclear status</h3>
           <p>Teams lack real-time visibility on what's running, what's stuck, and what's done.</p>
         </div>
         <div class="problem-card">
-          <div class="problem-icon">â±</div>
+          <div class="problem-icon">⏱</div>
           <h3>Delayed coordination</h3>
           <p>Delays impact delivery timelines and team performance without anyone noticing early enough.</p>
         </div>
         <div class="problem-card">
-          <div class="problem-icon">ð</div>
+          <div class="problem-icon">📊</div>
           <h3>No manager visibility</h3>
           <p>Owners can't see what's happening without a phone call or chasing their team.</p>
         </div>
@@ -1120,7 +1120,7 @@
             <span class="badge-priority priority-medium">Medium</span>
           </div>
           <div class="task-item">
-            <div class="task-check done">â</div>
+            <div class="task-check done">✓</div>
             <div class="task-info">
               <div class="task-name" style="text-decoration:line-through;opacity:0.5;">Campaign review</div>
               <div class="task-meta">Marketing Ops Â· Emma Wright Â· Today</div>
@@ -1150,27 +1150,27 @@
             <div class="schedule-item">
               <span class="schedule-time">10:30</span>
               <div class="schedule-dot"></div>
-              <span>Client onboarding â Client Alpha</span>
+              <span>Client onboarding - Client Alpha</span>
             </div>
             <div class="schedule-item">
               <span class="schedule-time">12:00</span>
               <div class="schedule-dot"></div>
-              <span>System update â Support Queue</span>
+              <span>System update - Support Queue</span>
             </div>
             <div class="schedule-item">
               <span class="schedule-time">14:00</span>
               <div class="schedule-dot"></div>
-              <span>Client follow-up â Client Success</span>
+              <span>Client follow-up - Client Success</span>
             </div>
             <div class="schedule-item">
               <span class="schedule-time">16:00</span>
               <div class="schedule-dot"></div>
-              <span>Quality review â Marketing Ops</span>
+              <span>Quality review - Marketing Ops</span>
             </div>
             <div class="schedule-item">
               <span class="schedule-time">18:30</span>
               <div class="schedule-dot"></div>
-              <span>Project delivery â Client Success</span>
+              <span>Project delivery - Client Success</span>
             </div>
           </div>
         </div>
@@ -1215,11 +1215,11 @@
       <div class="cta-box">
         <div class="section-label">ByCo Systems</div>
         <h2>Want this adapted for your business?</h2>
-        <p>We'll tailor ReadyFlow Manager to your projects, teams and processes â and walk you through a live demo personalized to your operations.</p>
+        <p>We'll tailor ReadyFlow Manager to your projects, teams and processes - and walk you through a live demo personalized to your operations.</p>
         <div class="cta-perks">
           <div class="cta-perk">Personalized walkthrough on your portfolio</div>
           <div class="cta-perk">Custom workflow mapping for your team</div>
-          <div class="cta-perk">No commitment â demo concept only</div>
+          <div class="cta-perk">No commitment - demo concept only</div>
         </div>
         <div class="cta-buttons">
           <a href="https://wa.me/447576594092?text=Hello%20ByCo%20Systems%2C%20I%20would%20like%20a%20demo%20of%20ReadyFlow%20Manager." class="btn-primary">Chat on WhatsApp</a>
