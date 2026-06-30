@@ -259,12 +259,12 @@ function Hero() {
   );
 }
 
-function AnimatedStat({ num, suffix, label }: { num: number; suffix: string; label: string }) {
+function AnimatedStat({ num, suffix, label, prefix = "" }: { num: number; suffix: string; label: string; prefix?: string }) {
   const { count, ref } = useCountUp(num, 1000);
   return (
     <div>
       <div className="text-3xl font-bold text-navy-deep">
-        <span ref={ref}>{count}</span>{suffix}
+        {prefix}<span ref={ref}>{count}</span>{suffix}
       </div>
       <div className="mt-1 text-sm text-muted-foreground">{label}</div>
     </div>
@@ -278,7 +278,7 @@ function StatsBar() {
         <div className="grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
           <AnimatedStat num={48} suffix="h" label="Average setup time" />
           <AnimatedStat num={24} suffix="/7" label="Smart phone reception" />
-          <AnimatedStat num={100} suffix="%" label="Zero missed clients" />
+          <AnimatedStat num={5} suffix="%" label="Missed client rate" prefix="< " />
           <AnimatedStat num={6} suffix="+" label="Industries served" />
         </div>
       </div>
@@ -639,10 +639,10 @@ function FeaturedDemo() {
         <div className="grid lg:grid-cols-12 gap-12 items-center">
           <div className="lg:col-span-5">
             <ParallaxTitle word="GUIDE">
-              <h2 className="text-3xl md:text-4xl font-medium text-navy-deep">ReadyFlow Manager</h2>
+              <h2 className="text-3xl md:text-4xl font-medium text-navy-deep">Your free operational dashboard - included from Business</h2>
             </ParallaxTitle>
             <p className="mt-5 text-muted-foreground leading-relaxed">
-              Operational workspace for service businesses handling requests, teams, tasks and day-to-day coordination.
+              Track client requests, assign tasks to your team and monitor your activity in real time. Simple, clear, ready from day one.
             </p>
             <ul className="mt-8 grid grid-cols-2 gap-3">
               {demoFeatures.map(({ icon: Icon, label }) => (
@@ -677,14 +677,14 @@ const pricingPlans = [
   {
     name: "Essential",
     price: "490€",
-    subtitle: "Internal dashboard & tracking",
-    desc: "For businesses with no website. We build everything from scratch - site, smart intake, WhatsApp automation and booking flow.",
+    subtitle: "Your digital presence, up and running",
+    desc: "No website yet? We build everything from scratch and automate your client intake from day one.",
     features: [
-      "Internal operations dashboard",
-      "Client request tracking",
-      "Team task management",
-      "Status updates & notifications",
-      "Simple and usable from day one",
+      "Professional website built from scratch",
+      "Online client intake form",
+      "WhatsApp automation (greeting + confirmation)",
+      "Booking system with automatic reminders",
+      "Internal request tracking dashboard",
       "Setup in 24h",
     ],
     cta: "Request this system",
@@ -693,30 +693,47 @@ const pricingPlans = [
   {
     name: "Business",
     price: "990€",
-    subtitle: "Complete smart reception system",
-    desc: "You already have a website. We add an intelligent reception layer directly on top - no rebuild needed.",
+    subtitle: "Your complete smart reception system",
+    desc: "Already have a website? We add an intelligent reception layer on top - no rebuild needed.",
     features: [
-      "Professional website included",
-      "Smart phone reception",
-      "WhatsApp automation flow",
-      "Booking & confirmation system",
-      "Client follow-up sequences",
+      "Everything in Essential",
+      "Smart phone reception 24/7",
+      "Automated client follow-up sequences",
+      "Automatic request qualification & routing",
+      "🎁 ReadyFlow Manager included - track requests, assign tasks and monitor your team from one dashboard",
       "Setup in 48h",
     ],
     cta: "Request this system",
     highlight: true,
   },
   {
-    name: "Premium",
+    name: "Business+",
     price: "1 490€",
-    subtitle: "Premium - full system + AI phone + 30-day support",
-    desc: "A clean internal dashboard to track requests, manage clients and monitor your operations - all in one place.",
+    subtitle: "Full system with AI voice reception",
+    desc: "Everything in Business, plus a custom AI voice receptionist that answers and qualifies every call.",
     features: [
       "Everything in Business",
-      "AI phone reception setup",
-      "Custom voice & script",
-      "30-day follow-up & support",
+      "AI voice phone reception (custom voice + script)",
+      "Advanced multi-channel automation (web, WhatsApp, email)",
+      "Integration with your existing tools (CRM, calendar)",
+      "🎁 ReadyFlow Manager included",
+      "Setup in 48-72h",
+    ],
+    cta: "Request this system",
+    highlight: false,
+  },
+  {
+    name: "Premium",
+    price: "1 990€",
+    subtitle: "Full system, built and supported",
+    desc: "Our most complete package - fully customized, delivered with priority and supported for 30 days.",
+    features: [
+      "Everything in Business+",
+      "Full workflow audit & mapping",
+      "Advanced customization (voice, script, industry-specific scenarios)",
+      "30-day post-delivery support & adjustments included",
       "Priority delivery",
+      "🎁 ReadyFlow Manager included",
       "Setup in 72h",
     ],
     cta: "Request this system",
@@ -738,7 +755,7 @@ function Pricing() {
             </p>
           </div>
         </ParallaxTitle>
-        <div className="mt-14 grid md:grid-cols-3 gap-6">
+        <div className="mt-14 grid md:grid-cols-2 lg:grid-cols-4 gap-6">
           {pricingPlans.map(({ name, price, subtitle, desc, features, cta, highlight }) => (
             <div
               key={name}
