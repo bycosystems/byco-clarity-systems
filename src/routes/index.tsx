@@ -230,12 +230,10 @@ function Hero() {
             </p>
             <div className="mt-8 flex flex-wrap gap-3">
               <a
-                href={DEMO_URL}
-                target="_blank"
-                rel="noopener noreferrer"
+                href="#demo"
                 className="inline-flex items-center gap-2 px-5 py-3 rounded-md bg-white text-navy-deep font-medium hover:bg-white/90 transition"
               >
-                See the system <ArrowRight className="size-4" />
+                See a live demo <ArrowRight className="size-4" />
               </a>
               <a
                 href="#contact"
@@ -636,6 +634,38 @@ function FeaturedDemo() {
   return (
     <section id="demo" className="py-24 md:py-32">
       <div className="mx-auto max-w-7xl px-6">
+
+        {/* Live demo intro block */}
+        <div className="mb-16 rounded-2xl border border-brand/30 bg-navy-gradient text-white p-8 md:p-10">
+          <h2 className="text-2xl md:text-3xl font-medium leading-snug">
+            Live system — built for a real restaurant in Nice
+          </h2>
+          <p className="mt-3 text-white/70 leading-relaxed max-w-2xl">
+            This is a real demo we built. Explore it, then call or WhatsApp our demo receptionist.
+          </p>
+          <div className="mt-6 flex flex-wrap gap-3">
+            <a
+              href="https://bycosystems.xyz/demo/les-sens"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-2 px-5 py-3 rounded-md bg-white text-navy-deep font-medium hover:bg-white/90 transition"
+            >
+              Explore the demo <ArrowRight className="size-4" />
+            </a>
+            <a
+              href="https://wa.me/447576594092"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-2 px-5 py-3 rounded-md border border-white/20 bg-white/5 hover:bg-white/10 font-medium transition"
+            >
+              Call or WhatsApp +44 7576 594092
+            </a>
+          </div>
+          <p className="mt-4 text-xs text-white/45">
+            Our demo receptionist answers 24/7. This is exactly what we build for your business.
+          </p>
+        </div>
+
         <div className="grid lg:grid-cols-12 gap-12 items-center">
           <div className="lg:col-span-5">
             <ParallaxTitle word="GUIDE">
@@ -689,6 +719,7 @@ const pricingPlans = [
     ],
     cta: "Request this system",
     highlight: false,
+    badge: null,
   },
   {
     name: "Business",
@@ -705,6 +736,7 @@ const pricingPlans = [
     ],
     cta: "Request this system",
     highlight: true,
+    badge: null,
   },
   {
     name: "Business+",
@@ -721,6 +753,7 @@ const pricingPlans = [
     ],
     cta: "Request this system",
     highlight: false,
+    badge: "⭐ Recommended",
   },
   {
     name: "Premium",
@@ -738,6 +771,7 @@ const pricingPlans = [
     ],
     cta: "Request this system",
     highlight: false,
+    badge: null,
   },
 ];
 
@@ -756,7 +790,7 @@ function Pricing() {
           </div>
         </ParallaxTitle>
         <div className="mt-14 grid md:grid-cols-2 lg:grid-cols-4 gap-6">
-          {pricingPlans.map(({ name, price, subtitle, desc, features, cta, highlight }) => (
+          {pricingPlans.map(({ name, price, subtitle, desc, features, cta, highlight, badge }) => (
             <div
               key={name}
               className={`relative rounded-2xl p-8 border transition-all flex flex-col ${
@@ -765,9 +799,9 @@ function Pricing() {
                   : "border-border bg-white hover:border-brand/40 hover:shadow-elevated"
               }`}
             >
-              {highlight && (
-                <div className="absolute -top-3 left-1/2 -translate-x-1/2 px-4 py-1 rounded-full bg-brand text-white text-xs font-semibold">
-                  Most popular
+              {badge && (
+                <div className="absolute -top-3 left-1/2 -translate-x-1/2 px-4 py-1 rounded-full bg-brand text-white text-xs font-semibold whitespace-nowrap">
+                  {badge}
                 </div>
               )}
               <div>
@@ -806,10 +840,10 @@ function Pricing() {
 }
 
 const steps = [
-  { n: "01", title: "Understand the workflow", desc: "We map how your team actually works today." },
-  { n: "02", title: "Build a practical first version", desc: "A focused, usable system - not an oversized platform." },
-  { n: "03", title: "Adapt the system to the business", desc: "Refine details based on real day-to-day usage." },
-  { n: "04", title: "Deliver a clear and usable operational tool", desc: "A system your team can rely on from day one." },
+  { n: "01", title: "Understand the workflow", desc: "We map how your team actually works today.", day: "Day 1" },
+  { n: "02", title: "Build a practical first version", desc: "A focused, usable system - not an oversized platform.", day: "Day 1–2" },
+  { n: "03", title: "Adapt the system to the business", desc: "Refine details based on real day-to-day usage.", day: "Day 2–3" },
+  { n: "04", title: "Deliver a clear and usable operational tool", desc: "A system your team can rely on from day one.", day: "Delivered in 24–72h" },
 ];
 
 function Process() {
@@ -825,11 +859,12 @@ function Process() {
           </div>
         </ParallaxTitle>
         <div className="mt-14 grid md:grid-cols-2 lg:grid-cols-4 gap-6">
-          {steps.map(({ n, title, desc }) => (
+          {steps.map(({ n, title, desc, day }) => (
             <div key={n} className="rounded-xl p-6 border border-white/10 bg-white/5 backdrop-blur-sm">
               <div className="text-brand-soft text-sm font-mono font-semibold">{n}</div>
               <h3 className="mt-3 font-medium text-lg leading-snug">{title}</h3>
               <p className="mt-2 text-sm text-white/60 leading-relaxed">{desc}</p>
+              <div className="mt-4 inline-block px-3 py-1 rounded-full bg-white/10 text-xs font-semibold text-brand-soft tracking-wide">{day}</div>
             </div>
           ))}
         </div>
@@ -920,6 +955,61 @@ function Contact() {
   );
 }
 
+const faqItems = [
+  {
+    q: "Why not just use a €49/month subscription tool?",
+    a: "Those tools require setup, maintenance and ongoing fees. We build it, configure it and hand it over. One payment. Runs forever. One recovered client on a Saturday night pays for the whole thing.",
+  },
+  {
+    q: "Does this work for my type of business?",
+    a: "If clients call you, message you or book with you — yes. We've built systems for restaurants, clinics, law firms, salons and agencies. If you're a service business, we adapt.",
+  },
+  {
+    q: "How long until I'm up and running?",
+    a: "24 hours for Essential. 48 hours for Business and Business+. 72 hours for Premium. Not weeks. Not months.",
+  },
+  {
+    q: "What happens after delivery?",
+    a: "The system runs on its own. No action needed from your side. Premium plan includes 30 days of support and adjustments. All plans include a handover walkthrough.",
+  },
+  {
+    q: "Can I see it working before I buy?",
+    a: "Yes. Call or WhatsApp +44 7576 594092 right now. Our demo receptionist is live 24/7. That's exactly what we build for you.",
+  },
+];
+
+function FAQ() {
+  const [open, setOpen] = useState<number | null>(null);
+  return (
+    <section className="py-24 md:py-32 border-t border-border">
+      <div className="mx-auto max-w-3xl px-6">
+        <div className="text-center mb-12">
+          <h2 className="text-3xl md:text-4xl font-medium text-navy-deep">Common questions</h2>
+          <p className="mt-3 text-muted-foreground">Straight answers — no fluff.</p>
+        </div>
+        <div className="divide-y divide-border">
+          {faqItems.map(({ q, a }, i) => (
+            <div key={i}>
+              <button
+                onClick={() => setOpen(open === i ? null : i)}
+                className="w-full flex items-center justify-between gap-4 py-5 text-left text-navy-deep font-medium hover:text-brand transition"
+              >
+                <span>{q}</span>
+                <span className={`shrink-0 size-6 rounded-full border border-border grid place-items-center text-muted-foreground transition-transform ${open === i ? "rotate-45" : ""}`}>
+                  +
+                </span>
+              </button>
+              {open === i && (
+                <p className="pb-5 text-sm text-muted-foreground leading-relaxed">{a}</p>
+              )}
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
 function Footer() {
   return (
     <footer className="bg-navy-deep text-white/70">
@@ -961,6 +1051,7 @@ function HomePage() {
         <Pricing />
         <Process />
         <Contact />
+        <FAQ />
       </main>
       <Footer />
     </div>
