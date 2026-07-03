@@ -10,33 +10,89 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as DemoMaisonFIndexRouteImport } from './routes/demo/maison-f/index'
+import { Route as DemoLesSensIndexRouteImport } from './routes/demo/les-sens/index'
+import { Route as DemoLePanierIndexRouteImport } from './routes/demo/le-panier/index'
+import { Route as DemoLaReserveIndexRouteImport } from './routes/demo/la-reserve/index'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const DemoMaisonFIndexRoute = DemoMaisonFIndexRouteImport.update({
+  id: '/demo/maison-f/',
+  path: '/demo/maison-f/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const DemoLesSensIndexRoute = DemoLesSensIndexRouteImport.update({
+  id: '/demo/les-sens/',
+  path: '/demo/les-sens/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const DemoLePanierIndexRoute = DemoLePanierIndexRouteImport.update({
+  id: '/demo/le-panier/',
+  path: '/demo/le-panier/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const DemoLaReserveIndexRoute = DemoLaReserveIndexRouteImport.update({
+  id: '/demo/la-reserve/',
+  path: '/demo/la-reserve/',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/demo/la-reserve/': typeof DemoLaReserveIndexRoute
+  '/demo/le-panier/': typeof DemoLePanierIndexRoute
+  '/demo/les-sens/': typeof DemoLesSensIndexRoute
+  '/demo/maison-f/': typeof DemoMaisonFIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/demo/la-reserve': typeof DemoLaReserveIndexRoute
+  '/demo/le-panier': typeof DemoLePanierIndexRoute
+  '/demo/les-sens': typeof DemoLesSensIndexRoute
+  '/demo/maison-f': typeof DemoMaisonFIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/demo/la-reserve/': typeof DemoLaReserveIndexRoute
+  '/demo/le-panier/': typeof DemoLePanierIndexRoute
+  '/demo/les-sens/': typeof DemoLesSensIndexRoute
+  '/demo/maison-f/': typeof DemoMaisonFIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/'
+  fullPaths:
+    | '/'
+    | '/demo/la-reserve/'
+    | '/demo/le-panier/'
+    | '/demo/les-sens/'
+    | '/demo/maison-f/'
   fileRoutesByTo: FileRoutesByTo
-  to: '/'
-  id: '__root__' | '/'
+  to:
+    | '/'
+    | '/demo/la-reserve'
+    | '/demo/le-panier'
+    | '/demo/les-sens'
+    | '/demo/maison-f'
+  id:
+    | '__root__'
+    | '/'
+    | '/demo/la-reserve/'
+    | '/demo/le-panier/'
+    | '/demo/les-sens/'
+    | '/demo/maison-f/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  DemoLaReserveIndexRoute: typeof DemoLaReserveIndexRoute
+  DemoLePanierIndexRoute: typeof DemoLePanierIndexRoute
+  DemoLesSensIndexRoute: typeof DemoLesSensIndexRoute
+  DemoMaisonFIndexRoute: typeof DemoMaisonFIndexRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -48,11 +104,43 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/demo/maison-f/': {
+      id: '/demo/maison-f/'
+      path: '/demo/maison-f'
+      fullPath: '/demo/maison-f/'
+      preLoaderRoute: typeof DemoMaisonFIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/demo/les-sens/': {
+      id: '/demo/les-sens/'
+      path: '/demo/les-sens'
+      fullPath: '/demo/les-sens/'
+      preLoaderRoute: typeof DemoLesSensIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/demo/le-panier/': {
+      id: '/demo/le-panier/'
+      path: '/demo/le-panier'
+      fullPath: '/demo/le-panier/'
+      preLoaderRoute: typeof DemoLePanierIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/demo/la-reserve/': {
+      id: '/demo/la-reserve/'
+      path: '/demo/la-reserve'
+      fullPath: '/demo/la-reserve/'
+      preLoaderRoute: typeof DemoLaReserveIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  DemoLaReserveIndexRoute: DemoLaReserveIndexRoute,
+  DemoLePanierIndexRoute: DemoLePanierIndexRoute,
+  DemoLesSensIndexRoute: DemoLesSensIndexRoute,
+  DemoMaisonFIndexRoute: DemoMaisonFIndexRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
