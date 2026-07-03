@@ -653,7 +653,7 @@ function FeaturedDemo() {
               Explore the demo <ArrowRight className="size-4" />
             </a>
             <a
-              href="https://wa.me/447576594092"
+              href="https://wa.me/447576594092?text=Bonjour%20ByCo%20Systems%2C%20je%20souhaite%20en%20savoir%20plus%20sur%20votre%20syst%C3%A8me%20d%27accueil%20intelligent."
               target="_blank"
               rel="noopener noreferrer"
               className="inline-flex items-center gap-2 px-5 py-3 rounded-md border border-white/20 bg-white/5 hover:bg-white/10 font-medium transition"
@@ -931,7 +931,7 @@ function Contact() {
           <p className="mt-5 text-lg text-muted-foreground leading-relaxed">
             Tell us your biggest reception headache. We'll show you exactly what we can automate.
           </p>
-          <a href="https://wa.me/447576594092" target="_blank" rel="noopener noreferrer"
+          <a href="https://wa.me/447576594092?text=Bonjour%2C%20je%20viens%20de%20visiter%20votre%20site%20et%20j%27aimerais%20une%20d%C3%A9monstration." target="_blank" rel="noopener noreferrer"
             className="mt-6 inline-flex items-center gap-3 px-5 py-3 rounded-md bg-green-500 text-white font-medium hover:bg-green-600 transition"
           >
             <svg xmlns="http://www.w3.org/2000/svg" className="size-5 shrink-0" viewBox="0 0 24 24" fill="currentColor">
