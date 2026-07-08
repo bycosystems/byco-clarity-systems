@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>ReadyFlow Manager - Operations Dashboard</title>
-  <meta name="description" content="Track projects, assign tasks, follow status, and prepare deliverables faster. Built for service teams and operations." />
+  <title id="page-title">ReadyFlow Manager - Operations Dashboard</title>
+  <meta id="page-description" name="description" content="Track projects, assign tasks, follow status, and prepare deliverables faster. Built for service teams and operations." />
   <meta property="og:title" content="ReadyFlow Manager - Operations Dashboard" />
   <meta property="og:description" content="Turn messy service operations into one clear workspace" />
   <meta property="og:type" content="website" />
@@ -901,9 +901,9 @@
       <span>ByCo Systems</span>
     </a>
     <ul class="nav-links">
-      <li><a href="#problem">Problem</a></li>
-      <li><a href="#workflow">Workflow</a></li>
-      <li><a href="#dashboard">Dashboard</a></li>
+      <li><a href="#problem" data-fr="Problème">Problem</a></li>
+      <li><a href="#workflow" data-fr="Flux de travail">Workflow</a></li>
+      <li><a href="#dashboard" data-fr="Tableau de bord">Dashboard</a></li>
     </ul>
     <a href="tel:+447576594092" style="display:flex;align-items:center;gap:8px;color:var(--white);text-decoration:none;font-size:14px;font-weight:500;opacity:0.85;transition:opacity 0.2s;" onmouseover="this.style.opacity='1'" onmouseout="this.style.opacity='0.85'">
       <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -912,8 +912,9 @@
       +44 7576 594092
     </a>
     <div class="nav-actions">
-      <a href="#dashboard" class="btn-ghost">Live demo</a>
-      <a href="#cta" class="btn-cta">Request a Demo</a>
+      <button type="button" id="lang-toggle" class="btn-ghost" onclick="toggleLang()" style="font-weight:700;">FR</button>
+      <a href="#dashboard" class="btn-ghost" data-fr="Démo en direct">Live demo</a>
+      <a href="#cta" class="btn-cta" data-fr="Demander une démo">Request a Demo</a>
     </div>
   </nav>
 
@@ -921,11 +922,11 @@
   <section>
     <div class="hero">
       <div class="hero-tag">ByCo Systems - ReadyFlow Manager</div>
-      <h1>Turn messy service operations into <span>one clear workspace</span></h1>
-      <p>ReadyFlow Manager organizes requests, coordinates teams and keeps day-to-day operations moving from a single dashboard - built for modern service businesses.</p>
+      <h1 data-fr="Transformez des opérations désorganisées en <span>un espace de travail unique</span>">Turn messy service operations into <span>one clear workspace</span></h1>
+      <p data-fr="ReadyFlow Manager organise les demandes, coordonne les équipes et fait avancer les opérations quotidiennes depuis un tableau de bord unique - conçu pour les entreprises de services modernes.">ReadyFlow Manager organizes requests, coordinates teams and keeps day-to-day operations moving from a single dashboard - built for modern service businesses.</p>
       <div class="hero-buttons">
-        <a href="#cta" class="btn-primary">Request a Demo</a>
-        <a href="#dashboard" class="btn-secondary">See the system</a>
+        <a href="#cta" class="btn-primary" data-fr="Demander une démo">Request a Demo</a>
+        <a href="#dashboard" class="btn-secondary" data-fr="Voir le système">See the system</a>
       </div>
     </div>
   </section>
@@ -933,27 +934,27 @@
   <!-- METRICS -->
   <div class="metrics-bar" id="metrics-bar">
     <div class="metric-item">
-      <div class="metric-num">Real-time</div>
-      <div class="metric-label">View of your activity</div>
+      <div class="metric-num" data-fr="Temps réel">Real-time</div>
+      <div class="metric-label" data-fr="Vue de votre activité">View of your activity</div>
     </div>
     <div class="metric-item">
-      <div class="metric-num">Full history</div>
-      <div class="metric-label">Of every client exchange</div>
+      <div class="metric-num" data-fr="Historique complet">Full history</div>
+      <div class="metric-label" data-fr="De chaque échange client">Of every client exchange</div>
     </div>
     <div class="metric-item">
-      <div class="metric-num">Smart alerts</div>
-      <div class="metric-label">On priority tasks</div>
+      <div class="metric-num" data-fr="Alertes intelligentes">Smart alerts</div>
+      <div class="metric-label" data-fr="Sur les tâches prioritaires">On priority tasks</div>
     </div>
     <div class="metric-item">
       <div class="metric-num">24/7</div>
-      <div class="metric-label">Operations visibility</div>
+      <div class="metric-label" data-fr="Visibilité opérationnelle">Operations visibility</div>
     </div>
   </div>
 
   <!-- DASHBOARD PREVIEW -->
   <section id="dashboard">
     <div class="dashboard-preview">
-      <div class="section-label" style="margin-bottom:16px;">Live Dashboard Preview</div>
+      <div class="section-label" style="margin-bottom:16px;" data-fr="Aperçu du tableau de bord en direct">Live Dashboard Preview</div>
       <div class="dashboard-frame">
         <div class="frame-bar">
           <div class="frame-dot" style="background:#f87171;"></div>
@@ -964,28 +965,28 @@
         <div class="dash-layout">
           <!-- Sidebar -->
           <div class="dash-sidebar">
-            <div class="dash-sidebar-header">Workspace</div>
-            <div class="dash-nav-item active"><span class="dash-nav-icon">⊞</span> Overview</div>
-            <div class="dash-nav-item"><span class="dash-nav-icon">◫</span> Projects</div>
-            <div class="dash-nav-item"><span class="dash-nav-icon">✓</span> Tasks</div>
-            <div class="dash-nav-item"><span class="dash-nav-icon">◷</span> Schedule</div>
-            <div class="dash-nav-item"><span class="dash-nav-icon">◎</span> Team</div>
-            <div class="dash-nav-item"><span class="dash-nav-icon">↗</span> Reports</div>
+            <div class="dash-sidebar-header" data-fr="Espace de travail">Workspace</div>
+            <div class="dash-nav-item active"><span class="dash-nav-icon">⊞</span> <span data-fr="Aperçu">Overview</span></div>
+            <div class="dash-nav-item"><span class="dash-nav-icon">◫</span> <span data-fr="Projets">Projects</span></div>
+            <div class="dash-nav-item"><span class="dash-nav-icon">✓</span> <span data-fr="Tâches">Tasks</span></div>
+            <div class="dash-nav-item"><span class="dash-nav-icon">◷</span> <span data-fr="Planning">Schedule</span></div>
+            <div class="dash-nav-item"><span class="dash-nav-icon">◎</span> <span data-fr="Équipe">Team</span></div>
+            <div class="dash-nav-item"><span class="dash-nav-icon">↗</span> <span data-fr="Rapports">Reports</span></div>
             <div class="dash-workspace">
-              <div class="workspace-label">Demo workspace</div>
-              <div class="workspace-sub">Sample data - explore freely.</div>
+              <div class="workspace-label" data-fr="Espace de démo">Demo workspace</div>
+              <div class="workspace-sub" data-fr="Données d'exemple - explorez librement.">Sample data - explore freely.</div>
             </div>
           </div>
           <!-- Main -->
           <div class="dash-main">
             <div class="dash-header">
               <div>
-                <div class="dash-title">Operations overview</div>
-                <div class="dash-subtitle">Live snapshot of your portfolio readiness.</div>
+                <div class="dash-title" data-fr="Aperçu des opérations">Operations overview</div>
+                <div class="dash-subtitle" data-fr="Instantané en direct de l'état de votre portefeuille.">Live snapshot of your portfolio readiness.</div>
               </div>
               <div class="dash-actions">
-                <button class="dash-btn">Filter</button>
-                <button class="dash-btn primary">+ New task</button>
+                <button class="dash-btn" data-fr="Filtrer">Filter</button>
+                <button class="dash-btn primary" data-fr="+ Nouvelle tâche">+ New task</button>
               </div>
             </div>
             <!-- Stats -->
@@ -993,68 +994,68 @@
               <div class="stat-card">
                 <div class="stat-icon">⚡</div>
                 <div class="stat-num"><span class="countup" data-target="48" data-suffix="">0</span></div>
-                <div class="stat-label">Active workflows</div>
+                <div class="stat-label" data-fr="Flux actifs">Active workflows</div>
               </div>
               <div class="stat-card">
                 <div class="stat-icon">✓</div>
                 <div class="stat-num"><span class="countup" data-target="21" data-suffix="">0</span></div>
-                <div class="stat-label">Completed</div>
+                <div class="stat-label" data-fr="Terminé">Completed</div>
               </div>
               <div class="stat-card">
                 <div class="stat-icon">⚙</div>
                 <div class="stat-num"><span class="countup" data-target="19" data-suffix="">0</span></div>
-                <div class="stat-label">Operations running</div>
+                <div class="stat-label" data-fr="Opérations en cours">Operations running</div>
               </div>
               <div class="stat-card">
                 <div class="stat-icon">⚑</div>
                 <div class="stat-num"><span class="countup" data-target="6" data-suffix="">0</span></div>
-                <div class="stat-label">Priority tasks</div>
+                <div class="stat-label" data-fr="Tâches prioritaires">Priority tasks</div>
               </div>
               <div class="stat-card">
                 <div class="stat-icon">◷</div>
                 <div class="stat-num"><span class="countup" data-target="5" data-suffix="">0</span></div>
-                <div class="stat-label">Today's ops</div>
+                <div class="stat-label" data-fr="Opérations du jour">Today's ops</div>
               </div>
             </div>
             <!-- Projects table -->
             <div class="projects-table">
               <div class="table-header">
-                <span class="table-title">Live team operations</span>
-                <span class="table-link">View all</span>
+                <span class="table-title" data-fr="Opérations d'équipe en direct">Live team operations</span>
+                <span class="table-link" data-fr="Tout voir">View all</span>
               </div>
               <div class="table-row head">
-                <span>Project</span><span>Status</span><span>Priority</span><span>Assigned</span><span>Due</span><span>Progress</span>
+                <span data-fr="Projet">Project</span><span data-fr="Statut">Status</span><span data-fr="Priorité">Priority</span><span data-fr="Assigné">Assigned</span><span data-fr="Échéance">Due</span><span data-fr="Progression">Progress</span>
               </div>
               <div class="table-row">
                 <div><div class="project-name">Client Alpha</div><div class="project-team">Operations Team</div></div>
-                <span><span class="badge-status badge-pending">Pending review</span></span>
-                <span><span class="badge-priority priority-high">High</span></span>
+                <span><span class="badge-status badge-pending" data-fr="En attente de revue">Pending review</span></span>
+                <span><span class="badge-priority priority-high" data-fr="Élevée">High</span></span>
                 <span><span class="avatar">SK</span></span>
-                <span style="font-size:11px;color:var(--muted);">Today 4pm</span>
+                <span style="font-size:11px;color:var(--muted);" data-fr="Aujourd'hui 16h">Today 4pm</span>
                 <div><div class="progress-bar"><div class="progress-fill" style="width:35%"></div></div><div style="font-size:10px;color:var(--muted);margin-top:3px;">35%</div></div>
               </div>
               <div class="table-row">
                 <div><div class="project-name">Support Queue</div><div class="project-team">Support Team</div></div>
-                <span><span class="badge-status badge-progress">In progress</span></span>
-                <span><span class="badge-priority priority-medium">Medium</span></span>
+                <span><span class="badge-status badge-progress" data-fr="En cours">In progress</span></span>
+                <span><span class="badge-priority priority-medium" data-fr="Moyenne">Medium</span></span>
                 <span><span class="avatar">MD</span></span>
-                <span style="font-size:11px;color:var(--muted);">Tomorrow</span>
+                <span style="font-size:11px;color:var(--muted);" data-fr="Demain">Tomorrow</span>
                 <div><div class="progress-bar"><div class="progress-fill" style="width:60%"></div></div><div style="font-size:10px;color:var(--muted);margin-top:3px;">60%</div></div>
               </div>
               <div class="table-row">
                 <div><div class="project-name">Marketing Ops</div><div class="project-team">Marketing Team</div></div>
-                <span><span class="badge-status badge-ready">Ready</span></span>
-                <span><span class="badge-priority priority-low">Low</span></span>
+                <span><span class="badge-status badge-ready" data-fr="Prêt">Ready</span></span>
+                <span><span class="badge-priority priority-low" data-fr="Faible">Low</span></span>
                 <span><span class="avatar">EW</span></span>
-                <span style="font-size:11px;color:var(--muted);">Today 6pm</span>
+                <span style="font-size:11px;color:var(--muted);" data-fr="Aujourd'hui 18h">Today 6pm</span>
                 <div><div class="progress-bar"><div class="progress-fill" style="width:90%"></div></div><div style="font-size:10px;color:var(--muted);margin-top:3px;">90%</div></div>
               </div>
               <div class="table-row">
                 <div><div class="project-name">Client Success</div><div class="project-team">CS Team</div></div>
-                <span><span class="badge-status badge-scheduled">Scheduled</span></span>
-                <span><span class="badge-priority priority-urgent">Urgent</span></span>
+                <span><span class="badge-status badge-scheduled" data-fr="Planifié">Scheduled</span></span>
+                <span><span class="badge-priority priority-urgent" data-fr="Urgent">Urgent</span></span>
                 <span><span class="avatar">LP</span></span>
-                <span style="font-size:11px;color:var(--muted);">Today 2pm</span>
+                <span style="font-size:11px;color:var(--muted);" data-fr="Aujourd'hui 14h">Today 2pm</span>
                 <div><div class="progress-bar"><div class="progress-fill" style="width:75%"></div></div><div style="font-size:10px;color:var(--muted);margin-top:3px;">75%</div></div>
               </div>
             </div>
@@ -1067,34 +1068,34 @@
   <!-- PROBLEM -->
   <section id="problem">
     <div class="section-block">
-      <div class="section-label">The Problem</div>
-      <h2>Business operations break in the same five places</h2>
-      <p>Spreadsheets and group chats weren't built to coordinate teams and projects across a growing organization.</p>
+      <div class="section-label" data-fr="Le problème">The Problem</div>
+      <h2 data-fr="Les opérations business échouent toujours aux cinq mêmes endroits">Business operations break in the same five places</h2>
+      <p data-fr="Les tableurs et les discussions de groupe n'ont pas été conçus pour coordonner équipes et projets au sein d'une organisation en croissance.">Spreadsheets and group chats weren't built to coordinate teams and projects across a growing organization.</p>
       <div class="problems-grid">
         <div class="problem-card">
           <div class="problem-icon">💬</div>
-          <h3>Scattered messages</h3>
-          <p>Updates lost across dozens of group chats with no single source of truth.</p>
+          <h3 data-fr="Messages éparpillés">Scattered messages</h3>
+          <p data-fr="Des mises à jour perdues dans des dizaines de discussions de groupe, sans source unique de vérité.">Updates lost across dozens of group chats with no single source of truth.</p>
         </div>
         <div class="problem-card">
           <div class="problem-icon">🔧</div>
-          <h3>Missed tasks</h3>
-          <p>Repairs and action items slip through the cracks until it's too late.</p>
+          <h3 data-fr="Tâches oubliées">Missed tasks</h3>
+          <p data-fr="Les réparations et actions à mener passent entre les mailles du filet jusqu'à ce qu'il soit trop tard.">Repairs and action items slip through the cracks until it's too late.</p>
         </div>
         <div class="problem-card">
           <div class="problem-icon">🔍</div>
-          <h3>Unclear status</h3>
-          <p>Teams lack real-time visibility on what's running, what's stuck, and what's done.</p>
+          <h3 data-fr="Statut flou">Unclear status</h3>
+          <p data-fr="Les équipes manquent de visibilité en temps réel sur ce qui avance, ce qui bloque et ce qui est terminé.">Teams lack real-time visibility on what's running, what's stuck, and what's done.</p>
         </div>
         <div class="problem-card">
           <div class="problem-icon">⏱</div>
-          <h3>Delayed coordination</h3>
-          <p>Delays impact delivery timelines and team performance without anyone noticing early enough.</p>
+          <h3 data-fr="Coordination retardée">Delayed coordination</h3>
+          <p data-fr="Les retards affectent les délais de livraison et la performance de l'équipe sans que personne ne le remarque à temps.">Delays impact delivery timelines and team performance without anyone noticing early enough.</p>
         </div>
         <div class="problem-card">
           <div class="problem-icon">📊</div>
-          <h3>No manager visibility</h3>
-          <p>Owners can't see what's happening without a phone call or chasing their team.</p>
+          <h3 data-fr="Aucune visibilité pour les responsables">No manager visibility</h3>
+          <p data-fr="Les dirigeants ne voient ce qui se passe qu'en passant un appel ou en relançant leur équipe.">Owners can't see what's happening without a phone call or chasing their team.</p>
         </div>
       </div>
     </div>
@@ -1103,80 +1104,80 @@
   <!-- TASKS & SCHEDULE -->
   <section id="workflow">
     <div class="section-block">
-      <div class="section-label">Task Management</div>
-      <h2>Every task, assigned clearly and delivered on time</h2>
-      <p>Assign tasks, track priorities and keep every team aligned in one workspace.</p>
+      <div class="section-label" data-fr="Gestion des tâches">Task Management</div>
+      <h2 data-fr="Chaque tâche, assignée clairement et livrée à temps">Every task, assigned clearly and delivered on time</h2>
+      <p data-fr="Assignez des tâches, suivez les priorités et gardez toutes les équipes alignées dans un seul espace de travail.">Assign tasks, track priorities and keep every team aligned in one workspace.</p>
       <div class="tasks-section">
         <div class="task-list-card">
-          <div class="task-list-title">Active tasks <span class="task-count">6 tasks</span></div>
+          <div class="task-list-title"><span data-fr="Tâches actives">Active tasks</span> <span class="task-count" data-fr="6 tâches">6 tasks</span></div>
           <div class="task-item">
             <div class="task-check"></div>
             <div class="task-info">
-              <div class="task-name">Client onboarding</div>
-              <div class="task-meta">Client Alpha · Sara Khalil · Today</div>
+              <div class="task-name" data-fr="Intégration client">Client onboarding</div>
+              <div class="task-meta">Client Alpha · Sara Khalil · <span data-fr="Aujourd'hui">Today</span></div>
             </div>
-            <span class="badge-priority priority-high">High</span>
+            <span class="badge-priority priority-high" data-fr="Élevée">High</span>
           </div>
           <div class="task-item">
             <div class="task-check"></div>
             <div class="task-info">
-              <div class="task-name">System update</div>
-              <div class="task-meta">Support Queue · Marco Diaz · Tomorrow</div>
+              <div class="task-name" data-fr="Mise à jour système">System update</div>
+              <div class="task-meta">Support Queue · Marco Diaz · <span data-fr="Demain">Tomorrow</span></div>
             </div>
-            <span class="badge-priority priority-medium">Medium</span>
+            <span class="badge-priority priority-medium" data-fr="Moyenne">Medium</span>
           </div>
           <div class="task-item">
             <div class="task-check done">✓</div>
             <div class="task-info">
-              <div class="task-name" style="text-decoration:line-through;opacity:0.5;">Campaign review</div>
-              <div class="task-meta">Marketing Ops · Emma Wright · Today</div>
+              <div class="task-name" style="text-decoration:line-through;opacity:0.5;" data-fr="Revue de campagne">Campaign review</div>
+              <div class="task-meta">Marketing Ops · Emma Wright · <span data-fr="Aujourd'hui">Today</span></div>
             </div>
-            <span class="badge-priority priority-low">Low</span>
+            <span class="badge-priority priority-low" data-fr="Faible">Low</span>
           </div>
           <div class="task-item">
             <div class="task-check"></div>
             <div class="task-info">
-              <div class="task-name">Data sync</div>
-              <div class="task-meta">Client Success · Liam Park · Today</div>
+              <div class="task-name" data-fr="Synchronisation des données">Data sync</div>
+              <div class="task-meta">Client Success · Liam Park · <span data-fr="Aujourd'hui">Today</span></div>
             </div>
-            <span class="badge-priority priority-urgent">Urgent</span>
+            <span class="badge-priority priority-urgent" data-fr="Urgent">Urgent</span>
           </div>
           <div class="task-item">
             <div class="task-check"></div>
             <div class="task-info">
-              <div class="task-name">Project delivery</div>
-              <div class="task-meta">Client Success · Liam Park · Today</div>
+              <div class="task-name" data-fr="Livraison du projet">Project delivery</div>
+              <div class="task-meta">Client Success · Liam Park · <span data-fr="Aujourd'hui">Today</span></div>
             </div>
-            <span class="badge-priority priority-urgent">Urgent</span>
+            <span class="badge-priority priority-urgent" data-fr="Urgent">Urgent</span>
           </div>
         </div>
         <div class="task-list-card">
-          <div class="task-list-title">Today's schedule <span class="task-count">5 operations</span></div>
+          <div class="task-list-title"><span data-fr="Planning du jour">Today's schedule</span> <span class="task-count" data-fr="5 opérations">5 operations</span></div>
           <div class="schedule-list">
             <div class="schedule-item">
               <span class="schedule-time">10:30</span>
               <div class="schedule-dot"></div>
-              <span>Client onboarding - Client Alpha</span>
+              <span data-fr="Intégration client - Client Alpha">Client onboarding - Client Alpha</span>
             </div>
             <div class="schedule-item">
               <span class="schedule-time">12:00</span>
               <div class="schedule-dot"></div>
-              <span>System update - Support Queue</span>
+              <span data-fr="Mise à jour système - Support Queue">System update - Support Queue</span>
             </div>
             <div class="schedule-item">
               <span class="schedule-time">14:00</span>
               <div class="schedule-dot"></div>
-              <span>Client follow-up - Client Success</span>
+              <span data-fr="Suivi client - Client Success">Client follow-up - Client Success</span>
             </div>
             <div class="schedule-item">
               <span class="schedule-time">16:00</span>
               <div class="schedule-dot"></div>
-              <span>Quality review - Marketing Ops</span>
+              <span data-fr="Revue qualité - Marketing Ops">Quality review - Marketing Ops</span>
             </div>
             <div class="schedule-item">
               <span class="schedule-time">18:30</span>
               <div class="schedule-dot"></div>
-              <span>Project delivery - Client Success</span>
+              <span data-fr="Livraison du projet - Client Success">Project delivery - Client Success</span>
             </div>
           </div>
         </div>
@@ -1187,29 +1188,29 @@
   <!-- HOW IT WORKS -->
   <section>
     <div class="section-block">
-      <div class="section-label">How it works</div>
-      <h2>From new project to delivery in four steps</h2>
-      <p style="margin-bottom:52px;">A simple, repeatable process that keeps every project on track from start to finish.</p>
+      <div class="section-label" data-fr="Comment ça marche">How it works</div>
+      <h2 data-fr="Du nouveau projet à la livraison en quatre étapes">From new project to delivery in four steps</h2>
+      <p style="margin-bottom:52px;" data-fr="Un processus simple et reproductible qui garde chaque projet sur la bonne voie du début à la fin.">A simple, repeatable process that keeps every project on track from start to finish.</p>
       <div class="steps-grid">
         <div class="step-card">
           <div class="step-num">1</div>
-          <h3>Add project</h3>
-          <p>Create projects, campaigns or operational tasks with full details and context.</p>
+          <h3 data-fr="Ajouter un projet">Add project</h3>
+          <p data-fr="Créez des projets, campagnes ou tâches opérationnelles avec tous les détails et le contexte.">Create projects, campaigns or operational tasks with full details and context.</p>
         </div>
         <div class="step-card">
           <div class="step-num">2</div>
-          <h3>Assign tasks</h3>
-          <p>Assign tasks and updates to the right teammate with priority and deadline.</p>
+          <h3 data-fr="Assigner des tâches">Assign tasks</h3>
+          <p data-fr="Assignez tâches et mises à jour au bon coéquipier avec priorité et échéance.">Assign tasks and updates to the right teammate with priority and deadline.</p>
         </div>
         <div class="step-card">
           <div class="step-num">3</div>
-          <h3>Track progress</h3>
-          <p>See live status, blockers and ETAs across the entire portfolio in real time.</p>
+          <h3 data-fr="Suivre l'avancement">Track progress</h3>
+          <p data-fr="Visualisez en temps réel le statut, les blocages et les délais sur l'ensemble du portefeuille.">See live status, blockers and ETAs across the entire portfolio in real time.</p>
         </div>
         <div class="step-card">
           <div class="step-num">4</div>
-          <h3>Complete workflow</h3>
-          <p>Confirm delivery and notify the team automatically when a workflow closes.</p>
+          <h3 data-fr="Terminer le flux">Complete workflow</h3>
+          <p data-fr="Confirmez la livraison et notifiez automatiquement l'équipe à la clôture d'un flux.">Confirm delivery and notify the team automatically when a workflow closes.</p>
         </div>
       </div>
     </div>
@@ -1220,18 +1221,18 @@
     <div class="cta-section">
       <div class="cta-box">
         <div class="section-label">ByCo Systems</div>
-        <h2>Want this adapted for your business?</h2>
-        <p>We'll tailor ReadyFlow Manager to your projects, teams and processes - and walk you through a live demo personalized to your operations.</p>
+        <h2 data-fr="Envie de l'adapter à votre entreprise ?">Want this adapted for your business?</h2>
+        <p data-fr="Nous adapterons ReadyFlow Manager à vos projets, équipes et processus - et vous présenterons une démo en direct personnalisée pour vos opérations.">We'll tailor ReadyFlow Manager to your projects, teams and processes - and walk you through a live demo personalized to your operations.</p>
         <div class="cta-perks">
-          <div class="cta-perk">Personalized walkthrough on your portfolio</div>
-          <div class="cta-perk">Custom workflow mapping for your team</div>
-          <div class="cta-perk">No commitment - demo concept only</div>
+          <div class="cta-perk" data-fr="Présentation personnalisée de votre portefeuille">Personalized walkthrough on your portfolio</div>
+          <div class="cta-perk" data-fr="Cartographie de flux sur-mesure pour votre équipe">Custom workflow mapping for your team</div>
+          <div class="cta-perk" data-fr="Sans engagement - démo à titre d'exemple uniquement">No commitment - demo concept only</div>
         </div>
         <div style="display:flex;flex-direction:column;gap:12px;align-items:flex-start;">
-          <a href="https://bycosystems.xyz/#pricing" class="btn-secondary">← View pricing &amp; plans</a>
+          <a href="https://bycosystems.xyz/#pricing" class="btn-secondary" data-fr="← Voir les tarifs et offres">← View pricing &amp; plans</a>
           <div class="cta-buttons">
-            <a href="https://wa.me/447576594092?text=Hello%20ByCo%20Systems%2C%20I%20would%20like%20a%20demo%20of%20ReadyFlow%20Manager." class="btn-primary">Chat on WhatsApp</a>
-            <a href="https://bycosystems.xyz/#contact" class="btn-secondary">Send an Email</a>
+            <a href="https://wa.me/447576594092?text=Hello%20ByCo%20Systems%2C%20I%20would%20like%20a%20demo%20of%20ReadyFlow%20Manager." class="btn-primary" data-fr="Discuter sur WhatsApp">Chat on WhatsApp</a>
+            <a href="https://bycosystems.xyz/#contact" class="btn-secondary" data-fr="Envoyer un email">Send an Email</a>
           </div>
         </div>
       </div>
@@ -1240,8 +1241,8 @@
 
   <!-- FOOTER -->
   <footer>
-    <span>ReadyFlow Manager · Service operations, simplified.</span>
-    <span>© 2026 · <a href="https://bycosystems.xyz">Powered by ByCo Systems</a></span>
+    <span data-fr="ReadyFlow Manager · Les opérations de service, simplifiées.">ReadyFlow Manager · Service operations, simplified.</span>
+    <span>© 2026 · <a href="https://bycosystems.xyz" data-fr="Propulsé par ByCo Systems">Powered by ByCo Systems</a></span>
   </footer>
 
   <script>
@@ -1276,6 +1277,46 @@
 
     observeSection('metrics-bar');
     observeSection('dash-stats');
+
+    // --- FR/EN toggle ---
+    const EN_TITLE = 'ReadyFlow Manager - Operations Dashboard';
+    const FR_TITLE = 'ReadyFlow Manager - Tableau de bord opérationnel';
+    const EN_DESC = 'Track projects, assign tasks, follow status, and prepare deliverables faster. Built for service teams and operations.';
+    const FR_DESC = 'Suivez vos projets, assignez des tâches, suivez leur statut et préparez vos livrables plus rapidement. Conçu pour les équipes et opérations de services.';
+
+    let currentLang = 'en';
+
+    function applyLang(lang) {
+      document.querySelectorAll('[data-fr]').forEach((el) => {
+        if (el.dataset.enCache === undefined) el.dataset.enCache = el.innerHTML;
+        el.innerHTML = lang === 'fr' ? el.dataset.fr : el.dataset.enCache;
+      });
+      document.documentElement.lang = lang;
+      document.getElementById('page-title').textContent = lang === 'fr' ? FR_TITLE : EN_TITLE;
+      document.getElementById('page-description').setAttribute('content', lang === 'fr' ? FR_DESC : EN_DESC);
+      const btn = document.getElementById('lang-toggle');
+      if (btn) btn.textContent = lang === 'fr' ? 'EN' : 'FR';
+      try { localStorage.setItem('rfm_lang', lang); } catch (e) {}
+      currentLang = lang;
+    }
+
+    function toggleLang() {
+      applyLang(currentLang === 'fr' ? 'en' : 'fr');
+    }
+
+    (function initLang() {
+      const params = new URLSearchParams(window.location.search);
+      let initial = 'en';
+      if (params.get('lang') === 'fr') {
+        initial = 'fr';
+      } else {
+        try {
+          const stored = localStorage.getItem('rfm_lang');
+          if (stored === 'fr' || stored === 'en') initial = stored;
+        } catch (e) {}
+      }
+      applyLang(initial);
+    })();
   </script>
 </body>
 </html>

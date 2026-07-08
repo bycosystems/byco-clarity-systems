@@ -36,6 +36,9 @@ export const Route = createFileRoute("/")({
 });
 
 const DEMO_URL = "/readyflow-manager.html";
+function demoUrl(lang: Lang) {
+  return lang === "fr" ? `${DEMO_URL}?lang=fr` : DEMO_URL;
+}
 const WHATSAPP_URL = "https://wa.me/447576594092";
 const PHONE_HREF = "tel:+447576594092";
 const PHONE_DISPLAY = "+44 7576 594092";
@@ -303,6 +306,7 @@ const pillarIcons = [Phone, MessageSquare, Zap];
 
 function CoreOffer() {
   const t = useContent();
+  const lang = useLang();
   return (
     <section id="offer" className="py-24 md:py-32">
       <div className="mx-auto max-w-7xl px-6">
@@ -331,7 +335,7 @@ function CoreOffer() {
           })}
         </div>
         <div className="mt-14 text-center">
-          <a href={DEMO_URL}
+          <a href={demoUrl(lang)}
             className="inline-flex items-center gap-2 px-6 py-3 rounded-md bg-navy text-white font-medium hover:bg-navy-deep transition"
           >
             {t.coreOffer.ctaDashboard}
@@ -591,6 +595,7 @@ const demoFeatureIcons = [ListChecks, Building2, Workflow, Users, Eye, Inbox];
 
 function FeaturedDemo() {
   const t = useContent();
+  const lang = useLang();
   return (
     <section id="demo" className="py-24 md:py-32">
       <div className="mx-auto max-w-7xl px-6">
@@ -647,7 +652,7 @@ function FeaturedDemo() {
                 );
               })}
             </ul>
-            <a href={DEMO_URL}
+            <a href={demoUrl(lang)}
               className="mt-10 inline-flex items-center gap-2 px-5 py-3 rounded-md bg-navy text-white font-medium hover:bg-navy-deep transition"
             >
               {t.featuredDemo.cta}
@@ -688,12 +693,12 @@ function Pricing() {
                 key={name}
                 className={`relative rounded-2xl p-8 border transition-all flex flex-col ${
                   highlight
-                    ? "border-brand bg-navy text-white shadow-elevated scale-[1.02]"
+                    ? "border-2 border-brand bg-gradient-to-b from-navy to-navy-deep text-white shadow-elevated ring-1 ring-brand/30 scale-[1.02]"
                     : "border-border bg-white hover:border-brand/40 hover:shadow-elevated"
                 }`}
               >
                 {badge && (
-                  <div className="absolute -top-3 left-1/2 -translate-x-1/2 px-4 py-1 rounded-full bg-brand text-white text-xs font-semibold whitespace-nowrap">
+                  <div className="absolute -top-3.5 left-1/2 -translate-x-1/2 px-5 py-1.5 rounded-full bg-brand text-white text-sm font-semibold whitespace-nowrap shadow-md shadow-brand/40">
                     {badge}
                   </div>
                 )}
