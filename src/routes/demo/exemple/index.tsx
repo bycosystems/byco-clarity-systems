@@ -397,7 +397,7 @@ function Accueil({ go }: { go: (s: ScreenId) => void }) {
             lineHeight: 1.55,
           }}
         >
-          Cyrille et Céline vous accueillent du lundi au vendredi
+          L'équipe du restaurant vous accueille du lundi au vendredi
         </p>
 
         {/* Carte réservation */}
@@ -508,7 +508,7 @@ type Cat =
   | "Poissons"
   | "Viandes"
   | "Végétarien"
-  | "Desserts Céline";
+  | "Desserts Maison";
 
 const FILTERS: Cat[] = [
   "Tous",
@@ -516,7 +516,7 @@ const FILTERS: Cat[] = [
   "Poissons",
   "Viandes",
   "Végétarien",
-  "Desserts Céline",
+  "Desserts Maison",
 ];
 
 type Plat = {
@@ -576,25 +576,25 @@ const PLATS: Plat[] = [
     prix: 22,
   },
   {
-    cat: "Desserts Céline",
+    cat: "Desserts Maison",
     nom: "Tarte fine aux abricots",
     desc: "crème d'amande",
     prix: 10,
   },
   {
-    cat: "Desserts Céline",
+    cat: "Desserts Maison",
     nom: "Moelleux au chocolat",
     desc: "glace vanille maison",
     prix: 9,
   },
   {
-    cat: "Desserts Céline",
+    cat: "Desserts Maison",
     nom: "Panna cotta à la lavande",
     desc: "coulis de fraise",
     prix: 8,
   },
   {
-    cat: "Desserts Céline",
+    cat: "Desserts Maison",
     nom: "Pain perdu brioché",
     desc: "caramel au beurre salé",
     prix: 9,
@@ -609,7 +609,7 @@ function Carte({ go }: { go: (s: ScreenId) => void }) {
       ? PLATS
       : PLATS.filter((p) => p.cat === activeFilter);
 
-  const showCeline = activeFilter === "Tous" || activeFilter === "Desserts Céline";
+  const showDessertsMaison = activeFilter === "Tous" || activeFilter === "Desserts Maison";
 
   return (
     <div style={{ paddingBottom: 28 }}>
@@ -696,7 +696,7 @@ function Carte({ go }: { go: (s: ScreenId) => void }) {
                 marginBottom: 14,
               }}
             >
-              Sélection Cyrille
+              Sélection du Chef
             </div>
 
             {/* Emplacement visuel dans le menu */}
@@ -714,7 +714,7 @@ function Carte({ go }: { go: (s: ScreenId) => void }) {
             {[
               { label: "Entrée", nom: "Carpaccio de daurade", desc: "citron confit, herbes fraîches du marché", prix: "14€" },
               { label: "Plat", nom: "Agneau de Sisteron", desc: "jus corsé, légumes de saison", prix: "26€" },
-              { label: "Dessert Céline", nom: "Tarte fine aux abricots", desc: "crème d'amande", prix: "10€" },
+              { label: "Dessert Maison", nom: "Tarte fine aux abricots", desc: "crème d'amande", prix: "10€" },
             ].map((item) => (
               <div
                 key={item.label}
@@ -783,8 +783,8 @@ function Carte({ go }: { go: (s: ScreenId) => void }) {
           </div>
         )}
 
-        {/* Desserts Céline encadré spécial */}
-        {showCeline && activeFilter !== "Tous" && (
+        {/* Desserts Maison encadré spécial */}
+        {showDessertsMaison && activeFilter !== "Tous" && (
           <div
             style={{
               background: C.terracotta,
@@ -798,7 +798,7 @@ function Carte({ go }: { go: (s: ScreenId) => void }) {
               ✦ Pâtisserie
             </div>
             <div style={{ fontFamily: SERIF, fontSize: 15, fontWeight: 600, lineHeight: 1.3 }}>
-              Fait maison par Céline, notre chef pâtissière
+              Fait maison par notre équipe de pâtisserie
             </div>
           </div>
         )}
@@ -806,7 +806,7 @@ function Carte({ go }: { go: (s: ScreenId) => void }) {
         {/* Liste des plats */}
         <div style={{ display: "grid", gap: 10 }}>
           {visible.map((p, i) => {
-            const isCeline = p.cat === "Desserts Céline";
+            const isDessertMaison = p.cat === "Desserts Maison";
             return (
               <div
                 key={`${p.cat}-${i}`}
@@ -814,7 +814,7 @@ function Carte({ go }: { go: (s: ScreenId) => void }) {
                   background: "#fff",
                   borderRadius: 12,
                   padding: "14px 15px",
-                  border: isCeline
+                  border: isDessertMaison
                     ? `1.5px solid ${C.terracotta}`
                     : `1px solid ${C.line}`,
                   display: "flex",
@@ -831,7 +831,7 @@ function Carte({ go }: { go: (s: ScreenId) => void }) {
                         fontSize: 8.5,
                         letterSpacing: "0.14em",
                         textTransform: "uppercase",
-                        color: isCeline ? C.terracotta : C.inkSoft,
+                        color: isDessertMaison ? C.terracotta : C.inkSoft,
                         marginBottom: 3,
                         fontWeight: 600,
                       }}
@@ -880,7 +880,7 @@ function Carte({ go }: { go: (s: ScreenId) => void }) {
           })}
         </div>
 
-        {/* Desserts Céline encadré (vue Tous) */}
+        {/* Desserts Maison encadré (vue Tous) */}
         {activeFilter === "Tous" && (
           <div
             style={{
@@ -895,10 +895,10 @@ function Carte({ go }: { go: (s: ScreenId) => void }) {
               ✦ Les desserts
             </div>
             <div style={{ fontFamily: SERIF, fontSize: 17, fontWeight: 600, marginBottom: 6 }}>
-              Créations de Céline Billa
+              Nos créations maison
             </div>
             <div style={{ fontSize: 12, opacity: 0.88, lineHeight: 1.45 }}>
-              Chaque dessert est imaginé et réalisé par Céline, notre chef pâtissière — de la tarte aux gâteaux, jusqu'au pain du jour.
+              Chaque dessert est imaginé et réalisé par notre équipe de pâtisserie — de la tarte aux gâteaux, jusqu'au pain du jour.
             </div>
           </div>
         )}
@@ -1009,7 +1009,7 @@ function Reservation({
             maxWidth: 300,
           }}
         >
-          votre table du mardi 8 juillet à 19h30 est confirmée. Cyrille vous attend.
+          votre table du mardi 8 juillet à 19h30 est confirmée. L'équipe vous attend.
         </p>
         <div
           style={{
@@ -1066,7 +1066,7 @@ function Reservation({
           lineHeight: 1.5,
         }}
       >
-        Cyrille et son équipe vous attendent
+        Toute l'équipe vous attend
       </p>
 
       {/* 1. Date */}
@@ -1381,7 +1381,7 @@ function MaTable({
       )}
       {tableAction === "modifier" && (
         <Banner tone="neutral">
-          Demande de modification transmise. Cyrille vous recontacte sous peu.
+          Demande de modification transmise. L'équipe vous recontacte sous peu.
         </Banner>
       )}
       {tableAction === "annuler" && (
@@ -1535,7 +1535,7 @@ function Apres({
 
   return (
     <div style={{ padding: "22px 22px 28px" }}>
-      {/* Titre desserts Céline */}
+      {/* Titre desserts maison */}
       <div style={{ textAlign: "center", marginBottom: 18 }}>
         <div
           style={{
@@ -1545,7 +1545,7 @@ function Apres({
             fontWeight: 600,
           }}
         >
-          Les desserts de Céline
+          Nos desserts maison
         </div>
         <p
           style={{
@@ -1557,7 +1557,7 @@ function Apres({
             lineHeight: 1.5,
           }}
         >
-          Chaque dessert est imaginé et réalisé par Céline Billa, notre chef pâtissière
+          Chaque dessert est imaginé et réalisé par notre équipe de pâtisserie
         </p>
       </div>
 
@@ -1644,7 +1644,7 @@ function Apres({
           Votre coup de cœur ce soir ?
         </div>
         <div style={{ display: "flex", gap: 8, flexWrap: "wrap" }}>
-          {["Entrée", "Poisson ou Viande", "Dessert Céline", "Le pain maison"].map(
+          {["Entrée", "Poisson ou Viande", "Dessert Maison", "Le pain maison"].map(
             (label) => {
               const sel = favori === label;
               return (
@@ -1692,7 +1692,7 @@ function Apres({
             lineHeight: 1.4,
           }}
         >
-          Votre avis aide Cyrille à se faire connaître
+          Votre avis aide le restaurant à se faire connaître
         </div>
         <button
           onClick={() => setAvisClicked(true)}
@@ -1753,7 +1753,7 @@ function Apres({
             margin: "0 0 14px",
           }}
         >
-          Chaque lundi, Cyrille partage les nouveautés de la semaine — avant tout le monde.
+          Chaque lundi, l'équipe partage les nouveautés de la semaine — avant tout le monde.
         </p>
         <button
           onClick={() => setNewsletter(!newsletter)}
