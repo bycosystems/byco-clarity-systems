@@ -104,8 +104,8 @@ export function DashboardMockup() {
             <ul className="divide-y divide-border text-xs">
               {[
                 { title: "Unit 204 — turnover prep", status: "In progress", color: "text-[oklch(0.55_0.15_250)]", icon: Clock },
-                { title: "Maintenance · plumbing", status: "Assigned", color: "text-[oklch(0.55_0.12_85)]", icon: AlertCircle },
-                { title: "Cleaning route · downtown", status: "Done", color: "text-[oklch(0.5_0.13_145)]", icon: CheckCircle2 },
+                { title: "Client color & cut", status: "Assigned", color: "text-[oklch(0.55_0.12_85)]", icon: AlertCircle },
+                { title: "Follow-up reminder", status: "Done", color: "text-[oklch(0.5_0.13_145)]", icon: CheckCircle2 },
               ].map(({ title, status, color, icon: Icon }) => (
                 <li key={title} className="flex items-center justify-between px-4 py-2.5">
                   <span className="text-foreground">{title}</span>
