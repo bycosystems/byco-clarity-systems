@@ -176,7 +176,7 @@ export const content: Record<Lang, Content> = {
       note: "French demo video - example adaptable to clinics, salons, agencies and any service business.",
     },
     featuredDemo: {
-      liveHeading: "Live system — built for a real restaurant in Nice",
+      liveHeading: "Live system — built for a real restaurant",
       liveSubtext: "This is a real demo we built. Explore it, then call or WhatsApp our demo receptionist.",
       exploreDemoCta: "Explore the demo",
       whatsappCta: "Call or WhatsApp +44 7576 594092",
@@ -400,7 +400,7 @@ export const content: Record<Lang, Content> = {
       note: "Vidéo de démonstration en français - exemple adaptable aux cliniques, salons, agences et toute entreprise de services.",
     },
     featuredDemo: {
-      liveHeading: "Système en direct — conçu pour un vrai restaurant à Nice",
+      liveHeading: "Système en direct — conçu pour un vrai restaurant",
       liveSubtext: "Ceci est une vraie démo que nous avons construite. Explorez-la, puis appelez ou contactez notre réceptionniste de démo sur WhatsApp.",
       exploreDemoCta: "Explorer la démo",
       whatsappCta: "Appeler ou WhatsApp +44 7576 594092",

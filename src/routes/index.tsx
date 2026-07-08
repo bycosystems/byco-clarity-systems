@@ -605,7 +605,7 @@ function FeaturedDemo() {
           </p>
           <div className="mt-6 flex flex-wrap gap-3">
             <a
-              href="https://bycosystems.xyz/demo/les-sens"
+              href="https://bycosystems.xyz/demo/exemple"
               target="_blank"
               rel="noopener noreferrer"
               className="inline-flex items-center gap-2 px-5 py-3 rounded-md bg-white text-navy-deep font-medium hover:bg-white/90 transition"
