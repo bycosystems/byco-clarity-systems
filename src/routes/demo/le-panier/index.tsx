@@ -14,6 +14,7 @@
 //  garantir un rendu identique à la démo validée, sans dépendre de la
 //  config Tailwind du projet. Migrables en classes Tailwind si souhaité.)
 // ─────────────────────────────────────────────────────────────
+// cache-bust: 2026-07-23 — force nouveau hash de build (déploiement bloqué)
 
 import { createFileRoute } from "@tanstack/react-router";
 import { useState } from "react";
