@@ -83,8 +83,8 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { name: "twitter:site", content: "@ByCo_Systems" },
       { name: "twitter:title", content: "ByCo Systems" },
       { name: "twitter:description", content: "Practical business web apps, dashboards and workflow tools for service-based businesses." },
-      { property: "og:image", content: "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/e1220005-4f62-45e4-b348-047d08231ead/id-preview-620e989e--4599e786-fd9d-4023-811b-53b7bb1f1ffb.lovable.app-1778355958118.png" },
-      { name: "twitter:image", content: "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/e1220005-4f62-45e4-b348-047d08231ead/id-preview-620e989e--4599e786-fd9d-4023-811b-53b7bb1f1ffb.lovable.app-1778355958118.png" },
+      { property: "og:image", content: "https://bycosystems.xyz/og-home.png" },
+      { name: "twitter:image", content: "https://bycosystems.xyz/og-home.png" },
     ],
     links: [
       {
