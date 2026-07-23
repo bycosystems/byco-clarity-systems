@@ -817,6 +817,23 @@ function Field({ label, name, type = "text", required = true }: { label: string;
   );
 }
 
+function FounderNote() {
+  const t = useContent();
+  return (
+    <div className="mt-6 flex items-center gap-3">
+      <img
+        src="/samuel-boumso.png"
+        alt={t.contact.founderName}
+        className="size-14 rounded-full object-cover object-top border border-border shrink-0"
+      />
+      <p className="text-xs text-muted-foreground leading-relaxed">
+        <span className="font-medium text-navy-deep">{t.contact.founderName}</span>, {t.contact.founderRole}.<br />
+        {t.contact.founderBio}
+      </p>
+    </div>
+  );
+}
+
 function Contact() {
   const t = useContent();
   return (
@@ -844,6 +861,7 @@ function Contact() {
               {t.contact.responseNote}
             </p>
           </div>
+          <FounderNote />
         </div>
         <div className="bg-white border border-border rounded-2xl p-7 shadow-elevated">
           <ContactForm />

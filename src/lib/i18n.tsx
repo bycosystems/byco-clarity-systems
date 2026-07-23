@@ -84,6 +84,9 @@ export interface Content {
     formMessage: string;
     formSubmit: string;
     formThanks: string;
+    founderName: string;
+    founderRole: string;
+    founderBio: string;
   };
   footer: { tagline: string; rights: string };
 }
@@ -307,6 +310,9 @@ export const content: Record<Lang, Content> = {
       formMessage: "Message",
       formSubmit: "Send request",
       formThanks: "Thanks - we'll be in touch soon!",
+      founderName: "Samuel Boumso",
+      founderRole: "founder of ByCo Systems",
+      founderBio: "I personally support every client through the setup of their intelligent reception system.",
     },
     footer: {
       tagline: "Smart reception systems, WhatsApp automation and operational dashboards for service businesses.",
@@ -531,6 +537,9 @@ export const content: Record<Lang, Content> = {
       formMessage: "Message",
       formSubmit: "Envoyer la demande",
       formThanks: "Merci - nous revenons vers vous très vite !",
+      founderName: "Samuel Boumso",
+      founderRole: "fondateur de ByCo Systems",
+      founderBio: "J'accompagne personnellement chaque client dans la mise en place de son système d'accueil intelligent.",
     },
     footer: {
       tagline: "Systèmes de réception intelligente, automatisation WhatsApp et tableaux de bord opérationnels pour entreprises de services.",
