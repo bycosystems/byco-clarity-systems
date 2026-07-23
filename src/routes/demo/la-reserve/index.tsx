@@ -27,6 +27,20 @@ export const Route = createFileRoute("/demo/la-reserve/")({
           "Démonstration interactive de la mini-application sur-mesure conçue par ByCo Systems pour La Réserve de Nice.",
       },
       { name: "robots", content: "noindex" },
+      { property: "og:title", content: "La Réserve de Nice · Depuis 1862 × ByCo Systems" },
+      {
+        property: "og:description",
+        content:
+          "Démonstration interactive de la mini-application sur-mesure conçue par ByCo Systems pour La Réserve de Nice.",
+      },
+      { property: "og:image", content: "https://bycosystems.xyz/demo/la-reserve/og-image.jpg" },
+      { name: "twitter:title", content: "La Réserve de Nice · Depuis 1862 × ByCo Systems" },
+      {
+        name: "twitter:description",
+        content:
+          "Démonstration interactive de la mini-application sur-mesure conçue par ByCo Systems pour La Réserve de Nice.",
+      },
+      { name: "twitter:image", content: "https://bycosystems.xyz/demo/la-reserve/og-image.jpg" },
     ],
   }),
 });
@@ -53,6 +67,24 @@ const C = {
 const SERIF  = '"Cormorant Garamond", Georgia, serif';
 const SERIF2 = '"Playfair Display", Georgia, serif';
 const SANS   = '"Inter", "Helvetica Neue", system-ui, sans-serif';
+
+/* ── Date dynamique ────────────────────────────────────────── */
+
+const MOIS_FR = [
+  "janvier", "février", "mars", "avril", "mai", "juin",
+  "juillet", "août", "septembre", "octobre", "novembre", "décembre",
+];
+
+function prochainVendredi(): string {
+  const today = new Date();
+  const jour = today.getDay();
+  const offsetLundi = jour === 0 ? -6 : 1 - jour;
+  const lundiCetteSemaine = new Date(today);
+  lundiCetteSemaine.setDate(today.getDate() + offsetLundi);
+  const vendrediProchain = new Date(lundiCetteSemaine);
+  vendrediProchain.setDate(lundiCetteSemaine.getDate() + 11);
+  return `Vendredi ${vendrediProchain.getDate()} ${MOIS_FR[vendrediProchain.getMonth()]}`;
+}
 
 /* ── Types ─────────────────────────────────────────────────── */
 
@@ -444,7 +476,7 @@ function Accueil({ go }: { go: (s: ScreenId) => void }) {
               fontWeight: 600,
             }}
           >
-            Samedi 12 juillet · 20h00
+            {prochainVendredi()} · 20h00
           </div>
           <div style={{ fontSize: 12.5, color: C.grisPerle, marginTop: 4 }}>
             Table pour 2 · Isabelle
@@ -1105,7 +1137,7 @@ function ReservTable({
             maxWidth: 300,
           }}
         >
-          votre table du samedi 12 juillet à 20h00 est réservée à La Réserve. Chef Jérôme Cotta vous attend. Un message WhatsApp de confirmation vous sera envoyé dans quelques instants.
+          votre table du {prochainVendredi().toLowerCase()} à 20h00 est réservée à La Réserve. Chef Jérôme Cotta vous attend. Un message WhatsApp de confirmation vous sera envoyé dans quelques instants.
         </p>
         <div style={{ marginTop: 24, width: "100%" }}>
           <PrimaryButton onClick={() => go("matable")}>
@@ -1728,7 +1760,7 @@ function MaTable({
             lineHeight: 1.25,
           }}
         >
-          Samedi 12 juillet · 20h00
+          {prochainVendredi()} · 20h00
         </div>
         <div style={{ fontSize: 13, color: C.grisPerle, marginTop: 5 }}>
           Table pour 2 · Isabelle

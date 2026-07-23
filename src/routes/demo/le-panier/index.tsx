@@ -29,6 +29,20 @@ export const Route = createFileRoute("/demo/le-panier/")({
           "Démonstration interactive de la mini-application sur-mesure conçue par ByCo Systems pour Le Panier, Vieux Nice.",
       },
       { name: "robots", content: "noindex" },
+      { property: "og:title", content: "Le Carnet du Voyageur · Le Panier × ByCo Systems" },
+      {
+        property: "og:description",
+        content:
+          "Démonstration interactive de la mini-application sur-mesure conçue par ByCo Systems pour Le Panier, Vieux Nice.",
+      },
+      { property: "og:image", content: "https://bycosystems.xyz/demo/le-panier/og-image.jpg" },
+      { name: "twitter:title", content: "Le Carnet du Voyageur · Le Panier × ByCo Systems" },
+      {
+        name: "twitter:description",
+        content:
+          "Démonstration interactive de la mini-application sur-mesure conçue par ByCo Systems pour Le Panier, Vieux Nice.",
+      },
+      { name: "twitter:image", content: "https://bycosystems.xyz/demo/le-panier/og-image.jpg" },
     ],
   }),
 });
@@ -46,6 +60,24 @@ const C = {
 
 const SERIF = '"Cormorant Garamond", Georgia, serif';
 const SANS = '"Inter", "Helvetica Neue", system-ui, sans-serif';
+
+/* ── Date dynamique ──────────────────────────────────────── */
+
+const MOIS_FR = [
+  "janvier", "février", "mars", "avril", "mai", "juin",
+  "juillet", "août", "septembre", "octobre", "novembre", "décembre",
+];
+
+function prochainVendredi(): string {
+  const today = new Date();
+  const jour = today.getDay();
+  const offsetLundi = jour === 0 ? -6 : 1 - jour;
+  const lundiCetteSemaine = new Date(today);
+  lundiCetteSemaine.setDate(today.getDate() + offsetLundi);
+  const vendrediProchain = new Date(lundiCetteSemaine);
+  vendrediProchain.setDate(lundiCetteSemaine.getDate() + 11);
+  return `Vendredi ${vendrediProchain.getDate()} ${MOIS_FR[vendrediProchain.getMonth()]}`;
+}
 
 type ScreenId =
   | "accueil"
@@ -392,7 +424,7 @@ function Accueil({ go }: { go: (s: ScreenId) => void }) {
           Votre réservation
         </div>
         <div style={{ fontFamily: SERIF, fontSize: 18, color: C.ink }}>
-          Vendredi 4 juillet · 19h30
+          {prochainVendredi()} · 19h30
         </div>
         <div style={{ fontSize: 12.5, color: C.inkSoft, marginTop: 3 }}>
           Table pour 2 · au nom d'Aurélie

@@ -27,6 +27,20 @@ export const Route = createFileRoute("/demo/les-sens/")({
           "Démonstration interactive de la mini-application sur-mesure conçue par ByCo Systems pour Les Sens · Nice.",
       },
       { name: "robots", content: "noindex" },
+      { property: "og:title", content: "Les Sens · Éveil Digital × ByCo Systems" },
+      {
+        property: "og:description",
+        content:
+          "Démonstration interactive de la mini-application sur-mesure conçue par ByCo Systems pour Les Sens · Nice.",
+      },
+      { property: "og:image", content: PHOTOS[0] },
+      { name: "twitter:title", content: "Les Sens · Éveil Digital × ByCo Systems" },
+      {
+        name: "twitter:description",
+        content:
+          "Démonstration interactive de la mini-application sur-mesure conçue par ByCo Systems pour Les Sens · Nice.",
+      },
+      { name: "twitter:image", content: PHOTOS[0] },
     ],
   }),
 });
@@ -53,6 +67,24 @@ const C = {
 
 const SERIF = '"Playfair Display", "Cormorant Garamond", Georgia, serif';
 const SANS = '"Inter", "Helvetica Neue", system-ui, sans-serif';
+
+/* ── Date dynamique ──────────────────────────────────────────── */
+
+const MOIS_FR = [
+  "janvier", "février", "mars", "avril", "mai", "juin",
+  "juillet", "août", "septembre", "octobre", "novembre", "décembre",
+];
+
+function prochainVendredi(): string {
+  const today = new Date();
+  const jour = today.getDay();
+  const offsetLundi = jour === 0 ? -6 : 1 - jour;
+  const lundiCetteSemaine = new Date(today);
+  lundiCetteSemaine.setDate(today.getDate() + offsetLundi);
+  const vendrediProchain = new Date(lundiCetteSemaine);
+  vendrediProchain.setDate(lundiCetteSemaine.getDate() + 11);
+  return `Vendredi ${vendrediProchain.getDate()} ${MOIS_FR[vendrediProchain.getMonth()]}`;
+}
 
 /* ── Photos & Logo ─────────────────────────────────────────── */
 
@@ -475,7 +507,7 @@ function Accueil({ go }: { go: (s: ScreenId) => void }) {
               fontWeight: 600,
             }}
           >
-            Mardi 8 juillet · 19h30
+            {prochainVendredi()} · 19h30
           </div>
           <div
             style={{
@@ -1063,7 +1095,7 @@ function Reservation({
             maxWidth: 300,
           }}
         >
-          votre table du mardi 8 juillet à 19h30 est confirmée. Cyrille vous attend.
+          votre table du {prochainVendredi().toLowerCase()} à 19h30 est confirmée. Cyrille vous attend.
         </p>
         <div
           style={{
@@ -1407,7 +1439,7 @@ function MaTable({
             lineHeight: 1.25,
           }}
         >
-          Mardi 8 juillet · 19h30
+          {prochainVendredi()} · 19h30
         </div>
         <div style={{ fontSize: 13, color: "#A8B8C8", marginTop: 5 }}>
           Table pour 2 · Laurent
