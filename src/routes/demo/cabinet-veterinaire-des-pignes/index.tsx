@@ -97,7 +97,6 @@ const DR_ARNAUD_PHOTO =
 // Ligne Orlane — même numéro de démo que sur bycosystems.xyz, préconfiguré
 // avec le contexte du Cabinet des Pignes pour cette démonstration.
 const ORLANE_HREF = "tel:+447576594092";
-const ORLANE_DISPLAY = "+44 7576 594092";
 const WHATSAPP_URL = "https://wa.me/447576594092";
 
 const ADRESSE = "3 Rue Alfred Binet, 06000 Nice";
@@ -380,12 +379,12 @@ function DemoInteractive({ called, setCalled }: { called: boolean; setCalled: (v
               margin: "10px 0 14px",
             }}
           >
-            Mettez-vous à la place d'un de vos clients
+            Testez la technologie qui répondra à vos patients
           </h2>
           <p style={{ fontSize: 14, color: "rgba(255,255,255,0.72)", lineHeight: 1.6, margin: 0 }}>
-            Docteur Arnaud, c'est vous qui appelez ci-dessous — comme le ferait un client du
-            cabinet. Orlane a déjà les informations du Cabinet des Pignes en mémoire, affichées
-            juste ici avant même que vous ne décrochiez.
+            Docteur Arnaud, c'est vous qui appelez ci-dessous : un vrai appel vers Orlane, l'agent
+            vocal de démonstration ByCo. Une fois configuré et personnalisé pour le Cabinet des
+            Pignes, votre agent saura restituer ce type d'information — en voici un exemple.
           </p>
         </div>
 
@@ -408,7 +407,7 @@ function DemoInteractive({ called, setCalled }: { called: boolean; setCalled: (v
               marginBottom: 10,
             }}
           >
-            Ce qu'Orlane sait déjà de votre cabinet
+            Exemple : ce que VOTRE agent saura
           </div>
           <div
             style={{
@@ -444,11 +443,11 @@ function DemoInteractive({ called, setCalled }: { called: boolean; setCalled: (v
               boxShadow: `0 10px 30px rgba(62,128,115,0.4)`,
             }}
           >
-            <PhoneIcon /> Appeler {ORLANE_DISPLAY}
+            📞 Appeler Orlane
           </a>
           <div style={{ textAlign: "center", marginTop: 12, fontSize: 11.5, color: "rgba(255,255,255,0.5)" }}>
-            Un seul effet à ce clic : votre téléphone compose immédiatement ce numéro — un appel
-            réel vers la ligne de démonstration Orlane, aucune donnée conservée.
+            Un seul effet à ce clic : votre téléphone compose immédiatement le numéro d'Orlane,
+            l'assistant de démonstration ByCo — pas un agent déjà configuré pour ce cabinet.
           </div>
         </div>
       </Container>
@@ -481,14 +480,6 @@ function InfoChip({ label, value, accent }: { label: string; value: string; acce
       </div>
       <div style={{ fontFamily: SERIF, fontSize: 15, color: "#fff", fontWeight: 600 }}>{value}</div>
     </div>
-  );
-}
-
-function PhoneIcon() {
-  return (
-    <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
-      <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z" />
-    </svg>
   );
 }
 
@@ -818,10 +809,10 @@ function OffrePilote() {
               boxShadow: "0 10px 28px rgba(37,211,102,0.35)",
             }}
           >
-            Discuter de l'offre Premium avec ByCo
+            💬 Écrire à Orlane sur WhatsApp
           </a>
           <div style={{ marginTop: 12, fontSize: 11, color: "rgba(255,255,255,0.4)" }}>
-            Contact direct avec l'équipe ByCo — indépendant de la ligne Orlane testée plus haut.
+            Même ligne Orlane, cette fois sur WhatsApp — votre message nous parvient directement.
           </div>
         </div>
       </Container>
