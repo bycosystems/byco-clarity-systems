@@ -80,13 +80,15 @@ const SANS = '"Inter", "Helvetica Neue", system-ui, sans-serif';
 const LOGO =
   "https://www.cabinetveterinairedespignes.com/wp-content/uploads/2021/03/Cabinet-veterinaire-des-pignes-logo2-quadri-noir.png";
 
+// Photos réelles du cabinet — variantes redimensionnées par WordPress
+// (les fichiers d'origine, non recadrés, pèsent 6 à 9 Mo pièce).
 const HERO_PHOTO =
-  "https://www.cabinetveterinairedespignes.com/wp-content/uploads/2021/03/IMG_20210208_162311.jpg";
+  "https://www.cabinetveterinairedespignes.com/wp-content/uploads/2021/03/Image-Cabinet.jpg";
 
 const CABINET_PHOTOS = [
-  "https://www.cabinetveterinairedespignes.com/wp-content/uploads/2021/03/IMG_20210208_162325.jpg",
-  "https://www.cabinetveterinairedespignes.com/wp-content/uploads/2021/03/IMG_20210208_162338.jpg",
-  "https://www.cabinetveterinairedespignes.com/wp-content/uploads/2021/03/IMG_20210208_162431.jpg",
+  "https://www.cabinetveterinairedespignes.com/wp-content/uploads/2021/03/IMG_20210208_162325-300x224.jpg",
+  "https://www.cabinetveterinairedespignes.com/wp-content/uploads/2021/03/IMG_20210208_162338-300x224.jpg",
+  "https://www.cabinetveterinairedespignes.com/wp-content/uploads/2021/03/IMG_20210208_162431-300x224.jpg",
 ];
 
 const DR_ARNAUD_PHOTO =
