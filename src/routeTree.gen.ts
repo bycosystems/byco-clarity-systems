@@ -16,6 +16,7 @@ import { Route as DemoLesSensIndexRouteImport } from './routes/demo/les-sens/ind
 import { Route as DemoLePanierIndexRouteImport } from './routes/demo/le-panier/index'
 import { Route as DemoLaReserveIndexRouteImport } from './routes/demo/la-reserve/index'
 import { Route as DemoExempleIndexRouteImport } from './routes/demo/exemple/index'
+import { Route as DemoDecouvrirIndexRouteImport } from './routes/demo/decouvrir/index'
 import { Route as DemoCabinetVeterinaireDesPignesIndexRouteImport } from './routes/demo/cabinet-veterinaire-des-pignes/index'
 
 const IndexRoute = IndexRouteImport.update({
@@ -53,6 +54,11 @@ const DemoExempleIndexRoute = DemoExempleIndexRouteImport.update({
   path: '/demo/exemple/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const DemoDecouvrirIndexRoute = DemoDecouvrirIndexRouteImport.update({
+  id: '/demo/decouvrir/',
+  path: '/demo/decouvrir/',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const DemoCabinetVeterinaireDesPignesIndexRoute =
   DemoCabinetVeterinaireDesPignesIndexRouteImport.update({
     id: '/demo/cabinet-veterinaire-des-pignes/',
@@ -64,6 +70,7 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/fr/': typeof FrIndexRoute
   '/demo/cabinet-veterinaire-des-pignes/': typeof DemoCabinetVeterinaireDesPignesIndexRoute
+  '/demo/decouvrir/': typeof DemoDecouvrirIndexRoute
   '/demo/exemple/': typeof DemoExempleIndexRoute
   '/demo/la-reserve/': typeof DemoLaReserveIndexRoute
   '/demo/le-panier/': typeof DemoLePanierIndexRoute
@@ -74,6 +81,7 @@ export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/fr': typeof FrIndexRoute
   '/demo/cabinet-veterinaire-des-pignes': typeof DemoCabinetVeterinaireDesPignesIndexRoute
+  '/demo/decouvrir': typeof DemoDecouvrirIndexRoute
   '/demo/exemple': typeof DemoExempleIndexRoute
   '/demo/la-reserve': typeof DemoLaReserveIndexRoute
   '/demo/le-panier': typeof DemoLePanierIndexRoute
@@ -85,6 +93,7 @@ export interface FileRoutesById {
   '/': typeof IndexRoute
   '/fr/': typeof FrIndexRoute
   '/demo/cabinet-veterinaire-des-pignes/': typeof DemoCabinetVeterinaireDesPignesIndexRoute
+  '/demo/decouvrir/': typeof DemoDecouvrirIndexRoute
   '/demo/exemple/': typeof DemoExempleIndexRoute
   '/demo/la-reserve/': typeof DemoLaReserveIndexRoute
   '/demo/le-panier/': typeof DemoLePanierIndexRoute
@@ -97,6 +106,7 @@ export interface FileRouteTypes {
     | '/'
     | '/fr/'
     | '/demo/cabinet-veterinaire-des-pignes/'
+    | '/demo/decouvrir/'
     | '/demo/exemple/'
     | '/demo/la-reserve/'
     | '/demo/le-panier/'
@@ -107,6 +117,7 @@ export interface FileRouteTypes {
     | '/'
     | '/fr'
     | '/demo/cabinet-veterinaire-des-pignes'
+    | '/demo/decouvrir'
     | '/demo/exemple'
     | '/demo/la-reserve'
     | '/demo/le-panier'
@@ -117,6 +128,7 @@ export interface FileRouteTypes {
     | '/'
     | '/fr/'
     | '/demo/cabinet-veterinaire-des-pignes/'
+    | '/demo/decouvrir/'
     | '/demo/exemple/'
     | '/demo/la-reserve/'
     | '/demo/le-panier/'
@@ -128,6 +140,7 @@ export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   FrIndexRoute: typeof FrIndexRoute
   DemoCabinetVeterinaireDesPignesIndexRoute: typeof DemoCabinetVeterinaireDesPignesIndexRoute
+  DemoDecouvrirIndexRoute: typeof DemoDecouvrirIndexRoute
   DemoExempleIndexRoute: typeof DemoExempleIndexRoute
   DemoLaReserveIndexRoute: typeof DemoLaReserveIndexRoute
   DemoLePanierIndexRoute: typeof DemoLePanierIndexRoute
@@ -186,6 +199,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof DemoExempleIndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/demo/decouvrir/': {
+      id: '/demo/decouvrir/'
+      path: '/demo/decouvrir'
+      fullPath: '/demo/decouvrir/'
+      preLoaderRoute: typeof DemoDecouvrirIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/demo/cabinet-veterinaire-des-pignes/': {
       id: '/demo/cabinet-veterinaire-des-pignes/'
       path: '/demo/cabinet-veterinaire-des-pignes'
@@ -201,6 +221,7 @@ const rootRouteChildren: RootRouteChildren = {
   FrIndexRoute: FrIndexRoute,
   DemoCabinetVeterinaireDesPignesIndexRoute:
     DemoCabinetVeterinaireDesPignesIndexRoute,
+  DemoDecouvrirIndexRoute: DemoDecouvrirIndexRoute,
   DemoExempleIndexRoute: DemoExempleIndexRoute,
   DemoLaReserveIndexRoute: DemoLaReserveIndexRoute,
   DemoLePanierIndexRoute: DemoLePanierIndexRoute,
