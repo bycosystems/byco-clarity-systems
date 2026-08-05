@@ -17,6 +17,12 @@
 //   ?secteur=urgence  → "intervention", "sur place", "dépannage"
 //   absent / inconnu  → formulation neutre par défaut
 //
+// Paramètre d'URL optionnel `?lang=en` pour la version anglaise de la
+// page (prospection Royaume-Uni). Absent, ou toute valeur autre que
+// "en" → contenu français inchangé. Se combine avec `?secteur=`, dans
+// n'importe quel ordre. Un seul dictionnaire FR/EN dans ce fichier,
+// pas de route dupliquée.
+//
 // Aucun élément nominatif : pas de nom d'entreprise, pas d'adresse,
 // pas de photo personnelle, pas de citation d'avis Google spécifique.
 //
@@ -28,32 +34,33 @@ import { createFileRoute } from "@tanstack/react-router";
 import { useState } from "react";
 
 export const Route = createFileRoute("/demo/decouvrir/")({
-  validateSearch: (search: Record<string, unknown>): { secteur?: string } => ({
+  validateSearch: (
+    search: Record<string, unknown>,
+  ): { secteur?: string; lang?: string; prospect?: string } => ({
     secteur: typeof search.secteur === "string" ? search.secteur : undefined,
+    lang: typeof search.lang === "string" ? search.lang : undefined,
+    prospect: typeof search.prospect === "string" ? search.prospect : undefined,
   }),
   component: DecouvrirDemo,
-  head: () => ({
-    meta: [
-      { title: "Découvrir votre agent d'accueil × ByCo Systems" },
-      {
-        name: "description",
-        content:
-          "Démonstration interactive de la mini-application sur-mesure conçue par ByCo Systems : testez l'agent d'accueil en direct.",
-      },
-      { name: "robots", content: "noindex" },
-      { property: "og:title", content: "Découvrir votre agent d'accueil × ByCo Systems" },
-      {
-        property: "og:description",
-        content: "Pendant que vous travaillez, qui répond au téléphone ? Testez Orlane en direct.",
-      },
-      { name: "twitter:card", content: "summary" },
-      { name: "twitter:title", content: "Découvrir votre agent d'accueil × ByCo Systems" },
-      {
-        name: "twitter:description",
-        content: "Pendant que vous travaillez, qui répond au téléphone ? Testez Orlane en direct.",
-      },
-    ],
-  }),
+  head: ({ match }) => {
+    const lang = resolveLang((match.search as { lang?: string }).lang);
+    const m = META[lang];
+    const ogImage = "https://bycosystems.xyz/demo/decouvrir/og-image.png";
+    return {
+      meta: [
+        { title: m.title },
+        { name: "description", content: m.description },
+        { name: "robots", content: "noindex" },
+        { property: "og:title", content: m.title },
+        { property: "og:description", content: m.ogDescription },
+        { property: "og:image", content: ogImage },
+        { name: "twitter:card", content: "summary" },
+        { name: "twitter:title", content: m.title },
+        { name: "twitter:description", content: m.ogDescription },
+        { name: "twitter:image", content: ogImage },
+      ],
+    };
+  },
 });
 
 /* ── Palette (identité ByCo) ───────────────────────────────────── */
@@ -87,6 +94,35 @@ const SANS = '"Inter", "Helvetica Neue", system-ui, sans-serif';
 const ORLANE_HREF = "tel:+447576594092";
 const WHATSAPP_URL = "https://wa.me/447576594092";
 
+/* ── Langue ─────────────────────────────────────────────────────
+   `?lang=en` bascule la page en anglais. Absent, ou toute autre
+   valeur → français (comportement par défaut inchangé).
+   ─────────────────────────────────────────────────────────────── */
+
+type Lang = "fr" | "en";
+
+function resolveLang(raw: string | undefined): Lang {
+  return raw === "en" ? "en" : "fr";
+}
+
+/* ── Nom de prospect (Hero) ────────────────────────────────────
+   `?prospect=` insère le nom de la structure démarchée dans le Hero,
+   sans édition manuelle ni redéploiement par prospect. Absent, vide,
+   ou uniquement des espaces → formulation neutre par défaut,
+   inchangée (jamais de undefined / placeholder brut affiché).
+   ─────────────────────────────────────────────────────────────── */
+
+const PROSPECT_NAME_MAX_LENGTH = 60;
+
+function resolveProspect(raw: string | undefined): string | undefined {
+  if (typeof raw !== "string") return undefined;
+  const trimmed = raw.trim();
+  if (trimmed.length === 0) return undefined;
+  return trimmed.length > PROSPECT_NAME_MAX_LENGTH
+    ? `${trimmed.slice(0, PROSPECT_NAME_MAX_LENGTH - 1).trimEnd()}…`
+    : trimmed;
+}
+
 /* ── Vocabulaire sectoriel ──────────────────────────────────────
    Un seul paramètre pilote quelques formulations ciblées ; le reste
    de la page (structure, mécanique d'appel, récap WhatsApp) est
@@ -113,81 +149,274 @@ type Copy = {
   recapBody: string;
 };
 
-const COPY: Record<Secteur, Copy> = {
+const COPY: Record<Secteur, Record<Lang, Copy>> = {
   sante: {
-    eyebrowHero: "▪ Toujours disponible pour vos patients ▪",
-    headline: "Pendant votre consultation, qui répond au téléphone ?",
-    accrocheHeadline: "Vous, en consultation : qui décroche ?",
-    accrocheP1:
-      "Beaucoup de cabinets tiennent grâce à un seul praticien, toujours le même, toujours disponible pour ses patients. C'est une force — et une vraie promesse de qualité.",
-    accrocheP2:
-      "Le revers, lui, n'est jamais dit à voix haute : quand vous êtes en consultation, personne d'autre n'est là pour décrocher — ni pour une question de tarif, ni pour une urgence.",
-    chips: [
-      { label: "Consultation", value: "Sur demande" },
-      { label: "Urgence", value: "Prioritaire", accent: true },
-      { label: "Rendez-vous", value: "7j/7" },
-      { label: "Zone", value: "Votre secteur" },
-    ],
-    demoIntro:
-      "C'est vous qui appelez ci-dessous : un vrai appel vers Orlane, l'agent vocal de démonstration ByCo. Une fois configuré et personnalisé pour votre cabinet, votre agent saura restituer ce type d'information — en voici un exemple.",
-    whatsappBody:
-      "Dès que vous raccrochez, un récapitulatif part directement sur WhatsApp : le motif de l'appel, le numéro du patient, et ce qu'il attend de vous. Rien ne se perd — même au bloc.",
-    recapTitle: "📞 Nouvel appel reçu",
-    recapBody:
-      "Un patient a appelé pour une question de tarif consultation.\nNuméro : +33 6 XX XX XX XX\nSouhaite être rappelé si besoin.",
+    fr: {
+      eyebrowHero: "▪ Toujours disponible pour vos patients ▪",
+      headline: "Pendant votre consultation, qui répond au téléphone ?",
+      accrocheHeadline: "Vous, en consultation : qui décroche ?",
+      accrocheP1:
+        "Beaucoup de cabinets tiennent grâce à un seul praticien, toujours le même, toujours disponible pour ses patients. C'est une force — et une vraie promesse de qualité.",
+      accrocheP2:
+        "Le revers, lui, n'est jamais dit à voix haute : quand vous êtes en consultation, personne d'autre n'est là pour décrocher — ni pour une question de tarif, ni pour une urgence.",
+      chips: [
+        { label: "Consultation", value: "Sur demande" },
+        { label: "Urgence", value: "Prioritaire", accent: true },
+        { label: "Rendez-vous", value: "7j/7" },
+        { label: "Zone", value: "Votre secteur" },
+      ],
+      demoIntro:
+        "C'est vous qui appelez ci-dessous : un vrai appel vers Orlane, l'agent vocal de démonstration ByCo. Une fois configuré et personnalisé pour votre cabinet, votre agent saura restituer ce type d'information — en voici un exemple.",
+      whatsappBody:
+        "Dès que vous raccrochez, un récapitulatif part directement sur WhatsApp : le motif de l'appel, le numéro du patient, et ce qu'il attend de vous. Rien ne se perd — même au bloc.",
+      recapTitle: "📞 Nouvel appel reçu",
+      recapBody:
+        "Un patient a appelé pour une question de tarif consultation.\nNuméro : +33 6 XX XX XX XX\nSouhaite être rappelé si besoin.",
+    },
+    en: {
+      eyebrowHero: "▪ Always available for your patients ▪",
+      headline: "While you're with a patient, who answers the phone?",
+      accrocheHeadline: "You, in consultation: who picks up?",
+      accrocheP1:
+        "Many practices run on a single practitioner, always the same one, always available for their patients. That's a strength — and a real promise of quality.",
+      accrocheP2:
+        "The downside is never said out loud: when you're with a patient, no one else is there to pick up — not for a pricing question, not for an emergency.",
+      chips: [
+        { label: "Consultation", value: "On request" },
+        { label: "Emergency", value: "Priority", accent: true },
+        { label: "Appointments", value: "7 days a week" },
+        { label: "Area", value: "Your region" },
+      ],
+      demoIntro:
+        "You're the one calling below: a real call to Orlane, ByCo's demo voice agent. Once configured and customized for your practice, your agent will handle this kind of information — here's an example.",
+      whatsappBody:
+        "As soon as you hang up, a summary is sent straight to WhatsApp: the reason for the call, the patient's number, and what they need from you. Nothing gets lost — even mid-appointment.",
+      recapTitle: "📞 New call received",
+      recapBody:
+        "A patient called about a consultation pricing question.\nNumber: +33 6 XX XX XX XX\nWould like a callback if needed.",
+    },
   },
   urgence: {
-    eyebrowHero: "▪ Toujours disponible pour vos clients ▪",
-    headline: "Pendant votre intervention, qui répond au téléphone ?",
-    accrocheHeadline: "Vous, sur place : qui décroche ?",
-    accrocheP1:
-      "Beaucoup d'artisans tiennent grâce à une seule personne, toujours la même, toujours disponible pour dépanner. C'est une force — et une vraie promesse de réactivité.",
-    accrocheP2:
-      "Le revers, lui, n'est jamais dit à voix haute : quand vous êtes sur une intervention, personne d'autre n'est là pour décrocher — ni pour une urgence, ni pour un simple devis.",
-    chips: [
-      { label: "Dépannage", value: "Sur demande" },
-      { label: "Urgence", value: "Prioritaire", accent: true },
-      { label: "Intervention", value: "7j/7" },
-      { label: "Zone", value: "Votre secteur" },
-    ],
-    demoIntro:
-      "C'est vous qui appelez ci-dessous : un vrai appel vers Orlane, l'agent vocal de démonstration ByCo. Une fois configuré et personnalisé pour votre activité, votre agent saura restituer ce type d'information — en voici un exemple.",
-    whatsappBody:
-      "Dès que vous raccrochez, un récapitulatif part directement sur WhatsApp : le motif de l'appel, le numéro du client, et ce qu'il attend de vous. Rien ne se perd — même en pleine intervention.",
-    recapTitle: "📞 Nouvel appel reçu",
-    recapBody:
-      "Un client a appelé pour une demande d'intervention urgente.\nNuméro : +33 6 XX XX XX XX\nSouhaite être rappelé si besoin.",
+    fr: {
+      eyebrowHero: "▪ Toujours disponible pour vos clients ▪",
+      headline: "Pendant votre intervention, qui répond au téléphone ?",
+      accrocheHeadline: "Vous, sur place : qui décroche ?",
+      accrocheP1:
+        "Beaucoup d'artisans tiennent grâce à une seule personne, toujours la même, toujours disponible pour dépanner. C'est une force — et une vraie promesse de réactivité.",
+      accrocheP2:
+        "Le revers, lui, n'est jamais dit à voix haute : quand vous êtes sur une intervention, personne d'autre n'est là pour décrocher — ni pour une urgence, ni pour un simple devis.",
+      chips: [
+        { label: "Dépannage", value: "Sur demande" },
+        { label: "Urgence", value: "Prioritaire", accent: true },
+        { label: "Intervention", value: "7j/7" },
+        { label: "Zone", value: "Votre secteur" },
+      ],
+      demoIntro:
+        "C'est vous qui appelez ci-dessous : un vrai appel vers Orlane, l'agent vocal de démonstration ByCo. Une fois configuré et personnalisé pour votre activité, votre agent saura restituer ce type d'information — en voici un exemple.",
+      whatsappBody:
+        "Dès que vous raccrochez, un récapitulatif part directement sur WhatsApp : le motif de l'appel, le numéro du client, et ce qu'il attend de vous. Rien ne se perd — même en pleine intervention.",
+      recapTitle: "📞 Nouvel appel reçu",
+      recapBody:
+        "Un client a appelé pour une demande d'intervention urgente.\nNuméro : +33 6 XX XX XX XX\nSouhaite être rappelé si besoin.",
+    },
+    en: {
+      eyebrowHero: "▪ Always available for your clients ▪",
+      headline: "While you're on a job, who answers the phone?",
+      accrocheHeadline: "You, on site: who picks up?",
+      accrocheP1:
+        "Many tradespeople run on a single person, always the same one, always available to help. That's a strength — and a real promise of responsiveness.",
+      accrocheP2:
+        "The downside is never said out loud: when you're on a job, no one else is there to pick up — not for an emergency, not for a simple quote.",
+      chips: [
+        { label: "Callout", value: "On request" },
+        { label: "Emergency", value: "Priority", accent: true },
+        { label: "Job", value: "7 days a week" },
+        { label: "Area", value: "Your region" },
+      ],
+      demoIntro:
+        "You're the one calling below: a real call to Orlane, ByCo's demo voice agent. Once configured and customized for your business, your agent will handle this kind of information — here's an example.",
+      whatsappBody:
+        "As soon as you hang up, a summary is sent straight to WhatsApp: the reason for the call, the client's number, and what they need from you. Nothing gets lost — even mid-job.",
+      recapTitle: "📞 New call received",
+      recapBody:
+        "A client called requesting an urgent callout.\nNumber: +33 6 XX XX XX XX\nWould like a callback if needed.",
+    },
   },
   default: {
-    eyebrowHero: "▪ Toujours disponible pour vos clients ▪",
-    headline: "Pendant que vous travaillez, qui répond au téléphone ?",
-    accrocheHeadline: "Vous, pendant que vous travaillez : qui décroche ?",
-    accrocheP1:
-      "Beaucoup de petites entreprises tiennent grâce à une seule personne, toujours la même, toujours disponible pour ses clients. C'est une force — et une vraie promesse de qualité.",
-    accrocheP2:
-      "Le revers, lui, n'est jamais dit à voix haute : quand cette personne est occupée avec un client, personne d'autre n'est là pour décrocher — ni pour une question simple, ni pour une urgence.",
-    chips: [
-      { label: "Devis", value: "Sur demande" },
-      { label: "Urgence", value: "Prioritaire", accent: true },
-      { label: "Disponibilité", value: "7j/7" },
-      { label: "Zone", value: "Votre secteur" },
-    ],
-    demoIntro:
-      "C'est vous qui appelez ci-dessous : un vrai appel vers Orlane, l'agent vocal de démonstration ByCo. Une fois configuré et personnalisé pour votre activité, votre agent saura restituer ce type d'information — en voici un exemple.",
-    whatsappBody:
-      "Dès que vous raccrochez, un récapitulatif part directement sur WhatsApp : le motif de l'appel, le numéro du client, et ce qu'il attend de vous. Rien ne se perd — même quand vous êtes occupé.",
-    recapTitle: "📞 Nouvel appel reçu",
-    recapBody:
-      "Un client a appelé pour une demande de renseignement.\nNuméro : +33 6 XX XX XX XX\nSouhaite être rappelé si besoin.",
+    fr: {
+      eyebrowHero: "▪ Toujours disponible pour vos clients ▪",
+      headline: "Pendant que vous travaillez, qui répond au téléphone ?",
+      accrocheHeadline: "Vous, pendant que vous travaillez : qui décroche ?",
+      accrocheP1:
+        "Beaucoup de petites entreprises tiennent grâce à une seule personne, toujours la même, toujours disponible pour ses clients. C'est une force — et une vraie promesse de qualité.",
+      accrocheP2:
+        "Le revers, lui, n'est jamais dit à voix haute : quand cette personne est occupée avec un client, personne d'autre n'est là pour décrocher — ni pour une question simple, ni pour une urgence.",
+      chips: [
+        { label: "Devis", value: "Sur demande" },
+        { label: "Urgence", value: "Prioritaire", accent: true },
+        { label: "Disponibilité", value: "7j/7" },
+        { label: "Zone", value: "Votre secteur" },
+      ],
+      demoIntro:
+        "C'est vous qui appelez ci-dessous : un vrai appel vers Orlane, l'agent vocal de démonstration ByCo. Une fois configuré et personnalisé pour votre activité, votre agent saura restituer ce type d'information — en voici un exemple.",
+      whatsappBody:
+        "Dès que vous raccrochez, un récapitulatif part directement sur WhatsApp : le motif de l'appel, le numéro du client, et ce qu'il attend de vous. Rien ne se perd — même quand vous êtes occupé.",
+      recapTitle: "📞 Nouvel appel reçu",
+      recapBody:
+        "Un client a appelé pour une demande de renseignement.\nNuméro : +33 6 XX XX XX XX\nSouhaite être rappelé si besoin.",
+    },
+    en: {
+      eyebrowHero: "▪ Always available for your clients ▪",
+      headline: "While you're working, who answers the phone?",
+      accrocheHeadline: "You, while you're working: who picks up?",
+      accrocheP1:
+        "Many small businesses run on a single person, always the same one, always available for their clients. That's a strength — and a real promise of quality.",
+      accrocheP2:
+        "The downside is never said out loud: when that person is busy with a client, no one else is there to pick up — not for a simple question, not for an emergency.",
+      chips: [
+        { label: "Quotes", value: "On request" },
+        { label: "Emergency", value: "Priority", accent: true },
+        { label: "Availability", value: "7 days a week" },
+        { label: "Area", value: "Your region" },
+      ],
+      demoIntro:
+        "You're the one calling below: a real call to Orlane, ByCo's demo voice agent. Once configured and customized for your business, your agent will handle this kind of information — here's an example.",
+      whatsappBody:
+        "As soon as you hang up, a summary is sent straight to WhatsApp: the reason for the call, the client's number, and what they need from you. Nothing gets lost — even when you're busy.",
+      recapTitle: "📞 New call received",
+      recapBody:
+        "A client called with a general inquiry.\nNumber: +33 6 XX XX XX XX\nWould like a callback if needed.",
+    },
+  },
+};
+
+/* ── Textes de l'interface (indépendants du secteur) ──────────── */
+
+type UIStrings = {
+  heroSubtitle: string;
+  heroSubtitleProspectTemplate: string;
+  demoTag: string;
+  accrocheEyebrow: string;
+  demoEyebrow: string;
+  demoTitle: string;
+  chipsLabel: string;
+  callButton: string;
+  callNote: string;
+  afterCallEyebrow: string;
+  afterCallTitle: string;
+  waitingMessage: string;
+  calledMessage: string;
+  notCalledMessage: string;
+  sentJustNow: string;
+  whatsappHeaderName: string;
+  whatsappOnline: string;
+  offerEyebrow: string;
+  offerTitle: string;
+  offerDesc: string;
+  badgePremium: string;
+  badgeGuarantee: string;
+  badgeTestimonial: string;
+  offerFooterNote: string;
+  offerFooterLinkText: string;
+  whatsappCta: string;
+  whatsappCtaNote: string;
+  footerLine1: string;
+  footerLine2: string;
+};
+
+const UI: Record<Lang, UIStrings> = {
+  fr: {
+    heroSubtitle: "Une démonstration interactive, adaptée à votre activité.",
+    heroSubtitleProspectTemplate: "Une démonstration interactive, préparée pour {name}.",
+    demoTag: "Démo ByCo",
+    accrocheEyebrow: "Ce que votre site ne dit pas",
+    demoEyebrow: "À vous de tester",
+    demoTitle: "Testez la technologie qui répondra à vos clients",
+    chipsLabel: "Exemple : ce que VOTRE agent saura",
+    callButton: "📞 Appeler Orlane",
+    callNote:
+      "Un seul effet à ce clic : votre téléphone compose immédiatement le numéro d'Orlane, l'assistant de démonstration ByCo — pas un agent déjà configuré pour votre activité.",
+    afterCallEyebrow: "Après l'appel",
+    afterCallTitle: "Chaque appel devient un message WhatsApp",
+    waitingMessage: "En attente de votre appel test…",
+    calledMessage: "Message généré suite à votre appel test ci-dessus.",
+    notCalledMessage: "Appelez le numéro de démo ci-dessus pour voir ce message apparaître ici.",
+    sentJustNow: "Envoyé à l'instant",
+    whatsappHeaderName: "Orlane · Assistant ByCo",
+    whatsappOnline: "en ligne",
+    offerEyebrow: "Envie d'aller plus loin ?",
+    offerTitle: "Le plan Premium — 1 990 €",
+    offerDesc:
+      "Audit complet du workflow d'accueil, Orlane et son automatisation WhatsApp, personnalisation avancée pour votre activité, remise à niveau du site, 30 jours de suivi post-livraison, mise en place prioritaire. Prix plein, paiement unique, aucun abonnement.",
+    badgePremium: "Plan Premium · 1 990 €",
+    badgeGuarantee: "Satisfait ou remboursé sous 30 jours, sans condition",
+    badgeTestimonial: "Contrepartie : un témoignage vidéo",
+    offerFooterNote: "Les formules Essential, Business et Business+ restent consultables sur",
+    offerFooterLinkText: "le site principal ByCo Systems",
+    whatsappCta: "💬 Écrire à Orlane sur WhatsApp",
+    whatsappCtaNote: "Même ligne Orlane, cette fois sur WhatsApp — votre message nous parvient directement.",
+    footerLine1: "Démonstration générique · adaptable à votre secteur",
+    footerLine2: "Démonstration personnalisable · ByCo Systems · bycosystems.xyz",
+  },
+  en: {
+    heroSubtitle: "An interactive demo, tailored to your business.",
+    heroSubtitleProspectTemplate: "An interactive demo, prepared for {name}.",
+    demoTag: "ByCo Demo",
+    accrocheEyebrow: "What your website doesn't say",
+    demoEyebrow: "Your turn to try",
+    demoTitle: "Test the technology that will answer your clients",
+    chipsLabel: "Example: what YOUR agent will know",
+    callButton: "📞 Call Orlane",
+    callNote:
+      "This click does one thing: your phone immediately dials Orlane, the ByCo demo assistant — not an agent already configured for your business.",
+    afterCallEyebrow: "After the call",
+    afterCallTitle: "Every call becomes a WhatsApp message",
+    waitingMessage: "Waiting for your test call…",
+    calledMessage: "Message generated from your test call above.",
+    notCalledMessage: "Call the demo number above to see this message appear here.",
+    sentJustNow: "Sent just now",
+    whatsappHeaderName: "Orlane · ByCo Assistant",
+    whatsappOnline: "online",
+    offerEyebrow: "Want to go further?",
+    offerTitle: "The Premium plan — €1,990",
+    offerDesc:
+      "Full audit of your reception workflow, Orlane and its WhatsApp automation, advanced customization for your business, website upgrade, 30 days of post-delivery support, priority setup. Full price, one-time payment, no subscription.",
+    badgePremium: "Premium plan · €1,990",
+    badgeGuarantee: "Money-back guarantee within 30 days, no conditions",
+    badgeTestimonial: "In exchange: a video testimonial",
+    offerFooterNote: "The Essential, Business and Business+ plans remain available on",
+    offerFooterLinkText: "the main ByCo Systems site",
+    whatsappCta: "💬 Message Orlane on WhatsApp",
+    whatsappCtaNote: "Same Orlane line, this time on WhatsApp — your message reaches us directly.",
+    footerLine1: "Generic demo · adaptable to your industry",
+    footerLine2: "Customizable demo · ByCo Systems · bycosystems.xyz",
+  },
+};
+
+const META: Record<Lang, { title: string; description: string; ogDescription: string }> = {
+  fr: {
+    title: "Découvrir votre agent d'accueil × ByCo Systems",
+    description:
+      "Démonstration interactive de la mini-application sur-mesure conçue par ByCo Systems : testez l'agent d'accueil en direct.",
+    ogDescription: "Pendant que vous travaillez, qui répond au téléphone ? Testez Orlane en direct.",
+  },
+  en: {
+    title: "Discover your AI receptionist × ByCo Systems",
+    description:
+      "Interactive demo of the custom mini-app built by ByCo Systems: test the AI receptionist live.",
+    ogDescription: "While you're working, who answers the phone? Test Orlane live.",
   },
 };
 
 /* ── Composant principal ────────────────────────────────────── */
 
 function DecouvrirDemo() {
-  const { secteur: rawSecteur } = Route.useSearch();
+  const { secteur: rawSecteur, lang: rawLang, prospect: rawProspect } = Route.useSearch();
   const secteur = resolveSecteur(rawSecteur);
-  const copy = COPY[secteur];
+  const lang = resolveLang(rawLang);
+  const prospect = resolveProspect(rawProspect);
+  const copy = COPY[secteur][lang];
+  const ui = UI[lang];
   const [called, setCalled] = useState(false);
 
   return (
@@ -196,19 +425,22 @@ function DecouvrirDemo() {
         rel="stylesheet"
         href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,600;0,700;1,500;1,600&family=Inter:wght@400;500;600;700&display=swap"
       />
-      <Hero copy={copy} />
-      <Accroche copy={copy} />
-      <DemoInteractive copy={copy} called={called} setCalled={setCalled} />
-      <WhatsAppConfirmation copy={copy} called={called} />
-      <OffreDecouverte />
-      <Footer />
+      <Hero copy={copy} ui={ui} prospect={prospect} />
+      <Accroche copy={copy} ui={ui} />
+      <DemoInteractive copy={copy} ui={ui} called={called} setCalled={setCalled} />
+      <WhatsAppConfirmation copy={copy} ui={ui} called={called} />
+      <OffreDecouverte ui={ui} />
+      <Footer ui={ui} />
     </div>
   );
 }
 
 /* ── Section 1 — Hero ───────────────────────────────────────── */
 
-function Hero({ copy }: { copy: Copy }) {
+function Hero({ copy, ui, prospect }: { copy: Copy; ui: UIStrings; prospect?: string }) {
+  const subtitle = prospect
+    ? ui.heroSubtitleProspectTemplate.replace("{name}", prospect)
+    : ui.heroSubtitle;
   return (
     <div style={{ position: "relative", background: C.noir }}>
       <div
@@ -219,7 +451,7 @@ function Hero({ copy }: { copy: Copy }) {
           background: `linear-gradient(150deg, ${C.noir} 0%, ${C.noirLight} 55%, ${C.tealDeep} 100%)`,
         }}
       >
-        <DemoTag />
+        <DemoTag label={ui.demoTag} />
         <div
           style={{
             position: "absolute",
@@ -262,9 +494,10 @@ function Hero({ copy }: { copy: Copy }) {
                 color: "rgba(255,255,255,0.82)",
                 lineHeight: 1.55,
                 maxWidth: 480,
+                overflowWrap: "break-word",
               }}
             >
-              Une démonstration interactive, adaptée à votre activité.
+              {subtitle}
             </p>
           </div>
         </div>
@@ -273,7 +506,7 @@ function Hero({ copy }: { copy: Copy }) {
   );
 }
 
-function DemoTag() {
+function DemoTag({ label }: { label: string }) {
   return (
     <div
       style={{
@@ -292,20 +525,20 @@ function DemoTag() {
         fontWeight: 600,
       }}
     >
-      Démo ByCo
+      {label}
     </div>
   );
 }
 
 /* ── Section 2 — Accroche ──────────────────────────────────── */
 
-function Accroche({ copy }: { copy: Copy }) {
+function Accroche({ copy, ui }: { copy: Copy; ui: UIStrings }) {
   return (
     <Section bg={C.paper}>
       <Container>
         <div style={{ maxWidth: 640, margin: "0 auto", textAlign: "center" }}>
           <Eyebrow color={C.terracotta} center>
-            Ce que votre site ne dit pas
+            {ui.accrocheEyebrow}
           </Eyebrow>
           <h2
             style={{
@@ -335,10 +568,12 @@ function Accroche({ copy }: { copy: Copy }) {
 
 function DemoInteractive({
   copy,
+  ui,
   called,
   setCalled,
 }: {
   copy: Copy;
+  ui: UIStrings;
   called: boolean;
   setCalled: (v: boolean) => void;
 }) {
@@ -347,7 +582,7 @@ function DemoInteractive({
       <Container>
         <div style={{ textAlign: "center", maxWidth: 620, margin: "0 auto 34px" }}>
           <Eyebrow color={C.tealLight} center>
-            À vous de tester
+            {ui.demoEyebrow}
           </Eyebrow>
           <h2
             style={{
@@ -359,7 +594,7 @@ function DemoInteractive({
               margin: "10px 0 14px",
             }}
           >
-            Testez la technologie qui répondra à vos clients
+            {ui.demoTitle}
           </h2>
           <p style={{ fontSize: 14, color: "rgba(255,255,255,0.72)", lineHeight: 1.6, margin: 0 }}>
             {copy.demoIntro}
@@ -385,7 +620,7 @@ function DemoInteractive({
               marginBottom: 10,
             }}
           >
-            Exemple : ce que VOTRE agent saura
+            {ui.chipsLabel}
           </div>
           <div style={{ display: "flex", flexWrap: "wrap", gap: 10, marginBottom: 26 }}>
             {copy.chips.map((chip) => (
@@ -418,7 +653,7 @@ function DemoInteractive({
               boxShadow: `0 10px 30px rgba(62,128,115,0.4)`,
             }}
           >
-            📞 Appeler Orlane
+            {ui.callButton}
           </a>
           <div
             style={{
@@ -428,8 +663,7 @@ function DemoInteractive({
               color: "rgba(255,255,255,0.5)",
             }}
           >
-            Un seul effet à ce clic : votre téléphone compose immédiatement le numéro d'Orlane,
-            l'assistant de démonstration ByCo — pas un agent déjà configuré pour votre activité.
+            {ui.callNote}
           </div>
         </div>
       </Container>
@@ -467,7 +701,15 @@ function InfoChip({ label, value, accent }: { label: string; value: string; acce
 
 /* ── Section 4 — Confirmation WhatsApp ─────────────────────── */
 
-function WhatsAppConfirmation({ copy, called }: { copy: Copy; called: boolean }) {
+function WhatsAppConfirmation({
+  copy,
+  ui,
+  called,
+}: {
+  copy: Copy;
+  ui: UIStrings;
+  called: boolean;
+}) {
   return (
     <Section bg={C.paperDeep}>
       <Container>
@@ -480,7 +722,7 @@ function WhatsAppConfirmation({ copy, called }: { copy: Copy; called: boolean })
           }}
         >
           <div style={{ flex: "1 1 320px", minWidth: 280 }}>
-            <Eyebrow color={C.tealDeep}>Après l'appel</Eyebrow>
+            <Eyebrow color={C.tealDeep}>{ui.afterCallEyebrow}</Eyebrow>
             <h2
               style={{
                 fontFamily: SERIF,
@@ -491,7 +733,7 @@ function WhatsAppConfirmation({ copy, called }: { copy: Copy; called: boolean })
                 margin: "10px 0 14px",
               }}
             >
-              Chaque appel devient un message WhatsApp
+              {ui.afterCallTitle}
             </h2>
             <p style={{ fontSize: 14, color: C.inkSoft, lineHeight: 1.65, margin: "0 0 12px" }}>
               {copy.whatsappBody}
@@ -505,16 +747,14 @@ function WhatsAppConfirmation({ copy, called }: { copy: Copy; called: boolean })
                 fontStyle: "italic",
               }}
             >
-              {called
-                ? "Message généré suite à votre appel test ci-dessus."
-                : "Appelez le numéro de démo ci-dessus pour voir ce message apparaître ici."}
+              {called ? ui.calledMessage : ui.notCalledMessage}
             </p>
           </div>
 
           <div
             style={{ flex: "1 1 280px", minWidth: 260, display: "flex", justifyContent: "center" }}
           >
-            <WhatsAppMock copy={copy} called={called} />
+            <WhatsAppMock copy={copy} ui={ui} called={called} />
           </div>
         </div>
       </Container>
@@ -522,7 +762,7 @@ function WhatsAppConfirmation({ copy, called }: { copy: Copy; called: boolean })
   );
 }
 
-function WhatsAppMock({ copy, called }: { copy: Copy; called: boolean }) {
+function WhatsAppMock({ copy, ui, called }: { copy: Copy; ui: UIStrings; called: boolean }) {
   return (
     <div
       style={{
@@ -561,9 +801,9 @@ function WhatsAppMock({ copy, called }: { copy: Copy; called: boolean }) {
         </div>
         <div>
           <div style={{ color: "#fff", fontSize: 12.5, fontWeight: 600 }}>
-            Orlane · Assistant ByCo
+            {ui.whatsappHeaderName}
           </div>
-          <div style={{ color: "rgba(255,255,255,0.7)", fontSize: 10 }}>en ligne</div>
+          <div style={{ color: "rgba(255,255,255,0.7)", fontSize: 10 }}>{ui.whatsappOnline}</div>
         </div>
       </div>
       <div
@@ -591,7 +831,7 @@ function WhatsAppMock({ copy, called }: { copy: Copy; called: boolean }) {
           >
             <div style={{ fontWeight: 700, marginBottom: 4 }}>{copy.recapTitle}</div>
             {copy.recapBody}
-            <div style={{ marginTop: 6, fontSize: 10, color: C.inkSoft }}>Envoyé à l'instant</div>
+            <div style={{ marginTop: 6, fontSize: 10, color: C.inkSoft }}>{ui.sentJustNow}</div>
           </div>
         ) : (
           <div
@@ -605,7 +845,7 @@ function WhatsAppMock({ copy, called }: { copy: Copy; called: boolean }) {
               border: `1px dashed ${C.line}`,
             }}
           >
-            En attente de votre appel test…
+            {ui.waitingMessage}
           </div>
         )}
       </div>
@@ -615,7 +855,7 @@ function WhatsAppMock({ copy, called }: { copy: Copy; called: boolean }) {
 
 /* ── Section 5 — L'offre ────────────────────────────────────── */
 
-function OffreDecouverte() {
+function OffreDecouverte({ ui }: { ui: UIStrings }) {
   return (
     <Section bg={C.noir}>
       <Container>
@@ -631,7 +871,7 @@ function OffreDecouverte() {
           }}
         >
           <Eyebrow color={C.tealLight} center>
-            Envie d'aller plus loin ?
+            {ui.offerEyebrow}
           </Eyebrow>
           <h2
             style={{
@@ -642,7 +882,7 @@ function OffreDecouverte() {
               margin: "10px 0 16px",
             }}
           >
-            Le plan Premium — 1 990 €
+            {ui.offerTitle}
           </h2>
           <p
             style={{
@@ -653,10 +893,7 @@ function OffreDecouverte() {
               margin: "0 auto 20px",
             }}
           >
-            Audit complet du workflow d'accueil, Orlane et son automatisation WhatsApp,
-            personnalisation avancée pour votre activité, remise à niveau du site, 30 jours de suivi
-            post-livraison, mise en place prioritaire. Prix plein, paiement unique, aucun
-            abonnement.
+            {ui.offerDesc}
           </p>
 
           <div
@@ -668,9 +905,9 @@ function OffreDecouverte() {
               marginBottom: 22,
             }}
           >
-            <OfferBadge>Plan Premium · 1 990 €</OfferBadge>
-            <OfferBadge>Satisfait ou remboursé sous 30 jours, sans condition</OfferBadge>
-            <OfferBadge>Contrepartie : un témoignage vidéo</OfferBadge>
+            <OfferBadge>{ui.badgePremium}</OfferBadge>
+            <OfferBadge>{ui.badgeGuarantee}</OfferBadge>
+            <OfferBadge>{ui.badgeTestimonial}</OfferBadge>
           </div>
 
           <p
@@ -682,14 +919,14 @@ function OffreDecouverte() {
               lineHeight: 1.5,
             }}
           >
-            Les formules Essential, Business et Business+ restent consultables sur{" "}
+            {ui.offerFooterNote}{" "}
             <a
               href="https://bycosystems.xyz"
               target="_blank"
               rel="noopener noreferrer"
               style={{ color: "rgba(255,255,255,0.6)" }}
             >
-              le site principal ByCo Systems
+              {ui.offerFooterLinkText}
             </a>
             .
           </p>
@@ -713,10 +950,10 @@ function OffreDecouverte() {
               boxShadow: "0 10px 28px rgba(37,211,102,0.35)",
             }}
           >
-            💬 Écrire à Orlane sur WhatsApp
+            {ui.whatsappCta}
           </a>
           <div style={{ marginTop: 12, fontSize: 11, color: "rgba(255,255,255,0.4)" }}>
-            Même ligne Orlane, cette fois sur WhatsApp — votre message nous parvient directement.
+            {ui.whatsappCtaNote}
           </div>
         </div>
       </Container>
@@ -744,7 +981,7 @@ function OfferBadge({ children }: { children: React.ReactNode }) {
 
 /* ── Footer ─────────────────────────────────────────────────── */
 
-function Footer() {
+function Footer({ ui }: { ui: UIStrings }) {
   return (
     <Section bg={C.noirDeep}>
       <Container>
@@ -757,12 +994,8 @@ function Footer() {
             justifyContent: "space-between",
           }}
         >
-          <div style={{ fontSize: 12, color: "rgba(255,255,255,0.55)" }}>
-            Démonstration générique · adaptable à votre secteur
-          </div>
-          <div style={{ fontSize: 11, color: "rgba(255,255,255,0.45)" }}>
-            Démonstration personnalisable · ByCo Systems · bycosystems.xyz
-          </div>
+          <div style={{ fontSize: 12, color: "rgba(255,255,255,0.55)" }}>{ui.footerLine1}</div>
+          <div style={{ fontSize: 11, color: "rgba(255,255,255,0.45)" }}>{ui.footerLine2}</div>
         </div>
       </Container>
     </Section>
