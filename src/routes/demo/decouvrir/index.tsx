@@ -152,7 +152,7 @@ type Copy = {
 const COPY: Record<Secteur, Record<Lang, Copy>> = {
   sante: {
     fr: {
-      eyebrowHero: "▪ Toujours disponible pour vos patients ▪",
+      eyebrowHero: "▪ Toujours disponible pour vos patients",
       headline: "Pendant votre consultation, qui répond au téléphone ?",
       accrocheHeadline: "Vous, en consultation : qui décroche ?",
       accrocheP1:
@@ -174,7 +174,7 @@ const COPY: Record<Secteur, Record<Lang, Copy>> = {
         "Un patient a appelé pour une question de tarif consultation.\nNuméro : +33 6 XX XX XX XX\nSouhaite être rappelé si besoin.",
     },
     en: {
-      eyebrowHero: "▪ Always available for your patients ▪",
+      eyebrowHero: "▪ Always available for your patients",
       headline: "While you're with a patient, who answers the phone?",
       accrocheHeadline: "You, in consultation: who picks up?",
       accrocheP1:
@@ -198,7 +198,7 @@ const COPY: Record<Secteur, Record<Lang, Copy>> = {
   },
   urgence: {
     fr: {
-      eyebrowHero: "▪ Toujours disponible pour vos clients ▪",
+      eyebrowHero: "▪ Toujours disponible pour vos clients",
       headline: "Pendant votre intervention, qui répond au téléphone ?",
       accrocheHeadline: "Vous, sur place : qui décroche ?",
       accrocheP1:
@@ -220,7 +220,7 @@ const COPY: Record<Secteur, Record<Lang, Copy>> = {
         "Un client a appelé pour une demande d'intervention urgente.\nNuméro : +33 6 XX XX XX XX\nSouhaite être rappelé si besoin.",
     },
     en: {
-      eyebrowHero: "▪ Always available for your clients ▪",
+      eyebrowHero: "▪ Always available for your clients",
       headline: "While you're on a job, who answers the phone?",
       accrocheHeadline: "You, on site: who picks up?",
       accrocheP1:
@@ -244,7 +244,7 @@ const COPY: Record<Secteur, Record<Lang, Copy>> = {
   },
   default: {
     fr: {
-      eyebrowHero: "▪ Toujours disponible pour vos clients ▪",
+      eyebrowHero: "▪ Toujours disponible pour vos clients",
       headline: "Pendant que vous travaillez, qui répond au téléphone ?",
       accrocheHeadline: "Vous, pendant que vous travaillez : qui décroche ?",
       accrocheP1:
@@ -266,7 +266,7 @@ const COPY: Record<Secteur, Record<Lang, Copy>> = {
         "Un client a appelé pour une demande de renseignement.\nNuméro : +33 6 XX XX XX XX\nSouhaite être rappelé si besoin.",
     },
     en: {
-      eyebrowHero: "▪ Always available for your clients ▪",
+      eyebrowHero: "▪ Always available for your clients",
       headline: "While you're working, who answers the phone?",
       accrocheHeadline: "You, while you're working: who picks up?",
       accrocheP1:
