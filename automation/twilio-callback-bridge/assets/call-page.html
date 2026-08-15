@@ -1,0 +1,432 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+<title>Orlane - Appel prospect</title>
+<style>
+  :root { color-scheme: light dark; }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    background: #0f172a;
+    color: #f1f5f9;
+    padding: 24px;
+  }
+  .card {
+    width: 100%;
+    max-width: 380px;
+    background: #1e293b;
+    border-radius: 16px;
+    padding: 28px 24px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+  }
+  h1 { font-size: 1.25rem; margin: 0 0 4px; }
+  p.sub { color: #94a3b8; margin: 0 0 20px; font-size: 0.9rem; }
+
+  .status {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 14px;
+    border-radius: 10px;
+    background: #0f172a;
+    border: 1px solid #334155;
+    margin-bottom: 20px;
+    font-size: 0.85rem;
+  }
+  .status .dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: #64748b;
+    flex-shrink: 0;
+  }
+  .status.ready .dot { background: #4ade80; }
+  .status.offline .dot { background: #f87171; }
+  .status.connecting .dot { background: #fbbf24; }
+  .status .label { flex: 1; }
+
+  fieldset { border: none; padding: 0; margin: 0 0 18px; }
+  legend { font-size: 0.85rem; color: #cbd5e1; margin-bottom: 8px; padding: 0; }
+  .mode-choice { display: flex; gap: 8px; }
+  .mode-choice label {
+    flex: 1;
+    display: block;
+    text-align: center;
+    padding: 10px 8px;
+    border-radius: 10px;
+    border: 1px solid #334155;
+    background: #0f172a;
+    font-size: 0.8rem;
+    cursor: pointer;
+    color: #cbd5e1;
+  }
+  .mode-choice input { display: none; }
+  .mode-choice input:checked + span { color: #0f172a; }
+  .mode-choice label:has(input:checked) { background: #38bdf8; border-color: #38bdf8; color: #0f172a; }
+
+  label.field-label { display: block; font-size: 0.85rem; margin-bottom: 6px; color: #cbd5e1; }
+  input[type="tel"] {
+    width: 100%;
+    padding: 14px 16px;
+    font-size: 1.1rem;
+    border-radius: 10px;
+    border: 1px solid #334155;
+    background: #0f172a;
+    color: #f1f5f9;
+    margin-bottom: 16px;
+  }
+  input[type="tel"]:focus { outline: 2px solid #38bdf8; border-color: transparent; }
+  button {
+    width: 100%;
+    padding: 16px;
+    font-size: 1.05rem;
+    font-weight: 600;
+    border: none;
+    border-radius: 10px;
+    background: #38bdf8;
+    color: #0f172a;
+    cursor: pointer;
+  }
+  button:disabled { opacity: 0.6; cursor: not-allowed; }
+  .msg { margin-top: 16px; font-size: 0.9rem; text-align: center; min-height: 20px; }
+  .msg.ok { color: #4ade80; }
+  .msg.err { color: #f87171; }
+
+  .incoming-overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(15, 23, 42, 0.92);
+    align-items: center;
+    justify-content: center;
+    padding: 24px;
+    z-index: 10;
+  }
+  .incoming-overlay.show { display: flex; }
+  .incoming-card {
+    width: 100%;
+    max-width: 340px;
+    background: #1e293b;
+    border-radius: 16px;
+    padding: 28px 24px;
+    text-align: center;
+  }
+  .incoming-card h2 { margin: 0 0 6px; font-size: 1.1rem; }
+  .incoming-card p { margin: 0 0 24px; color: #94a3b8; font-size: 0.85rem; }
+  .incoming-actions { display: flex; gap: 12px; }
+  .incoming-actions button { padding: 14px; }
+  #btn-reject { background: #f87171; }
+  #btn-accept { background: #4ade80; }
+  .in-call-actions { display: none; }
+  .in-call-actions.show { display: block; }
+  #btn-hangup { background: #f87171; margin-top: 8px; }
+
+  .dtmf-label { font-size: 0.8rem; color: #64748b; margin: 16px 0 8px; text-align: center; }
+  .dtmf-pad {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 8px;
+  }
+  .dtmf-btn {
+    width: auto;
+    padding: 14px 8px;
+    font-size: 1.1rem;
+    font-weight: 600;
+    border: 1px solid #334155;
+    border-radius: 10px;
+    background: #0f172a;
+    color: #f1f5f9;
+    cursor: pointer;
+    transition: background 0.1s;
+  }
+  .dtmf-btn:active, .dtmf-btn:hover { background: #334155; }
+
+  .confirm-overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(15, 23, 42, 0.92);
+    align-items: center;
+    justify-content: center;
+    padding: 24px;
+    z-index: 20;
+  }
+  .confirm-overlay.show { display: flex; }
+  .confirm-card {
+    width: 100%;
+    max-width: 340px;
+    background: #1e293b;
+    border: 1px solid #fbbf24;
+    border-radius: 16px;
+    padding: 28px 24px;
+    text-align: center;
+  }
+  .confirm-card h2 { margin: 0 0 10px; font-size: 1.1rem; color: #fbbf24; }
+  .confirm-card p { margin: 0 0 24px; color: #cbd5e1; font-size: 0.9rem; }
+  .confirm-actions { display: flex; gap: 12px; }
+  .confirm-actions button { padding: 14px; }
+  #btn-confirm-cancel { background: #334155; color: #f1f5f9; }
+  #btn-confirm-pstn { background: #fbbf24; }
+</style>
+</head>
+<body>
+  <div class="card">
+    <h1>Appeler un prospect</h1>
+    <p class="sub">Le prospect verra s'afficher le +44, jamais ton numero.</p>
+
+    <div class="status connecting" id="status">
+      <div class="dot"></div>
+      <div class="label" id="status-label">Connexion en cours...</div>
+    </div>
+
+    <fieldset>
+      <legend>Reception du 1er leg (toi)</legend>
+      <div class="mode-choice">
+        <label>
+          <input type="radio" name="mode" value="webrtc" id="mode-webrtc" checked />
+          <span>WebRTC (recommande)</span>
+        </label>
+        <label>
+          <input type="radio" name="mode" value="pstn" id="mode-pstn" />
+          <span>PSTN classique (secours)</span>
+        </label>
+      </div>
+    </fieldset>
+
+    <label class="field-label" for="numero">Numero du prospect (format international)</label>
+    <input type="tel" inputmode="tel" id="numero" placeholder="+33612345678" autocomplete="off" />
+    <button id="btn">Appeler</button>
+    <div class="msg" id="msg"></div>
+
+    <div class="in-call-actions" id="in-call-actions">
+      <button id="btn-hangup">Raccrocher</button>
+      <p class="dtmf-label">Clavier DTMF</p>
+      <div class="dtmf-pad" id="dtmf-pad">
+        <button class="dtmf-btn" data-digit="1">1</button>
+        <button class="dtmf-btn" data-digit="2">2</button>
+        <button class="dtmf-btn" data-digit="3">3</button>
+        <button class="dtmf-btn" data-digit="4">4</button>
+        <button class="dtmf-btn" data-digit="5">5</button>
+        <button class="dtmf-btn" data-digit="6">6</button>
+        <button class="dtmf-btn" data-digit="7">7</button>
+        <button class="dtmf-btn" data-digit="8">8</button>
+        <button class="dtmf-btn" data-digit="9">9</button>
+        <button class="dtmf-btn" data-digit="*">*</button>
+        <button class="dtmf-btn" data-digit="0">0</button>
+        <button class="dtmf-btn" data-digit="#">#</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="incoming-overlay" id="incoming-overlay">
+    <div class="incoming-card">
+      <h2>Appel entrant</h2>
+      <p>Premier leg du pont d'appel Orlane.</p>
+      <div class="incoming-actions">
+        <button id="btn-reject">Refuser</button>
+        <button id="btn-accept">Decrocher</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="confirm-overlay" id="confirm-overlay">
+    <div class="confirm-card">
+      <h2>Connexion WebRTC non active</h2>
+      <p>L'appel partira sur le reseau telephonique classique (PSTN). Continuer ?</p>
+      <div class="confirm-actions">
+        <button id="btn-confirm-cancel">Annuler</button>
+        <button id="btn-confirm-pstn">Continuer en PSTN</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="/vendor/twilio-voice-sdk.min.js"></script>
+  <script>
+    // Bundle auto-heberge (voir scripts/build-voice-sdk.js) plutot qu'un CDN
+    // a conversion CJS->ESM automatique : jsdelivr (+esm) ET esm.sh cassent
+    // tous les deux sur ce paquet (Logger interne mal resolu -> "Cannot read
+    // properties of undefined (reading 'ERROR')" a la construction du
+    // Device). Expose window.Twilio.Device, teste et confirme fonctionnel.
+    const Device = window.Twilio.Device;
+
+    // Colle ici, une seule fois, le meme secret que celui saisi dans
+    // Environment Variables (CALLBACK_SHARED_SECRET) de la Console Twilio.
+    // Cette page n'est pas indexee ; seule son URL exacte permet d'y acceder.
+    const SECRET = "a27af4721a0fb4d52c75a87b1802ed2888a6d8178949c79f1b1419741ee6f002";
+
+    // Remplace par l'URL de la Function une fois deployee, ex.
+    // https://orlane-tools-xxxx.twil.io/callback-bridge
+    const FUNCTION_URL = '/callback-bridge';
+    const TOKEN_URL = '/voice-token';
+
+    const statusEl = document.getElementById('status');
+    const statusLabel = document.getElementById('status-label');
+    const btn = document.getElementById('btn');
+    const input = document.getElementById('numero');
+    const msg = document.getElementById('msg');
+    const modeWebrtc = document.getElementById('mode-webrtc');
+    const modePstn = document.getElementById('mode-pstn');
+    const overlay = document.getElementById('incoming-overlay');
+    const btnAccept = document.getElementById('btn-accept');
+    const btnReject = document.getElementById('btn-reject');
+    const inCallActions = document.getElementById('in-call-actions');
+    const btnHangup = document.getElementById('btn-hangup');
+    const confirmOverlay = document.getElementById('confirm-overlay');
+    const btnConfirmCancel = document.getElementById('btn-confirm-cancel');
+    const btnConfirmPstn = document.getElementById('btn-confirm-pstn');
+
+    let deviceStatus = 'connecting'; // 'connecting' | 'ready' | 'offline'
+
+    function setStatus(kind, text) {
+      deviceStatus = kind;
+      statusEl.className = 'status ' + kind;
+      statusLabel.textContent = text;
+    }
+
+    // Interruption explicite (vrai bouton, pas de bascule automatique) avant
+    // de laisser partir un appel sur le PSTN de secours alors que le mode
+    // choisi etait WebRTC mais que la connexion n'est en realite pas prete.
+    function confirmPstnFallback() {
+      return new Promise((resolve) => {
+        confirmOverlay.classList.add('show');
+        function cleanup(result) {
+          confirmOverlay.classList.remove('show');
+          btnConfirmCancel.removeEventListener('click', onCancel);
+          btnConfirmPstn.removeEventListener('click', onConfirm);
+          resolve(result);
+        }
+        function onCancel() { cleanup(false); }
+        function onConfirm() { cleanup(true); }
+        btnConfirmCancel.addEventListener('click', onCancel);
+        btnConfirmPstn.addEventListener('click', onConfirm);
+      });
+    }
+
+    let device = null;
+    let activeCall = null;
+
+    async function fetchToken() {
+      const res = await fetch(TOKEN_URL, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ secret: SECRET }),
+      });
+      if (!res.ok) throw new Error('token http ' + res.status);
+      const data = await res.json();
+      if (!data.token) throw new Error('token manquant dans la reponse');
+      return data.token;
+    }
+
+    async function setupDevice() {
+      setStatus('connecting', 'Connexion en cours...');
+      try {
+        const token = await fetchToken();
+        device = new Device(token, { logLevel: 'error' });
+
+        device.on('registered', () => setStatus('ready', 'Pret a recevoir (WebRTC connecte)'));
+        device.on('unregistered', () => setStatus('offline', 'Hors ligne — utilise PSTN classique en secours'));
+        device.on('error', (err) => {
+          console.error('Device error:', err);
+          setStatus('offline', 'Erreur WebRTC — utilise PSTN classique en secours');
+        });
+        device.on('tokenWillExpire', async () => {
+          try {
+            device.updateToken(await fetchToken());
+          } catch (e) {
+            console.error('Echec renouvellement token:', e);
+          }
+        });
+        device.on('incoming', (call) => {
+          activeCall = call;
+          overlay.classList.add('show');
+
+          call.on('cancel', () => { overlay.classList.remove('show'); activeCall = null; });
+          call.on('disconnect', () => {
+            overlay.classList.remove('show');
+            inCallActions.classList.remove('show');
+            activeCall = null;
+          });
+          call.on('reject', () => { overlay.classList.remove('show'); activeCall = null; });
+          call.on('accept', () => {
+            overlay.classList.remove('show');
+            inCallActions.classList.add('show');
+          });
+        });
+
+        await device.register();
+      } catch (e) {
+        console.error('Echec setup Device:', e);
+        setStatus('offline', 'Hors ligne — utilise PSTN classique en secours');
+      }
+    }
+
+    btnAccept.addEventListener('click', () => { if (activeCall) activeCall.accept(); });
+    btnReject.addEventListener('click', () => { if (activeCall) activeCall.reject(); });
+    btnHangup.addEventListener('click', () => { if (activeCall) activeCall.disconnect(); });
+
+    document.getElementById('dtmf-pad').addEventListener('click', (e) => {
+      const btn = e.target.closest('.dtmf-btn');
+      if (btn && activeCall) activeCall.sendDigits(btn.dataset.digit);
+    });
+
+    btn.addEventListener('click', async () => {
+      const numero = input.value.trim();
+      if (!numero) {
+        msg.textContent = 'Entre un numero.';
+        msg.className = 'msg err';
+        return;
+      }
+      let mode = modePstn.checked ? 'pstn' : 'webrtc';
+
+      // Le mode PSTN choisi explicitement via le selecteur reste immediat
+      // (decision deliberee de Samuel). Mais si le mode WebRTC est actif
+      // sans que la connexion soit reellement prete, on bloque et on
+      // demande confirmation avant de basculer silencieusement sur PSTN.
+      if (mode === 'webrtc' && deviceStatus !== 'ready') {
+        const confirmed = await confirmPstnFallback();
+        if (!confirmed) {
+          msg.textContent = 'Appel annule.';
+          msg.className = 'msg';
+          return;
+        }
+        mode = 'pstn';
+      }
+
+      btn.disabled = true;
+      msg.textContent = 'Envoi en cours...';
+      msg.className = 'msg';
+      try {
+        const res = await fetch(FUNCTION_URL, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ to: numero, secret: SECRET, mode }),
+        });
+        const data = await res.json();
+        if (res.ok && data.status === 'started') {
+          msg.textContent = mode === 'webrtc'
+            ? 'Appel lance, decroche ici dans la page dans quelques secondes.'
+            : 'Appel lance, decroche ton telephone dans quelques secondes.';
+          msg.className = 'msg ok';
+        } else {
+          msg.textContent = 'Erreur: ' + (data.error || res.status);
+          msg.className = 'msg err';
+        }
+      } catch (e) {
+        msg.textContent = 'Erreur reseau.';
+        msg.className = 'msg err';
+      } finally {
+        btn.disabled = false;
+      }
+    });
+
+    setupDevice();
+  </script>
+</body>
+</html>
