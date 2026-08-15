@@ -310,10 +310,11 @@ type UIStrings = {
   sentJustNow: string;
   whatsappHeaderName: string;
   whatsappOnline: string;
+  prospectBadgeTemplate: string;
   offerEyebrow: string;
   offerTitle: string;
   offerDesc: string;
-  badgePremium: string;
+  badgeOffer: string;
   badgeGuarantee: string;
   badgeTestimonial: string;
   offerFooterNote: string;
@@ -344,14 +345,15 @@ const UI: Record<Lang, UIStrings> = {
     sentJustNow: "Envoyé à l'instant",
     whatsappHeaderName: "Orlane · Assistant ByCo",
     whatsappOnline: "en ligne",
+    prospectBadgeTemplate: "Préparé pour {name}",
     offerEyebrow: "Envie d'aller plus loin ?",
-    offerTitle: "Le plan Premium — 1 990 €",
+    offerTitle: "Le plan Business+ — 1 490 €",
     offerDesc:
-      "Audit complet du workflow d'accueil, Orlane et son automatisation WhatsApp, personnalisation avancée pour votre activité, remise à niveau du site, 30 jours de suivi post-livraison, mise en place prioritaire. Prix plein, paiement unique, aucun abonnement.",
-    badgePremium: "Plan Premium · 1 990 €",
+      "Accueil IA disponible 24h/24, automatisation WhatsApp complète, réservation et confirmation automatique, suivi client automatisé, ReadyFlow Manager inclus, voix IA sur-mesure. Mise en place en 48 à 72h. Prix plein, paiement unique, aucun abonnement.",
+    badgeOffer: "Plan Business+ · 1 490 €",
     badgeGuarantee: "Satisfait ou remboursé sous 30 jours, sans condition",
     badgeTestimonial: "Contrepartie : un témoignage vidéo",
-    offerFooterNote: "Les formules Essential, Business et Business+ restent consultables sur",
+    offerFooterNote: "Les formules Essential, Business et Premium restent consultables sur",
     offerFooterLinkText: "le site principal ByCo Systems",
     whatsappCta: "💬 Écrire à Orlane sur WhatsApp",
     whatsappCtaNote: "Même ligne Orlane, cette fois sur WhatsApp — votre message nous parvient directement.",
@@ -377,14 +379,15 @@ const UI: Record<Lang, UIStrings> = {
     sentJustNow: "Sent just now",
     whatsappHeaderName: "Orlane · ByCo Assistant",
     whatsappOnline: "online",
+    prospectBadgeTemplate: "Prepared for {name}",
     offerEyebrow: "Want to go further?",
-    offerTitle: "The Premium plan — €1,990",
+    offerTitle: "The Business+ plan — €1,490",
     offerDesc:
-      "Full audit of your reception workflow, Orlane and its WhatsApp automation, advanced customization for your business, website upgrade, 30 days of post-delivery support, priority setup. Full price, one-time payment, no subscription.",
-    badgePremium: "Premium plan · €1,990",
+      "24/7 AI reception, full WhatsApp automation, automatic booking and confirmation, automated client follow-up, ReadyFlow Manager included, custom AI voice. Setup in 48 to 72 hours. Full price, one-time payment, no subscription.",
+    badgeOffer: "Business+ plan · €1,490",
     badgeGuarantee: "Money-back guarantee within 30 days, no conditions",
     badgeTestimonial: "In exchange: a video testimonial",
-    offerFooterNote: "The Essential, Business and Business+ plans remain available on",
+    offerFooterNote: "The Essential, Business and Premium plans remain available on",
     offerFooterLinkText: "the main ByCo Systems site",
     whatsappCta: "💬 Message Orlane on WhatsApp",
     whatsappCtaNote: "Same Orlane line, this time on WhatsApp — your message reaches us directly.",
@@ -463,6 +466,27 @@ function Hero({ copy, ui, prospect }: { copy: Copy; ui: UIStrings; prospect?: st
           }}
         >
           <div style={{ maxWidth: 620 }}>
+            {prospect && (
+              <div
+                style={{
+                  display: "inline-block",
+                  marginBottom: 14,
+                  padding: "5px 14px",
+                  borderRadius: 20,
+                  background: C.teal,
+                  color: "#fff",
+                  fontSize: 11.5,
+                  fontWeight: 700,
+                  letterSpacing: "0.04em",
+                  maxWidth: "100%",
+                  overflowWrap: "break-word",
+                  wordBreak: "break-word",
+                  boxShadow: "0 2px 10px rgba(62,128,115,0.4)",
+                }}
+              >
+                {ui.prospectBadgeTemplate.replace("{name}", prospect)}
+              </div>
+            )}
             <div
               style={{
                 fontSize: 10.5,
@@ -905,7 +929,7 @@ function OffreDecouverte({ ui }: { ui: UIStrings }) {
               marginBottom: 22,
             }}
           >
-            <OfferBadge>{ui.badgePremium}</OfferBadge>
+            <OfferBadge>{ui.badgeOffer}</OfferBadge>
             <OfferBadge>{ui.badgeGuarantee}</OfferBadge>
             <OfferBadge>{ui.badgeTestimonial}</OfferBadge>
           </div>
