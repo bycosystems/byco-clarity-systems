@@ -43,8 +43,10 @@ export const Route = createFileRoute("/demo/decouvrir/")({
   }),
   component: DecouvrirDemo,
   head: ({ match }) => {
-    const lang = resolveLang((match.search as { lang?: string }).lang);
-    const m = META[lang];
+    const search = match.search as { lang?: string; secteur?: string };
+    const lang = resolveLang(search.lang);
+    const secteur = resolveSecteur(search.secteur);
+    const m = META[secteur][lang];
     const ogImage = "https://bycosystems.xyz/demo/decouvrir/og-image.png";
     return {
       meta: [
@@ -396,18 +398,48 @@ const UI: Record<Lang, UIStrings> = {
   },
 };
 
-const META: Record<Lang, { title: string; description: string; ogDescription: string }> = {
-  fr: {
-    title: "Découvrir votre agent d'accueil × ByCo Systems",
-    description:
-      "Démonstration interactive de la mini-application sur-mesure conçue par ByCo Systems : testez l'agent d'accueil en direct.",
-    ogDescription: "Pendant que vous travaillez, qui répond au téléphone ? Testez Orlane en direct.",
+const META: Record<Secteur, Record<Lang, { title: string; description: string; ogDescription: string }>> = {
+  sante: {
+    fr: {
+      title: "Votre cabinet, toujours disponible × ByCo Systems",
+      description:
+        "Démonstration interactive de l'agent vocal ByCo pour cabinets médicaux et paramédicaux : testez Orlane en direct.",
+      ogDescription: "Pendant votre consultation, qui répond au téléphone ? Testez Orlane en direct.",
+    },
+    en: {
+      title: "Your practice, always available × ByCo Systems",
+      description:
+        "Interactive demo of the ByCo voice agent for medical and healthcare practices: test Orlane live.",
+      ogDescription: "While you're with a patient, who answers the phone? Test Orlane live.",
+    },
   },
-  en: {
-    title: "Discover your AI receptionist × ByCo Systems",
-    description:
-      "Interactive demo of the custom mini-app built by ByCo Systems: test the AI receptionist live.",
-    ogDescription: "While you're working, who answers the phone? Test Orlane live.",
+  urgence: {
+    fr: {
+      title: "Votre activité, toujours disponible × ByCo Systems",
+      description:
+        "Démonstration interactive de l'agent vocal ByCo pour artisans et dépanneurs : testez Orlane en direct.",
+      ogDescription: "Pendant votre intervention, qui répond au téléphone ? Testez Orlane en direct.",
+    },
+    en: {
+      title: "Your business, always available × ByCo Systems",
+      description:
+        "Interactive demo of the ByCo voice agent for tradespeople and service businesses: test Orlane live.",
+      ogDescription: "While you're on a job, who answers the phone? Test Orlane live.",
+    },
+  },
+  default: {
+    fr: {
+      title: "Découvrir votre agent d'accueil × ByCo Systems",
+      description:
+        "Démonstration interactive de la mini-application sur-mesure conçue par ByCo Systems : testez l'agent d'accueil en direct.",
+      ogDescription: "Pendant que vous travaillez, qui répond au téléphone ? Testez Orlane en direct.",
+    },
+    en: {
+      title: "Discover your AI receptionist × ByCo Systems",
+      description:
+        "Interactive demo of the custom mini-app built by ByCo Systems: test the AI receptionist live.",
+      ogDescription: "While you're working, who answers the phone? Test Orlane live.",
+    },
   },
 };
 
