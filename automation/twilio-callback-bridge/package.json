@@ -1,0 +1,21 @@
+{
+  "name": "orlane-twilio-bridge",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Pont d'appel Orlane (ByCo Systems) - masque le numero personnel derriere +447576594092",
+  "scripts": {
+    "start": "twilio-run",
+    "build:voice-sdk": "node scripts/build-voice-sdk.js",
+    "deploy": "node scripts/deploy.js",
+    "test-bridge": "node scripts/test-bridge.js"
+  },
+  "dependencies": {
+    "twilio": "^5.3.0"
+  },
+  "devDependencies": {
+    "@twilio/voice-sdk": "^2.18.3",
+    "dotenv": "^16.4.5",
+    "esbuild": "^0.28.1",
+    "twilio-run": "^3.5.0"
+  }
+}
