@@ -124,8 +124,8 @@ export const content: Record<Lang, Content> = {
         { title: "WhatsApp & multi-channel automation", desc: "Instant greetings, appointment confirmations and follow-ups on WhatsApp - without lifting a finger." },
         { title: "Automated booking & follow-up", desc: "Clients book, get confirmed and receive reminders automatically. Your calendar fills itself." },
       ],
-      ctaDashboard: "Explore live dashboard",
-      ctaNote: "Live demo - explore freely, no login required.",
+      ctaDashboard: "Preview the ReadyFlow Manager concept",
+      ctaNote: "Concept preview - explore freely, no login required.",
     },
     services: {
       heading: "Everything your front desk should do - automated",
@@ -351,8 +351,8 @@ export const content: Record<Lang, Content> = {
         { title: "Automatisation WhatsApp et multi-canal", desc: "Accueil instantané, confirmations de rendez-vous et relances sur WhatsApp - sans lever le petit doigt." },
         { title: "Réservation et suivi automatisés", desc: "Vos clients réservent, sont confirmés et reçoivent des rappels automatiquement. Votre agenda se remplit tout seul." },
       ],
-      ctaDashboard: "Explorer le tableau de bord",
-      ctaNote: "Démo en direct - explorez librement, sans connexion requise.",
+      ctaDashboard: "Découvrir le concept ReadyFlow Manager",
+      ctaNote: "Aperçu du concept - explorez librement, sans connexion requise.",
     },
     services: {
       heading: "Tout ce que votre accueil devrait faire - automatisé",
