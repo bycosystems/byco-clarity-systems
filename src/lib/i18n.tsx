@@ -139,7 +139,7 @@ export const content: Record<Lang, Content> = {
       ],
     },
     whoWeServe: {
-      heading: "When someone needs you urgently — do they reach you, or call the next name on the list?",
+      heading: "When someone needs you urgently, do they reach you, or call the next name on the list?",
       subheading: "Every unanswered call is a client you never knew you lost. Locksmiths, plumbers, emergency vets, healthcare practices, and many others — if your business can't afford a missed call, ByCo Systems makes sure every request gets a response, 24/7.",
     },
     smartIntakeIntro: {
@@ -366,7 +366,7 @@ export const content: Record<Lang, Content> = {
       ],
     },
     whoWeServe: {
-      heading: "Quand quelqu'un a besoin de vous en urgence — décroche-t-il, ou appelle-t-il le suivant sur la liste ?",
+      heading: "Quand quelqu'un a besoin de vous en urgence, décroche-t-il, ou appelle-t-il le suivant sur la liste ?",
       subheading: "Chaque appel sans réponse est un client perdu que vous ne verrez jamais. Serruriers, plombiers, vétérinaires d'urgence, professionnels de santé, et bien d'autres — si votre métier ne tolère pas un appel manqué, ByCo Systems veille à ce que chaque demande reçoive une réponse, 24h/24.",
     },
     smartIntakeIntro: {
