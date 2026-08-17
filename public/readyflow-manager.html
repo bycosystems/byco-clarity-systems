@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title id="page-title">ReadyFlow Manager - Operations Dashboard</title>
-  <meta id="page-description" name="description" content="Track projects, assign tasks, follow status, and prepare deliverables faster. Built for service teams and operations." />
+  <meta id="page-description" name="description" content="Track every call and WhatsApp conversation Orlane handles, so nothing falls through the cracks." />
   <meta property="og:title" content="ReadyFlow Manager - Operations Dashboard" />
   <meta property="og:description" content="Turn messy service operations into one clear workspace" />
   <meta property="og:type" content="website" />
@@ -43,7 +43,7 @@
   /* --- BACKGROUND MESH --- */
     body::before {
       content: '';
-      position: fixed;
+      position: absolute;
       inset: 0;
       background:
         radial-gradient(ellipse 80% 60% at 20% 10%, rgba(34,211,238,0.06) 0%, transparent 60%),
@@ -901,7 +901,7 @@
     </a>
     <ul class="nav-links">
       <li><a href="#problem" data-fr="Problème">Problem</a></li>
-      <li><a href="#workflow" data-fr="Flux de travail">Workflow</a></li>
+      <li><a href="#workflow" data-fr="Journal">Log</a></li>
       <li><a href="#dashboard" data-fr="Tableau de bord">Dashboard</a></li>
     </ul>
     <a href="tel:+447576594092" style="display:flex;align-items:center;gap:8px;color:var(--white);text-decoration:none;font-size:14px;font-weight:500;opacity:0.85;transition:opacity 0.2s;" onmouseover="this.style.opacity='1'" onmouseout="this.style.opacity='0.85'">
@@ -969,7 +969,7 @@
             <div class="dash-nav-item"><span class="dash-nav-icon">◫</span> <span data-fr="Projets">Projects</span></div>
             <div class="dash-nav-item"><span class="dash-nav-icon">✓</span> <span data-fr="Tâches">Tasks</span></div>
             <div class="dash-nav-item"><span class="dash-nav-icon">◷</span> <span data-fr="Planning">Schedule</span></div>
-            <div class="dash-nav-item"><span class="dash-nav-icon">◎</span> <span data-fr="Équipe">Team</span></div>
+            <div class="dash-nav-item"><span class="dash-nav-icon">◎</span> <span data-fr="Journal">Log</span></div>
             <div class="dash-nav-item"><span class="dash-nav-icon">↗</span> <span data-fr="Rapports">Reports</span></div>
             <div class="dash-workspace">
               <div class="workspace-label" data-fr="Espace de démo">Demo workspace</div>
@@ -1019,43 +1019,43 @@
             <!-- Projects table -->
             <div class="projects-table">
               <div class="table-header">
-                <span class="table-title" data-fr="Opérations d'équipe en direct">Live team operations</span>
+                <span class="table-title" data-fr="Interactions récentes">Recent interactions</span>
                 <span class="table-link" data-fr="Tout voir">View all</span>
               </div>
               <div class="table-row head">
-                <span data-fr="Projet">Project</span><span data-fr="Statut">Status</span><span data-fr="Priorité">Priority</span><span data-fr="Assigné">Assigned</span><span data-fr="Échéance">Due</span><span data-fr="Progression">Progress</span>
+                <span data-fr="Contact">Contact</span><span data-fr="Statut">Status</span><span data-fr="Priorité">Priority</span><span data-fr="Canal">Channel</span><span data-fr="Reçu">Received</span><span data-fr="Suite">Next step</span>
               </div>
               <div class="table-row">
-                <div><div class="project-name">Client Alpha</div><div class="project-team">Operations Team</div></div>
-                <span><span class="badge-status badge-pending" data-fr="En attente de revue">Pending review</span></span>
+                <div><div class="project-name">+44 7576 ···092</div></div>
+                <span><span class="badge-status badge-pending" data-fr="Nouveau">New</span></span>
                 <span><span class="badge-priority priority-high" data-fr="Élevée">High</span></span>
-                <span><span class="avatar">SK</span></span>
+                <span style="font-size:11px;color:var(--muted);" data-fr="Appel">Voice</span>
                 <span style="font-size:11px;color:var(--muted);" data-fr="Aujourd'hui 16h">Today 4pm</span>
-                <div><div class="progress-bar"><div class="progress-fill" style="width:35%"></div></div><div style="font-size:10px;color:var(--muted);margin-top:3px;">35%</div></div>
+                <span style="font-size:11px;color:var(--muted);" data-fr="Rappeler">Call back</span>
               </div>
               <div class="table-row">
-                <div><div class="project-name">Support Queue</div><div class="project-team">Support Team</div></div>
+                <div><div class="project-name">WhatsApp +33 6 ···23</div></div>
                 <span><span class="badge-status badge-progress" data-fr="En cours">In progress</span></span>
                 <span><span class="badge-priority priority-medium" data-fr="Moyenne">Medium</span></span>
-                <span><span class="avatar">MD</span></span>
-                <span style="font-size:11px;color:var(--muted);" data-fr="Demain">Tomorrow</span>
-                <div><div class="progress-bar"><div class="progress-fill" style="width:60%"></div></div><div style="font-size:10px;color:var(--muted);margin-top:3px;">60%</div></div>
-              </div>
-              <div class="table-row">
-                <div><div class="project-name">Marketing Ops</div><div class="project-team">Marketing Team</div></div>
-                <span><span class="badge-status badge-ready" data-fr="Prêt">Ready</span></span>
-                <span><span class="badge-priority priority-low" data-fr="Faible">Low</span></span>
-                <span><span class="avatar">EW</span></span>
-                <span style="font-size:11px;color:var(--muted);" data-fr="Aujourd'hui 18h">Today 6pm</span>
-                <div><div class="progress-bar"><div class="progress-fill" style="width:90%"></div></div><div style="font-size:10px;color:var(--muted);margin-top:3px;">90%</div></div>
-              </div>
-              <div class="table-row">
-                <div><div class="project-name">Client Success</div><div class="project-team">CS Team</div></div>
-                <span><span class="badge-status badge-scheduled" data-fr="Planifié">Scheduled</span></span>
-                <span><span class="badge-priority priority-urgent" data-fr="Urgent">Urgent</span></span>
-                <span><span class="avatar">LP</span></span>
+                <span><span class="avatar">WA</span></span>
                 <span style="font-size:11px;color:var(--muted);" data-fr="Aujourd'hui 14h">Today 2pm</span>
-                <div><div class="progress-bar"><div class="progress-fill" style="width:75%"></div></div><div style="font-size:10px;color:var(--muted);margin-top:3px;">75%</div></div>
+                <span style="font-size:11px;color:var(--muted);" data-fr="En attente de réponse">Awaiting reply</span>
+              </div>
+              <div class="table-row">
+                <div><div class="project-name">+44 7576 ···347</div></div>
+                <span><span class="badge-status badge-ready" data-fr="Traité">Handled</span></span>
+                <span><span class="badge-priority priority-low" data-fr="Faible">Low</span></span>
+                <span><span class="avatar">OR</span></span>
+                <span style="font-size:11px;color:var(--muted);" data-fr="Hier">Yesterday</span>
+                <span style="font-size:11px;color:var(--muted);" data-fr="Aucune">None</span>
+              </div>
+              <div class="table-row">
+                <div><div class="project-name">WhatsApp +33 7 ···58</div></div>
+                <span><span class="badge-status badge-scheduled" data-fr="Transféré">Transferred</span></span>
+                <span><span class="badge-priority priority-urgent" data-fr="Urgent">Urgent</span></span>
+                <span><span class="avatar">SB</span></span>
+                <span style="font-size:11px;color:var(--muted);" data-fr="Aujourd'hui 18h">Today 6pm</span>
+                <span style="font-size:11px;color:var(--muted);" data-fr="Confirmé par Samuel">Confirmed by Samuel</span>
               </div>
             </div>
           </div>
@@ -1084,17 +1084,17 @@
         <div class="problem-card">
           <div class="problem-icon">🔍</div>
           <h3 data-fr="Statut flou">Unclear status</h3>
-          <p data-fr="Les équipes manquent de visibilité en temps réel sur ce qui avance, ce qui bloque et ce qui est terminé.">Teams lack real-time visibility on what's running, what's stuck, and what's done.</p>
+          <p data-fr="Vous ne voyez pas en temps réel quels appels ont été traités, lesquels restent ouverts, et lesquels attendent un rappel.">You can't see in real time which calls got answered, which are still open, and which need a callback.</p>
         </div>
         <div class="problem-card">
           <div class="problem-icon">⏱</div>
           <h3 data-fr="Coordination retardée">Delayed coordination</h3>
-          <p data-fr="Les retards affectent les délais de livraison et la performance de l'équipe sans que personne ne le remarque à temps.">Delays impact delivery timelines and team performance without anyone noticing early enough.</p>
+          <p data-fr="Un appel manqué ou un message WhatsApp resté sans réponse peut coûter un client avant même qu'on s'en aperçoive.">A missed call or an unanswered WhatsApp message can cost a client before anyone even notices.</p>
         </div>
         <div class="problem-card">
           <div class="problem-icon">📊</div>
           <h3 data-fr="Aucune visibilité pour les responsables">No manager visibility</h3>
-          <p data-fr="Les dirigeants ne voient ce qui se passe qu'en passant un appel ou en relançant leur équipe.">Owners can't see what's happening without a phone call or chasing their team.</p>
+          <p data-fr="Le dirigeant ne voit pas ce qu'Orlane traite sans devoir vérifier constamment.">Business owners can't see what Orlane is handling without checking in constantly.</p>
         </div>
       </div>
     </div>
@@ -1188,28 +1188,28 @@
   <section>
     <div class="section-block">
       <div class="section-label" data-fr="Comment ça marche">How it works</div>
-      <h2 data-fr="Du nouveau projet à la livraison en quatre étapes">From new project to delivery in four steps</h2>
-      <p style="margin-bottom:52px;" data-fr="Un processus simple et reproductible qui garde chaque projet sur la bonne voie du début à la fin.">A simple, repeatable process that keeps every project on track from start to finish.</p>
+      <h2 data-fr="De l'appel manqué au contact résolu en quatre étapes">From missed call to resolved contact in four steps</h2>
+      <p style="margin-bottom:52px;" data-fr="Un registre simple et automatique qui garde chaque échange visible du premier contact à sa résolution.">A simple, automatic log that keeps every interaction visible from first contact to resolution.</p>
       <div class="steps-grid">
         <div class="step-card">
           <div class="step-num">1</div>
-          <h3 data-fr="Ajouter un projet">Add project</h3>
-          <p data-fr="Créez des projets, campagnes ou tâches opérationnelles avec tous les détails et le contexte.">Create projects, campaigns or operational tasks with full details and context.</p>
+          <h3 data-fr="Un appel ou un message arrive">Call or message comes in</h3>
+          <p data-fr="Orlane répond instantanément, par téléphone ou WhatsApp, jour et nuit.">Orlane answers instantly, on the phone or on WhatsApp, day or night.</p>
         </div>
         <div class="step-card">
           <div class="step-num">2</div>
-          <h3 data-fr="Assigner des tâches">Assign tasks</h3>
-          <p data-fr="Assignez tâches et mises à jour au bon coéquipier avec priorité et échéance.">Assign tasks and updates to the right teammate with priority and deadline.</p>
+          <h3 data-fr="Orlane l'enregistre">Orlane logs it</h3>
+          <p data-fr="Nom, contact, besoin et urgence sont capturés automatiquement, sans saisie manuelle.">Name, contact, need and urgency are captured automatically, no manual entry.</p>
         </div>
         <div class="step-card">
           <div class="step-num">3</div>
-          <h3 data-fr="Suivre l'avancement">Track progress</h3>
-          <p data-fr="Visualisez en temps réel le statut, les blocages et les délais sur l'ensemble du portefeuille.">See live status, blockers and ETAs across the entire portfolio in real time.</p>
+          <h3 data-fr="Vous le voyez dans ReadyFlow Manager">You see it in ReadyFlow Manager</h3>
+          <p data-fr="Chaque échange apparaît avec son statut, rien n'attend d'être découvert.">Every interaction appears with its status, so nothing waits to be discovered.</p>
         </div>
         <div class="step-card">
           <div class="step-num">4</div>
-          <h3 data-fr="Terminer le flux">Complete workflow</h3>
-          <p data-fr="Confirmez la livraison et notifiez automatiquement l'équipe à la clôture d'un flux.">Confirm delivery and notify the team automatically when a workflow closes.</p>
+          <h3 data-fr="Relancer et clôturer">Follow up and close</h3>
+          <p data-fr="Marquez comme traité une fois le suivi fait. Rien ne se perd deux fois.">Mark it handled once you've followed up. Nothing falls through twice.</p>
         </div>
       </div>
     </div>
@@ -1221,10 +1221,10 @@
       <div class="cta-box">
         <div class="section-label">ByCo Systems</div>
         <h2 data-fr="Envie de l'adapter à votre entreprise ?">Want this adapted for your business?</h2>
-        <p data-fr="Nous adapterons ReadyFlow Manager à vos projets, équipes et processus - et vous présenterons une démo en direct personnalisée pour vos opérations.">We'll tailor ReadyFlow Manager to your projects, teams and processes - and walk you through a live demo personalized to your operations.</p>
+        <p data-fr="Nous adapterons ReadyFlow Manager à la façon dont votre entreprise reçoit réellement ses appels et messages - et vous présenterons une démo personnalisée pour votre activité.">We'll tailor ReadyFlow Manager to how your business actually receives calls and messages - and walk you through a demo personalized to your operations.</p>
         <div class="cta-perks">
           <div class="cta-perk" data-fr="Présentation personnalisée de votre portefeuille">Personalized walkthrough on your portfolio</div>
-          <div class="cta-perk" data-fr="Cartographie de flux sur-mesure pour votre équipe">Custom workflow mapping for your team</div>
+          <div class="cta-perk" data-fr="Configuration sur-mesure pour votre activité">Custom setup for how your business actually works</div>
           <div class="cta-perk" data-fr="Sans engagement - démo à titre d'exemple uniquement">No commitment - demo concept only</div>
         </div>
         <div style="display:flex;flex-direction:column;gap:12px;align-items:flex-start;">
@@ -1280,8 +1280,8 @@
     // --- FR/EN toggle ---
     const EN_TITLE = 'ReadyFlow Manager - Operations Dashboard';
     const FR_TITLE = 'ReadyFlow Manager - Tableau de bord opérationnel';
-    const EN_DESC = 'Track projects, assign tasks, follow status, and prepare deliverables faster. Built for service teams and operations.';
-    const FR_DESC = 'Suivez vos projets, assignez des tâches, suivez leur statut et préparez vos livrables plus rapidement. Conçu pour les équipes et opérations de services.';
+    const EN_DESC = 'Track every call and WhatsApp conversation Orlane handles, so nothing falls through the cracks.';
+    const FR_DESC = 'Suivez chaque appel et conversation WhatsApp traité par Orlane, pour que rien ne passe à travers les mailles.';
 
     let currentLang = 'en';
 

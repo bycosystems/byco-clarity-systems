@@ -617,39 +617,31 @@ function FeaturedDemo() {
           </p>
         </div>
 
-        <div className="grid lg:grid-cols-12 gap-12 items-center">
-          <div className="lg:col-span-5">
-            <ParallaxTitle word={t.parallax.guide}>
-              <h2 className="text-3xl md:text-4xl font-medium text-navy-deep">{t.featuredDemo.heading}</h2>
-            </ParallaxTitle>
-            <p className="mt-5 text-muted-foreground leading-relaxed">
-              {t.featuredDemo.subheading}
-            </p>
-            <ul className="mt-8 grid grid-cols-2 gap-3">
-              {t.featuredDemo.features.map((label, i) => {
-                const Icon = demoFeatureIcons[i];
-                return (
-                  <li key={label} className="flex items-center gap-2.5 text-sm text-foreground">
-                    <span className="size-7 rounded-md bg-brand/10 grid place-items-center">
-                      <Icon className="size-3.5 text-brand" />
-                    </span>
-                    {label}
-                  </li>
-                );
-              })}
-            </ul>
-            <a href={demoUrl(lang)}
-              className="mt-10 inline-flex items-center gap-2 px-5 py-3 rounded-md bg-navy text-white font-medium hover:bg-navy-deep transition"
-            >
-              {t.featuredDemo.cta}
-            </a>
-          </div>
-          <div className="lg:col-span-7">
-            <div className="relative">
-              <div className="absolute -inset-4 bg-brand/10 rounded-3xl blur-2xl" />
-              <div className="relative"><DashboardMockup /></div>
-            </div>
-          </div>
+        <div className="max-w-2xl">
+          <ParallaxTitle word={t.parallax.guide}>
+            <h2 className="text-3xl md:text-4xl font-medium text-navy-deep">{t.featuredDemo.heading}</h2>
+          </ParallaxTitle>
+          <p className="mt-5 text-muted-foreground leading-relaxed">
+            {t.featuredDemo.subheading}
+          </p>
+          <ul className="mt-8 grid grid-cols-2 gap-3">
+            {t.featuredDemo.features.map((label, i) => {
+              const Icon = demoFeatureIcons[i];
+              return (
+                <li key={label} className="flex items-center gap-2.5 text-sm text-foreground">
+                  <span className="size-7 rounded-md bg-brand/10 grid place-items-center">
+                    <Icon className="size-3.5 text-brand" />
+                  </span>
+                  {label}
+                </li>
+              );
+            })}
+          </ul>
+          <a href={demoUrl(lang)}
+            className="mt-10 inline-flex items-center gap-2 px-5 py-3 rounded-md bg-navy text-white font-medium hover:bg-navy-deep transition"
+          >
+            {t.featuredDemo.cta}
+          </a>
         </div>
       </div>
     </section>
