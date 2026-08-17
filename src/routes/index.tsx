@@ -195,7 +195,7 @@ function Header() {
         <nav className="hidden md:flex items-center gap-8 text-sm text-muted-foreground">
           <a href="#offer" className="hover:text-navy-deep transition">{t.nav.offer}</a>
           <a href="#services" className="hover:text-navy-deep transition">{t.nav.services}</a>
-          <a href="#pricing" className="hover:text-navy-deep transition">{t.nav.pricing}</a>
+          <a href="#pricing-business-plus" className="hover:text-navy-deep transition">{t.nav.pricing}</a>
           <a href="#demo" className="hover:text-navy-deep transition">{t.nav.demo}</a>
           <a href="#process" className="hover:text-navy-deep transition">{t.nav.process}</a>
           <a href="#contact" className="hover:text-navy-deep transition">{t.nav.contact}</a>
@@ -383,32 +383,20 @@ function Services() {
   );
 }
 
-const sectorIcons = [Building2, Users, ClipboardList, Workflow, LayoutDashboard, Bot];
-
 function WhoWeServe() {
   const t = useContent();
   return (
     <section className="py-16 border-b border-border">
       <div className="mx-auto max-w-7xl px-6">
-        <ParallaxTitle word={t.parallax.clients} center={true}>
-          <div className="text-center mb-10">
-            <h2 className="text-2xl md:text-3xl font-medium text-navy-deep">
+        <div className="max-w-3xl mx-auto text-center">
+          <ParallaxTitle word={t.parallax.clients} center={true}>
+            <h2 className="text-2xl md:text-3xl font-medium text-navy-deep leading-snug">
               {t.whoWeServe.heading}
             </h2>
-          </div>
-        </ParallaxTitle>
-        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
-          {t.whoWeServe.sectors.map((label, i) => {
-            const Icon = sectorIcons[i];
-            return (
-              <div key={label} className="flex flex-col items-center gap-3 p-4 rounded-xl border border-border bg-white hover:border-brand/40 hover:shadow-sm transition-all text-center">
-                <span className="size-10 rounded-lg bg-brand/10 grid place-items-center">
-                  <Icon className="size-5 text-brand" />
-                </span>
-                <span className="text-xs font-medium text-navy-deep leading-snug">{label}</span>
-              </div>
-            );
-          })}
+          </ParallaxTitle>
+          <p className="mt-5 text-muted-foreground leading-relaxed">
+            {t.whoWeServe.subheading}
+          </p>
         </div>
       </div>
     </section>
@@ -610,9 +598,7 @@ function FeaturedDemo() {
           </p>
           <div className="mt-6 flex flex-wrap gap-3">
             <a
-              href="https://bycosystems.xyz/demo/exemple"
-              target="_blank"
-              rel="noopener noreferrer"
+              href="/demo/decouvrir"
               className="inline-flex items-center gap-2 px-5 py-3 rounded-md bg-white text-navy-deep font-medium hover:bg-white/90 transition"
             >
               {t.featuredDemo.exploreDemoCta} <ArrowRight className="size-4" />
@@ -691,6 +677,7 @@ function Pricing() {
             return (
               <div
                 key={name}
+                id={highlight ? "pricing-business-plus" : undefined}
                 className={`relative rounded-2xl p-8 border transition-all flex flex-col ${
                   highlight
                     ? "border-2 border-brand bg-gradient-to-b from-navy to-navy-deep text-white shadow-elevated ring-1 ring-brand/30 scale-[1.02]"

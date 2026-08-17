@@ -62,8 +62,7 @@
       justify-content: space-between;
       padding: 0 48px;
       height: 64px;
-      background: rgba(13,31,53,0.85);
-      backdrop-filter: blur(16px);
+      background: rgba(13,31,53,0.95);
       border-bottom: 1px solid var(--card-border);
     }
 
@@ -1101,83 +1100,83 @@
     </div>
   </section>
 
-  <!-- TASKS & SCHEDULE -->
+  <!-- INTERACTION LOG -->
   <section id="workflow">
     <div class="section-block">
-      <div class="section-label" data-fr="Gestion des tâches">Task Management</div>
-      <h2 data-fr="Chaque tâche, assignée clairement et livrée à temps">Every task, assigned clearly and delivered on time</h2>
-      <p data-fr="Assignez des tâches, suivez les priorités et gardez toutes les équipes alignées dans un seul espace de travail.">Assign tasks, track priorities and keep every team aligned in one workspace.</p>
+      <div class="section-label" data-fr="Journal des interactions">Interaction Log</div>
+      <h2 data-fr="Chaque échange tracé, chaque opportunité prête pour la relance">Every exchange traced, every opportunity ready for follow-up</h2>
+      <p data-fr="Orlane enregistre automatiquement chaque appel, message et transfert. Rien ne passe à travers les mailles.">Orlane logs every call, message and handoff automatically. Nothing falls through the cracks.</p>
       <div class="tasks-section">
         <div class="task-list-card">
-          <div class="task-list-title"><span data-fr="Tâches actives">Active tasks</span> <span class="task-count" data-fr="6 tâches">6 tasks</span></div>
+          <div class="task-list-title"><span data-fr="Interactions actives">Active interactions</span> <span class="task-count" data-fr="5 échanges">5 exchanges</span></div>
           <div class="task-item">
             <div class="task-check"></div>
             <div class="task-info">
-              <div class="task-name" data-fr="Intégration client">Client onboarding</div>
-              <div class="task-meta">Client Alpha · Sara Khalil · <span data-fr="Aujourd'hui">Today</span></div>
+              <div class="task-name" data-fr="Appel manqué — réponse auto envoyée">Missed call — auto-reply sent</div>
+              <div class="task-meta">+44 7576 ··· 092 · <span data-fr="Aujourd'hui">Today</span></div>
+            </div>
+            <span class="badge-priority priority-urgent" data-fr="Urgent">Urgent</span>
+          </div>
+          <div class="task-item">
+            <div class="task-check"></div>
+            <div class="task-info">
+              <div class="task-name" data-fr="WhatsApp qualifié — démo demandée">WhatsApp lead — demo requested</div>
+              <div class="task-meta">whatsapp:+33 6 ··· 23 · <span data-fr="Aujourd'hui">Today</span></div>
             </div>
             <span class="badge-priority priority-high" data-fr="Élevée">High</span>
           </div>
           <div class="task-item">
-            <div class="task-check"></div>
-            <div class="task-info">
-              <div class="task-name" data-fr="Mise à jour système">System update</div>
-              <div class="task-meta">Support Queue · Marco Diaz · <span data-fr="Demain">Tomorrow</span></div>
-            </div>
-            <span class="badge-priority priority-medium" data-fr="Moyenne">Medium</span>
-          </div>
-          <div class="task-item">
             <div class="task-check done">✓</div>
             <div class="task-info">
-              <div class="task-name" style="text-decoration:line-through;opacity:0.5;" data-fr="Revue de campagne">Campaign review</div>
-              <div class="task-meta">Marketing Ops · Emma Wright · <span data-fr="Aujourd'hui">Today</span></div>
+              <div class="task-name" style="text-decoration:line-through;opacity:0.5;" data-fr="Appel hors horaires — transfert effectué">After-hours call — transfer done</div>
+              <div class="task-meta">+44 7576 ··· 112 · <span data-fr="Aujourd'hui">Today</span></div>
             </div>
             <span class="badge-priority priority-low" data-fr="Faible">Low</span>
           </div>
           <div class="task-item">
             <div class="task-check"></div>
             <div class="task-info">
-              <div class="task-name" data-fr="Synchronisation des données">Data sync</div>
-              <div class="task-meta">Client Success · Liam Park · <span data-fr="Aujourd'hui">Today</span></div>
+              <div class="task-name" data-fr="Nouvelle demande — qualification en cours">New inquiry — qualification in progress</div>
+              <div class="task-meta">whatsapp:+33 7 ··· 58 · <span data-fr="Aujourd'hui">Today</span></div>
             </div>
-            <span class="badge-priority priority-urgent" data-fr="Urgent">Urgent</span>
+            <span class="badge-priority priority-high" data-fr="Élevée">High</span>
           </div>
           <div class="task-item">
             <div class="task-check"></div>
             <div class="task-info">
-              <div class="task-name" data-fr="Livraison du projet">Project delivery</div>
-              <div class="task-meta">Client Success · Liam Park · <span data-fr="Aujourd'hui">Today</span></div>
+              <div class="task-name" data-fr="Appel capté — rappel programmé">Call captured — callback scheduled</div>
+              <div class="task-meta">+44 7576 ··· 347 · <span data-fr="Demain">Tomorrow</span></div>
             </div>
-            <span class="badge-priority priority-urgent" data-fr="Urgent">Urgent</span>
+            <span class="badge-priority priority-medium" data-fr="Moyenne">Medium</span>
           </div>
         </div>
         <div class="task-list-card">
-          <div class="task-list-title"><span data-fr="Planning du jour">Today's schedule</span> <span class="task-count" data-fr="5 opérations">5 operations</span></div>
+          <div class="task-list-title"><span data-fr="Activité du jour">Today's activity</span> <span class="task-count" data-fr="5 événements">5 events</span></div>
           <div class="schedule-list">
+            <div class="schedule-item">
+              <span class="schedule-time">09:15</span>
+              <div class="schedule-dot"></div>
+              <span data-fr="Appel entrant capté — réponse auto">Incoming call captured — auto-reply sent</span>
+            </div>
             <div class="schedule-item">
               <span class="schedule-time">10:30</span>
               <div class="schedule-dot"></div>
-              <span data-fr="Intégration client - Client Alpha">Client onboarding - Client Alpha</span>
+              <span data-fr="WhatsApp qualifié — démo demandée">WhatsApp lead qualified — demo requested</span>
             </div>
             <div class="schedule-item">
-              <span class="schedule-time">12:00</span>
+              <span class="schedule-time">12:45</span>
               <div class="schedule-dot"></div>
-              <span data-fr="Mise à jour système - Support Queue">System update - Support Queue</span>
+              <span data-fr="Appel hors horaires — transfert préparé">After-hours call — transfer prepared</span>
             </div>
             <div class="schedule-item">
               <span class="schedule-time">14:00</span>
               <div class="schedule-dot"></div>
-              <span data-fr="Suivi client - Client Success">Client follow-up - Client Success</span>
+              <span data-fr="Nouvelle demande — qualification en cours">New inquiry — qualification in progress</span>
             </div>
             <div class="schedule-item">
-              <span class="schedule-time">16:00</span>
+              <span class="schedule-time">16:30</span>
               <div class="schedule-dot"></div>
-              <span data-fr="Revue qualité - Marketing Ops">Quality review - Marketing Ops</span>
-            </div>
-            <div class="schedule-item">
-              <span class="schedule-time">18:30</span>
-              <div class="schedule-dot"></div>
-              <span data-fr="Livraison du projet - Client Success">Project delivery - Client Success</span>
+              <span data-fr="Rappel programmé — contact à recontacter">Callback scheduled — prospect to follow up</span>
             </div>
           </div>
         </div>

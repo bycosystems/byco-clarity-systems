@@ -25,7 +25,7 @@ export interface Content {
     ctaNote: string;
   };
   services: { heading: string; items: { title: string; desc: string }[] };
-  whoWeServe: { heading: string; sectors: string[] };
+  whoWeServe: { heading: string; subheading: string };
   smartIntakeIntro: {
     heading: string;
     subheading: string;
@@ -139,8 +139,8 @@ export const content: Record<Lang, Content> = {
       ],
     },
     whoWeServe: {
-      heading: "Built for every service business that wants to stop losing clients",
-      sectors: ["Clinics & Healthcare", "Salons & Beauty", "Law Firms & Notaries", "Agencies & Consultants", "Hotels & Hospitality", "Any service business"],
+      heading: "When someone needs you urgently — do they reach you, or call the next name on the list?",
+      subheading: "Every unanswered call is a client you never knew you lost. Locksmiths, plumbers, emergency vets, healthcare practices, and many others — if your business can't afford a missed call, ByCo Systems makes sure every request gets a response, 24/7.",
     },
     smartIntakeIntro: {
       heading: "Your 24/7 intelligent receptionist",
@@ -366,8 +366,8 @@ export const content: Record<Lang, Content> = {
       ],
     },
     whoWeServe: {
-      heading: "Conçu pour toute entreprise de services qui veut arrêter de perdre des clients",
-      sectors: ["Cliniques et santé", "Salons et beauté", "Cabinets juridiques et notaires", "Agences et conseil", "Hôtellerie", "Tout métier de service"],
+      heading: "Quand quelqu'un a besoin de vous en urgence — décroche-t-il, ou appelle-t-il le suivant sur la liste ?",
+      subheading: "Chaque appel sans réponse est un client perdu que vous ne verrez jamais. Serruriers, plombiers, vétérinaires d'urgence, professionnels de santé, et bien d'autres — si votre métier ne tolère pas un appel manqué, ByCo Systems veille à ce que chaque demande reçoive une réponse, 24h/24.",
     },
     smartIntakeIntro: {
       heading: "Votre réceptionniste intelligent, 24h/24",

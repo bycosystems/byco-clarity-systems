@@ -11,11 +11,6 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as FrIndexRouteImport } from './routes/fr/index'
-import { Route as DemoMaisonFIndexRouteImport } from './routes/demo/maison-f/index'
-import { Route as DemoLesSensIndexRouteImport } from './routes/demo/les-sens/index'
-import { Route as DemoLePanierIndexRouteImport } from './routes/demo/le-panier/index'
-import { Route as DemoLaReserveIndexRouteImport } from './routes/demo/la-reserve/index'
-import { Route as DemoExempleIndexRouteImport } from './routes/demo/exemple/index'
 import { Route as DemoDecouvrirIndexRouteImport } from './routes/demo/decouvrir/index'
 import { Route as DemoCabinetVeterinaireDesPignesIndexRouteImport } from './routes/demo/cabinet-veterinaire-des-pignes/index'
 
@@ -27,31 +22,6 @@ const IndexRoute = IndexRouteImport.update({
 const FrIndexRoute = FrIndexRouteImport.update({
   id: '/fr/',
   path: '/fr/',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const DemoMaisonFIndexRoute = DemoMaisonFIndexRouteImport.update({
-  id: '/demo/maison-f/',
-  path: '/demo/maison-f/',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const DemoLesSensIndexRoute = DemoLesSensIndexRouteImport.update({
-  id: '/demo/les-sens/',
-  path: '/demo/les-sens/',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const DemoLePanierIndexRoute = DemoLePanierIndexRouteImport.update({
-  id: '/demo/le-panier/',
-  path: '/demo/le-panier/',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const DemoLaReserveIndexRoute = DemoLaReserveIndexRouteImport.update({
-  id: '/demo/la-reserve/',
-  path: '/demo/la-reserve/',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const DemoExempleIndexRoute = DemoExempleIndexRouteImport.update({
-  id: '/demo/exemple/',
-  path: '/demo/exemple/',
   getParentRoute: () => rootRouteImport,
 } as any)
 const DemoDecouvrirIndexRoute = DemoDecouvrirIndexRouteImport.update({
@@ -69,83 +39,48 @@ const DemoCabinetVeterinaireDesPignesIndexRoute =
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/fr/': typeof FrIndexRoute
-  '/demo/cabinet-veterinaire-des-pignes/': typeof DemoCabinetVeterinaireDesPignesIndexRoute
   '/demo/decouvrir/': typeof DemoDecouvrirIndexRoute
-  '/demo/exemple/': typeof DemoExempleIndexRoute
-  '/demo/la-reserve/': typeof DemoLaReserveIndexRoute
-  '/demo/le-panier/': typeof DemoLePanierIndexRoute
-  '/demo/les-sens/': typeof DemoLesSensIndexRoute
-  '/demo/maison-f/': typeof DemoMaisonFIndexRoute
+  '/demo/cabinet-veterinaire-des-pignes/': typeof DemoCabinetVeterinaireDesPignesIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/fr': typeof FrIndexRoute
-  '/demo/cabinet-veterinaire-des-pignes': typeof DemoCabinetVeterinaireDesPignesIndexRoute
   '/demo/decouvrir': typeof DemoDecouvrirIndexRoute
-  '/demo/exemple': typeof DemoExempleIndexRoute
-  '/demo/la-reserve': typeof DemoLaReserveIndexRoute
-  '/demo/le-panier': typeof DemoLePanierIndexRoute
-  '/demo/les-sens': typeof DemoLesSensIndexRoute
-  '/demo/maison-f': typeof DemoMaisonFIndexRoute
+  '/demo/cabinet-veterinaire-des-pignes': typeof DemoCabinetVeterinaireDesPignesIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/fr/': typeof FrIndexRoute
-  '/demo/cabinet-veterinaire-des-pignes/': typeof DemoCabinetVeterinaireDesPignesIndexRoute
   '/demo/decouvrir/': typeof DemoDecouvrirIndexRoute
-  '/demo/exemple/': typeof DemoExempleIndexRoute
-  '/demo/la-reserve/': typeof DemoLaReserveIndexRoute
-  '/demo/le-panier/': typeof DemoLePanierIndexRoute
-  '/demo/les-sens/': typeof DemoLesSensIndexRoute
-  '/demo/maison-f/': typeof DemoMaisonFIndexRoute
+  '/demo/cabinet-veterinaire-des-pignes/': typeof DemoCabinetVeterinaireDesPignesIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
     | '/fr/'
-    | '/demo/cabinet-veterinaire-des-pignes/'
     | '/demo/decouvrir/'
-    | '/demo/exemple/'
-    | '/demo/la-reserve/'
-    | '/demo/le-panier/'
-    | '/demo/les-sens/'
-    | '/demo/maison-f/'
+    | '/demo/cabinet-veterinaire-des-pignes/'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
     | '/fr'
-    | '/demo/cabinet-veterinaire-des-pignes'
     | '/demo/decouvrir'
-    | '/demo/exemple'
-    | '/demo/la-reserve'
-    | '/demo/le-panier'
-    | '/demo/les-sens'
-    | '/demo/maison-f'
+    | '/demo/cabinet-veterinaire-des-pignes'
   id:
     | '__root__'
     | '/'
     | '/fr/'
-    | '/demo/cabinet-veterinaire-des-pignes/'
     | '/demo/decouvrir/'
-    | '/demo/exemple/'
-    | '/demo/la-reserve/'
-    | '/demo/le-panier/'
-    | '/demo/les-sens/'
-    | '/demo/maison-f/'
+    | '/demo/cabinet-veterinaire-des-pignes/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   FrIndexRoute: typeof FrIndexRoute
-  DemoCabinetVeterinaireDesPignesIndexRoute: typeof DemoCabinetVeterinaireDesPignesIndexRoute
   DemoDecouvrirIndexRoute: typeof DemoDecouvrirIndexRoute
-  DemoExempleIndexRoute: typeof DemoExempleIndexRoute
-  DemoLaReserveIndexRoute: typeof DemoLaReserveIndexRoute
-  DemoLePanierIndexRoute: typeof DemoLePanierIndexRoute
-  DemoLesSensIndexRoute: typeof DemoLesSensIndexRoute
-  DemoMaisonFIndexRoute: typeof DemoMaisonFIndexRoute
+  DemoCabinetVeterinaireDesPignesIndexRoute: typeof DemoCabinetVeterinaireDesPignesIndexRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -162,41 +97,6 @@ declare module '@tanstack/react-router' {
       path: '/fr'
       fullPath: '/fr/'
       preLoaderRoute: typeof FrIndexRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/demo/maison-f/': {
-      id: '/demo/maison-f/'
-      path: '/demo/maison-f'
-      fullPath: '/demo/maison-f/'
-      preLoaderRoute: typeof DemoMaisonFIndexRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/demo/les-sens/': {
-      id: '/demo/les-sens/'
-      path: '/demo/les-sens'
-      fullPath: '/demo/les-sens/'
-      preLoaderRoute: typeof DemoLesSensIndexRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/demo/le-panier/': {
-      id: '/demo/le-panier/'
-      path: '/demo/le-panier'
-      fullPath: '/demo/le-panier/'
-      preLoaderRoute: typeof DemoLePanierIndexRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/demo/la-reserve/': {
-      id: '/demo/la-reserve/'
-      path: '/demo/la-reserve'
-      fullPath: '/demo/la-reserve/'
-      preLoaderRoute: typeof DemoLaReserveIndexRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/demo/exemple/': {
-      id: '/demo/exemple/'
-      path: '/demo/exemple'
-      fullPath: '/demo/exemple/'
-      preLoaderRoute: typeof DemoExempleIndexRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/demo/decouvrir/': {
@@ -219,14 +119,9 @@ declare module '@tanstack/react-router' {
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   FrIndexRoute: FrIndexRoute,
+  DemoDecouvrirIndexRoute: DemoDecouvrirIndexRoute,
   DemoCabinetVeterinaireDesPignesIndexRoute:
     DemoCabinetVeterinaireDesPignesIndexRoute,
-  DemoDecouvrirIndexRoute: DemoDecouvrirIndexRoute,
-  DemoExempleIndexRoute: DemoExempleIndexRoute,
-  DemoLaReserveIndexRoute: DemoLaReserveIndexRoute,
-  DemoLePanierIndexRoute: DemoLePanierIndexRoute,
-  DemoLesSensIndexRoute: DemoLesSensIndexRoute,
-  DemoMaisonFIndexRoute: DemoMaisonFIndexRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

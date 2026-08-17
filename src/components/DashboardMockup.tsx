@@ -1,4 +1,4 @@
-import { CheckCircle2, Clock, AlertCircle, TrendingUp, Users, ClipboardList } from "lucide-react";
+import { CheckCircle2, Clock, Phone, MessageCircle, TrendingUp, ArrowRightLeft } from "lucide-react";
 import React, { useEffect, useRef, useState } from "react";
 
 function useCountUp(target: number, duration: number = 1000) {
@@ -33,7 +33,7 @@ function useCountUp(target: number, duration: number = 1000) {
   return { count, ref };
 }
 
-function KpiCard({ label, target, icon: Icon }: { label: string; target: number; icon: any }) {
+function KpiCard({ label, target, suffix = "", icon: Icon }: { label: string; target: number; suffix?: string; icon: any }) {
   const { count, ref } = useCountUp(target, 1000);
   return (
     <div ref={ref} className="rounded-lg border border-border p-3 bg-white">
@@ -41,7 +41,7 @@ function KpiCard({ label, target, icon: Icon }: { label: string; target: number;
         <span className="text-[10px] uppercase tracking-wider text-muted-foreground">{label}</span>
         <Icon className="size-3.5 text-brand" />
       </div>
-      <div className="mt-1 text-xl font-semibold text-navy-deep">{count}</div>
+      <div className="mt-1 text-xl font-semibold text-navy-deep">{count}{suffix}</div>
     </div>
   );
 }
@@ -55,12 +55,12 @@ export function DashboardMockup() {
           <span className="size-2.5 rounded-full bg-[oklch(0.85_0.13_85)]" />
           <span className="size-2.5 rounded-full bg-[oklch(0.78_0.13_145)]" />
         </div>
-        <div className="ml-3 text-xs text-muted-foreground font-medium">ReadyFlow Manager · Operations</div>
+        <div className="ml-3 text-xs text-muted-foreground font-medium">Orlane · Interaction Log</div>
       </div>
 
       <div className="grid grid-cols-12 gap-4 p-5">
         <div className="col-span-3 hidden md:flex flex-col gap-1 text-xs">
-          {["Overview", "Tasks", "Units", "Team", "Requests", "Reports"].map((item, i) => (
+          {["Overview", "Calls", "WhatsApp", "Transfers", "Log", "Reports"].map((item, i) => (
             <div
               key={item}
               className={`px-3 py-2 rounded-md ${i === 0 ? "bg-brand/10 text-navy-deep font-semibold" : "text-muted-foreground"}`}
@@ -72,15 +72,15 @@ export function DashboardMockup() {
 
         <div className="col-span-12 md:col-span-9 flex flex-col gap-4">
           <div className="grid grid-cols-3 gap-3">
-            <KpiCard label="Open tasks" target={24} icon={ClipboardList} />
-            <KpiCard label="In progress" target={12} icon={Clock} />
-            <KpiCard label="Completed" target={186} icon={CheckCircle2} />
+            <KpiCard label="Calls captured" target={94} suffix="%" icon={Phone} />
+            <KpiCard label="WhatsApp handled" target={31} icon={MessageCircle} />
+            <KpiCard label="Response rate" target={98} suffix="%" icon={CheckCircle2} />
           </div>
 
           <div className="rounded-lg border border-border p-4 bg-white">
             <div className="flex items-center justify-between mb-3">
               <div>
-                <div className="text-xs text-muted-foreground">Workflow throughput</div>
+                <div className="text-xs text-muted-foreground">Incoming activity</div>
                 <div className="text-sm font-semibold text-navy-deep">Last 14 days</div>
               </div>
               <TrendingUp className="size-4 text-brand" />
@@ -98,14 +98,14 @@ export function DashboardMockup() {
 
           <div className="rounded-lg border border-border bg-white">
             <div className="px-4 py-2 border-b border-border flex items-center justify-between">
-              <span className="text-xs font-semibold text-navy-deep">Active requests</span>
-              <Users className="size-3.5 text-muted-foreground" />
+              <span className="text-xs font-semibold text-navy-deep">Recent interactions</span>
+              <ArrowRightLeft className="size-3.5 text-muted-foreground" />
             </div>
             <ul className="divide-y divide-border text-xs">
               {[
-                { title: "Unit 204 — turnover prep", status: "In progress", color: "text-[oklch(0.55_0.15_250)]", icon: Clock },
-                { title: "Client color & cut", status: "Assigned", color: "text-[oklch(0.55_0.12_85)]", icon: AlertCircle },
-                { title: "Follow-up reminder", status: "Done", color: "text-[oklch(0.5_0.13_145)]", icon: CheckCircle2 },
+                { title: "Missed call — auto-reply sent", status: "Logged", color: "text-[oklch(0.55_0.15_250)]", icon: Clock },
+                { title: "WhatsApp lead — demo requested", status: "Qualified", color: "text-[oklch(0.55_0.12_85)]", icon: MessageCircle },
+                { title: "After-hours call — transfer done", status: "Done", color: "text-[oklch(0.5_0.13_145)]", icon: CheckCircle2 },
               ].map(({ title, status, color, icon: Icon }) => (
                 <li key={title} className="flex items-center justify-between px-4 py-2.5">
                   <span className="text-foreground">{title}</span>
