@@ -242,7 +242,7 @@ export const content: Record<Lang, Content> = {
     },
     faq: {
       heading: "Common questions",
-      tagline: "Straight answers — no fluff.",
+      tagline: "Straight answers, no fluff.",
       items: [
         {
           q: "Why not just use a €49/month subscription tool?",
@@ -250,7 +250,7 @@ export const content: Record<Lang, Content> = {
         },
         {
           q: "Does this work for my type of business?",
-          a: "If clients call you, message you or book with you — yes. We've built systems for restaurants, clinics, law firms, salons and agencies. If you're a service business, we adapt.",
+          a: "If clients call you, message you or book with you, yes. We've built systems for restaurants, clinics, law firms, salons and agencies. If you're a service business, we adapt.",
         },
         {
           q: "How long until I'm up and running?",
@@ -284,7 +284,7 @@ export const content: Record<Lang, Content> = {
       founderBio: "I personally support every client through the setup of their intelligent reception system.",
     },
     footer: {
-      tagline: "Smart reception systems, WhatsApp automation and operational dashboards for service businesses.",
+      tagline: "Smart reception systems, WhatsApp automation and call tracking for service businesses.",
       rights: "All rights reserved.",
     },
   },
@@ -302,7 +302,7 @@ export const content: Record<Lang, Content> = {
       titleLine1: "Ne manquez plus",
       titleLine2: "jamais un client.",
       titleLine3: "24/7.",
-      subtitle: "Réception intelligente et automatisation pour entreprises de services — appels, WhatsApp et rendez-vous gérés 24h/24.",
+      subtitle: "Réception intelligente et automatisation pour entreprises de services : appels, WhatsApp et rendez-vous gérés 24h/24.",
       ctaPrimary: "Demander une démo",
       ctaSecondary: "Voir les offres",
       bullets: ["Zéro appel manqué", "Automatisation WhatsApp", "Mise en place rapide - 24-72h"],
@@ -451,7 +451,7 @@ export const content: Record<Lang, Content> = {
     },
     faq: {
       heading: "Questions fréquentes",
-      tagline: "Des réponses directes — sans blabla.",
+      tagline: "Des réponses directes, sans blabla.",
       items: [
         {
           q: "Pourquoi pas un outil à 49€/mois ?",
@@ -459,7 +459,7 @@ export const content: Record<Lang, Content> = {
         },
         {
           q: "Est-ce adapté à mon type d'activité ?",
-          a: "Si des clients vous appellent, vous écrivent ou réservent chez vous — oui. Nous avons construit des systèmes pour des restaurants, cliniques, cabinets juridiques, salons et agences. Si vous êtes une entreprise de services, nous nous adaptons.",
+          a: "Si des clients vous appellent, vous écrivent ou réservent chez vous, oui. Nous avons construit des systèmes pour des restaurants, cliniques, cabinets juridiques, salons et agences. Si vous êtes une entreprise de services, nous nous adaptons.",
         },
         {
           q: "Combien de temps avant d'être opérationnel ?",
@@ -493,7 +493,7 @@ export const content: Record<Lang, Content> = {
       founderBio: "J'accompagne personnellement chaque client dans la mise en place de son système d'accueil intelligent.",
     },
     footer: {
-      tagline: "Systèmes de réception intelligente, automatisation WhatsApp et tableaux de bord opérationnels pour entreprises de services.",
+      tagline: "Systèmes de réception intelligente, automatisation WhatsApp et suivi des échanges pour entreprises de services.",
       rights: "Tous droits réservés.",
     },
   },
