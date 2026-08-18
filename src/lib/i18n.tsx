@@ -26,23 +26,6 @@ export interface Content {
   };
   services: { heading: string; items: { title: string; desc: string }[] };
   whoWeServe: { heading: string; subheading: string };
-  smartIntakeIntro: {
-    heading: string;
-    subheading: string;
-    benefits: string[];
-    cta: string;
-    note: string;
-    chatOnline: string;
-    chatGreeting: string;
-    chatUserMsg: string;
-    chatFollowup: string;
-    chatQualified: string;
-    chatRouted: string;
-    chatType: string;
-    chatTypeValue: string;
-    chatPriority: string;
-    chatPriorityValue: string;
-  };
   smartIntakeDemo: {
     heading: string;
     subheading: string;
@@ -61,6 +44,10 @@ export interface Content {
     subheading: string;
     features: string[];
     cta: string;
+    chatMsg1: string;
+    chatReply1: string;
+    chatMsg2: string;
+    chatReply2: string;
   };
   pricing: {
     heading: string;
@@ -134,7 +121,7 @@ export const content: Record<Lang, Content> = {
         { title: "WhatsApp Automation", desc: "Instant greetings, appointment confirmations, lead capture and follow-up sequences on WhatsApp." },
         { title: "Booking & Intake Systems", desc: "Clients book online, get confirmed instantly, receive reminders automatically. Zero manual work." },
         { title: "Operations Dashboards", desc: "Track requests, teams and daily operations from one clear interface." },
-        { title: "AI Client Assistant", desc: "Conversational AI that guides visitors, qualifies requests and provides immediate responses." },
+        { title: "AI Client Assistant", desc: "Handles visitor questions directly, qualifies the request and responds without delay." },
         { title: "Custom Automation Flows", desc: "Connect your tools, automate repetitive tasks and keep your business running while you focus on delivery." },
       ],
     },
@@ -142,52 +129,39 @@ export const content: Record<Lang, Content> = {
       heading: "When someone needs you urgently, do they reach you, or call the next name on the list?",
       subheading: "Every unanswered call is a client you never knew you lost. Locksmiths, plumbers, emergency vets, healthcare practices, and many others. If your business can't afford a missed call, ByCo Systems makes sure every request gets a response, 24/7.",
     },
-    smartIntakeIntro: {
-      heading: "Your 24/7 intelligent receptionist",
-      subheading: "Captures, qualifies and routes every client request automatically - by phone, WhatsApp or web form.",
-      benefits: ["24/7 customer intake", "Request qualification", "Faster response coordination"],
-      cta: "Request AI intake demo",
-      note: "Private workflow demo available on request.",
-      chatOnline: "Smart Intake · Online",
-      chatGreeting: "Hi! How can we help you today?",
-      chatUserMsg: "I need a quote for a service appointment next week.",
-      chatFollowup: "Got it. Could you share your name, contact and preferred day?",
-      chatQualified: "Qualified request",
-      chatRouted: "Routed to team",
-      chatType: "Type",
-      chatTypeValue: "Service quote",
-      chatPriority: "Priority",
-      chatPriorityValue: "Standard",
-    },
     smartIntakeDemo: {
       heading: "See how a 24/7 smart intake handles real customer requests",
-      subheading: "This example shows how a business can receive, guide and qualify customer requests automatically before human intervention.",
+      subheading: "This example shows how a business handles incoming requests automatically - so when you step in, the context is already there.",
       benefits: [
-        { title: "24/7 Availability", desc: "Your intake process never sleeps. Capture business while you rest, without extra headcount." },
-        { title: "Multi-Channel Sync", desc: "Integrate with WhatsApp, Email, and your website with one centralized smart dashboard." },
-        { title: "Smart Qualification", desc: "AI automatically scores and categorizes requests based on urgency, priority, and business fit." },
-        { title: "AI Intake Assistant", desc: "Conversational AI that captures request details and provides immediate feedback to customers." },
-        { title: "Unified Analytics", desc: "Get real-time insights into request volume, lead quality, and conversion performance." },
-        { title: "Enterprise Security", desc: "Data encryption ensures your customer information is always safe and compliant." },
+        { title: "24/7 Availability", desc: "Orlane never sleeps. Capture business while you rest, without extra headcount." },
+        { title: "Phone and WhatsApp", desc: "One system, both channels - calls and messages handled the same way." },
+        { title: "Smart Qualification", desc: "Orlane asks the right questions and flags what's urgent." },
+        { title: "Custom Voice and Script", desc: "Built for your business, not a generic assistant." },
+        { title: "Every Exchange Logged", desc: "ReadyFlow Manager tracks every call and message automatically." },
+        { title: "One-Time Payment", desc: "No subscription, no recurring fees." },
       ],
       steps: [
         { n: "01", title: "Capture", desc: "AI collects requests from WhatsApp, phone or your website instantly." },
-        { n: "02", title: "Process", desc: "Advanced AI extracts intent, urgency and priority in milliseconds." },
-        { n: "03", title: "Organize", desc: "Request is assigned to the right team with a clear AI summary." },
+        { n: "02", title: "Process", desc: "Reads what's urgent, what can wait, and what needs a callback." },
+        { n: "03", title: "Organize", desc: "The request is logged with a clear summary, ready to follow up." },
       ],
       cta: "Request a similar system",
-      note: "French demo video - example adaptable to clinics, salons, agencies and any service business.",
+      note: "Demo video in French, fully subtitled in English - adaptable to clinics, salons, agencies and any service business.",
     },
     featuredDemo: {
-      liveHeading: "Live system — built for a real restaurant",
-      liveSubtext: "This is a real demo we built. Explore it, then call or WhatsApp our demo receptionist.",
+      liveHeading: "See Orlane in action",
+      liveSubtext: "This is a simplified demo we built. Explore it, then call or WhatsApp our demo receptionist.",
       exploreDemoCta: "Explore the demo",
       whatsappCta: "Call or WhatsApp +44 7576 594092",
       liveNote: "Our demo receptionist answers 24/7. This is exactly what we build for your business.",
-      heading: "Your free operational dashboard - included from Business",
-      subheading: "Track client requests, assign tasks to your team and monitor your activity in real time. Simple, clear, ready from day one.",
-      features: ["Task tracking", "Unit management", "Workflow organization", "Team coordination", "Operational visibility", "Request management"],
-      cta: "Explore workspace",
+      heading: "See exactly who Orlane talked to, and what happened next",
+      subheading: "ReadyFlow Manager logs every call and WhatsApp exchange automatically - included free from Business, so nothing gets lost after the conversation ends.",
+      features: ["Every call logged automatically", "Every WhatsApp exchange saved", "Clear status: new, in progress, handled", "Know who to follow up with", "No spreadsheets, no sticky notes", "Included free from Business"],
+      cta: "See ReadyFlow Manager",
+      chatMsg1: "Hi, do you have availability this week?",
+      chatReply1: "Yes! What day works best for you?",
+      chatMsg2: "Thursday afternoon if possible",
+      chatReply2: "Perfect, I’ve got you down for Thursday. Logged in ReadyFlow Manager ✓",
     },
     pricing: {
       heading: "Simple, transparent pricing",
@@ -212,7 +186,7 @@ export const content: Record<Lang, Content> = {
           name: "Business",
           price: "990€",
           subtitle: "A tireless assistant, behind the WhatsApp you already use",
-          desc: "WhatsApp is already on your phone, day and night - but so are you, and you can't always answer. Business puts an intelligent assistant behind that same number, one that replies instantly, asks the right questions, and books the appointment while you sleep, eat, or work the job in front of you. Every message answered is a client who didn't go looking elsewhere.",
+          desc: "WhatsApp is already on your phone, day and night - but so are you, and you can't always answer. Business puts an intelligent assistant behind that same number, one that replies instantly and wisely, asks the right questions, and books the appointment while you sleep, eat, or work the job in front of you. Every message answered is a client who didn't go looking elsewhere.",
           features: [
             "Everything in Essential",
             "An AI assistant on WhatsApp - replies and qualifies every message, 24/7",
@@ -258,12 +232,12 @@ export const content: Record<Lang, Content> = {
       footerLinkText: "Talk to us - we adapt to every service business.",
     },
     process: {
-      heading: "How projects move from idea to usable system",
+      heading: "How Orlane goes live for your business",
       steps: [
-        { n: "01", title: "Understand the workflow", desc: "We map how your team actually works today.", day: "Day 1" },
-        { n: "02", title: "Build a practical first version", desc: "A focused, usable system - not an oversized platform.", day: "Day 1–2" },
-        { n: "03", title: "Adapt the system to the business", desc: "Refine details based on real day-to-day usage.", day: "Day 2–3" },
-        { n: "04", title: "Deliver a clear and usable operational tool", desc: "A system your team can rely on from day one.", day: "Delivered in 24–72h" },
+        { n: "01", title: "We learn your business", desc: "Your services, hours, and how you tell an emergency from a routine request.", day: "Day 1" },
+        { n: "02", title: "Orlane goes live", desc: "Answering calls and WhatsApp messages with a voice and script built for you.", day: "Day 1-2" },
+        { n: "03", title: "We fine-tune together", desc: "Real conversations reveal small adjustments. We refine based on how it's actually used.", day: "Day 2-3" },
+        { n: "04", title: "You never miss a call again", desc: "Delivered and answering for you, start to finish.", day: "Delivered in 24-72h" },
       ],
     },
     faq: {
@@ -356,7 +330,7 @@ export const content: Record<Lang, Content> = {
         { title: "Automatisation WhatsApp", desc: "Accueil instantané, confirmations de rendez-vous, capture de prospects et séquences de relance sur WhatsApp." },
         { title: "Réservation et prise en charge", desc: "Vos clients réservent en ligne, sont confirmés instantanément et reçoivent des rappels automatiquement. Zéro travail manuel." },
         { title: "Tableaux de bord opérationnels", desc: "Suivez les demandes, les équipes et l'activité quotidienne depuis une interface claire." },
-        { title: "Assistant client IA", desc: "Une IA conversationnelle qui guide vos visiteurs, qualifie les demandes et répond immédiatement." },
+        { title: "Assistant client IA", desc: "Répond aux questions des visiteurs directement, qualifie la demande et réagit sans délai." },
         { title: "Flux d'automatisation sur mesure", desc: "Connectez vos outils, automatisez les tâches répétitives et gardez votre activité fluide pendant que vous vous concentrez sur l'essentiel." },
       ],
     },
@@ -364,52 +338,39 @@ export const content: Record<Lang, Content> = {
       heading: "Quand quelqu'un a besoin de vous en urgence, décroche-t-il, ou appelle-t-il le suivant sur la liste ?",
       subheading: "Chaque appel sans réponse est un client perdu que vous ne verrez jamais. Serruriers, plombiers, vétérinaires d'urgence, professionnels de santé, et bien d'autres. Si votre métier ne tolère pas un appel manqué, ByCo Systems veille à ce que chaque demande reçoive une réponse, 24h/24.",
     },
-    smartIntakeIntro: {
-      heading: "Votre réceptionniste intelligent, 24h/24",
-      subheading: "Capture, qualifie et redirige chaque demande client automatiquement - par téléphone, WhatsApp ou formulaire web.",
-      benefits: ["Prise en charge client 24h/24", "Qualification des demandes", "Coordination plus rapide des réponses"],
-      cta: "Demander une démo de l'accueil IA",
-      note: "Démo privée du workflow disponible sur demande.",
-      chatOnline: "Accueil intelligent · En ligne",
-      chatGreeting: "Bonjour ! Comment pouvons-nous vous aider aujourd'hui ?",
-      chatUserMsg: "J'ai besoin d'un devis pour un rendez-vous la semaine prochaine.",
-      chatFollowup: "Très bien. Pouvez-vous partager votre nom, vos coordonnées et le jour souhaité ?",
-      chatQualified: "Demande qualifiée",
-      chatRouted: "Transmise à l'équipe",
-      chatType: "Type",
-      chatTypeValue: "Devis service",
-      chatPriority: "Priorité",
-      chatPriorityValue: "Standard",
-    },
     smartIntakeDemo: {
       heading: "Découvrez comment un accueil intelligent 24h/24 traite de vraies demandes clients",
-      subheading: "Cet exemple montre comment une entreprise peut recevoir, guider et qualifier automatiquement les demandes clients avant toute intervention humaine.",
+      subheading: "Cet exemple montre comment une entreprise traite automatiquement les demandes entrantes - pour qu'au moment où vous intervenez, le contexte est déjà là.",
       benefits: [
-        { title: "Disponibilité 24h/24", desc: "Votre prise en charge ne s'arrête jamais. Captez de l'activité pendant votre repos, sans personnel supplémentaire." },
-        { title: "Synchronisation multi-canal", desc: "Intégrez WhatsApp, email et votre site web dans un tableau de bord intelligent centralisé." },
-        { title: "Qualification intelligente", desc: "L'IA note et catégorise automatiquement les demandes selon l'urgence, la priorité et la pertinence commerciale." },
-        { title: "Assistant IA de prise en charge", desc: "Une IA conversationnelle qui capture les détails de la demande et répond immédiatement au client." },
-        { title: "Analyses unifiées", desc: "Obtenez des indicateurs en temps réel sur le volume de demandes, la qualité des prospects et la conversion." },
-        { title: "Sécurité renforcée", desc: "Le chiffrement des données garantit que les informations de vos clients restent toujours protégées et conformes." },
+        { title: "Disponible 24h/24", desc: "Orlane ne dort jamais. Captez de l'activité même quand vous vous reposez, sans embaucher." },
+        { title: "Téléphone et WhatsApp", desc: "Un seul système, deux canaux - appels et messages traités de la même façon." },
+        { title: "Qualification intelligente", desc: "Orlane pose les bonnes questions et repère ce qui est urgent." },
+        { title: "Voix et script sur-mesure", desc: "Construits pour votre entreprise, pas un assistant générique." },
+        { title: "Chaque échange enregistré", desc: "ReadyFlow Manager trace chaque appel et message automatiquement." },
+        { title: "Paiement unique", desc: "Aucun abonnement, aucuns frais récurrents." },
       ],
       steps: [
         { n: "01", title: "Capture", desc: "L'IA collecte les demandes depuis WhatsApp, le téléphone ou votre site web instantanément." },
-        { n: "02", title: "Traitement", desc: "L'IA avancée extrait l'intention, l'urgence et la priorité en quelques millisecondes." },
-        { n: "03", title: "Organisation", desc: "La demande est assignée à la bonne équipe avec un résumé IA clair." },
+        { n: "02", title: "Traitement", desc: "Lit ce qui est urgent, ce qui peut attendre, ce qui demande un rappel." },
+        { n: "03", title: "Organisation", desc: "La demande est enregistrée avec un résumé clair, prête à être suivie." },
       ],
       cta: "Demander un système similaire",
-      note: "Vidéo de démonstration en français - exemple adaptable aux cliniques, salons, agences et toute entreprise de services.",
+      note: "Vidéo de démonstration, sous-titrée en anglais - exemple adaptable aux cliniques, salons, agences et toute entreprise de services.",
     },
     featuredDemo: {
-      liveHeading: "Système en direct — conçu pour un vrai restaurant",
-      liveSubtext: "Ceci est une vraie démo que nous avons construite. Explorez-la, puis appelez ou contactez notre réceptionniste de démo sur WhatsApp.",
+      liveHeading: "Découvrez Orlane en action",
+      liveSubtext: "Voici une démo simplifiée que nous avons construite. Explorez-la, puis appelez ou écrivez à notre réceptionniste de démonstration.",
       exploreDemoCta: "Explorer la démo",
       whatsappCta: "Appeler ou WhatsApp +44 7576 594092",
       liveNote: "Notre réceptionniste de démo répond 24h/24. C'est exactement ce que nous construisons pour votre entreprise.",
-      heading: "Votre tableau de bord opérationnel gratuit - inclus dès l'offre Business",
-      subheading: "Suivez les demandes clients, assignez des tâches à votre équipe et surveillez votre activité en temps réel. Simple, clair, prêt dès le premier jour.",
-      features: ["Suivi des tâches", "Gestion des unités", "Organisation des flux", "Coordination d'équipe", "Visibilité opérationnelle", "Gestion des demandes"],
-      cta: "Explorer l'espace de travail",
+      heading: "Voyez exactement à qui Orlane a parlé, et ce qui s'est passé ensuite",
+      subheading: "ReadyFlow Manager enregistre automatiquement chaque appel et échange WhatsApp - inclus gratuitement dès Business, pour que rien ne se perde une fois la conversation terminée.",
+      features: ["Chaque appel enregistré automatiquement", "Chaque échange WhatsApp sauvegardé", "Statut clair : nouveau, en cours, traité", "Savoir qui relancer, toujours", "Ni tableur, ni post-it", "Inclus gratuitement dès Business"],
+      cta: "Découvrir ReadyFlow Manager",
+      chatMsg1: "Bonjour, avez-vous de la disponibilité cette semaine ?",
+      chatReply1: "Oui ! Quel jour vous conviendrait le mieux ?",
+      chatMsg2: "Jeudi après-midi si possible",
+      chatReply2: "Parfait, c'est noté pour jeudi. Enregistré dans ReadyFlow Manager ✓",
     },
     pricing: {
       heading: "Des tarifs simples et transparents",
@@ -434,7 +395,7 @@ export const content: Record<Lang, Content> = {
           name: "Business",
           price: "990€",
           subtitle: "Un assistant infatigable, derrière le WhatsApp que vous avez déjà",
-          desc: "WhatsApp est déjà sur votre téléphone, jour et nuit - mais vous aussi, et vous ne pouvez pas toujours répondre. Business installe un assistant intelligent derrière ce même numéro, qui répond instantanément, pose les bonnes questions, et prend le rendez-vous pendant que vous dormez, mangez, ou êtes déjà sur un chantier. Chaque message traité est un client qui n'est pas allé voir ailleurs.",
+          desc: "WhatsApp est déjà sur votre téléphone, jour et nuit - mais vous aussi, et vous ne pouvez pas toujours répondre. Business installe un assistant intelligent derrière ce même numéro, qui répond instantanément et intelligemment, pose les bonnes questions, et prend le rendez-vous pendant que vous dormez, mangez, ou êtes déjà sur un chantier. Chaque message traité est un client qui n'est pas allé voir ailleurs.",
           features: [
             "Tout Essential",
             "Un assistant IA sur WhatsApp - répond et qualifie chaque message, 24h/24",
@@ -480,12 +441,12 @@ export const content: Record<Lang, Content> = {
       footerLinkText: "Parlez-nous - nous nous adaptons à toute entreprise de services.",
     },
     process: {
-      heading: "Comment les projets passent de l'idée à un système utilisable",
+      heading: "Comment Orlane démarre chez vous",
       steps: [
-        { n: "01", title: "Comprendre le workflow", desc: "Nous cartographions comment votre équipe travaille réellement aujourd'hui.", day: "Jour 1" },
-        { n: "02", title: "Construire une première version pratique", desc: "Un système ciblé et utilisable - pas une plateforme surdimensionnée.", day: "Jour 1-2" },
-        { n: "03", title: "Adapter le système à l'activité", desc: "Nous affinons les détails selon l'usage réel au quotidien.", day: "Jour 2-3" },
-        { n: "04", title: "Livrer un outil opérationnel clair et utilisable", desc: "Un système sur lequel votre équipe peut compter dès le premier jour.", day: "Livré en 24-72h" },
+        { n: "01", title: "Nous apprenons votre activité", desc: "Vos services, vos horaires, et comment vous distinguez une urgence d'une demande courante.", day: "Jour 1" },
+        { n: "02", title: "Orlane démarre", desc: "Elle répond aux appels et messages WhatsApp avec une voix et un script construits pour vous.", day: "Jour 1-2" },
+        { n: "03", title: "On ajuste ensemble", desc: "Les vrais échanges révèlent de petits ajustements. On affine selon l'usage réel.", day: "Jour 2-3" },
+        { n: "04", title: "Vous ne manquez plus jamais un appel", desc: "Livré et opérationnel pour vous, du début à la fin.", day: "Livré en 24-72h" },
       ],
     },
     faq: {

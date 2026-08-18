@@ -254,7 +254,7 @@ function Hero() {
                 {t.hero.ctaPrimary} <ArrowRight className="size-4" />
               </a>
               <a
-                href="#pricing"
+                href="#pricing-business-plus"
                 className="inline-flex items-center gap-2 px-5 py-3 rounded-md border border-white/20 bg-white/5 hover:bg-white/10 font-medium transition"
               >
                 {t.hero.ctaSecondary}
@@ -403,115 +403,6 @@ function WhoWeServe() {
   );
 }
 
-const smartIntakeBenefitIcons = [Clock, UserCheck, Workflow];
-
-function SmartIntakeIntro() {
-  const t = useContent();
-  return (
-    <section id="smart-intake-intro" className="py-24 md:py-32">
-      <div className="mx-auto max-w-7xl px-6">
-        <div className="grid lg:grid-cols-12 gap-12 items-center">
-          <div className="lg:col-span-6">
-            <ParallaxTitle word={t.parallax.demo}>
-              <h2 className="text-3xl md:text-4xl font-medium text-navy-deep leading-tight">
-                {t.smartIntakeIntro.heading}
-              </h2>
-            </ParallaxTitle>
-            <p className="mt-5 text-lg text-muted-foreground leading-relaxed">
-              {t.smartIntakeIntro.subheading}
-            </p>
-            <ul className="mt-8 space-y-3">
-              {t.smartIntakeIntro.benefits.map((label, i) => {
-                const Icon = smartIntakeBenefitIcons[i];
-                return (
-                  <li key={label} className="flex items-center gap-3 text-sm text-foreground">
-                    <span className="size-9 rounded-md bg-brand/10 grid place-items-center shrink-0">
-                      <Icon className="size-4 text-brand" />
-                    </span>
-                    <span className="font-medium text-navy-deep">{label}</span>
-                  </li>
-                );
-              })}
-            </ul>
-            <a
-              href="#contact"
-              onClick={(e) => {
-                e.preventDefault();
-                document.getElementById("contact")?.scrollIntoView({ behavior: "smooth" });
-              }}
-              className="mt-10 inline-flex items-center gap-2 px-5 py-3 rounded-md bg-navy text-white font-medium hover:bg-navy-deep transition"
-            >
-              {t.smartIntakeIntro.cta} <ArrowRight className="size-4" />
-            </a>
-            <p className="mt-3 text-sm text-muted-foreground">
-              {t.smartIntakeIntro.note}
-            </p>
-          </div>
-          <div className="lg:col-span-6">
-            <div className="relative">
-              <div className="absolute -inset-4 bg-brand/10 rounded-3xl blur-2xl" />
-              <div className="relative rounded-2xl border border-border bg-white shadow-elevated overflow-hidden">
-                <div className="flex items-center gap-2 px-4 py-3 border-b border-border bg-secondary/40">
-                  <div className="flex gap-1.5">
-                    <span className="size-2.5 rounded-full bg-muted-foreground/30" />
-                    <span className="size-2.5 rounded-full bg-muted-foreground/30" />
-                    <span className="size-2.5 rounded-full bg-muted-foreground/30" />
-                  </div>
-                  <div className="ml-2 flex items-center gap-2 text-xs text-muted-foreground">
-                    <span className="size-1.5 rounded-full bg-brand animate-pulse" />
-                    {t.smartIntakeIntro.chatOnline}
-                  </div>
-                </div>
-                <div className="p-5 space-y-4 bg-white">
-                  <div className="flex gap-2.5">
-                    <div className="size-8 rounded-full bg-navy-gradient grid place-items-center shrink-0">
-                      <Bot className="size-4 text-white" />
-                    </div>
-                    <div className="rounded-2xl rounded-tl-sm bg-secondary/60 px-4 py-2.5 text-sm text-navy-deep max-w-[85%]">
-                      {t.smartIntakeIntro.chatGreeting}
-                    </div>
-                  </div>
-                  <div className="flex gap-2.5 justify-end">
-                    <div className="rounded-2xl rounded-tr-sm bg-navy text-white px-4 py-2.5 text-sm max-w-[85%]">
-                      {t.smartIntakeIntro.chatUserMsg}
-                    </div>
-                  </div>
-                  <div className="flex gap-2.5">
-                    <div className="size-8 rounded-full bg-navy-gradient grid place-items-center shrink-0">
-                      <Bot className="size-4 text-white" />
-                    </div>
-                    <div className="rounded-2xl rounded-tl-sm bg-secondary/60 px-4 py-2.5 text-sm text-navy-deep max-w-[85%]">
-                      {t.smartIntakeIntro.chatFollowup}
-                    </div>
-                  </div>
-                  <div className="mt-4 rounded-lg border border-border bg-secondary/30 p-3.5">
-                    <div className="flex items-center justify-between text-xs">
-                      <span className="font-semibold uppercase tracking-wider text-brand">{t.smartIntakeIntro.chatQualified}</span>
-                      <span className="flex items-center gap-1 text-muted-foreground">
-                        <CheckCircle2 className="size-3.5 text-brand" /> {t.smartIntakeIntro.chatRouted}
-                      </span>
-                    </div>
-                    <div className="mt-2.5 grid grid-cols-2 gap-2 text-xs">
-                      <div>
-                        <div className="text-muted-foreground">{t.smartIntakeIntro.chatType}</div>
-                        <div className="font-medium text-navy-deep">{t.smartIntakeIntro.chatTypeValue}</div>
-                      </div>
-                      <div>
-                        <div className="text-muted-foreground">{t.smartIntakeIntro.chatPriority}</div>
-                        <div className="font-medium text-navy-deep">{t.smartIntakeIntro.chatPriorityValue}</div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-  );
-}
-
 const intakeBenefitIcons = [Clock, PhoneOff, UserCheck, Bot, Eye, ListChecks];
 
 function SmartIntakeDemo() {
@@ -598,13 +489,16 @@ function FeaturedDemo() {
           </p>
           <div className="mt-6 flex flex-wrap gap-3">
             <a
-              href="/demo/decouvrir"
+              href={lang === "fr" ? "/demo/decouvrir?lang=fr" : "/demo/decouvrir?lang=en"}
               className="inline-flex items-center gap-2 px-5 py-3 rounded-md bg-white text-navy-deep font-medium hover:bg-white/90 transition"
             >
               {t.featuredDemo.exploreDemoCta} <ArrowRight className="size-4" />
             </a>
             <a
-              href="https://wa.me/447576594092?text=Bonjour%20ByCo%20Systems%2C%20je%20souhaite%20en%20savoir%20plus%20sur%20votre%20syst%C3%A8me%20d%27accueil%20intelligent."
+              href={lang === "fr"
+                ? "https://wa.me/447576594092?text=Bonjour%20ByCo%20Systems%2C%20je%20souhaite%20en%20savoir%20plus%20sur%20votre%20syst%C3%A8me%20d%27accueil%20intelligent."
+                : "https://wa.me/447576594092?text=Hi%20ByCo%20Systems%2C%20I%27d%20like%20to%20know%20more%20about%20your%20smart%20reception%20system."
+              }
               target="_blank"
               rel="noopener noreferrer"
               className="inline-flex items-center gap-2 px-5 py-3 rounded-md border border-white/20 bg-white/5 hover:bg-white/10 font-medium transition"
@@ -617,31 +511,79 @@ function FeaturedDemo() {
           </p>
         </div>
 
-        <div className="max-w-2xl">
-          <ParallaxTitle word={t.parallax.guide}>
-            <h2 className="text-3xl md:text-4xl font-medium text-navy-deep">{t.featuredDemo.heading}</h2>
-          </ParallaxTitle>
-          <p className="mt-5 text-muted-foreground leading-relaxed">
-            {t.featuredDemo.subheading}
-          </p>
-          <ul className="mt-8 grid grid-cols-2 gap-3">
-            {t.featuredDemo.features.map((label, i) => {
-              const Icon = demoFeatureIcons[i];
-              return (
-                <li key={label} className="flex items-center gap-2.5 text-sm text-foreground">
-                  <span className="size-7 rounded-md bg-brand/10 grid place-items-center">
-                    <Icon className="size-3.5 text-brand" />
-                  </span>
-                  {label}
-                </li>
-              );
-            })}
-          </ul>
-          <a href={demoUrl(lang)}
-            className="mt-10 inline-flex items-center gap-2 px-5 py-3 rounded-md bg-navy text-white font-medium hover:bg-navy-deep transition"
-          >
-            {t.featuredDemo.cta}
-          </a>
+        <div className="grid lg:grid-cols-12 gap-12 items-center">
+          <div className="lg:col-span-5">
+            <ParallaxTitle word={t.parallax.guide}>
+              <h2 className="text-3xl md:text-4xl font-medium text-navy-deep">{t.featuredDemo.heading}</h2>
+            </ParallaxTitle>
+            <p className="mt-5 text-muted-foreground leading-relaxed">
+              {t.featuredDemo.subheading}
+            </p>
+            <ul className="mt-8 grid grid-cols-2 gap-3">
+              {t.featuredDemo.features.map((label, i) => {
+                const Icon = demoFeatureIcons[i];
+                return (
+                  <li key={label} className="flex items-center gap-2.5 text-sm text-foreground">
+                    <span className="size-7 rounded-md bg-brand/10 grid place-items-center">
+                      <Icon className="size-3.5 text-brand" />
+                    </span>
+                    {label}
+                  </li>
+                );
+              })}
+            </ul>
+            <a href={demoUrl(lang)}
+              className="mt-10 inline-flex items-center gap-2 px-5 py-3 rounded-md bg-navy text-white font-medium hover:bg-navy-deep transition"
+            >
+              {t.featuredDemo.cta}
+            </a>
+          </div>
+          <div className="lg:col-span-7">
+            <div className="relative">
+              <div className="absolute -inset-4 bg-brand/10 rounded-3xl blur-2xl" />
+              <div className="relative rounded-2xl border border-border bg-white shadow-elevated overflow-hidden">
+                <div className="flex items-center gap-2 px-4 py-3 border-b border-border bg-secondary/40">
+                  <div className="flex gap-1.5">
+                    <span className="size-2.5 rounded-full bg-muted-foreground/30" />
+                    <span className="size-2.5 rounded-full bg-muted-foreground/30" />
+                    <span className="size-2.5 rounded-full bg-muted-foreground/30" />
+                  </div>
+                  <div className="ml-2 flex items-center gap-2 text-xs text-muted-foreground">
+                    <span className="size-1.5 rounded-full bg-brand animate-pulse" />
+                    WhatsApp · Orlane
+                  </div>
+                </div>
+                <div className="p-5 space-y-4 bg-white">
+                  <div className="flex gap-2.5 justify-end">
+                    <div className="rounded-2xl rounded-tr-sm bg-navy text-white px-4 py-2.5 text-sm max-w-[85%]">
+                      {t.featuredDemo.chatMsg1}
+                    </div>
+                  </div>
+                  <div className="flex gap-2.5">
+                    <div className="size-8 rounded-full bg-navy-gradient grid place-items-center shrink-0">
+                      <Bot className="size-4 text-white" />
+                    </div>
+                    <div className="rounded-2xl rounded-tl-sm bg-secondary/60 px-4 py-2.5 text-sm text-navy-deep max-w-[85%]">
+                      {t.featuredDemo.chatReply1}
+                    </div>
+                  </div>
+                  <div className="flex gap-2.5 justify-end">
+                    <div className="rounded-2xl rounded-tr-sm bg-navy text-white px-4 py-2.5 text-sm max-w-[85%]">
+                      {t.featuredDemo.chatMsg2}
+                    </div>
+                  </div>
+                  <div className="flex gap-2.5">
+                    <div className="size-8 rounded-full bg-navy-gradient grid place-items-center shrink-0">
+                      <Bot className="size-4 text-white" />
+                    </div>
+                    <div className="rounded-2xl rounded-tl-sm bg-secondary/60 px-4 py-2.5 text-sm text-navy-deep max-w-[85%]">
+                      {t.featuredDemo.chatReply2}
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </section>
@@ -920,7 +862,6 @@ export function HomePage({ lang }: { lang: Lang }) {
           <CoreOffer />
           <Services />
           <WhoWeServe />
-          <SmartIntakeIntro />
           <SmartIntakeDemo />
           <FeaturedDemo />
           <Pricing />
