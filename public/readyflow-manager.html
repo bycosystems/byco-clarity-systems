@@ -873,6 +873,7 @@
     @media (max-width: 900px) {
       nav { padding: 0 24px; }
       .nav-links { display: none; }
+      .nav-phone, .nav-live-demo { display: none; }
       .hero, .section-block, .dashboard-preview, .metrics-bar, .cta-section { padding-left: 24px; padding-right: 24px; }
       .steps-grid { grid-template-columns: 1fr 1fr; }
       .steps-grid::before { display: none; }
@@ -906,7 +907,7 @@
       <li><a href="#workflow" data-fr="Journal">Log</a></li>
       <li><a href="#dashboard" data-fr="Tableau de bord">Dashboard</a></li>
     </ul>
-    <a href="tel:+447576594092" style="display:flex;align-items:center;gap:8px;color:var(--white);text-decoration:none;font-size:14px;font-weight:500;opacity:0.85;transition:opacity 0.2s;" onmouseover="this.style.opacity='1'" onmouseout="this.style.opacity='0.85'">
+    <a href="tel:+447576594092" class="nav-phone" style="display:flex;align-items:center;gap:8px;color:var(--white);text-decoration:none;font-size:14px;font-weight:500;opacity:0.85;transition:opacity 0.2s;" onmouseover="this.style.opacity='1'" onmouseout="this.style.opacity='0.85'">
       <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
         <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 3.6 1.3h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 8.85a16 16 0 0 0 6.29 6.29l1.61-1.04a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/>
       </svg>
@@ -914,7 +915,7 @@
     </a>
     <div class="nav-actions">
       <button type="button" id="lang-toggle" class="btn-ghost" onclick="toggleLang()" style="font-weight:700;">FR</button>
-      <a href="#dashboard" class="btn-ghost" data-fr="Démo en direct">Live demo</a>
+      <a href="#dashboard" class="btn-ghost nav-live-demo" data-fr="Démo en direct">Live demo</a>
       <a href="#cta" class="btn-cta" data-fr="Demander une démo">Request a Demo</a>
     </div>
   </nav>
