@@ -187,9 +187,7 @@ function Header() {
     <header className="sticky top-0 z-40 backdrop-blur-md bg-background/80 border-b border-border">
       <div className="mx-auto max-w-7xl px-6 h-16 flex items-center justify-between">
         <a href="#top" className="flex items-center gap-2">
-          <div className="size-7 rounded-md bg-navy-gradient grid place-items-center">
-            <span className="text-white text-xs font-bold tracking-tight">B</span>
-          </div>
+          <img src="/logo-icon.png" alt="ByCo Systems" className="size-7" />
           <span className="font-semibold text-navy-deep tracking-tight">ByCo Systems</span>
         </a>
         <nav className="hidden md:flex items-center gap-8 text-sm text-muted-foreground">
@@ -260,6 +258,12 @@ function Hero() {
                 {t.hero.ctaSecondary}
               </a>
             </div>
+            <a href={PHONE_HREF} className="mt-4 inline-flex items-center gap-2 text-sm font-medium text-white/70 hover:text-white transition">
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 3.6 1.3h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 8.85a16 16 0 0 0 6.29 6.29l1.61-1.04a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/>
+              </svg>
+              {PHONE_DISPLAY}
+            </a>
             <div className="mt-10 flex flex-wrap gap-6 text-xs text-white/50">
               {t.hero.bullets.map((bullet) => (
                 <span key={bullet} className="flex items-center gap-2"><CheckCircle2 className="size-4 text-brand-soft" /> {bullet}</span>
