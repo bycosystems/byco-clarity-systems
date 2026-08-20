@@ -836,10 +836,8 @@ function Footer() {
       <div className="mx-auto max-w-7xl px-6 py-14">
         <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-6">
           <div>
-            <div className="flex items-center gap-2">
-              <div className="size-7 rounded-md bg-white/10 grid place-items-center">
-                <span className="text-white text-xs font-bold">B</span>
-              </div>
+            <div className="flex items-center gap-1">
+              <img src="/logo-icon.png" alt="ByCo Systems" className="size-7" />
               <span className="text-white font-semibold tracking-tight">ByCo Systems</span>
             </div>
             <p className="mt-3 text-sm max-w-md">
