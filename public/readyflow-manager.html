@@ -873,7 +873,9 @@
     @media (max-width: 900px) {
       nav { padding: 0 24px; }
       .nav-links { display: none; }
-      .nav-phone, .nav-live-demo { display: none; }
+      .nav-phone { display: none !important; }
+      .nav-live-demo { display: none; }
+      .metrics-bar { flex-direction: column; }
       .hero, .section-block, .dashboard-preview, .metrics-bar, .cta-section { padding-left: 24px; padding-right: 24px; }
       .steps-grid { grid-template-columns: 1fr 1fr; }
       .steps-grid::before { display: none; }
@@ -924,7 +926,7 @@
   <section>
     <div class="hero">
       <div class="hero-tag">ByCo Systems - ReadyFlow Manager</div>
-      <h1 data-fr="Ne perdez plus jamais la trace <span>d'un appel ou d'un message</span>">Never lose track of <span>a single call or message</span></h1>
+      <h1 data-fr="Ne perdez plus jamais la trace<br><span>d'un appel ou d'un message</span>">Never lose track of<br><span>a single call or message</span></h1>
       <p data-fr="ReadyFlow Manager enregistre chaque appel et conversation WhatsApp traité par Orlane, avec statut et prochaine étape, pour que vous sachiez toujours qui relancer.">ReadyFlow Manager logs every call and WhatsApp conversation Orlane handles, with status and next steps, so you always know who to follow up with.</p>
       <div class="hero-buttons">
         <a href="#cta" class="btn-primary" data-fr="Demander une démo">Request a Demo</a>
