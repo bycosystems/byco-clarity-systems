@@ -186,7 +186,7 @@ function Header() {
   return (
     <header className="sticky top-0 z-40 backdrop-blur-md bg-background/80 border-b border-border">
       <div className="mx-auto max-w-7xl px-6 h-16 flex items-center justify-between">
-        <a href="#top" className="flex items-center gap-2">
+        <a href="#top" className="flex items-center gap-1">
           <img src="/logo-icon.png" alt="ByCo Systems" className="size-7" />
           <span className="font-semibold text-navy-deep tracking-tight">ByCo Systems</span>
         </a>

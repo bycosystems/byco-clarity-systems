@@ -69,12 +69,13 @@
     .nav-brand {
       display: flex;
       align-items: center;
-      gap: 10px;
+      gap: 3px;
       text-decoration: none;
       color: var(--white);
       font-family: 'Syne', sans-serif;
       font-weight: 700;
       font-size: 15px;
+      white-space: nowrap;
     }
 
     .nav-brand .back-arrow {
@@ -876,6 +877,8 @@
       .nav-phone { display: none !important; }
       .nav-live-demo { display: none; }
       .metrics-bar { flex-direction: column; }
+      .metric-num { font-size: 26px; }
+      .metric-item { padding: 24px 20px; }
       .hero, .section-block, .dashboard-preview, .metrics-bar, .cta-section { padding-left: 24px; padding-right: 24px; }
       .steps-grid { grid-template-columns: 1fr 1fr; }
       .steps-grid::before { display: none; }
