@@ -11,6 +11,10 @@ exports.handler = function (context, event, callback) {
     { language: 'fr-FR' },
     "Merci. Un responsable ByCo Systems vous recontactera très prochainement."
   );
+  twiml.say(
+    { language: 'en-US' },
+    "Thank you. A ByCo Systems manager will contact you back very soon."
+  );
 
   callback(null, twiml);
 };
