@@ -1031,45 +1031,13 @@
               </div>
             </div>
             <!-- Projects table -->
-            <div class="projects-table">
+            <div class="projects-table" id="interactions-table">
               <div class="table-header">
                 <span class="table-title" data-fr="Interactions récentes">Recent interactions</span>
                 <span class="table-link" data-fr="Tout voir">View all</span>
               </div>
               <div class="table-row head">
-                <span data-fr="Contact">Contact</span><span data-fr="Statut">Status</span><span data-fr="Priorité">Priority</span><span data-fr="Canal">Channel</span><span data-fr="Reçu">Received</span><span data-fr="Suite">Next step</span>
-              </div>
-              <div class="table-row">
-                <div><div class="project-name">+44 7576 ···092</div></div>
-                <span><span class="badge-status badge-pending" data-fr="Nouveau">New</span></span>
-                <span><span class="badge-priority priority-high" data-fr="Élevée">High</span></span>
-                <span style="font-size:11px;color:var(--muted);" data-fr="Appel">Voice</span>
-                <span style="font-size:11px;color:var(--muted);" data-fr="Aujourd'hui 16h">Today 4pm</span>
-                <span style="font-size:11px;color:var(--muted);" data-fr="Rappeler">Call back</span>
-              </div>
-              <div class="table-row">
-                <div><div class="project-name">WhatsApp +33 6 ···23</div></div>
-                <span><span class="badge-status badge-progress" data-fr="En cours">In progress</span></span>
-                <span><span class="badge-priority priority-medium" data-fr="Moyenne">Medium</span></span>
-                <span><span class="avatar">WA</span></span>
-                <span style="font-size:11px;color:var(--muted);" data-fr="Aujourd'hui 14h">Today 2pm</span>
-                <span style="font-size:11px;color:var(--muted);" data-fr="En attente de réponse">Awaiting reply</span>
-              </div>
-              <div class="table-row">
-                <div><div class="project-name">+44 7576 ···347</div></div>
-                <span><span class="badge-status badge-ready" data-fr="Traité">Handled</span></span>
-                <span><span class="badge-priority priority-low" data-fr="Faible">Low</span></span>
-                <span><span class="avatar">OR</span></span>
-                <span style="font-size:11px;color:var(--muted);" data-fr="Hier">Yesterday</span>
-                <span style="font-size:11px;color:var(--muted);" data-fr="Aucune">None</span>
-              </div>
-              <div class="table-row">
-                <div><div class="project-name">WhatsApp +33 7 ···58</div></div>
-                <span><span class="badge-status badge-scheduled" data-fr="Transféré">Transferred</span></span>
-                <span><span class="badge-priority priority-urgent" data-fr="Urgent">Urgent</span></span>
-                <span><span class="avatar">SB</span></span>
-                <span style="font-size:11px;color:var(--muted);" data-fr="Aujourd'hui 18h">Today 6pm</span>
-                <span style="font-size:11px;color:var(--muted);" data-fr="Confirmé par Samuel">Confirmed by Samuel</span>
+                <span data-fr="Contact">Contact</span><span data-fr="Statut">Status</span><span data-fr="Secteur">Sector</span><span data-fr="Canal">Channel</span><span data-fr="Reçu">Received</span><span data-fr="Suite">Next step</span>
               </div>
             </div>
           </div>
@@ -1330,6 +1298,64 @@
       }
       applyLang(initial);
     })();
+  </script>
+
+  <script>
+    async function loadRealInteractions() {
+      const table = document.getElementById('interactions-table');
+      if (!table) return;
+
+      try {
+        const response = await fetch('https://hook.eu1.make.com/rd4j1vsqqhv5f72fh4y65gmo1q8eyvop');
+        const interactions = await response.json();
+
+        interactions.sort((a, b) => new Date(b.created_at) - new Date(a.created_at));
+
+        const statusMap = {
+          nouveau:   { cls: 'badge-pending',  fr: 'Nouveau',   en: 'New' },
+          en_cours:  { cls: 'badge-progress', fr: 'En cours',  en: 'In progress' },
+          qualifie:  { cls: 'badge-ready',    fr: 'Qualifié',  en: 'Qualified' },
+          traite:    { cls: 'badge-ready',    fr: 'Traité',    en: 'Handled' },
+          'traité':  { cls: 'badge-ready',    fr: 'Traité',    en: 'Handled' }
+        };
+
+        interactions.slice(0, 10).forEach((item) => {
+          const row = document.createElement('div');
+          row.className = 'table-row';
+
+          const statusInfo = statusMap[item.status] || { cls: 'badge-pending', fr: item.status || 'Nouveau', en: item.status || 'New' };
+          const contact = item.prospect_name || (item.key || '').replace('whatsapp:', '').replace('voice:', '');
+          const channelFr = item.channel === 'voice' ? 'Appel' : 'WhatsApp';
+          const channelEn = item.channel === 'voice' ? 'Voice' : 'WhatsApp';
+          const sector = item.sector || '—';
+          const nextAction = item.next_action || '—';
+
+          let dateDisplay = '—';
+          const parsed = new Date(item.created_at);
+          if (!isNaN(parsed.getTime())) {
+            dateDisplay = parsed.toLocaleDateString('fr-FR', { day: 'numeric', month: 'short', hour: '2-digit', minute: '2-digit' });
+          }
+
+          row.innerHTML = `
+            <div><div class="project-name">${contact}</div></div>
+            <span><span class="badge-status ${statusInfo.cls}" data-fr="${statusInfo.fr}">${statusInfo.en}</span></span>
+            <span style="font-size:11px;color:var(--muted);">${sector}</span>
+            <span style="font-size:11px;color:var(--muted);" data-fr="${channelFr}">${channelEn}</span>
+            <span style="font-size:11px;color:var(--muted);">${dateDisplay}</span>
+            <span style="font-size:11px;color:var(--muted);">${nextAction}</span>
+          `;
+          table.appendChild(row);
+        });
+
+        if (typeof applyLang === 'function' && typeof currentLang !== 'undefined') {
+          applyLang(currentLang);
+        }
+      } catch (e) {
+        console.error('Erreur de chargement des interactions RFM :', e);
+      }
+    }
+
+    document.addEventListener('DOMContentLoaded', loadRealInteractions);
   </script>
 </body>
 </html>
