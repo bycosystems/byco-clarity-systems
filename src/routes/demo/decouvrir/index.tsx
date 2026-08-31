@@ -158,9 +158,9 @@ const COPY: Record<Secteur, Record<Lang, Copy>> = {
       headline: "Pendant votre consultation, qui répond au téléphone ?",
       accrocheHeadline: "Vous, en consultation : qui décroche ?",
       accrocheP1:
-        "Beaucoup de cabinets tiennent grâce à un seul praticien, toujours le même, toujours disponible pour ses patients. C'est une force — et une vraie promesse de qualité.",
+        "Beaucoup de cabinets tiennent grâce à un seul praticien, toujours le même, toujours disponible pour ses patients. C'est une force, et une vraie promesse de qualité.",
       accrocheP2:
-        "Le revers, lui, n'est jamais dit à voix haute : quand vous êtes en consultation, personne d'autre n'est là pour décrocher — ni pour une question de tarif, ni pour une urgence.",
+        "Le revers, lui, n'est jamais dit à voix haute : quand vous êtes en consultation, personne d'autre n'est là pour décrocher, ni pour une question de tarif, ni pour une urgence.",
       chips: [
         { label: "Consultation", value: "Sur demande" },
         { label: "Urgence", value: "Prioritaire", accent: true },
@@ -168,9 +168,9 @@ const COPY: Record<Secteur, Record<Lang, Copy>> = {
         { label: "Zone", value: "Votre secteur" },
       ],
       demoIntro:
-        "C'est vous qui appelez ci-dessous : un vrai appel vers Orlane, l'agent vocal de démonstration ByCo. Une fois configuré et personnalisé pour votre cabinet, votre agent saura restituer ce type d'information — en voici un exemple.",
+        "C'est vous qui appelez ci-dessous : un vrai appel vers Orlane, l'agent vocal de démonstration ByCo. Une fois configuré et personnalisé pour votre cabinet, votre agent saura restituer ce type d'information, comme dans l'exemple ci-dessous.",
       whatsappBody:
-        "Dès que vous raccrochez, un récapitulatif part directement sur WhatsApp : le motif de l'appel, le numéro du patient, et ce qu'il attend de vous. Rien ne se perd — même au bloc.",
+        "Dès que vous raccrochez, un récapitulatif part directement sur WhatsApp : le motif de l'appel, le numéro du patient, et ce qu'il attend de vous. Rien ne se perd, même au bloc.",
       recapTitle: "📞 Nouvel appel reçu",
       recapBody:
         "Un patient a appelé pour une question de tarif consultation.\nNuméro : +33 6 XX XX XX XX\nSouhaite être rappelé si besoin.",
@@ -180,9 +180,9 @@ const COPY: Record<Secteur, Record<Lang, Copy>> = {
       headline: "While you're with a patient, who answers the phone?",
       accrocheHeadline: "You, in consultation: who picks up?",
       accrocheP1:
-        "Many practices run on a single practitioner, always the same one, always available for their patients. That's a strength — and a real promise of quality.",
+        "Many practices run on a single practitioner, always the same one, always available for their patients. That's a strength, and a real promise of quality.",
       accrocheP2:
-        "The downside is never said out loud: when you're with a patient, no one else is there to pick up — not for a pricing question, not for an emergency.",
+        "The downside is never said out loud: when you're with a patient, no one else is there to pick up, not for a pricing question, not for an emergency.",
       chips: [
         { label: "Consultation", value: "On request" },
         { label: "Emergency", value: "Priority", accent: true },
@@ -190,9 +190,9 @@ const COPY: Record<Secteur, Record<Lang, Copy>> = {
         { label: "Area", value: "Your region" },
       ],
       demoIntro:
-        "You're the one calling below: a real call to Orlane, ByCo's demo voice agent. Once configured and customized for your practice, your agent will handle this kind of information — here's an example.",
+        "You're the one calling below: a real call to Orlane, ByCo's demo voice agent. Once configured and customized for your practice, your agent will handle this kind of information, as shown in the example below.",
       whatsappBody:
-        "As soon as you hang up, a summary is sent straight to WhatsApp: the reason for the call, the patient's number, and what they need from you. Nothing gets lost — even mid-appointment.",
+        "As soon as you hang up, a summary is sent straight to WhatsApp: the reason for the call, the patient's number, and what they need from you. Nothing gets lost, even mid-appointment.",
       recapTitle: "📞 New call received",
       recapBody:
         "A patient called about a consultation pricing question.\nNumber: +33 6 XX XX XX XX\nWould like a callback if needed.",
@@ -204,9 +204,9 @@ const COPY: Record<Secteur, Record<Lang, Copy>> = {
       headline: "Pendant votre intervention, qui répond au téléphone ?",
       accrocheHeadline: "Vous, sur place : qui décroche ?",
       accrocheP1:
-        "Beaucoup d'artisans tiennent grâce à une seule personne, toujours la même, toujours disponible pour dépanner. C'est une force — et une vraie promesse de réactivité.",
+        "Beaucoup d'artisans tiennent grâce à une seule personne, toujours la même, toujours disponible pour dépanner. C'est une force, et une vraie promesse de réactivité.",
       accrocheP2:
-        "Le revers, lui, n'est jamais dit à voix haute : quand vous êtes sur une intervention, personne d'autre n'est là pour décrocher — ni pour une urgence, ni pour un simple devis.",
+        "Le revers, lui, n'est jamais dit à voix haute : quand vous êtes sur une intervention, personne d'autre n'est là pour décrocher, ni pour une urgence, ni pour un simple devis.",
       chips: [
         { label: "Dépannage", value: "Sur demande" },
         { label: "Urgence", value: "Prioritaire", accent: true },
@@ -214,9 +214,9 @@ const COPY: Record<Secteur, Record<Lang, Copy>> = {
         { label: "Zone", value: "Votre secteur" },
       ],
       demoIntro:
-        "C'est vous qui appelez ci-dessous : un vrai appel vers Orlane, l'agent vocal de démonstration ByCo. Une fois configuré et personnalisé pour votre activité, votre agent saura restituer ce type d'information — en voici un exemple.",
+        "C'est vous qui appelez ci-dessous : un vrai appel vers Orlane, l'agent vocal de démonstration ByCo. Une fois configuré et personnalisé pour votre activité, votre agent saura restituer ce type d'information, comme dans l'exemple ci-dessous.",
       whatsappBody:
-        "Dès que vous raccrochez, un récapitulatif part directement sur WhatsApp : le motif de l'appel, le numéro du client, et ce qu'il attend de vous. Rien ne se perd — même en pleine intervention.",
+        "Dès que vous raccrochez, un récapitulatif part directement sur WhatsApp : le motif de l'appel, le numéro du client, et ce qu'il attend de vous. Rien ne se perd, même en pleine intervention.",
       recapTitle: "📞 Nouvel appel reçu",
       recapBody:
         "Un client a appelé pour une demande d'intervention urgente.\nNuméro : +33 6 XX XX XX XX\nSouhaite être rappelé si besoin.",
@@ -226,9 +226,9 @@ const COPY: Record<Secteur, Record<Lang, Copy>> = {
       headline: "While you're on a job, who answers the phone?",
       accrocheHeadline: "You, on site: who picks up?",
       accrocheP1:
-        "Many tradespeople run on a single person, always the same one, always available to help. That's a strength — and a real promise of responsiveness.",
+        "Many tradespeople run on a single person, always the same one, always available to help. That's a strength, and a real promise of responsiveness.",
       accrocheP2:
-        "The downside is never said out loud: when you're on a job, no one else is there to pick up — not for an emergency, not for a simple quote.",
+        "The downside is never said out loud: when you're on a job, no one else is there to pick up, not for an emergency, not for a simple quote.",
       chips: [
         { label: "Callout", value: "On request" },
         { label: "Emergency", value: "Priority", accent: true },
@@ -236,9 +236,9 @@ const COPY: Record<Secteur, Record<Lang, Copy>> = {
         { label: "Area", value: "Your region" },
       ],
       demoIntro:
-        "You're the one calling below: a real call to Orlane, ByCo's demo voice agent. Once configured and customized for your business, your agent will handle this kind of information — here's an example.",
+        "You're the one calling below: a real call to Orlane, ByCo's demo voice agent. Once configured and customized for your business, your agent will handle this kind of information, as shown in the example below.",
       whatsappBody:
-        "As soon as you hang up, a summary is sent straight to WhatsApp: the reason for the call, the client's number, and what they need from you. Nothing gets lost — even mid-job.",
+        "As soon as you hang up, a summary is sent straight to WhatsApp: the reason for the call, the client's number, and what they need from you. Nothing gets lost, even mid-job.",
       recapTitle: "📞 New call received",
       recapBody:
         "A client called requesting an urgent callout.\nNumber: +33 6 XX XX XX XX\nWould like a callback if needed.",
@@ -250,9 +250,9 @@ const COPY: Record<Secteur, Record<Lang, Copy>> = {
       headline: "Pendant que vous travaillez, qui répond au téléphone ?",
       accrocheHeadline: "Vous, pendant que vous travaillez : qui décroche ?",
       accrocheP1:
-        "Beaucoup de petites entreprises tiennent grâce à une seule personne, toujours la même, toujours disponible pour ses clients. C'est une force — et une vraie promesse de qualité.",
+        "Beaucoup de petites entreprises tiennent grâce à une seule personne, toujours la même, toujours disponible pour ses clients. C'est une force, et une vraie promesse de qualité.",
       accrocheP2:
-        "Le revers, lui, n'est jamais dit à voix haute : quand cette personne est occupée avec un client, personne d'autre n'est là pour décrocher — ni pour une question simple, ni pour une urgence.",
+        "Le revers, lui, n'est jamais dit à voix haute : quand cette personne est occupée avec un client, personne d'autre n'est là pour décrocher, ni pour une question simple, ni pour une urgence.",
       chips: [
         { label: "Devis", value: "Sur demande" },
         { label: "Urgence", value: "Prioritaire", accent: true },
@@ -260,9 +260,9 @@ const COPY: Record<Secteur, Record<Lang, Copy>> = {
         { label: "Zone", value: "Votre secteur" },
       ],
       demoIntro:
-        "C'est vous qui appelez ci-dessous : un vrai appel vers Orlane, l'agent vocal de démonstration ByCo. Une fois configuré et personnalisé pour votre activité, votre agent saura restituer ce type d'information — en voici un exemple.",
+        "C'est vous qui appelez ci-dessous : un vrai appel vers Orlane, l'agent vocal de démonstration ByCo. Une fois configuré et personnalisé pour votre activité, votre agent saura restituer ce type d'information, comme dans l'exemple ci-dessous.",
       whatsappBody:
-        "Dès que vous raccrochez, un récapitulatif part directement sur WhatsApp : le motif de l'appel, le numéro du client, et ce qu'il attend de vous. Rien ne se perd — même quand vous êtes occupé.",
+        "Dès que vous raccrochez, un récapitulatif part directement sur WhatsApp : le motif de l'appel, le numéro du client, et ce qu'il attend de vous. Rien ne se perd, même quand vous êtes occupé.",
       recapTitle: "📞 Nouvel appel reçu",
       recapBody:
         "Un client a appelé pour une demande de renseignement.\nNuméro : +33 6 XX XX XX XX\nSouhaite être rappelé si besoin.",
@@ -272,9 +272,9 @@ const COPY: Record<Secteur, Record<Lang, Copy>> = {
       headline: "While you're working, who answers the phone?",
       accrocheHeadline: "You, while you're working: who picks up?",
       accrocheP1:
-        "Many small businesses run on a single person, always the same one, always available for their clients. That's a strength — and a real promise of quality.",
+        "Many small businesses run on a single person, always the same one, always available for their clients. That's a strength, and a real promise of quality.",
       accrocheP2:
-        "The downside is never said out loud: when that person is busy with a client, no one else is there to pick up — not for a simple question, not for an emergency.",
+        "The downside is never said out loud: when that person is busy with a client, no one else is there to pick up, not for a simple question, not for an emergency.",
       chips: [
         { label: "Quotes", value: "On request" },
         { label: "Emergency", value: "Priority", accent: true },
@@ -282,9 +282,9 @@ const COPY: Record<Secteur, Record<Lang, Copy>> = {
         { label: "Area", value: "Your region" },
       ],
       demoIntro:
-        "You're the one calling below: a real call to Orlane, ByCo's demo voice agent. Once configured and customized for your business, your agent will handle this kind of information — here's an example.",
+        "You're the one calling below: a real call to Orlane, ByCo's demo voice agent. Once configured and customized for your business, your agent will handle this kind of information, as shown in the example below.",
       whatsappBody:
-        "As soon as you hang up, a summary is sent straight to WhatsApp: the reason for the call, the client's number, and what they need from you. Nothing gets lost — even when you're busy.",
+        "As soon as you hang up, a summary is sent straight to WhatsApp: the reason for the call, the client's number, and what they need from you. Nothing gets lost, even when you're busy.",
       recapTitle: "📞 New call received",
       recapBody:
         "A client called with a general inquiry.\nNumber: +33 6 XX XX XX XX\nWould like a callback if needed.",
@@ -338,7 +338,7 @@ const UI: Record<Lang, UIStrings> = {
     chipsLabel: "Exemple : ce que VOTRE agent saura",
     callButton: "📞 Appeler Orlane",
     callNote:
-      "Un seul effet à ce clic : votre téléphone compose immédiatement le numéro d'Orlane, l'assistant de démonstration ByCo — pas un agent déjà configuré pour votre activité.",
+      "Un seul effet à ce clic : votre téléphone compose immédiatement le numéro d'Orlane, l'assistant de démonstration ByCo, pas un agent déjà configuré pour votre activité.",
     afterCallEyebrow: "Après l'appel",
     afterCallTitle: "Chaque appel devient un message WhatsApp",
     waitingMessage: "En attente de votre appel test…",
@@ -349,7 +349,7 @@ const UI: Record<Lang, UIStrings> = {
     whatsappOnline: "en ligne",
     prospectBadgeTemplate: "Préparé pour {name}",
     offerEyebrow: "Envie d'aller plus loin ?",
-    offerTitle: "Le plan Business+ — 1 490 €",
+    offerTitle: "Le plan Business+ : 1 490 €",
     offerDesc:
       "Accueil IA disponible 24h/24, automatisation WhatsApp complète, réservation et confirmation automatique, suivi client automatisé, ReadyFlow Manager inclus, voix IA sur-mesure. Mise en place en 48 à 72h. Prix plein, paiement unique, aucun abonnement.",
     badgeOffer: "Plan Business+ · 1 490 €",
@@ -358,7 +358,7 @@ const UI: Record<Lang, UIStrings> = {
     offerFooterNote: "Les formules Essential, Business et Premium restent consultables sur",
     offerFooterLinkText: "le site principal ByCo Systems",
     whatsappCta: "💬 Écrire à Orlane sur WhatsApp",
-    whatsappCtaNote: "Même ligne Orlane, cette fois sur WhatsApp — votre message nous parvient directement.",
+    whatsappCtaNote: "Même ligne Orlane, cette fois sur WhatsApp : votre message nous parvient directement.",
     footerLine1: "Démonstration générique · adaptable à votre secteur",
     footerLine2: "Démonstration personnalisable · ByCo Systems · bycosystems.xyz",
   },
@@ -372,7 +372,7 @@ const UI: Record<Lang, UIStrings> = {
     chipsLabel: "Example: what YOUR agent will know",
     callButton: "📞 Call Orlane",
     callNote:
-      "This click does one thing: your phone immediately dials Orlane, the ByCo demo assistant — not an agent already configured for your business.",
+      "This click does one thing: your phone immediately dials Orlane, the ByCo demo assistant, not an agent already configured for your business.",
     afterCallEyebrow: "After the call",
     afterCallTitle: "Every call becomes a WhatsApp message",
     waitingMessage: "Waiting for your test call…",
@@ -383,7 +383,7 @@ const UI: Record<Lang, UIStrings> = {
     whatsappOnline: "online",
     prospectBadgeTemplate: "Prepared for {name}",
     offerEyebrow: "Want to go further?",
-    offerTitle: "The Business+ plan — €1,490",
+    offerTitle: "The Business+ plan: €1,490",
     offerDesc:
       "24/7 AI reception, full WhatsApp automation, automatic booking and confirmation, automated client follow-up, ReadyFlow Manager included, custom AI voice. Setup in 48 to 72 hours. Full price, one-time payment, no subscription.",
     badgeOffer: "Business+ plan · €1,490",
@@ -392,7 +392,7 @@ const UI: Record<Lang, UIStrings> = {
     offerFooterNote: "The Essential, Business and Premium plans remain available on",
     offerFooterLinkText: "the main ByCo Systems site",
     whatsappCta: "💬 Message Orlane on WhatsApp",
-    whatsappCtaNote: "Same Orlane line, this time on WhatsApp — your message reaches us directly.",
+    whatsappCtaNote: "Same Orlane line, this time on WhatsApp: your message reaches us directly.",
     footerLine1: "Generic demo · adaptable to your industry",
     footerLine2: "Customizable demo · ByCo Systems · bycosystems.xyz",
   },
