@@ -21,6 +21,8 @@ import {
 } from "lucide-react";
 import { DashboardMockup } from "@/components/DashboardMockup";
 import { LangProvider, useContent, useLang, localePath, content, type Lang } from "@/lib/i18n";
+import { useMarche } from "@/lib/market";
+import { priceFor } from "@/lib/pricing";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -596,6 +598,7 @@ function FeaturedDemo() {
 
 function Pricing() {
   const t = useContent();
+  const marche = useMarche();
   return (
     <section id="pricing" className="py-24 md:py-32 bg-secondary/30 border-y border-border">
       <div className="mx-auto max-w-7xl px-6">
@@ -610,8 +613,9 @@ function Pricing() {
           </div>
         </ParallaxTitle>
         <div className="mt-14 grid md:grid-cols-2 lg:grid-cols-4 gap-6">
-          {t.pricing.plans.map(({ name, price, subtitle, desc, features, cta, badge }) => {
+          {t.pricing.plans.map(({ name, price: fallbackPrice, subtitle, desc, features, cta, badge }) => {
             const highlight = !!badge;
+            const price = priceFor(name, marche) || fallbackPrice;
             return (
               <div
                 key={name}

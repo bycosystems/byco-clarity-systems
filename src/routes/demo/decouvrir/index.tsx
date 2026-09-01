@@ -32,6 +32,9 @@
 
 import { createFileRoute } from "@tanstack/react-router";
 import { useState } from "react";
+import { useMarche } from "@/lib/market";
+import { priceFor, type Marche } from "@/lib/pricing";
+import { useOrlaneCall } from "@/lib/useOrlaneCall";
 
 export const Route = createFileRoute("/demo/decouvrir/")({
   validateSearch: (
@@ -91,9 +94,6 @@ const C = {
 const SERIF = '"Playfair Display", Georgia, serif';
 const SANS = '"Inter", "Helvetica Neue", system-ui, sans-serif';
 
-// Ligne Orlane — même numéro de démo que sur bycosystems.xyz et sur la
-// démo Cabinet des Pignes, pont Twilio déjà en place. Ne rien reconstruire.
-const ORLANE_HREF = "tel:+447576594092";
 const WHATSAPP_URL = "https://wa.me/447576594092";
 
 /* ── Langue ─────────────────────────────────────────────────────
@@ -303,6 +303,9 @@ type UIStrings = {
   demoTitle: string;
   chipsLabel: string;
   callButton: string;
+  callButtonConnecting: string;
+  callButtonActive: string;
+  callButtonError: string;
   callNote: string;
   afterCallEyebrow: string;
   afterCallTitle: string;
@@ -314,15 +317,23 @@ type UIStrings = {
   whatsappOnline: string;
   prospectBadgeTemplate: string;
   offerEyebrow: string;
-  offerTitle: string;
+  offerTitleTemplate: string;
   offerDesc: string;
-  badgeOffer: string;
+  badgeOfferTemplate: string;
   badgeGuarantee: string;
   badgeTestimonial: string;
   offerFooterNote: string;
   offerFooterLinkText: string;
   whatsappCta: string;
   whatsappCtaNote: string;
+  suiviEyebrow: string;
+  suiviTitle: string;
+  suiviDesc: string;
+  suiviName: string;
+  suiviContact: string;
+  suiviMessage: string;
+  suiviSubmit: string;
+  suiviThanks: string;
   footerLine1: string;
   footerLine2: string;
 };
@@ -336,9 +347,12 @@ const UI: Record<Lang, UIStrings> = {
     demoEyebrow: "À vous de tester",
     demoTitle: "Testez la technologie qui répondra à vos clients",
     chipsLabel: "Exemple : ce que VOTRE agent saura",
-    callButton: "📞 Appeler Orlane",
+    callButton: "📞 Parler à Orlane",
+    callButtonConnecting: "Connexion en cours…",
+    callButtonActive: "🔴 Raccrocher",
+    callButtonError: "Appel indisponible pour le moment",
     callNote:
-      "Un seul effet à ce clic : votre téléphone compose immédiatement le numéro d'Orlane, l'assistant de démonstration ByCo, pas un agent déjà configuré pour votre activité.",
+      "Un seul effet à ce clic : un appel démarre directement dans votre navigateur avec Orlane, l'assistant de démonstration ByCo, pas un agent déjà configuré pour votre activité.",
     afterCallEyebrow: "Après l'appel",
     afterCallTitle: "Chaque appel devient un message WhatsApp",
     waitingMessage: "En attente de votre appel test…",
@@ -349,16 +363,24 @@ const UI: Record<Lang, UIStrings> = {
     whatsappOnline: "en ligne",
     prospectBadgeTemplate: "Préparé pour {name}",
     offerEyebrow: "Envie d'aller plus loin ?",
-    offerTitle: "Le plan Business+ : 1 490 €",
+    offerTitleTemplate: "Le plan Business+ : {price}",
     offerDesc:
       "Accueil IA disponible 24h/24, automatisation WhatsApp complète, réservation et confirmation automatique, suivi client automatisé, ReadyFlow Manager inclus, voix IA sur-mesure. Mise en place en 48 à 72h. Prix plein, paiement unique, aucun abonnement.",
-    badgeOffer: "Plan Business+ · 1 490 €",
+    badgeOfferTemplate: "Plan Business+ · {price}",
     badgeGuarantee: "Satisfait ou remboursé sous 30 jours, sans condition",
     badgeTestimonial: "Contrepartie : un témoignage vidéo",
     offerFooterNote: "Les formules Essential, Business et Premium restent consultables sur",
     offerFooterLinkText: "le site principal ByCo Systems",
     whatsappCta: "💬 Écrire à Orlane sur WhatsApp",
     whatsappCtaNote: "Même ligne Orlane, cette fois sur WhatsApp : votre message nous parvient directement.",
+    suiviEyebrow: "Pas prêt à appeler tout de suite ?",
+    suiviTitle: "Laissez-nous vos coordonnées",
+    suiviDesc: "Un mot, votre contact, et on revient vers vous — pas besoin d'attendre.",
+    suiviName: "Nom",
+    suiviContact: "Téléphone ou WhatsApp",
+    suiviMessage: "Votre message",
+    suiviSubmit: "Envoyer",
+    suiviThanks: "Merci, c'est bien reçu — on vous recontacte rapidement.",
     footerLine1: "Démonstration générique · adaptable à votre secteur",
     footerLine2: "Démonstration personnalisable · ByCo Systems · bycosystems.xyz",
   },
@@ -370,9 +392,12 @@ const UI: Record<Lang, UIStrings> = {
     demoEyebrow: "Your turn to try",
     demoTitle: "Test the technology that will answer your clients",
     chipsLabel: "Example: what YOUR agent will know",
-    callButton: "📞 Call Orlane",
+    callButton: "📞 Talk to Orlane",
+    callButtonConnecting: "Connecting…",
+    callButtonActive: "🔴 Hang up",
+    callButtonError: "Call unavailable right now",
     callNote:
-      "This click does one thing: your phone immediately dials Orlane, the ByCo demo assistant, not an agent already configured for your business.",
+      "This click does one thing: a call starts right in your browser with Orlane, the ByCo demo assistant, not an agent already configured for your business.",
     afterCallEyebrow: "After the call",
     afterCallTitle: "Every call becomes a WhatsApp message",
     waitingMessage: "Waiting for your test call…",
@@ -383,16 +408,24 @@ const UI: Record<Lang, UIStrings> = {
     whatsappOnline: "online",
     prospectBadgeTemplate: "Prepared for {name}",
     offerEyebrow: "Want to go further?",
-    offerTitle: "The Business+ plan: €1,490",
+    offerTitleTemplate: "The Business+ plan: {price}",
     offerDesc:
       "24/7 AI reception, full WhatsApp automation, automatic booking and confirmation, automated client follow-up, ReadyFlow Manager included, custom AI voice. Setup in 48 to 72 hours. Full price, one-time payment, no subscription.",
-    badgeOffer: "Business+ plan · €1,490",
+    badgeOfferTemplate: "Business+ plan · {price}",
     badgeGuarantee: "Money-back guarantee within 30 days, no conditions",
     badgeTestimonial: "In exchange: a video testimonial",
     offerFooterNote: "The Essential, Business and Premium plans remain available on",
     offerFooterLinkText: "the main ByCo Systems site",
     whatsappCta: "💬 Message Orlane on WhatsApp",
     whatsappCtaNote: "Same Orlane line, this time on WhatsApp: your message reaches us directly.",
+    suiviEyebrow: "Not ready to call right now?",
+    suiviTitle: "Leave us your details",
+    suiviDesc: "A quick note, your contact, and we'll get back to you — no need to wait.",
+    suiviName: "Name",
+    suiviContact: "Phone or WhatsApp",
+    suiviMessage: "Your message",
+    suiviSubmit: "Send",
+    suiviThanks: "Thanks, got it — we'll be in touch shortly.",
     footerLine1: "Generic demo · adaptable to your industry",
     footerLine2: "Customizable demo · ByCo Systems · bycosystems.xyz",
   },
@@ -453,6 +486,8 @@ function DecouvrirDemo() {
   const copy = COPY[secteur][lang];
   const ui = UI[lang];
   const [called, setCalled] = useState(false);
+  const marche = useMarche();
+  const price = priceFor("Business+", marche);
 
   return (
     <div style={{ fontFamily: SANS, background: C.paper, color: C.ink }}>
@@ -462,9 +497,10 @@ function DecouvrirDemo() {
       />
       <Hero copy={copy} ui={ui} prospect={prospect} />
       <Accroche copy={copy} ui={ui} />
-      <DemoInteractive copy={copy} ui={ui} called={called} setCalled={setCalled} />
+      <DemoInteractive copy={copy} ui={ui} called={called} setCalled={setCalled} marche={marche} />
       <WhatsAppConfirmation copy={copy} ui={ui} called={called} />
-      <OffreDecouverte ui={ui} />
+      <OffreDecouverte ui={ui} price={price} />
+      <SuiviForm ui={ui} />
       <Footer ui={ui} />
     </div>
   );
@@ -627,12 +663,27 @@ function DemoInteractive({
   ui,
   called,
   setCalled,
+  marche,
 }: {
   copy: Copy;
   ui: UIStrings;
   called: boolean;
   setCalled: (v: boolean) => void;
+  marche: Marche;
 }) {
+  const { status, start, hangup } = useOrlaneCall(marche, () => setCalled(true));
+  const buttonLabel =
+    status === "connecting"
+      ? ui.callButtonConnecting
+      : status === "active"
+        ? ui.callButtonActive
+        : status === "error"
+          ? ui.callButtonError
+          : ui.callButton;
+  const handleClick = () => {
+    if (status === "active") hangup();
+    else if (status === "idle" || status === "ended" || status === "error") start();
+  };
   return (
     <Section bg={C.noir} id="demo">
       <Container>
@@ -689,9 +740,10 @@ function DemoInteractive({
             ))}
           </div>
 
-          <a
-            href={ORLANE_HREF}
-            onClick={() => setCalled(true)}
+          <button
+            type="button"
+            onClick={handleClick}
+            disabled={status === "connecting"}
             style={{
               display: "flex",
               alignItems: "center",
@@ -701,16 +753,20 @@ function DemoInteractive({
               boxSizing: "border-box",
               padding: "17px 20px",
               borderRadius: 13,
-              background: C.teal,
+              border: "none",
+              cursor: status === "connecting" ? "wait" : "pointer",
+              background: status === "active" ? C.terracotta : C.teal,
               color: "#fff",
               fontSize: 15.5,
               fontWeight: 700,
+              fontFamily: "inherit",
               textDecoration: "none",
               boxShadow: `0 10px 30px rgba(62,128,115,0.4)`,
+              opacity: status === "connecting" ? 0.7 : 1,
             }}
           >
-            {ui.callButton}
-          </a>
+            {buttonLabel}
+          </button>
           <div
             style={{
               textAlign: "center",
@@ -911,7 +967,9 @@ function WhatsAppMock({ copy, ui, called }: { copy: Copy; ui: UIStrings; called:
 
 /* ── Section 5 — L'offre ────────────────────────────────────── */
 
-function OffreDecouverte({ ui }: { ui: UIStrings }) {
+function OffreDecouverte({ ui, price }: { ui: UIStrings; price: string }) {
+  const offerTitle = ui.offerTitleTemplate.replace("{price}", price);
+  const badgeOffer = ui.badgeOfferTemplate.replace("{price}", price);
   return (
     <Section bg={C.noir}>
       <Container>
@@ -938,7 +996,7 @@ function OffreDecouverte({ ui }: { ui: UIStrings }) {
               margin: "10px 0 16px",
             }}
           >
-            {ui.offerTitle}
+            {offerTitle}
           </h2>
           <p
             style={{
@@ -961,7 +1019,7 @@ function OffreDecouverte({ ui }: { ui: UIStrings }) {
               marginBottom: 22,
             }}
           >
-            <OfferBadge>{ui.badgeOffer}</OfferBadge>
+            <OfferBadge>{badgeOffer}</OfferBadge>
             <OfferBadge>{ui.badgeGuarantee}</OfferBadge>
             <OfferBadge>{ui.badgeTestimonial}</OfferBadge>
           </div>
@@ -1032,6 +1090,104 @@ function OfferBadge({ children }: { children: React.ReactNode }) {
     >
       {children}
     </div>
+  );
+}
+
+/* ── Section 6 — Formulaire de suivi ───────────────────────── */
+
+const FORMSPREE_ENDPOINT = "https://formspree.io/f/mbdbpvyz";
+
+function SuiviForm({ ui }: { ui: UIStrings }) {
+  const [submitted, setSubmitted] = useState(false);
+  const [sending, setSending] = useState(false);
+
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    setSending(true);
+    const form = e.currentTarget;
+    const data = new FormData(form);
+    try {
+      const response = await fetch(FORMSPREE_ENDPOINT, {
+        method: "POST",
+        body: data,
+        headers: { Accept: "application/json" },
+      });
+      if (response.ok) setSubmitted(true);
+    } finally {
+      setSending(false);
+    }
+  };
+
+  const inputStyle: React.CSSProperties = {
+    width: "100%",
+    boxSizing: "border-box",
+    padding: "12px 14px",
+    borderRadius: 10,
+    border: `1px solid ${C.line}`,
+    background: "#fff",
+    fontSize: 14,
+    fontFamily: SANS,
+    color: C.ink,
+  };
+
+  return (
+    <Section bg={C.paperDeep}>
+      <Container>
+        <div style={{ maxWidth: 480, margin: "0 auto", textAlign: "center" }}>
+          <Eyebrow color={C.tealDeep} center>
+            {ui.suiviEyebrow}
+          </Eyebrow>
+          <h2
+            style={{
+              fontFamily: SERIF,
+              fontSize: "clamp(22px, 3vw, 28px)",
+              color: C.ink,
+              fontWeight: 700,
+              margin: "10px 0 10px",
+            }}
+          >
+            {ui.suiviTitle}
+          </h2>
+          <p style={{ fontSize: 14, color: C.inkSoft, lineHeight: 1.6, margin: "0 0 24px" }}>
+            {ui.suiviDesc}
+          </p>
+          {submitted ? (
+            <p style={{ fontSize: 14, color: C.tealDeep, fontWeight: 600 }}>{ui.suiviThanks}</p>
+          ) : (
+            <form onSubmit={handleSubmit} style={{ display: "grid", gap: 12, textAlign: "left" }}>
+              <input type="hidden" name="source" value="demo-decouvrir" />
+              <input style={inputStyle} name="name" placeholder={ui.suiviName} required />
+              <input style={inputStyle} name="contact" placeholder={ui.suiviContact} required />
+              <textarea
+                style={{ ...inputStyle, resize: "vertical" }}
+                name="message"
+                rows={4}
+                placeholder={ui.suiviMessage}
+                required
+              />
+              <button
+                type="submit"
+                disabled={sending}
+                style={{
+                  padding: "13px 20px",
+                  borderRadius: 10,
+                  border: "none",
+                  background: C.teal,
+                  color: "#fff",
+                  fontSize: 14.5,
+                  fontWeight: 700,
+                  fontFamily: "inherit",
+                  cursor: sending ? "wait" : "pointer",
+                  opacity: sending ? 0.7 : 1,
+                }}
+              >
+                {ui.suiviSubmit}
+              </button>
+            </form>
+          )}
+        </div>
+      </Container>
+    </Section>
   );
 }
 

@@ -20,6 +20,9 @@
 
 import { createFileRoute } from "@tanstack/react-router";
 import { useState } from "react";
+import { useMarche } from "@/lib/market";
+import { priceFor, type Marche } from "@/lib/pricing";
+import { useOrlaneCall } from "@/lib/useOrlaneCall";
 
 export const Route = createFileRoute("/demo/cabinet-veterinaire-des-pignes/")({
   component: CabinetDesPignes,
@@ -94,9 +97,6 @@ const CABINET_PHOTOS = [
 const DR_ARNAUD_PHOTO =
   "https://www.cabinetveterinairedespignes.com/wp-content/uploads/2021/03/image-Dr-Arnaud.jpg";
 
-// Ligne Orlane — même numéro de démo que sur bycosystems.xyz, préconfiguré
-// avec le contexte du Cabinet des Pignes pour cette démonstration.
-const ORLANE_HREF = "tel:+447576594092";
 const WHATSAPP_URL = "https://wa.me/447576594092";
 
 const ADRESSE = "3 Rue Alfred Binet, 06000 Nice";
@@ -107,6 +107,8 @@ const TEL_URGENCE = "06 20 46 50 40";
 
 function CabinetDesPignes() {
   const [called, setCalled] = useState(false);
+  const marche = useMarche();
+  const price = priceFor("Premium", marche);
 
   return (
     <div style={{ fontFamily: SANS, background: C.paper, color: C.ink }}>
@@ -116,10 +118,10 @@ function CabinetDesPignes() {
       />
       <Hero />
       <Accroche />
-      <DemoInteractive called={called} setCalled={setCalled} />
+      <DemoInteractive called={called} setCalled={setCalled} marche={marche} />
       <WhatsAppConfirmation called={called} />
       <SiteRemisANiveau />
-      <OffrePilote />
+      <OffrePilote price={price} />
       <Footer />
     </div>
   );
@@ -361,7 +363,28 @@ function Accroche() {
 
 /* ── Section 3 — Démo interactive ──────────────────────────── */
 
-function DemoInteractive({ called, setCalled }: { called: boolean; setCalled: (v: boolean) => void }) {
+function DemoInteractive({
+  called,
+  setCalled,
+  marche,
+}: {
+  called: boolean;
+  setCalled: (v: boolean) => void;
+  marche: Marche;
+}) {
+  const { status, start, hangup } = useOrlaneCall(marche, () => setCalled(true));
+  const buttonLabel =
+    status === "connecting"
+      ? "Connexion en cours…"
+      : status === "active"
+        ? "🔴 Raccrocher"
+        : status === "error"
+          ? "Appel indisponible pour le moment"
+          : "📞 Parler à Orlane";
+  const handleClick = () => {
+    if (status === "active") hangup();
+    else if (status === "idle" || status === "ended" || status === "error") start();
+  };
   return (
     <Section bg={C.noir} id="demo">
       <Container>
@@ -423,9 +446,10 @@ function DemoInteractive({ called, setCalled }: { called: boolean; setCalled: (v
             <InfoChip label="Parking" value="Gare du Sud · 20m" />
           </div>
 
-          <a
-            href={ORLANE_HREF}
-            onClick={() => setCalled(true)}
+          <button
+            type="button"
+            onClick={handleClick}
+            disabled={status === "connecting"}
             style={{
               display: "flex",
               alignItems: "center",
@@ -435,18 +459,22 @@ function DemoInteractive({ called, setCalled }: { called: boolean; setCalled: (v
               boxSizing: "border-box",
               padding: "17px 20px",
               borderRadius: 13,
-              background: C.teal,
+              border: "none",
+              cursor: status === "connecting" ? "wait" : "pointer",
+              background: status === "active" ? C.terracotta : C.teal,
               color: "#fff",
               fontSize: 15.5,
               fontWeight: 700,
+              fontFamily: "inherit",
               textDecoration: "none",
               boxShadow: `0 10px 30px rgba(62,128,115,0.4)`,
+              opacity: status === "connecting" ? 0.7 : 1,
             }}
           >
-            📞 Appeler Orlane
-          </a>
+            {buttonLabel}
+          </button>
           <div style={{ textAlign: "center", marginTop: 12, fontSize: 11.5, color: "rgba(255,255,255,0.5)" }}>
-            Un seul effet à ce clic : votre téléphone compose immédiatement le numéro d'Orlane,
+            Un seul effet à ce clic : un appel démarre directement dans votre navigateur avec Orlane,
             l'assistant de démonstration ByCo — pas un agent déjà configuré pour ce cabinet.
           </div>
         </div>
@@ -733,7 +761,7 @@ function RowPair({ avant, apres }: { avant: string; apres: string }) {
 
 /* ── Section 6 — L'offre ────────────────────────────────────── */
 
-function OffrePilote() {
+function OffrePilote({ price }: { price: string }) {
   return (
     <Section bg={C.noir}>
       <Container>
@@ -760,7 +788,7 @@ function OffrePilote() {
               margin: "10px 0 16px",
             }}
           >
-            Le plan Premium — 1 990 €
+            Le plan Premium — {price}
           </h2>
           <p style={{ fontSize: 14, color: "rgba(255,255,255,0.72)", lineHeight: 1.65, maxWidth: 480, margin: "0 auto 20px" }}>
             Audit complet du workflow d'accueil, Orlane et son automatisation WhatsApp,
@@ -777,7 +805,7 @@ function OffrePilote() {
               marginBottom: 22,
             }}
           >
-            <OfferBadge>Plan Premium · 1 990 €</OfferBadge>
+            <OfferBadge>Plan Premium · {price}</OfferBadge>
             <OfferBadge>Satisfait ou remboursé sous 30 jours, sans condition</OfferBadge>
             <OfferBadge>Contrepartie : un témoignage vidéo</OfferBadge>
           </div>

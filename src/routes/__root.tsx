@@ -10,6 +10,8 @@ import {
 } from "@tanstack/react-router";
 
 import appCss from "../styles.css?url";
+import { MarketProvider, getMarcheServerFn } from "@/lib/market";
+import { resolveMarcheOverride } from "@/lib/pricing";
 
 function NotFoundComponent() {
   return (
@@ -69,6 +71,11 @@ function ErrorComponent({ error, reset }: { error: Error; reset: () => void }) {
 }
 
 export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()({
+  beforeLoad: async ({ location }) => {
+    const override = resolveMarcheOverride((location.search as Record<string, unknown>)?.marche);
+    const marche = override ?? (await getMarcheServerFn());
+    return { marche };
+  },
   head: () => ({
     meta: [
       { charSet: "utf-8" },
@@ -116,11 +123,13 @@ function RootShell({ children }: { children: React.ReactNode }) {
 }
 
 function RootComponent() {
-  const { queryClient } = Route.useRouteContext();
+  const { queryClient, marche } = Route.useRouteContext();
 
   return (
     <QueryClientProvider client={queryClient}>
-      <Outlet />
+      <MarketProvider marche={marche}>
+        <Outlet />
+      </MarketProvider>
     </QueryClientProvider>
   );
 }

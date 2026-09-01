@@ -39,48 +39,41 @@ const DemoCabinetVeterinaireDesPignesIndexRoute =
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/fr/': typeof FrIndexRoute
-  '/demo/decouvrir/': typeof DemoDecouvrirIndexRoute
   '/demo/cabinet-veterinaire-des-pignes/': typeof DemoCabinetVeterinaireDesPignesIndexRoute
+  '/demo/decouvrir/': typeof DemoDecouvrirIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/fr': typeof FrIndexRoute
-  '/demo/decouvrir': typeof DemoDecouvrirIndexRoute
   '/demo/cabinet-veterinaire-des-pignes': typeof DemoCabinetVeterinaireDesPignesIndexRoute
+  '/demo/decouvrir': typeof DemoDecouvrirIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/fr/': typeof FrIndexRoute
-  '/demo/decouvrir/': typeof DemoDecouvrirIndexRoute
   '/demo/cabinet-veterinaire-des-pignes/': typeof DemoCabinetVeterinaireDesPignesIndexRoute
+  '/demo/decouvrir/': typeof DemoDecouvrirIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
-    | '/'
-    | '/fr/'
-    | '/demo/decouvrir/'
-    | '/demo/cabinet-veterinaire-des-pignes/'
+    '/' | '/fr/' | '/demo/cabinet-veterinaire-des-pignes/' | '/demo/decouvrir/'
   fileRoutesByTo: FileRoutesByTo
-  to:
-    | '/'
-    | '/fr'
-    | '/demo/decouvrir'
-    | '/demo/cabinet-veterinaire-des-pignes'
+  to: '/' | '/fr' | '/demo/cabinet-veterinaire-des-pignes' | '/demo/decouvrir'
   id:
     | '__root__'
     | '/'
     | '/fr/'
-    | '/demo/decouvrir/'
     | '/demo/cabinet-veterinaire-des-pignes/'
+    | '/demo/decouvrir/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   FrIndexRoute: typeof FrIndexRoute
-  DemoDecouvrirIndexRoute: typeof DemoDecouvrirIndexRoute
   DemoCabinetVeterinaireDesPignesIndexRoute: typeof DemoCabinetVeterinaireDesPignesIndexRoute
+  DemoDecouvrirIndexRoute: typeof DemoDecouvrirIndexRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -119,9 +112,9 @@ declare module '@tanstack/react-router' {
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   FrIndexRoute: FrIndexRoute,
-  DemoDecouvrirIndexRoute: DemoDecouvrirIndexRoute,
   DemoCabinetVeterinaireDesPignesIndexRoute:
     DemoCabinetVeterinaireDesPignesIndexRoute,
+  DemoDecouvrirIndexRoute: DemoDecouvrirIndexRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
