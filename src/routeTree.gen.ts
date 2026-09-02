@@ -12,7 +12,6 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as FrIndexRouteImport } from './routes/fr/index'
 import { Route as DemoDecouvrirIndexRouteImport } from './routes/demo/decouvrir/index'
-import { Route as DemoCabinetVeterinaireDesPignesIndexRouteImport } from './routes/demo/cabinet-veterinaire-des-pignes/index'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -29,50 +28,34 @@ const DemoDecouvrirIndexRoute = DemoDecouvrirIndexRouteImport.update({
   path: '/demo/decouvrir/',
   getParentRoute: () => rootRouteImport,
 } as any)
-const DemoCabinetVeterinaireDesPignesIndexRoute =
-  DemoCabinetVeterinaireDesPignesIndexRouteImport.update({
-    id: '/demo/cabinet-veterinaire-des-pignes/',
-    path: '/demo/cabinet-veterinaire-des-pignes/',
-    getParentRoute: () => rootRouteImport,
-  } as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/fr/': typeof FrIndexRoute
-  '/demo/cabinet-veterinaire-des-pignes/': typeof DemoCabinetVeterinaireDesPignesIndexRoute
   '/demo/decouvrir/': typeof DemoDecouvrirIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/fr': typeof FrIndexRoute
-  '/demo/cabinet-veterinaire-des-pignes': typeof DemoCabinetVeterinaireDesPignesIndexRoute
   '/demo/decouvrir': typeof DemoDecouvrirIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/fr/': typeof FrIndexRoute
-  '/demo/cabinet-veterinaire-des-pignes/': typeof DemoCabinetVeterinaireDesPignesIndexRoute
   '/demo/decouvrir/': typeof DemoDecouvrirIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths:
-    '/' | '/fr/' | '/demo/cabinet-veterinaire-des-pignes/' | '/demo/decouvrir/'
+  fullPaths: '/' | '/fr/' | '/demo/decouvrir/'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/fr' | '/demo/cabinet-veterinaire-des-pignes' | '/demo/decouvrir'
-  id:
-    | '__root__'
-    | '/'
-    | '/fr/'
-    | '/demo/cabinet-veterinaire-des-pignes/'
-    | '/demo/decouvrir/'
+  to: '/' | '/fr' | '/demo/decouvrir'
+  id: '__root__' | '/' | '/fr/' | '/demo/decouvrir/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   FrIndexRoute: typeof FrIndexRoute
-  DemoCabinetVeterinaireDesPignesIndexRoute: typeof DemoCabinetVeterinaireDesPignesIndexRoute
   DemoDecouvrirIndexRoute: typeof DemoDecouvrirIndexRoute
 }
 
@@ -99,21 +82,12 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof DemoDecouvrirIndexRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/demo/cabinet-veterinaire-des-pignes/': {
-      id: '/demo/cabinet-veterinaire-des-pignes/'
-      path: '/demo/cabinet-veterinaire-des-pignes'
-      fullPath: '/demo/cabinet-veterinaire-des-pignes/'
-      preLoaderRoute: typeof DemoCabinetVeterinaireDesPignesIndexRouteImport
-      parentRoute: typeof rootRouteImport
-    }
   }
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   FrIndexRoute: FrIndexRoute,
-  DemoCabinetVeterinaireDesPignesIndexRoute:
-    DemoCabinetVeterinaireDesPignesIndexRoute,
   DemoDecouvrirIndexRoute: DemoDecouvrirIndexRoute,
 }
 export const routeTree = rootRouteImport
