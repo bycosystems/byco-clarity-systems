@@ -21,7 +21,6 @@ export default defineConfig(({ mode }) => {
   }
 
   return {
-    base: "/byco-clarity-systems/",
     define,
     resolve: {
       alias: {
