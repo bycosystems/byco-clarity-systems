@@ -23,10 +23,10 @@ export function resolveMarcheOverride(raw: unknown): Marche | undefined {
 }
 
 export const PLAN_PRICES: Record<string, Record<Marche, string>> = {
-  Essential: { europe: "490€", afrique_francophone: "350 000 FCFA" },
-  Business: { europe: "990€", afrique_francophone: "650 000 FCFA" },
-  "Business+": { europe: "1 490€", afrique_francophone: "1 000 000 FCFA" },
-  Premium: { europe: "1 990€", afrique_francophone: "1 500 000 FCFA" },
+  Essential: { europe: "490€", afrique_francophone: "343 900 FCFA" },
+  Business: { europe: "990€", afrique_francophone: "694 900 FCFA" },
+  "Business+": { europe: "1 490€", afrique_francophone: "1 045 800 FCFA" },
+  Premium: { europe: "1 990€", afrique_francophone: "1 396 700 FCFA" },
 };
 
 export function priceFor(planName: string, marche: Marche): string {
