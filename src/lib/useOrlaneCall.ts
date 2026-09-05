@@ -4,6 +4,7 @@
 
 import { useCallback, useRef, useState } from "react";
 import type { Marche } from "./pricing";
+import type Vapi from "../vendor/vapi-bundled.mjs";
 
 // Assistant "Orlane" (Vapi) — id stable, confirmé via dashboard.vapi.ai.
 const ORLANE_ASSISTANT_ID = "621b0d76-7aad-483e-89b7-30c0b55415b7";
@@ -21,7 +22,7 @@ export type OrlaneCallStatus = "idle" | "connecting" | "active" | "ended" | "err
 
 export function useOrlaneCall(marche: Marche, onCallEnded?: () => void) {
   const [status, setStatus] = useState<OrlaneCallStatus>("idle");
-  const vapiRef = useRef<InstanceType<typeof import("@vapi-ai/web").default> | null>(null);
+  const vapiRef = useRef<InstanceType<typeof Vapi> | null>(null);
 
   const start = useCallback(async () => {
     if (!VAPI_PUBLIC_KEY) {
@@ -32,8 +33,15 @@ export function useOrlaneCall(marche: Marche, onCallEnded?: () => void) {
     if (vapiRef.current) return; // déjà démarré
     setStatus("connecting");
     try {
-      const { default: Vapi } = await import("@vapi-ai/web");
-      const vapi = new Vapi(VAPI_PUBLIC_KEY);
+      // Import du bundle esbuild pré-empaqueté (src/vendor/vapi-bundled.mjs,
+      // généré par scripts/prebundle-vapi.mjs) plutôt que du paquet
+      // @vapi-ai/web directement — contourne un bug Rollup/Vite documenté
+      // (vitejs/vite#9703 "Inconsistency between dev & build") où le
+      // require("events") CJS interne du SDK est traité différemment en
+      // dev (fonctionne) et en build (résout vers un stub vide, d'où
+      // "Class extends value #<Object> is not a constructor or null").
+      const { default: VapiCtor } = await import("../vendor/vapi-bundled.mjs");
+      const vapi = new VapiCtor(VAPI_PUBLIC_KEY);
       vapiRef.current = vapi;
       vapi.on("call-start", () => setStatus("active"));
       vapi.on("call-end", () => {

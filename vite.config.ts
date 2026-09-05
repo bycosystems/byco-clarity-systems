@@ -22,6 +22,13 @@ export default defineConfig(({ mode }) => {
 
   return {
     define,
+    environments: {
+      client: {
+        build: {
+          sourcemap: true,
+        },
+      },
+    },
     resolve: {
       alias: {
         "@": `${process.cwd()}/src`,
