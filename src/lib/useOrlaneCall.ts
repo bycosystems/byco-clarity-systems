@@ -54,8 +54,28 @@ export function useOrlaneCall(marche: Marche, onCallEnded?: () => void) {
         setStatus("error");
         vapiRef.current = null;
       });
+      const prices =
+        marche === "afrique_francophone"
+          ? {
+              essential: "343900 francs CFA",
+              business: "694900 francs CFA",
+              businessPlus: "1045800 francs CFA",
+              premium: "1396700 francs CFA",
+            }
+          : {
+              essential: "490 euros",
+              business: "990 euros",
+              businessPlus: "1490 euros",
+              premium: "1990 euros",
+            };
       await vapi.start(ORLANE_ASSISTANT_ID, {
-        variableValues: { marche },
+        variableValues: {
+          marche,
+          price_essential: prices.essential,
+          price_business: prices.business,
+          price_business_plus: prices.businessPlus,
+          price_premium: prices.premium,
+        },
         ...(marche === "afrique_francophone"
           ? { maxDurationSeconds: AFRIQUE_FRANCOPHONE_MAX_DURATION_SECONDS }
           : {}),
