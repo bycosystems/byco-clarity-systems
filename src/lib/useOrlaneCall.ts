@@ -15,8 +15,12 @@ const ORLANE_ASSISTANT_ID = "621b0d76-7aad-483e-89b7-30c0b55415b7";
 const VAPI_PUBLIC_KEY = import.meta.env.VITE_VAPI_PUBLIC_KEY as string | undefined;
 
 // Durée maximale d'un appel démo pour le marché afrique_francophone
-// (coût par minute plus élevé, à ajuster après un premier test réel).
-const AFRIQUE_FRANCOPHONE_MAX_DURATION_SECONDS = 90;
+// (coût par minute plus élevé — plafond anti-abus contre les appels
+// récréatifs gratuits, pas contre les vrais prospects). 90s coupait de
+// vraies conversations légitimes en plein milieu de la présentation des
+// prix (confirmé par test réel, appel de 104s coupé) ; 240s couvre une
+// présentation complète des 4 offres sans jamais couper un vrai prospect.
+const AFRIQUE_FRANCOPHONE_MAX_DURATION_SECONDS = 240;
 
 export type OrlaneCallStatus = "idle" | "connecting" | "active" | "ended" | "error";
 
