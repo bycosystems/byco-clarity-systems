@@ -54,27 +54,56 @@ export function useOrlaneCall(marche: Marche, onCallEnded?: () => void) {
         setStatus("error");
         vapiRef.current = null;
       });
+      // Montants en toutes lettres, un jeu par langue — un format numérique
+      // (avec ou sans séparateur) se fait systématiquement mal lire par la
+      // synthèse vocale (lecture chiffre par chiffre, ou virgule prise pour
+      // un séparateur décimal). Orlane ne lit donc plus jamais un chiffre :
+      // le montant à réciter est déjà écrit comme texte.
       const prices =
         marche === "afrique_francophone"
           ? {
-              essential: "343900 francs CFA",
-              business: "694900 francs CFA",
-              businessPlus: "1045800 francs CFA",
-              premium: "1396700 francs CFA",
+              essentialFr: "trois cent quarante-trois mille neuf cents francs CFA",
+              essentialEn: "three hundred forty-three thousand nine hundred CFA francs",
+              essentialDigits: "343 900 FCFA",
+              businessFr: "six cent quatre-vingt-quatorze mille neuf cents francs CFA",
+              businessEn: "six hundred ninety-four thousand nine hundred CFA francs",
+              businessDigits: "694 900 FCFA",
+              businessPlusFr: "un million quarante-cinq mille huit cents francs CFA",
+              businessPlusEn: "one million forty-five thousand eight hundred CFA francs",
+              businessPlusDigits: "1 045 800 FCFA",
+              premiumFr: "un million trois cent quatre-vingt-seize mille sept cents francs CFA",
+              premiumEn: "one million three hundred ninety-six thousand seven hundred CFA francs",
+              premiumDigits: "1 396 700 FCFA",
             }
           : {
-              essential: "490 euros",
-              business: "990 euros",
-              businessPlus: "1490 euros",
-              premium: "1990 euros",
+              essentialFr: "quatre cent quatre-vingt-dix euros",
+              essentialEn: "four hundred ninety euros",
+              essentialDigits: "490 €",
+              businessFr: "neuf cent quatre-vingt-dix euros",
+              businessEn: "nine hundred ninety euros",
+              businessDigits: "990 €",
+              businessPlusFr: "mille quatre cent quatre-vingt-dix euros",
+              businessPlusEn: "one thousand four hundred ninety euros",
+              businessPlusDigits: "1 490 €",
+              premiumFr: "mille neuf cent quatre-vingt-dix euros",
+              premiumEn: "one thousand nine hundred ninety euros",
+              premiumDigits: "1 990 €",
             };
       await vapi.start(ORLANE_ASSISTANT_ID, {
         variableValues: {
           marche,
-          price_essential: prices.essential,
-          price_business: prices.business,
-          price_business_plus: prices.businessPlus,
-          price_premium: prices.premium,
+          price_essential_fr: prices.essentialFr,
+          price_essential_en: prices.essentialEn,
+          price_essential_digits: prices.essentialDigits,
+          price_business_fr: prices.businessFr,
+          price_business_en: prices.businessEn,
+          price_business_digits: prices.businessDigits,
+          price_business_plus_fr: prices.businessPlusFr,
+          price_business_plus_en: prices.businessPlusEn,
+          price_business_plus_digits: prices.businessPlusDigits,
+          price_premium_fr: prices.premiumFr,
+          price_premium_en: prices.premiumEn,
+          price_premium_digits: prices.premiumDigits,
         },
         ...(marche === "afrique_francophone"
           ? { maxDurationSeconds: AFRIQUE_FRANCOPHONE_MAX_DURATION_SECONDS }
