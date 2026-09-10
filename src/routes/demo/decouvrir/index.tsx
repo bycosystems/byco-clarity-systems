@@ -23,6 +23,26 @@
 // n'importe quel ordre. Un seul dictionnaire FR/EN dans ce fichier,
 // pas de route dupliquée.
 //
+// Paramètre d'URL optionnel `?image=` (valeur encodée avec
+// encodeURIComponent) pour afficher, dans le Hero, une photo liée au
+// prospect (ex. capture prise directement sur son site). Absent, vide,
+// ou URL invalide/non http(s) → aucun changement visuel, comportement
+// identique à aujourd'hui. Un échec de chargement de l'image (URL morte)
+// masque simplement le bloc image, sans jamais casser le reste du Hero.
+//
+// Paramètre d'URL optionnel `?logo=` (même encodage/validation que
+// `?image=`) pour afficher un petit encart logo en haut à gauche du
+// Hero, sans déplacer le reste de la mise en page. Indépendant de
+// `?image=`, peut être utilisé seul ou combiné avec lui.
+//
+// Identité visuelle par prospect : la table PROSPECT_BRANDING (voir
+// plus bas) permet de donner à un prospect connu (par son nom exact
+// passé dans `?prospect=`) sa propre couleur d'accent, appliquée
+// uniquement à son nom dans le badge et la ligne de personnalisation
+// du Hero. Prospect absent de la table → couleur teal par défaut,
+// inchangée. Mécanisme volontairement séparé du logo (`?logo=`) pour
+// que chaque futur prospect n'exige qu'une ligne de configuration.
+//
 // Aucun élément nominatif : pas de nom d'entreprise, pas d'adresse,
 // pas de photo personnelle, pas de citation d'avis Google spécifique.
 //
@@ -39,10 +59,12 @@ import { useOrlaneCall } from "@/lib/useOrlaneCall";
 export const Route = createFileRoute("/demo/decouvrir/")({
   validateSearch: (
     search: Record<string, unknown>,
-  ): { secteur?: string; lang?: string; prospect?: string } => ({
+  ): { secteur?: string; lang?: string; prospect?: string; image?: string; logo?: string } => ({
     secteur: typeof search.secteur === "string" ? search.secteur : undefined,
     lang: typeof search.lang === "string" ? search.lang : undefined,
     prospect: typeof search.prospect === "string" ? search.prospect : undefined,
+    image: typeof search.image === "string" ? search.image : undefined,
+    logo: typeof search.logo === "string" ? search.logo : undefined,
   }),
   component: DecouvrirDemo,
   head: ({ match }) => {
@@ -125,16 +147,59 @@ function resolveProspect(raw: string | undefined): string | undefined {
     : trimmed;
 }
 
+/* ── Image de prospect (Hero) ──────────────────────────────────
+   `?image=` (encodée avec encodeURIComponent) insère une photo liée
+   au prospect dans le Hero. Absent, vide, ou URL invalide/non http(s)
+   → aucune image affichée, page identique à aujourd'hui.
+   ─────────────────────────────────────────────────────────────── */
+
+const IMAGE_URL_MAX_LENGTH = 2000;
+
+function resolveImage(raw: string | undefined): string | undefined {
+  if (typeof raw !== "string") return undefined;
+  const trimmed = raw.trim();
+  if (trimmed.length === 0 || trimmed.length > IMAGE_URL_MAX_LENGTH) return undefined;
+  try {
+    const url = new URL(trimmed);
+    if (url.protocol !== "https:" && url.protocol !== "http:") return undefined;
+    return trimmed;
+  } catch {
+    return undefined;
+  }
+}
+
+/* ── Identité visuelle par prospect (Hero) ───────────────────────
+   Certains prospects ont leur propre couleur d'accent (extraite de
+   leur logo) pour que le lien de démo paraisse préparé pour eux et
+   non générique. Mécanisme réutilisable : ajouter une entrée ici,
+   clé = nom du prospect tel que passé dans `?prospect=`, normalisé
+   en minuscules. Absent de cette table → couleur teal par défaut,
+   inchangée. Ne pilote que la couleur du nom lui-même (badge + ligne
+   de personnalisation du Hero) ; le logo, lui, vient de `?logo=`
+   (indépendant de cette table, voir HeroLogo plus bas).
+   ─────────────────────────────────────────────────────────────── */
+
+type ProspectBranding = { accentColor: string };
+
+const PROSPECT_BRANDING: Record<string, ProspectBranding> = {
+  "trésor hotel": { accentColor: "#C2B767" },
+};
+
+function resolveProspectBranding(prospect: string | undefined): ProspectBranding | undefined {
+  if (!prospect) return undefined;
+  return PROSPECT_BRANDING[prospect.trim().toLowerCase()];
+}
+
 /* ── Vocabulaire sectoriel ──────────────────────────────────────
    Un seul paramètre pilote quelques formulations ciblées ; le reste
    de la page (structure, mécanique d'appel, récap WhatsApp) est
    partagé, pour éviter toute duplication de page par secteur.
    ─────────────────────────────────────────────────────────────── */
 
-type Secteur = "sante" | "urgence" | "default";
+type Secteur = "sante" | "urgence" | "hotellerie" | "default";
 
 function resolveSecteur(raw: string | undefined): Secteur {
-  if (raw === "sante" || raw === "urgence") return raw;
+  if (raw === "sante" || raw === "urgence" || raw === "hotellerie") return raw;
   return "default";
 }
 
@@ -244,6 +309,52 @@ const COPY: Record<Secteur, Record<Lang, Copy>> = {
         "A client called requesting an urgent callout.\nNumber: +33 6 XX XX XX XX\nWould like a callback if needed.",
     },
   },
+  hotellerie: {
+    fr: {
+      eyebrowHero: "▪ Toujours disponible pour vos clients",
+      headline: "Quand votre standard est occupé, qui répond au téléphone ?",
+      accrocheHeadline: "Quand la ligne est occupée, qui décroche les autres appels ?",
+      accrocheP1:
+        "Beaucoup d'hôtels tiennent sur une seule ligne de réception, qui reçoit tout à la fois : réservations, questions, urgences. C'est une organisation simple, qui fonctionne au quotidien.",
+      accrocheP2:
+        "Le revers, lui, n'est jamais dit à voix haute : quand cette ligne est occupée, un client potentiel qui n'obtient pas de réponse compose simplement le numéro de l'hôtel suivant.",
+      chips: [
+        { label: "Réservation", value: "Chambre disponible" },
+        { label: "Urgence", value: "Prioritaire", accent: true },
+        { label: "Disponibilité", value: "7j/7" },
+        { label: "Zone", value: "Votre secteur" },
+      ],
+      demoIntro:
+        "C'est vous qui appelez ci-dessous : un vrai appel vers Orlane, l'agent vocal de démonstration ByCo. Une fois configuré et personnalisé pour votre activité, votre agent saura restituer ce type d'information, comme dans l'exemple ci-dessous.",
+      whatsappBody:
+        "Dès que vous raccrochez, un récapitulatif part directement sur WhatsApp : le motif de l'appel, le numéro du client, et ce qu'il attend de vous. Rien ne se perd, même quand vous êtes occupé.",
+      recapTitle: "📞 Nouvel appel reçu",
+      recapBody:
+        "Un client a appelé pour une demande de renseignement.\nNuméro : +33 6 XX XX XX XX\nSouhaite être rappelé si besoin.",
+    },
+    en: {
+      eyebrowHero: "▪ Always available for your clients",
+      headline: "When your front desk is busy, who answers the phone?",
+      accrocheHeadline: "When the line is busy, who answers the other calls?",
+      accrocheP1:
+        "Many hotels run on a single front desk line that handles everything at once: bookings, questions, emergencies. It's a simple setup that works day to day.",
+      accrocheP2:
+        "The downside is never said out loud: when that line is busy, a potential guest who gets no answer simply dials the next hotel's number.",
+      chips: [
+        { label: "Booking", value: "Room available" },
+        { label: "Emergency", value: "Priority", accent: true },
+        { label: "Availability", value: "7 days a week" },
+        { label: "Area", value: "Your region" },
+      ],
+      demoIntro:
+        "You're the one calling below: a real call to Orlane, ByCo's demo voice agent. Once configured and customized for your business, your agent will handle this kind of information, as shown in the example below.",
+      whatsappBody:
+        "As soon as you hang up, a summary is sent straight to WhatsApp: the reason for the call, the client's number, and what they need from you. Nothing gets lost, even when you're busy.",
+      recapTitle: "📞 New call received",
+      recapBody:
+        "A client called with a general inquiry.\nNumber: +33 6 XX XX XX XX\nWould like a callback if needed.",
+    },
+  },
   default: {
     fr: {
       eyebrowHero: "▪ Toujours disponible pour vos clients",
@@ -341,7 +452,7 @@ type UIStrings = {
 const UI: Record<Lang, UIStrings> = {
   fr: {
     heroSubtitle: "Une démonstration interactive, adaptée à votre activité.",
-    heroSubtitleProspectTemplate: "Une démonstration interactive, préparée pour {name}.",
+    heroSubtitleProspectTemplate: "Une démonstration interactive, préparée pour {name}",
     demoTag: "Démo ByCo",
     accrocheEyebrow: "Ce que votre site ne dit pas",
     demoEyebrow: "À vous de tester",
@@ -386,7 +497,7 @@ const UI: Record<Lang, UIStrings> = {
   },
   en: {
     heroSubtitle: "An interactive demo, tailored to your business.",
-    heroSubtitleProspectTemplate: "An interactive demo, prepared for {name}.",
+    heroSubtitleProspectTemplate: "An interactive demo, prepared for {name}",
     demoTag: "ByCo Demo",
     accrocheEyebrow: "What your website doesn't say",
     demoEyebrow: "Your turn to try",
@@ -460,6 +571,20 @@ const META: Record<Secteur, Record<Lang, { title: string; description: string; o
       ogDescription: "While you're on a job, who answers the phone? Test Orlane live.",
     },
   },
+  hotellerie: {
+    fr: {
+      title: "Découvrir votre agent d'accueil × ByCo Systems",
+      description:
+        "Démonstration interactive de la mini-application sur-mesure conçue par ByCo Systems : testez l'agent d'accueil en direct.",
+      ogDescription: "Quand votre standard est occupé, qui répond au téléphone ? Testez Orlane en direct.",
+    },
+    en: {
+      title: "Discover your AI receptionist × ByCo Systems",
+      description:
+        "Interactive demo of the custom mini-app built by ByCo Systems: test the AI receptionist live.",
+      ogDescription: "When your front desk is busy, who answers the phone? Test Orlane live.",
+    },
+  },
   default: {
     fr: {
       title: "Découvrir votre agent d'accueil × ByCo Systems",
@@ -479,10 +604,18 @@ const META: Record<Secteur, Record<Lang, { title: string; description: string; o
 /* ── Composant principal ────────────────────────────────────── */
 
 function DecouvrirDemo() {
-  const { secteur: rawSecteur, lang: rawLang, prospect: rawProspect } = Route.useSearch();
+  const {
+    secteur: rawSecteur,
+    lang: rawLang,
+    prospect: rawProspect,
+    image: rawImage,
+    logo: rawLogo,
+  } = Route.useSearch();
   const secteur = resolveSecteur(rawSecteur);
   const lang = resolveLang(rawLang);
   const prospect = resolveProspect(rawProspect);
+  const image = resolveImage(rawImage);
+  const logo = resolveImage(rawLogo);
   const copy = COPY[secteur][lang];
   const ui = UI[lang];
   const [called, setCalled] = useState(false);
@@ -495,7 +628,7 @@ function DecouvrirDemo() {
         rel="stylesheet"
         href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,600;0,700;1,500;1,600&family=Inter:wght@400;500;600;700&display=swap"
       />
-      <Hero copy={copy} ui={ui} prospect={prospect} />
+      <Hero copy={copy} ui={ui} prospect={prospect} image={image} logo={logo} />
       <Accroche copy={copy} ui={ui} />
       <DemoInteractive copy={copy} ui={ui} called={called} setCalled={setCalled} marche={marche} />
       <WhatsAppConfirmation copy={copy} ui={ui} called={called} />
@@ -508,92 +641,229 @@ function DecouvrirDemo() {
 
 /* ── Section 1 — Hero ───────────────────────────────────────── */
 
-function Hero({ copy, ui, prospect }: { copy: Copy; ui: UIStrings; prospect?: string }) {
-  const subtitle = prospect
-    ? ui.heroSubtitleProspectTemplate.replace("{name}", prospect)
-    : ui.heroSubtitle;
+function Hero({
+  copy,
+  ui,
+  prospect,
+  image,
+  logo,
+}: {
+  copy: Copy;
+  ui: UIStrings;
+  prospect?: string;
+  image?: string;
+  logo?: string;
+}) {
+  const branding = resolveProspectBranding(prospect);
   return (
     <div style={{ position: "relative", background: C.noir }}>
       <div
         style={{
           position: "relative",
-          height: "clamp(300px, 44vw, 460px)",
+          minHeight: "clamp(300px, 44vw, 460px)",
           overflow: "hidden",
           background: `linear-gradient(150deg, ${C.noir} 0%, ${C.noirLight} 55%, ${C.tealDeep} 100%)`,
         }}
       >
         <DemoTag label={ui.demoTag} />
+        {logo && <HeroLogo src={logo} />}
         <div
           style={{
-            position: "absolute",
-            inset: 0,
+            position: "relative",
             display: "flex",
             flexDirection: "column",
             justifyContent: "center",
+            minHeight: image ? "clamp(380px, 50vw, 560px)" : "clamp(300px, 44vw, 460px)",
             padding: "clamp(20px, 4vw, 44px) clamp(20px, 6vw, 64px)",
           }}
         >
-          <div style={{ maxWidth: 620 }}>
-            {prospect && (
-              <div
-                style={{
-                  display: "inline-block",
-                  marginBottom: 14,
-                  padding: "5px 14px",
-                  borderRadius: 20,
-                  background: C.teal,
-                  color: "#fff",
-                  fontSize: 11.5,
-                  fontWeight: 700,
-                  letterSpacing: "0.04em",
-                  maxWidth: "100%",
-                  overflowWrap: "break-word",
-                  wordBreak: "break-word",
-                  boxShadow: "0 2px 10px rgba(62,128,115,0.4)",
-                }}
-              >
-                {ui.prospectBadgeTemplate.replace("{name}", prospect)}
-              </div>
-            )}
+          <div
+            style={{
+              display: "flex",
+              alignItems: "center",
+              flexWrap: "wrap",
+              gap: "clamp(24px, 4vw, 48px)",
+              maxWidth: image ? 1220 : 620,
+              width: "100%",
+              margin: image ? "0 auto" : undefined,
+            }}
+          >
             <div
               style={{
-                fontSize: 10.5,
-                letterSpacing: "0.28em",
-                textTransform: "uppercase",
-                color: C.tealLight,
-                marginBottom: 12,
+                flex: "1 1 340px",
+                minWidth: 260,
+                maxWidth: image ? 480 : 620,
+                marginTop: logo ? 76 : 0,
               }}
             >
-              {copy.eyebrowHero}
+              {prospect && (
+                <div
+                  style={{
+                    display: "inline-block",
+                    marginBottom: 14,
+                    padding: "5px 14px",
+                    borderRadius: 20,
+                    background: C.teal,
+                    color: "#fff",
+                    fontSize: 11.5,
+                    fontWeight: 700,
+                    letterSpacing: "0.04em",
+                    maxWidth: "100%",
+                    overflowWrap: "break-word",
+                    wordBreak: "break-word",
+                    boxShadow: "0 2px 10px rgba(62,128,115,0.4)",
+                  }}
+                >
+                  <TemplateWithName
+                    template={ui.prospectBadgeTemplate}
+                    name={prospect}
+                    accentColor={branding?.accentColor}
+                  />
+                </div>
+              )}
+              <div
+                style={{
+                  fontSize: 10.5,
+                  letterSpacing: "0.28em",
+                  textTransform: "uppercase",
+                  color: C.tealLight,
+                  marginBottom: 12,
+                }}
+              >
+                {copy.eyebrowHero}
+              </div>
+              <h1
+                style={{
+                  fontFamily: SERIF,
+                  fontSize: "clamp(26px, 4.4vw, 44px)",
+                  color: "#fff",
+                  fontWeight: 700,
+                  lineHeight: 1.2,
+                  margin: 0,
+                  textShadow: "0 2px 14px rgba(0,0,0,0.5)",
+                }}
+              >
+                {copy.headline}
+              </h1>
+              <p
+                style={{
+                  marginTop: 16,
+                  fontFamily: SERIF,
+                  fontSize: "clamp(20px, 3.4vw, 34px)",
+                  fontWeight: 700,
+                  color: C.teal,
+                  lineHeight: 1.25,
+                  maxWidth: 520,
+                  overflowWrap: "break-word",
+                  textShadow: "0 2px 12px rgba(0,0,0,0.5)",
+                }}
+              >
+                {prospect ? (
+                  <TemplateWithName
+                    template={ui.heroSubtitleProspectTemplate}
+                    name={prospect}
+                    accentColor={branding?.accentColor}
+                  />
+                ) : (
+                  ui.heroSubtitle
+                )}
+              </p>
             </div>
-            <h1
-              style={{
-                fontFamily: SERIF,
-                fontSize: "clamp(26px, 4.4vw, 44px)",
-                color: "#fff",
-                fontWeight: 700,
-                lineHeight: 1.2,
-                margin: 0,
-                textShadow: "0 2px 14px rgba(0,0,0,0.5)",
-              }}
-            >
-              {copy.headline}
-            </h1>
-            <p
-              style={{
-                marginTop: 14,
-                fontSize: "clamp(13.5px, 1.6vw, 16px)",
-                color: "rgba(255,255,255,0.82)",
-                lineHeight: 1.55,
-                maxWidth: 480,
-                overflowWrap: "break-word",
-              }}
-            >
-              {subtitle}
-            </p>
+            {image && <HeroImage src={image} />}
           </div>
         </div>
       </div>
+    </div>
+  );
+}
+
+function HeroImage({ src }: { src: string }) {
+  const [failed, setFailed] = useState(false);
+  if (failed) return null;
+  return (
+    <div style={{ flex: "1 1 480px", minWidth: 300, maxWidth: 700 }}>
+      <img
+        src={src}
+        alt=""
+        loading="lazy"
+        referrerPolicy="no-referrer"
+        onError={() => setFailed(true)}
+        style={{
+          display: "block",
+          width: "100%",
+          height: "clamp(240px, 38vw, 460px)",
+          objectFit: "cover",
+          borderRadius: 18,
+          border: `2px solid ${C.teal}`,
+          boxShadow: "0 20px 54px rgba(0,0,0,0.5)",
+        }}
+      />
+    </div>
+  );
+}
+
+/* ── Nom de prospect coloré dans un gabarit "{name}" ───────────
+   Découpe le gabarit autour de "{name}" pour ne recolorer que le nom
+   lui-même (accentColor), le reste du texte gardant sa couleur
+   parente inchangée. Réutilisé par le badge et la ligne de
+   personnalisation du Hero.
+   ─────────────────────────────────────────────────────────────── */
+
+function TemplateWithName({
+  template,
+  name,
+  accentColor,
+}: {
+  template: string;
+  name: string;
+  accentColor?: string;
+}) {
+  const idx = template.indexOf("{name}");
+  if (idx === -1) return <>{template}</>;
+  const prefix = template.slice(0, idx);
+  const suffix = template.slice(idx + "{name}".length);
+  return (
+    <>
+      {prefix}
+      <span style={accentColor ? { color: accentColor } : undefined}>{name}</span>
+      {suffix}
+    </>
+  );
+}
+
+/* ── Logo de prospect (Hero) ────────────────────────────────────
+   `?logo=` (même mécanisme de validation que `?image=`) affiche un
+   petit encart logo en haut à gauche du Hero, sans déplacer le reste
+   de la mise en page. Absent, vide, ou échec de chargement → rien
+   affiché, comportement identique à aujourd'hui.
+   ─────────────────────────────────────────────────────────────── */
+
+function HeroLogo({ src }: { src: string }) {
+  const [failed, setFailed] = useState(false);
+  if (failed) return null;
+  return (
+    <div
+      style={{
+        position: "absolute",
+        top: 16,
+        left: 16,
+        zIndex: 2,
+        background: "rgba(255,255,255,0.94)",
+        borderRadius: 12,
+        padding: "9px 16px",
+        boxShadow: "0 4px 14px rgba(0,0,0,0.35)",
+        display: "flex",
+        alignItems: "center",
+      }}
+    >
+      <img
+        src={src}
+        alt=""
+        loading="lazy"
+        referrerPolicy="no-referrer"
+        onError={() => setFailed(true)}
+        style={{ display: "block", height: 44, maxWidth: 190, objectFit: "contain" }}
+      />
     </div>
   );
 }
