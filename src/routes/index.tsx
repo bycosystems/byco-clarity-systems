@@ -1,4 +1,4 @@
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, useRouterState } from "@tanstack/react-router";
 import React, { useEffect, useRef, useState } from "react";
 import {
   LayoutDashboard,
@@ -173,9 +173,10 @@ function ParallaxTitle({ word, children, dark = false, center = false }: { word:
 function LangSwitcher() {
   const lang = useLang();
   const other: Lang = lang === "en" ? "fr" : "en";
+  const searchStr = useRouterState({ select: (s) => s.location.searchStr });
   return (
     <a
-      href={localePath(other)}
+      href={`${localePath(other)}${searchStr}`}
       className="text-sm font-medium text-muted-foreground hover:text-navy-deep transition"
     >
       {other.toUpperCase()}
