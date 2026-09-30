@@ -18,6 +18,8 @@ import {
   Phone,
   MessageSquare,
   Zap,
+  KeyRound,
+  XCircle,
 } from "lucide-react";
 import { DashboardMockup } from "@/components/DashboardMockup";
 import { LangProvider, useContent, useLang, localePath, content, type Lang } from "@/lib/i18n";
@@ -245,6 +247,10 @@ function Hero() {
             <p className="mt-6 text-lg text-white/70 max-w-xl leading-relaxed">
               {t.hero.subtitle}
             </p>
+            <div className="mt-5 inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-amber-400/15 border border-amber-300/30 text-amber-200 font-semibold text-sm">
+              <KeyRound className="size-4 shrink-0" />
+              {t.hero.ownershipBadge}
+            </div>
             <div className="mt-8 flex flex-wrap gap-3">
               <a
                 href={WHATSAPP_URL}
@@ -660,6 +666,45 @@ function Pricing() {
             );
           })}
         </div>
+
+        <div className="mt-16 max-w-4xl mx-auto">
+          <h3 className="text-2xl md:text-3xl font-medium text-navy-deep text-center">
+            {t.pricing.comparison.heading}
+          </h3>
+          <div className="mt-8 grid md:grid-cols-2 gap-px bg-border rounded-2xl overflow-hidden border border-border">
+            <div className="bg-navy-deep text-white p-8">
+              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-brand/20 border border-brand-soft/30 text-brand-soft text-xs font-semibold uppercase tracking-wide">
+                <KeyRound className="size-3.5" />
+                {t.pricing.comparison.ownershipTitle}
+              </div>
+              <ul className="mt-6 space-y-3">
+                {t.pricing.comparison.ownershipPoints.map((point) => (
+                  <li key={point} className="flex items-start gap-2.5 text-sm text-white/85">
+                    <CheckCircle2 className="size-4 shrink-0 mt-0.5 text-brand-soft" />
+                    {point}
+                  </li>
+                ))}
+              </ul>
+            </div>
+            <div className="bg-white p-8">
+              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-muted text-muted-foreground text-xs font-semibold uppercase tracking-wide">
+                {t.pricing.comparison.subscriptionTitle}
+              </div>
+              <ul className="mt-6 space-y-3">
+                {t.pricing.comparison.subscriptionPoints.map((point) => (
+                  <li key={point} className="flex items-start gap-2.5 text-sm text-muted-foreground">
+                    <XCircle className="size-4 shrink-0 mt-0.5 text-muted-foreground/60" />
+                    {point}
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </div>
+          <p className="mt-4 text-center text-xs text-muted-foreground">
+            {t.pricing.comparison.note}
+          </p>
+        </div>
+
         <p className="mt-8 text-center text-sm text-muted-foreground">
           {t.pricing.footerNote} <a href="#contact" className="text-brand font-medium hover:underline">{t.pricing.footerLinkText}</a>
         </p>
