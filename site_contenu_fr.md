@@ -40,7 +40,7 @@ Tout Business + voix IA sur-mesure · automatisations multi-canaux avancées (we
 **Premium — 1 990 €**
 Tout Business+ + audit complet du workflow · personnalisation avancée · 30 jours de suivi post-livraison · livraison prioritaire · mise en place en 72h
 
-**Mention commune :** Paiement unique. Aucun abonnement.
+**Mention commune :** Paiement unique pour la mise en place. Vous devenez propriétaire du système. Le suivi, si vous le souhaitez, se fait sur contrat séparé.
 
 ## READYFLOW MANAGER (page dédiée)
 
