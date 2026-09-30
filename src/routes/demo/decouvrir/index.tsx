@@ -476,7 +476,7 @@ const UI: Record<Lang, UIStrings> = {
     offerEyebrow: "Envie d'aller plus loin ?",
     offerTitleTemplate: "Le plan Business+ : {price}",
     offerDesc:
-      "Accueil IA disponible 24h/24, automatisation WhatsApp complète, réservation et confirmation automatique, suivi client automatisé, ReadyFlow Manager inclus, voix IA sur-mesure. Mise en place en 48 à 72h. Prix plein, paiement unique, aucun abonnement.",
+      "Accueil IA disponible 24h/24, automatisation WhatsApp complète, réservation et confirmation automatique, suivi client automatisé, ReadyFlow Manager inclus, voix IA sur-mesure. Mise en place en 48 à 72h. Prix plein, paiement unique. Vous êtes propriétaire du système.",
     badgeOfferTemplate: "Plan Business+ · {price}",
     badgeGuarantee: "Satisfait ou remboursé sous 30 jours, sans condition",
     badgeTestimonial: "Contrepartie : un témoignage vidéo",
@@ -521,7 +521,7 @@ const UI: Record<Lang, UIStrings> = {
     offerEyebrow: "Want to go further?",
     offerTitleTemplate: "The Business+ plan: {price}",
     offerDesc:
-      "24/7 AI reception, full WhatsApp automation, automatic booking and confirmation, automated client follow-up, ReadyFlow Manager included, custom AI voice. Setup in 48 to 72 hours. Full price, one-time payment, no subscription.",
+      "24/7 AI reception, full WhatsApp automation, automatic booking and confirmation, automated client follow-up, ReadyFlow Manager included, custom AI voice. Setup in 48 to 72 hours. Full price, one-time payment. You own the system outright.",
     badgeOfferTemplate: "Business+ plan · {price}",
     badgeGuarantee: "Money-back guarantee within 30 days, no conditions",
     badgeTestimonial: "In exchange: a video testimonial",
