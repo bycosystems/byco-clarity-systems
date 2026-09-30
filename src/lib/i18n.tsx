@@ -8,6 +8,7 @@ export interface Content {
   nav: { offer: string; services: string; pricing: string; demo: string; process: string; contact: string; cta: string };
   hero: {
     badge: string;
+    ownershipBadge: string;
     titleLine1: string;
     titleLine2: string;
     titleLine3: string;
@@ -55,6 +56,14 @@ export interface Content {
     plans: { name: string; price: string; subtitle: string; desc: string; features: string[]; cta: string; badge: string | null }[];
     footerNote: string;
     footerLinkText: string;
+    comparison: {
+      heading: string;
+      ownershipTitle: string;
+      ownershipPoints: string[];
+      subscriptionTitle: string;
+      subscriptionPoints: string[];
+      note: string;
+    };
   };
   process: { heading: string; steps: { n: string; title: string; desc: string; day: string }[] };
   faq: { heading: string; tagline: string; items: { q: string; a: string }[] };
@@ -90,13 +99,14 @@ export const content: Record<Lang, Content> = {
     nav: { offer: "What we build", services: "Services", pricing: "Pricing", demo: "Demo", process: "Process", contact: "Contact", cta: "Request a Demo" },
     hero: {
       badge: "Smart reception & automation for service businesses",
+      ownershipBadge: "You own it. You don't rent it.",
       titleLine1: "Never miss",
       titleLine2: "a client again.",
       titleLine3: "24/7.",
       subtitle: "Smart phone reception, WhatsApp automation, booking flows and follow-up systems - built for clinics, salons, agencies and every service business.",
       ctaPrimary: "Request a Demo",
       ctaSecondary: "See our plans",
-      bullets: ["Zero missed calls", "WhatsApp automation", "Fast setup - 24-72h"],
+      bullets: ["You own the system", "WhatsApp automation", "Fast setup - 24-72h"],
     },
     stats: {
       setupLabel: "Full setup, done for you",
@@ -138,7 +148,7 @@ export const content: Record<Lang, Content> = {
         { title: "Smart Qualification", desc: "Orlane asks the right questions and flags what's urgent." },
         { title: "Custom Voice and Script", desc: "Built for your business, not a generic assistant." },
         { title: "Every Exchange Logged", desc: "ReadyFlow Manager tracks every call and message automatically." },
-        { title: "One-Time Payment", desc: "No subscription, no recurring fees." },
+        { title: "You Own The System", desc: "One-time setup fee. Ongoing support, if needed, is a separate contract." },
       ],
       steps: [
         { n: "01", title: "Capture", desc: "AI collects requests from WhatsApp, phone or your website instantly." },
@@ -165,7 +175,7 @@ export const content: Record<Lang, Content> = {
     },
     pricing: {
       heading: "Simple, transparent pricing",
-      subheading: "One-time setup. No monthly fees. No surprises.",
+      subheading: "One-time setup fee. You own the system outright. Ongoing support, if you want it, is a separate contract tailored to your usage.",
       plans: [
         {
           name: "Essential",
@@ -230,6 +240,24 @@ export const content: Record<Lang, Content> = {
       ],
       footerNote: "Need a custom system?",
       footerLinkText: "Talk to us - we adapt to every service business.",
+      comparison: {
+        heading: "Buy it once, or rent it forever?",
+        ownershipTitle: "With ByCo Systems",
+        ownershipPoints: [
+          "You pay once, at setup",
+          "You own the system, for good",
+          "No lifetime rent to us",
+          "You choose who handles support after that",
+        ],
+        subscriptionTitle: "A typical market subscription",
+        subscriptionPoints: [
+          "You pay every month, indefinitely",
+          "You never own the system",
+          "Stop paying, lose access",
+          "Total cost keeps climbing",
+        ],
+        note: "Based on common pricing models in the AI reception market. No mandatory monthly subscription with ByCo.",
+      },
     },
     process: {
       heading: "How Orlane goes live for your business",
@@ -299,13 +327,14 @@ export const content: Record<Lang, Content> = {
     nav: { offer: "Notre offre", services: "Services", pricing: "Tarifs", demo: "Démo", process: "Méthode", contact: "Contact", cta: "Demander une démo" },
     hero: {
       badge: "Réception intelligente et automatisation pour entreprises de services",
+      ownershipBadge: "Vous l'achetez. Vous ne le louez pas.",
       titleLine1: "Ne manquez plus",
       titleLine2: "jamais un client.",
       titleLine3: "24/7.",
       subtitle: "Réception intelligente et automatisation pour entreprises de services : appels, WhatsApp et rendez-vous gérés 24h/24.",
       ctaPrimary: "Demander une démo",
       ctaSecondary: "Voir les offres",
-      bullets: ["Zéro appel manqué", "Automatisation WhatsApp", "Mise en place rapide - 24-72h"],
+      bullets: ["Vous êtes propriétaire du système", "Automatisation WhatsApp", "Mise en place rapide - 24-72h"],
     },
     stats: {
       setupLabel: "Mise en place complète, clé en main",
@@ -347,7 +376,7 @@ export const content: Record<Lang, Content> = {
         { title: "Qualification intelligente", desc: "Orlane pose les bonnes questions et repère ce qui est urgent." },
         { title: "Voix et script sur-mesure", desc: "Construits pour votre entreprise, pas un assistant générique." },
         { title: "Chaque échange enregistré", desc: "ReadyFlow Manager trace chaque appel et message automatiquement." },
-        { title: "Paiement unique", desc: "Aucun abonnement, aucuns frais récurrents." },
+        { title: "Vous êtes propriétaire", desc: "Paiement unique pour l'installation. Le suivi, si besoin, se fait sur contrat séparé." },
       ],
       steps: [
         { n: "01", title: "Capture", desc: "L'IA collecte les demandes depuis WhatsApp, le téléphone ou votre site web instantanément." },
@@ -374,7 +403,7 @@ export const content: Record<Lang, Content> = {
     },
     pricing: {
       heading: "Des tarifs simples et transparents",
-      subheading: "Paiement unique. Aucun abonnement. Sans surprise.",
+      subheading: "Paiement unique pour la mise en place. Vous devenez propriétaire du système. Le suivi, si vous le souhaitez, se fait sur contrat séparé, adapté à votre usage.",
       plans: [
         {
           name: "Essential",
@@ -439,6 +468,24 @@ export const content: Record<Lang, Content> = {
       ],
       footerNote: "Besoin d'un système sur mesure ?",
       footerLinkText: "Parlez-nous - nous nous adaptons à toute entreprise de services.",
+      comparison: {
+        heading: "Acheter une fois, ou louer pour toujours ?",
+        ownershipTitle: "Avec ByCo Systems",
+        ownershipPoints: [
+          "Vous payez une seule fois, à l'installation",
+          "Le système vous appartient, pour de bon",
+          "Aucun loyer à vie envers nous",
+          "Vous choisissez qui assure le suivi ensuite",
+        ],
+        subscriptionTitle: "Un abonnement classique du marché",
+        subscriptionPoints: [
+          "Vous payez chaque mois, indéfiniment",
+          "Vous ne possédez jamais le système",
+          "Arrêtez de payer, perdez l'accès",
+          "Le coût total ne cesse de grimper",
+        ],
+        note: "Comparaison basée sur les modèles de tarification courants du marché de la réception IA. Aucun abonnement mensuel obligatoire chez ByCo.",
+      },
     },
     process: {
       heading: "Comment Orlane démarre chez vous",
