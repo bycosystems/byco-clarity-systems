@@ -358,12 +358,12 @@ const COPY: Record<Secteur, Record<Lang, Copy>> = {
   default: {
     fr: {
       eyebrowHero: "▪ Toujours disponible pour vos clients",
-      headline: "Pendant que vous travaillez, qui répond au téléphone ?",
-      accrocheHeadline: "Vous, pendant que vous travaillez : qui décroche ?",
+      headline: "Ligne occupée ou indisponible : qui prend les autres appels ?",
+      accrocheHeadline: "Offrez-vous un accueil intelligent, au téléphone et sur WhatsApp, pour votre business.",
       accrocheP1:
-        "Beaucoup de petites entreprises tiennent grâce à une seule personne, toujours la même, toujours disponible pour ses clients. C'est une force, et une vraie promesse de qualité.",
+        "Que ce soit une seule personne aux commandes ou toute une équipe au standard, le principe ne change pas : un client qui appelle attend une réponse tout de suite, pas un message qui patiente.",
       accrocheP2:
-        "Le revers, lui, n'est jamais dit à voix haute : quand cette personne est occupée avec un client, personne d'autre n'est là pour décrocher, ni pour une question simple, ni pour une urgence.",
+        "Ce qui n'est jamais dit à voix haute : dès que la ligne est prise ou que personne n'est disponible, l'appel suivant tombe dans le vide. Une simple question, ou une vraie urgence.",
       chips: [
         { label: "Devis", value: "Sur demande" },
         { label: "Urgence", value: "Prioritaire", accent: true },
@@ -371,7 +371,7 @@ const COPY: Record<Secteur, Record<Lang, Copy>> = {
         { label: "Zone", value: "Votre secteur" },
       ],
       demoIntro:
-        "C'est vous qui appelez ci-dessous : un vrai appel vers Orlane, l'agent vocal de démonstration ByCo. Une fois configuré et personnalisé pour votre activité, votre agent saura restituer ce type d'information, comme dans l'exemple ci-dessous.",
+        "C'est vous qui appelez ci-dessous : un vrai appel vers Orlane, l'agent vocal de démonstration ByCo. Une fois configuré et personnalisé pour votre business, votre agent saura restituer ce type d'information, comme dans l'exemple ci-dessous.",
       whatsappBody:
         "Dès que vous raccrochez, un récapitulatif part directement sur WhatsApp : le motif de l'appel, le numéro du client, et ce qu'il attend de vous. Rien ne se perd, même quand vous êtes occupé.",
       recapTitle: "📞 Nouvel appel reçu",
@@ -380,12 +380,12 @@ const COPY: Record<Secteur, Record<Lang, Copy>> = {
     },
     en: {
       eyebrowHero: "▪ Always available for your clients",
-      headline: "While you're working, who answers the phone?",
-      accrocheHeadline: "You, while you're working: who picks up?",
+      headline: "Line busy or unavailable: who takes the other calls?",
+      accrocheHeadline: "Give your business an intelligent reception — by phone and on WhatsApp.",
       accrocheP1:
-        "Many small businesses run on a single person, always the same one, always available for their clients. That's a strength, and a real promise of quality.",
+        "Whether it's one person running the show or a full front desk, the principle stays the same: a client who calls wants an answer right away, not a message waiting in line.",
       accrocheP2:
-        "The downside is never said out loud: when that person is busy with a client, no one else is there to pick up, not for a simple question, not for an emergency.",
+        "What's never said out loud: the moment the line is busy or no one's available, the next call falls through. A simple question, or a real emergency.",
       chips: [
         { label: "Quotes", value: "On request" },
         { label: "Emergency", value: "Priority", accent: true },
