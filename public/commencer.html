@@ -1,0 +1,81 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Bienvenue — ByCo Systems</title>
+<style>
+  :root{
+    --bg:#17140f; --surface:#231f19; --fg:#f3ede3; --muted:#a89d8d;
+    --line:#38322a; --accent:#e08a3e; --accent-ink:#1a1206;
+  }
+  *{box-sizing:border-box}
+  body{
+    margin:0; background:var(--bg); color:var(--fg);
+    font-family:"Public Sans",system-ui,-apple-system,Segoe UI,sans-serif;
+    padding:40px 20px 60px;
+  }
+  .wrap{max-width:560px;margin:0 auto}
+  .eyebrow{
+    font-family:"Work Sans",system-ui,sans-serif; font-weight:700; font-size:0.75rem;
+    letter-spacing:0.08em; text-transform:uppercase; color:var(--accent); margin:0 0 10px;
+  }
+  h1{
+    font-family:"Work Sans",system-ui,sans-serif; font-weight:800; font-size:1.7rem;
+    line-height:1.25; margin:0 0 22px;
+  }
+  p.lead{color:var(--muted); font-size:1rem; line-height:1.6; margin:0 0 34px}
+  .step{display:flex; gap:16px; margin-bottom:22px; padding-bottom:22px; border-bottom:1px solid var(--line)}
+  .step:last-of-type{border-bottom:none}
+  .num{
+    flex:0 0 36px; height:36px; border-radius:10px; background:var(--surface);
+    border:1px solid var(--line); color:var(--accent); font-weight:800; font-size:1rem;
+    display:flex; align-items:center; justify-content:center; font-family:"Work Sans",sans-serif;
+  }
+  .step h2{font-size:1rem; margin:2px 0 6px; font-family:"Work Sans",sans-serif; font-weight:700}
+  .step p{margin:0; font-size:0.92rem; color:var(--muted); line-height:1.55}
+  .cta{
+    display:block; text-align:center; margin-top:30px; background:var(--accent); color:var(--accent-ink);
+    font-weight:800; font-family:"Work Sans",sans-serif; text-decoration:none; padding:16px 20px;
+    border-radius:12px; font-size:1.02rem;
+  }
+  .foot{margin-top:28px; font-size:0.85rem; color:var(--muted); text-align:center}
+  .foot a{color:var(--accent); text-decoration:none}
+</style>
+</head>
+<body>
+  <div class="wrap">
+    <p class="eyebrow">Orlane · ByCo Systems</p>
+    <h1>Votre système est à vous. Voici ce qui se passe maintenant.</h1>
+    <p class="lead">Merci pour votre achat. Trois étapes simples nous séparent de la mise en service, chacune vous sera confirmée avant la suivante.</p>
+
+    <div class="step">
+      <div class="num">1</div>
+      <div>
+        <h2>Vous remplissez le formulaire de configuration</h2>
+        <p>Secteur d'activité, numéros à connecter, horaires, langue de réponse. Deux minutes, et un message récapitulatif part directement sur WhatsApp à notre équipe.</p>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="num">2</div>
+      <div>
+        <h2>On configure votre assistant, sous 24h</h2>
+        <p>Votre voix, votre ton, les réponses propres à votre activité. Chaque configuration est écrite pour vous, rien d'automatique côté script.</p>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="num">3</div>
+      <div>
+        <h2>On teste ensemble avant d'activer</h2>
+        <p>Mise en service entre 48 et 72h. Vous gardez votre numéro actuel, rien ne change pour vos clients à part le fait que, cette fois, quelqu'un répond toujours.</p>
+      </div>
+    </div>
+
+    <a class="cta" href="/configuration.html">Remplir le formulaire de configuration →</a>
+
+    <p class="foot">Une question avant de commencer ? Écrivez directement sur WhatsApp au <a href="https://wa.me/237677035874">+237 677 035 874</a>.</p>
+  </div>
+</body>
+</html>
