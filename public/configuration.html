@@ -1,0 +1,134 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Configuration Orlane — ByCo Systems</title>
+<style>
+  :root{
+    --bg:#17140f; --surface:#231f19; --fg:#f3ede3; --muted:#a89d8d;
+    --line:#38322a; --accent:#e08a3e; --accent-ink:#1a1206;
+  }
+  *{box-sizing:border-box}
+  body{
+    margin:0; background:var(--bg); color:var(--fg);
+    font-family:"Public Sans",system-ui,-apple-system,Segoe UI,sans-serif;
+    padding:40px 20px 60px;
+  }
+  .wrap{max-width:520px;margin:0 auto}
+  .eyebrow{
+    font-family:"Work Sans",system-ui,sans-serif; font-weight:700; font-size:0.75rem;
+    letter-spacing:0.08em; text-transform:uppercase; color:var(--accent); margin:0 0 10px;
+  }
+  h1{
+    font-family:"Work Sans",system-ui,sans-serif; font-weight:800; font-size:1.5rem;
+    line-height:1.3; margin:0 0 10px;
+  }
+  p.lead{color:var(--muted); font-size:0.95rem; line-height:1.6; margin:0 0 30px}
+  label{
+    display:block; font-family:"Work Sans",sans-serif; font-weight:700; font-size:0.88rem;
+    margin:0 0 7px; color:var(--fg);
+  }
+  .field{margin-bottom:20px}
+  input[type=text], input[type=tel], select, textarea{
+    width:100%; background:var(--surface); border:1px solid var(--line); color:var(--fg);
+    border-radius:10px; padding:13px 14px; font-size:0.95rem; font-family:inherit;
+  }
+  textarea{resize:vertical; min-height:70px}
+  input::placeholder, textarea::placeholder{color:var(--muted)}
+  .radios{display:flex; gap:10px; flex-wrap:wrap}
+  .radio-opt{
+    flex:1; min-width:100px; background:var(--surface); border:1px solid var(--line); border-radius:10px;
+    padding:11px; text-align:center; cursor:pointer; font-size:0.9rem;
+  }
+  .radio-opt input{display:none}
+  .radio-opt.selected{border-color:var(--accent); background:rgba(224,138,62,0.12); color:var(--accent); font-weight:700}
+  button{
+    width:100%; margin-top:10px; background:var(--accent); color:var(--accent-ink); border:none;
+    font-weight:800; font-family:"Work Sans",sans-serif; padding:16px 20px; border-radius:12px;
+    font-size:1.02rem; cursor:pointer;
+  }
+  .foot{margin-top:22px; font-size:0.82rem; color:var(--muted); text-align:center; line-height:1.5}
+</style>
+</head>
+<body>
+  <div class="wrap">
+    <p class="eyebrow">Orlane · ByCo Systems</p>
+    <h1>Configurons votre système</h1>
+    <p class="lead">Deux minutes. Vos réponses partent directement par WhatsApp à notre équipe, qui démarre la configuration sous 24h.</p>
+
+    <form id="cfgForm">
+      <div class="field">
+        <label for="entreprise">Nom de votre entreprise</label>
+        <input type="text" id="entreprise" placeholder="Ex. Cabinet Dr Martin" required>
+      </div>
+
+      <div class="field">
+        <label for="secteur">Secteur d'activité</label>
+        <input type="text" id="secteur" placeholder="Ex. santé, beauté, droit, hôtellerie..." required>
+      </div>
+
+      <div class="field">
+        <label for="numero">Numéro(s) de téléphone à connecter</label>
+        <input type="tel" id="numero" placeholder="Ex. +33 6 12 34 56 78" required>
+      </div>
+
+      <div class="field">
+        <label for="horaires">Horaires d'ouverture</label>
+        <input type="text" id="horaires" placeholder="Ex. Lun-Ven 9h-18h, ou 24h/24" required>
+      </div>
+
+      <div class="field">
+        <label>Langue de réponse souhaitée</label>
+        <div class="radios" id="langueRadios">
+          <label class="radio-opt" data-val="Français"><input type="radio" name="langue" value="Français">Français</label>
+          <label class="radio-opt" data-val="Anglais"><input type="radio" name="langue" value="Anglais">Anglais</label>
+          <label class="radio-opt" data-val="Les deux"><input type="radio" name="langue" value="Les deux">Les deux</label>
+        </div>
+      </div>
+
+      <div class="field">
+        <label for="remarques">Remarques (facultatif)</label>
+        <textarea id="remarques" placeholder="Toute précision utile sur votre activité ou vos attentes"></textarea>
+      </div>
+
+      <button type="submit">Envoyer sur WhatsApp →</button>
+    </form>
+
+    <p class="foot">En cliquant sur "Envoyer", WhatsApp s'ouvre avec un message pré-rempli contenant vos réponses, prêt à envoyer à notre équipe.</p>
+  </div>
+
+<script>
+const radios = document.querySelectorAll('.radio-opt');
+radios.forEach(r => {
+  r.addEventListener('click', () => {
+    radios.forEach(x => x.classList.remove('selected'));
+    r.classList.add('selected');
+    r.querySelector('input').checked = true;
+  });
+});
+
+document.getElementById('cfgForm').addEventListener('submit', function(e){
+  e.preventDefault();
+  const entreprise = document.getElementById('entreprise').value.trim();
+  const secteur = document.getElementById('secteur').value.trim();
+  const numero = document.getElementById('numero').value.trim();
+  const horaires = document.getElementById('horaires').value.trim();
+  const langueEl = document.querySelector('input[name=langue]:checked');
+  const langue = langueEl ? langueEl.value : 'Non précisé';
+  const remarques = document.getElementById('remarques').value.trim();
+
+  let msg = `Configuration Orlane\n\n`;
+  msg += `Entreprise : ${entreprise}\n`;
+  msg += `Secteur : ${secteur}\n`;
+  msg += `Numero(s) : ${numero}\n`;
+  msg += `Horaires : ${horaires}\n`;
+  msg += `Langue : ${langue}\n`;
+  if (remarques) msg += `Remarques : ${remarques}\n`;
+
+  const url = `https://wa.me/237677035874?text=${encodeURIComponent(msg)}`;
+  window.location.href = url;
+});
+</script>
+</body>
+</html>
