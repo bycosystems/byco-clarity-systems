@@ -55,7 +55,7 @@
   <div class="wrap">
     <p class="eyebrow">Orlane · ByCo Systems</p>
     <h1>Configurons votre système</h1>
-    <p class="lead">Deux minutes. Vos réponses partent directement par WhatsApp à notre équipe, qui démarre la configuration sous 24h.</p>
+    <p class="lead">Quelques minutes. Plus c'est précis, moins nous aurons besoin de vous recontacter. Vos réponses partent directement par WhatsApp à notre équipe, qui démarre la configuration sous 24h.</p>
 
     <form id="cfgForm">
       <div class="field">
@@ -69,8 +69,22 @@
       </div>
 
       <div class="field">
+        <label for="pays">Pays</label>
+        <input type="text" id="pays" placeholder="Ex. France, Cameroun, Belgique..." required>
+      </div>
+
+      <div class="field">
         <label for="numero">Numéro(s) de téléphone à connecter</label>
         <input type="tel" id="numero" placeholder="Ex. +33 6 12 34 56 78" required>
+      </div>
+
+      <div class="field">
+        <label>Type de ligne</label>
+        <div class="radios" id="ligneRadios">
+          <label class="radio-opt" data-val="Mobile"><input type="radio" name="ligne" value="Mobile">Mobile</label>
+          <label class="radio-opt" data-val="Fixe"><input type="radio" name="ligne" value="Fixe">Fixe</label>
+          <label class="radio-opt" data-val="VoIP / standard"><input type="radio" name="ligne" value="VoIP / standard">VoIP / standard</label>
+        </div>
       </div>
 
       <div class="field">
@@ -88,6 +102,29 @@
       </div>
 
       <div class="field">
+        <label for="services">Services proposés et tarifs à communiquer aux appelants</label>
+        <textarea id="services" placeholder="Ex. Consultation 30€, détartrage 60€, forfait entretien 120€/mois..." required></textarea>
+      </div>
+
+      <div class="field">
+        <label>Certains appels doivent-ils être transférés à une personne ?</label>
+        <div class="radios" id="transfertRadios">
+          <label class="radio-opt" data-val="Oui"><input type="radio" name="transfert" value="Oui">Oui</label>
+          <label class="radio-opt" data-val="Non"><input type="radio" name="transfert" value="Non">Non</label>
+        </div>
+      </div>
+
+      <div class="field">
+        <label for="transfertDetails">Si oui : numéro à joindre et dans quels cas</label>
+        <input type="text" id="transfertDetails" placeholder="Ex. urgences uniquement, +33 6 98 76 54 32">
+      </div>
+
+      <div class="field">
+        <label for="whatsappNotif">Numéro WhatsApp pour recevoir les notifications d'appels (si différent du numéro ci-dessus)</label>
+        <input type="tel" id="whatsappNotif" placeholder="Laissez vide si identique">
+      </div>
+
+      <div class="field">
         <label for="remarques">Remarques (facultatif)</label>
         <textarea id="remarques" placeholder="Toute précision utile sur votre activité ou vos attentes"></textarea>
       </div>
@@ -102,7 +139,8 @@
 const radios = document.querySelectorAll('.radio-opt');
 radios.forEach(r => {
   r.addEventListener('click', () => {
-    radios.forEach(x => x.classList.remove('selected'));
+    const group = r.closest('.radios');
+    group.querySelectorAll('.radio-opt').forEach(x => x.classList.remove('selected'));
     r.classList.add('selected');
     r.querySelector('input').checked = true;
   });
@@ -112,18 +150,33 @@ document.getElementById('cfgForm').addEventListener('submit', function(e){
   e.preventDefault();
   const entreprise = document.getElementById('entreprise').value.trim();
   const secteur = document.getElementById('secteur').value.trim();
+  const pays = document.getElementById('pays').value.trim();
   const numero = document.getElementById('numero').value.trim();
+  const ligneEl = document.querySelector('input[name=ligne]:checked');
+  const ligne = ligneEl ? ligneEl.value : 'Non précisé';
   const horaires = document.getElementById('horaires').value.trim();
   const langueEl = document.querySelector('input[name=langue]:checked');
   const langue = langueEl ? langueEl.value : 'Non précisé';
+  const services = document.getElementById('services').value.trim();
+  const transfertEl = document.querySelector('input[name=transfert]:checked');
+  const transfert = transfertEl ? transfertEl.value : 'Non précisé';
+  const transfertDetails = document.getElementById('transfertDetails').value.trim();
+  const whatsappNotif = document.getElementById('whatsappNotif').value.trim();
   const remarques = document.getElementById('remarques').value.trim();
 
   let msg = `Configuration Orlane\n\n`;
   msg += `Entreprise : ${entreprise}\n`;
   msg += `Secteur : ${secteur}\n`;
+  msg += `Pays : ${pays}\n`;
   msg += `Numero(s) : ${numero}\n`;
+  msg += `Type de ligne : ${ligne}\n`;
   msg += `Horaires : ${horaires}\n`;
   msg += `Langue : ${langue}\n`;
+  msg += `Services/tarifs : ${services}\n`;
+  msg += `Transfert humain : ${transfert}`;
+  if (transfert === 'Oui' && transfertDetails) msg += ` (${transfertDetails})`;
+  msg += `\n`;
+  if (whatsappNotif) msg += `WhatsApp notifications : ${whatsappNotif}\n`;
   if (remarques) msg += `Remarques : ${remarques}\n`;
 
   const url = `https://wa.me/237677035874?text=${encodeURIComponent(msg)}`;
