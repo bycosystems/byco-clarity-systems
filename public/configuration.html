@@ -41,6 +41,9 @@
     flex:1; min-width:100px; background:var(--surface); border:1px solid var(--line); border-radius:10px;
     padding:11px; text-align:center; cursor:pointer; font-size:0.9rem;
   }
+  .radios-compact{display:block; font-size:0}
+  .radios-compact .radio-opt{display:inline-block; width:31.33%; margin:0 3% 8px 0; box-sizing:border-box; min-width:0; padding:9px 2px; font-size:0.78rem; vertical-align:top}
+  .radios-compact .radio-opt:nth-child(3n){margin-right:0}
   .radio-opt input{display:none}
   .radio-opt.selected{border-color:var(--accent); background:rgba(224,138,62,0.12); color:var(--accent); font-weight:700}
   button{
@@ -125,6 +128,18 @@
       </div>
 
       <div class="field">
+        <label>Comment avez-vous connu notre offre ?</label>
+        <div class="radios radios-compact" id="canalRadios">
+          <label class="radio-opt" data-val="WhatsApp"><input type="radio" name="canal" value="WhatsApp">WhatsApp</label>
+          <label class="radio-opt" data-val="Facebook"><input type="radio" name="canal" value="Facebook">Facebook</label>
+          <label class="radio-opt" data-val="Instagram"><input type="radio" name="canal" value="Instagram">Instagram</label>
+          <label class="radio-opt" data-val="Discord"><input type="radio" name="canal" value="Discord">Discord</label>
+          <label class="radio-opt" data-val="Chariow"><input type="radio" name="canal" value="Chariow">Chariow</label>
+          <label class="radio-opt" data-val="Autre"><input type="radio" name="canal" value="Autre">Autre</label>
+        </div>
+      </div>
+
+      <div class="field">
         <label for="remarques">Remarques (facultatif)</label>
         <textarea id="remarques" placeholder="Toute précision utile sur votre activité ou vos attentes"></textarea>
       </div>
@@ -162,6 +177,8 @@ document.getElementById('cfgForm').addEventListener('submit', function(e){
   const transfert = transfertEl ? transfertEl.value : 'Non précisé';
   const transfertDetails = document.getElementById('transfertDetails').value.trim();
   const whatsappNotif = document.getElementById('whatsappNotif').value.trim();
+  const canalEl = document.querySelector('input[name=canal]:checked');
+  const canal = canalEl ? canalEl.value : 'Non précisé';
   const remarques = document.getElementById('remarques').value.trim();
 
   let msg = `Configuration Orlane\n\n`;
@@ -177,6 +194,7 @@ document.getElementById('cfgForm').addEventListener('submit', function(e){
   if (transfert === 'Oui' && transfertDetails) msg += ` (${transfertDetails})`;
   msg += `\n`;
   if (whatsappNotif) msg += `WhatsApp notifications : ${whatsappNotif}\n`;
+  msg += `Connu via : ${canal}\n`;
   if (remarques) msg += `Remarques : ${remarques}\n`;
 
   const url = `https://wa.me/237677035874?text=${encodeURIComponent(msg)}`;
