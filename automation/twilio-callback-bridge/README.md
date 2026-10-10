@@ -164,6 +164,9 @@ scripts/test-bridge.js             -> test interne (own numbers only)
    - `API_KEY_SID` / `API_KEY_SECRET` (recommandé, scope Voice + Studio) ou
      `AUTH_TOKEN` (Auth Token principal, à défaut),
    - `CALLBACK_SHARED_SECRET` (générez une chaîne aléatoire longue),
+   - `VAPI_SERVER_SECRET` (générez une chaîne aléatoire longue, **distincte**
+     de `CALLBACK_SHARED_SECRET` — utilisée uniquement par le Server URL
+     Vapi, voir `functions/vapi-assistant-request.js`),
    - `STUDIO_FLOW_SID`, `SAMUEL_NUMBER`, `TWILIO_NUMBER` : à renseigner avec vos valeurs.
    - `VOICE_CLIENT_IDENTITY` : identité WebRTC (ex. `samuel`).
    - `TWILIO_API_KEY_SID` / `TWILIO_API_KEY_SECRET` : API Key **Standard**
@@ -174,15 +177,49 @@ scripts/test-bridge.js             -> test interne (own numbers only)
    Environment Variables du Service. Notez l'URL de la Function affichée en
    sortie (ex. `https://orlane-tools-xxxx.twil.io/callback-bridge`), et
    collez-la dans `FUNCTION_URL` du `.env`.
-4. Éditez `assets/call-page.html` : remplacez `SECRET` par la valeur de
-   `CALLBACK_SHARED_SECRET`, et `FUNCTION_URL` par l'URL notée à l'étape 3 si
-   elle n'est pas sur le même domaine. Re-déployez (`npm run deploy`).
-   (`node scripts/inject-secret.js` fait ce remplacement automatiquement si
-   le placeholder `REMPLACE_MOI` est encore présent.)
+4. Mettez à jour le Server URL du numéro Orlane côté dashboard Vapi avec
+   `?secret=<valeur de VAPI_SERVER_SECRET>` (jamais la même valeur que
+   `CALLBACK_SHARED_SECRET`).
 5. Sur Android, ouvrez l'URL de `call-page.html` dans Chrome → menu ⋮ →
    **Ajouter à l'écran d'accueil**. Au premier chargement, Chrome demandera
    l'autorisation d'utiliser le micro — l'accepter (nécessaire pour décrocher
-   un appel WebRTC ; sans elle, l'indicateur restera hors ligne).
+   un appel WebRTC ; sans elle, l'indicateur restera hors ligne). La page
+   demande ensuite la clé d'accès (`CALLBACK_SHARED_SECRET`) une seule fois
+   via un champ de saisie masqué — jamais écrite dans le code, voir
+   "Clé d'accès de `call-page.html`" ci-dessous.
+
+### Clé d'accès de `call-page.html`
+
+`call-page.html` ne contient plus aucun secret en dur. Au premier
+chargement, elle demande `CALLBACK_SHARED_SECRET` via un champ de saisie
+(type `password`) et la garde uniquement dans le `localStorage` du
+navigateur de Samuel — jamais écrite sur disque, jamais committée. Si le
+serveur répond 401/403 (secret périmé, par exemple après une rotation), la
+page efface la clé stockée et la redemande automatiquement.
+
+### Rotation de `CALLBACK_SHARED_SECRET`
+
+En cas de doute sur une fuite (ex. valeur vue dans un commit, un log, un
+partage accidentel) :
+
+1. Générez une nouvelle valeur (ex. `openssl rand -hex 32`).
+2. Console Twilio > Functions & Assets > service `orlane-twilio-bridge` >
+   Environment Variables > `CALLBACK_SHARED_SECRET` → remplacez la valeur et
+   republiez le service.
+3. Sur le téléphone de Samuel, ouvrez `call-page.html` : la page détecte le
+   rejet (401/403) de l'ancienne clé stockée, l'efface, et affiche à nouveau
+   le champ de saisie — ressaisissez-y la nouvelle valeur.
+4. Vérifiez avec `npm run test-bridge` (`TEST_MODE=pstn`, numéro de test =
+   le vôtre) que l'exécution démarre, puis dans Console > Monitor > Logs >
+   Calls que le Caller ID affiché est bien le +44.
+
+Aucune valeur de secret ne doit jamais être collée dans ce dépôt, un commit,
+un message de chat, ou un fichier suivi par git — uniquement dans la Console
+Twilio (variable d'environnement) et dans le champ de saisie de la page.
+
+La rotation de `VAPI_SERVER_SECRET` suit le même principe (étape 2 sur sa
+propre variable, étape de re-saisie en plus côté dashboard Vapi — pas de
+`localStorage` ici puisque Vapi n'est pas un navigateur).
 
 ## Test interne (own numbers only)
 

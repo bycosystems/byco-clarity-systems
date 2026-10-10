@@ -23,18 +23,10 @@ if (buildSdk.status !== 0) {
   process.exit(buildSdk.status || 1);
 }
 
-// 2. Injecte CALLBACK_SHARED_SECRET dans assets/call-page.html (remplace le
-// placeholder REMPLACE_MOI s'il est encore present). Sans cette etape, la
-// page deployee appelle voice-token/callback-bridge avec le mauvais secret
-// et se prend un 403 en boucle.
-const inject = run(process.execPath, [path.join(__dirname, 'inject-secret.js')]);
-process.stdout.write(inject.stdout);
-if (inject.status !== 0) {
-  process.stderr.write(inject.stderr);
-  process.exit(inject.status || 1);
-}
-
-// 3. Prepare .env.runtime (uniquement les vars destinees a la Function)
+// 2. Prepare .env.runtime (uniquement les vars destinees a la Function).
+// Aucune injection de secret dans assets/call-page.html : la page ne
+// contient plus aucun secret, elle le demande a l'utilisateur au premier
+// chargement (voir call-page.html) et ne le reecrit jamais sur disque.
 const split = run(process.execPath, [path.join(__dirname, 'split-env.js')]);
 process.stdout.write(split.stdout);
 if (split.status !== 0) {
@@ -42,7 +34,7 @@ if (split.status !== 0) {
   process.exit(split.status || 1);
 }
 
-// 4. Identifiants de deploiement : API Key de preference, sinon Auth Token
+// 3. Identifiants de deploiement : API Key de preference, sinon Auth Token
 const username = process.env.API_KEY_SID || process.env.ACCOUNT_SID;
 const password = process.env.API_KEY_SECRET || process.env.AUTH_TOKEN;
 
@@ -98,7 +90,7 @@ if (deploy.status !== 0) {
   process.exit(deploy.status || 1);
 }
 
-// 5. Extrait l'URL de la Function depuis la sortie et met a jour .env
+// 4. Extrait l'URL de la Function depuis la sortie et met a jour .env
 const match = (deploy.stdout || '').match(/https:\/\/[^\s]+\/callback-bridge/);
 if (match) {
   const functionUrl = match[0];
