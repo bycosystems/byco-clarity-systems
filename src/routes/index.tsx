@@ -660,7 +660,8 @@ function Pricing() {
             );
           })}
         </div>
-        <p className="mt-8 text-center text-sm text-muted-foreground">
+        <p className="mt-8 text-center text-sm text-muted-foreground">{t.pricing.guarantee}</p>
+        <p className="mt-2 text-center text-sm text-muted-foreground">
           {t.pricing.footerNote} <a href="#contact" className="text-brand font-medium hover:underline">{t.pricing.footerLinkText}</a>
         </p>
       </div>
@@ -853,6 +854,7 @@ function Footer() {
             © {new Date().getFullYear()} ByCo Systems. {t.footer.rights}
           </div>
         </div>
+        <p className="mt-6 text-xs text-white/30">{t.footer.siege}</p>
       </div>
     </footer>
   );

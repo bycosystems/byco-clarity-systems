@@ -23,6 +23,10 @@ dist-ssr
 .wrangler/
 .dev.vars
 
+# Sauvegardes locales de scénarios Make (contiennent le prompt système
+# d'Orlane et le SID Twilio) — jamais destinées au dépôt.
+make-backup/
+
 # Editor directories and files
 .vscode/*
 !.vscode/extensions.json

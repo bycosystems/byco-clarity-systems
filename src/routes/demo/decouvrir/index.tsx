@@ -447,6 +447,7 @@ type UIStrings = {
   suiviThanks: string;
   footerLine1: string;
   footerLine2: string;
+  footerSiege: string;
 };
 
 const UI: Record<Lang, UIStrings> = {
@@ -476,10 +477,10 @@ const UI: Record<Lang, UIStrings> = {
     offerEyebrow: "Envie d'aller plus loin ?",
     offerTitleTemplate: "Le plan Business+ : {price}",
     offerDesc:
-      "Accueil IA disponible 24h/24, automatisation WhatsApp complète, réservation et confirmation automatique, suivi client automatisé, ReadyFlow Manager inclus, voix IA sur-mesure. Mise en place en 48 à 72h. Prix plein, paiement unique, aucun abonnement.",
+      "Accueil IA disponible 24h/24, automatisation WhatsApp complète, réservation et confirmation automatique, suivi client automatisé, ReadyFlow Manager inclus, voix IA sur-mesure. Mise en place en 30 à 45 jours, tests et validations inclus. Prix plein, paiement unique pour la mise en place, sans frais de service mensuel de notre part.",
     badgeOfferTemplate: "Plan Business+ · {price}",
-    badgeGuarantee: "Satisfait ou remboursé sous 30 jours, sans condition",
-    badgeTestimonial: "Contrepartie : un témoignage vidéo",
+    badgeGuarantee: "Satisfait ou remboursé sous 30 jours, à compter de la mise en place achevée, sans condition",
+    badgeTestimonial: "Si vous êtes satisfait, un témoignage vidéo ou un avis est le bienvenu, sans obligation.",
     offerFooterNote: "Les formules Essential, Business et Premium restent consultables sur",
     offerFooterLinkText: "le site principal ByCo Systems",
     whatsappCta: "💬 Écrire à Orlane sur WhatsApp",
@@ -494,6 +495,7 @@ const UI: Record<Lang, UIStrings> = {
     suiviThanks: "Merci, c'est bien reçu — on vous recontacte rapidement.",
     footerLine1: "Démonstration générique · adaptable à votre secteur",
     footerLine2: "Démonstration personnalisable · ByCo Systems · bycosystems.xyz",
+    footerSiege: "ByCo Systems opère en ligne. Siège social : Douala, Cameroun.",
   },
   en: {
     heroSubtitle: "An interactive demo, tailored to your business.",
@@ -521,10 +523,10 @@ const UI: Record<Lang, UIStrings> = {
     offerEyebrow: "Want to go further?",
     offerTitleTemplate: "The Business+ plan: {price}",
     offerDesc:
-      "24/7 AI reception, full WhatsApp automation, automatic booking and confirmation, automated client follow-up, ReadyFlow Manager included, custom AI voice. Setup in 48 to 72 hours. Full price, one-time payment, no subscription.",
+      "24/7 AI reception, full WhatsApp automation, automatic booking and confirmation, automated client follow-up, ReadyFlow Manager included, custom AI voice. Setup in 30 to 45 days, testing and validation included. Full price, one-time payment for the setup, with no monthly service fee from us.",
     badgeOfferTemplate: "Business+ plan · {price}",
-    badgeGuarantee: "Money-back guarantee within 30 days, no conditions",
-    badgeTestimonial: "In exchange: a video testimonial",
+    badgeGuarantee: "30-day money-back guarantee, starting once your setup is completed, no conditions",
+    badgeTestimonial: "If you are satisfied, a video testimonial or a review is welcome, but entirely optional.",
     offerFooterNote: "The Essential, Business and Premium plans remain available on",
     offerFooterLinkText: "the main ByCo Systems site",
     whatsappCta: "💬 Message Orlane on WhatsApp",
@@ -539,6 +541,7 @@ const UI: Record<Lang, UIStrings> = {
     suiviThanks: "Thanks, got it — we'll be in touch shortly.",
     footerLine1: "Generic demo · adaptable to your industry",
     footerLine2: "Customizable demo · ByCo Systems · bycosystems.xyz",
+    footerSiege: "ByCo Systems operates online. Headquarters: Douala, Cameroon.",
   },
 };
 
@@ -1479,6 +1482,7 @@ function Footer({ ui }: { ui: UIStrings }) {
           <div style={{ fontSize: 12, color: "rgba(255,255,255,0.55)" }}>{ui.footerLine1}</div>
           <div style={{ fontSize: 11, color: "rgba(255,255,255,0.45)" }}>{ui.footerLine2}</div>
         </div>
+        <div style={{ marginTop: 10, fontSize: 10.5, color: "rgba(255,255,255,0.3)" }}>{ui.footerSiege}</div>
       </Container>
     </Section>
   );
