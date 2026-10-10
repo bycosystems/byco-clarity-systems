@@ -8,7 +8,6 @@ export interface Content {
   nav: { offer: string; services: string; pricing: string; demo: string; process: string; contact: string; cta: string };
   hero: {
     badge: string;
-    ownershipBadge: string;
     titleLine1: string;
     titleLine2: string;
     titleLine3: string;
@@ -54,16 +53,9 @@ export interface Content {
     heading: string;
     subheading: string;
     plans: { name: string; price: string; subtitle: string; desc: string; features: string[]; cta: string; badge: string | null }[];
+    guarantee: string;
     footerNote: string;
     footerLinkText: string;
-    comparison: {
-      heading: string;
-      ownershipTitle: string;
-      ownershipPoints: string[];
-      subscriptionTitle: string;
-      subscriptionPoints: string[];
-      note: string;
-    };
   };
   process: { heading: string; steps: { n: string; title: string; desc: string; day: string }[] };
   faq: { heading: string; tagline: string; items: { q: string; a: string }[] };
@@ -84,7 +76,7 @@ export interface Content {
     founderRole: string;
     founderBio: string;
   };
-  footer: { tagline: string; rights: string };
+  footer: { tagline: string; rights: string; siege: string };
 }
 
 export const content: Record<Lang, Content> = {
@@ -96,17 +88,16 @@ export const content: Record<Lang, Content> = {
       ogDescription: "Never miss a client again. Smart reception systems that run 24/7 for clinics, salons, agencies and every service business.",
     },
     parallax: { offer: "OFFER", services: "SERVICES", clients: "CLIENTS", demo: "DEMO", automation: "AUTOMATION", guide: "GUIDE", plans: "PLANS", process: "PROCESS", contact: "CONTACT" },
-    nav: { offer: "What we build", services: "Services", pricing: "Pricing", demo: "Demo", process: "Process", contact: "Contact", cta: "Request a Demo" },
+    nav: { offer: "What we build", services: "Services", pricing: "Pricing", demo: "Demo", process: "Process", contact: "Contact", cta: "Contact us" },
     hero: {
       badge: "Smart reception & automation for service businesses",
-      ownershipBadge: "You own it. You don't rent it.",
       titleLine1: "Never miss",
       titleLine2: "a client again.",
       titleLine3: "24/7.",
       subtitle: "Smart phone reception, WhatsApp automation, booking flows and follow-up systems - built for clinics, salons, agencies and every service business.",
-      ctaPrimary: "Request a Demo",
+      ctaPrimary: "Contact us",
       ctaSecondary: "See our plans",
-      bullets: ["You own the system", "WhatsApp automation", "Fast setup - 24-72h"],
+      bullets: ["Zero missed calls", "WhatsApp automation", "One-time payment, tailored setup"],
     },
     stats: {
       setupLabel: "Full setup, done for you",
@@ -137,7 +128,7 @@ export const content: Record<Lang, Content> = {
     },
     whoWeServe: {
       heading: "When someone needs you urgently, do they reach you, or call the next name on the list?",
-      subheading: "Every unanswered call is a client you never knew you lost. Locksmiths, plumbers, emergency vets, healthcare practices, and many others. If your business can't afford a missed call, ByCo Systems makes sure every request gets a response, 24/7.",
+      subheading: "Every unanswered call is a client you never knew you lost. This applies to all service businesses. If your business can't afford a missed call, ByCo Systems makes sure every request gets a response, 24/7.",
     },
     smartIntakeDemo: {
       heading: "See how a 24/7 smart intake handles real customer requests",
@@ -148,7 +139,7 @@ export const content: Record<Lang, Content> = {
         { title: "Smart Qualification", desc: "Orlane asks the right questions and flags what's urgent." },
         { title: "Custom Voice and Script", desc: "Built for your business, not a generic assistant." },
         { title: "Every Exchange Logged", desc: "ReadyFlow Manager tracks every call and message automatically." },
-        { title: "You Own The System", desc: "One-time setup fee. Ongoing support, if needed, is a separate contract." },
+        { title: "One-Time Payment", desc: "One-time payment for the setup, with no monthly service fee from us. Usage costs are billed directly by the providers, on accounts in your name." },
       ],
       steps: [
         { n: "01", title: "Capture", desc: "AI collects requests from WhatsApp, phone or your website instantly." },
@@ -163,7 +154,7 @@ export const content: Record<Lang, Content> = {
       liveSubtext: "This is a simplified demo we built. Explore it, then call or WhatsApp our demo receptionist.",
       exploreDemoCta: "Explore the demo",
       whatsappCta: "Call or WhatsApp +44 7576 594092",
-      liveNote: "Our demo receptionist answers 24/7. This is exactly what we build for your business.",
+      liveNote: "Our demo receptionist answers 24/7. It's a preview of the concept behind what we build for service businesses like yours.",
       heading: "See exactly who Orlane talked to, and what happened next",
       subheading: "ReadyFlow Manager logs every call and WhatsApp exchange automatically - included free from Business, so nothing gets lost after the conversation ends.",
       features: ["Every call logged automatically", "Every WhatsApp exchange saved", "Clear status: new, in progress, handled", "Know who to follow up with", "No spreadsheets, no sticky notes", "Included free from Business"],
@@ -175,7 +166,7 @@ export const content: Record<Lang, Content> = {
     },
     pricing: {
       heading: "Simple, transparent pricing",
-      subheading: "One-time setup fee. You own the system outright. Ongoing support, if you want it, is a separate contract tailored to your usage.",
+      subheading: "One-time payment for the setup, with no monthly service fee from us.",
       plans: [
         {
           name: "Essential",
@@ -187,7 +178,7 @@ export const content: Record<Lang, Content> = {
             "Online client intake form - every visitor can reach you in one click",
             "Booking system with automatic reminders - fewer no-shows, fuller calendar",
             "Request tracking dashboard - see who reached out and follow up",
-            "Setup in 24h",
+            "Setup in 1 to 2 weeks, testing and validation included",
           ],
           cta: "Request this system",
           badge: null,
@@ -202,7 +193,7 @@ export const content: Record<Lang, Content> = {
             "An AI assistant on WhatsApp - replies and qualifies every message, 24/7",
             "Automatic routing so nothing sits unanswered",
             "🎁 ReadyFlow Manager included - every conversation logged automatically, so you always know who to follow up with",
-            "Setup in 48h",
+            "Setup in 3 to 4 weeks, testing and validation included",
           ],
           cta: "Request this system",
           badge: null,
@@ -216,7 +207,7 @@ export const content: Record<Lang, Content> = {
             "Everything in Business",
             "AI phone reception, 24/7, custom voice and script built for your business",
             "Integration with your existing tools (CRM, calendar) - nothing to re-enter",
-            "Setup in 48-72h",
+            "Setup in 30 to 45 days, testing and validation included",
           ],
           cta: "Request this system",
           badge: "⭐ Recommended",
@@ -232,40 +223,23 @@ export const content: Record<Lang, Content> = {
             "Scenarios designed around how you specifically triage requests",
             "30 days of post-delivery support and adjustments included",
             "Priority delivery",
-            "Setup in 72h",
+            "Setup in 45 days maximum, testing and validation included",
           ],
           cta: "Request this system",
           badge: null,
         },
       ],
+      guarantee: "30-day money-back guarantee, starting once your setup is completed, no conditions.",
       footerNote: "Need a custom system?",
       footerLinkText: "Talk to us - we adapt to every service business.",
-      comparison: {
-        heading: "Buy it once, or rent it forever?",
-        ownershipTitle: "With ByCo Systems",
-        ownershipPoints: [
-          "You pay once, at setup",
-          "You own the system, for good",
-          "No lifetime rent to us",
-          "You choose who handles support after that",
-        ],
-        subscriptionTitle: "A typical market subscription",
-        subscriptionPoints: [
-          "You pay every month, indefinitely",
-          "You never own the system",
-          "Stop paying, lose access",
-          "Total cost keeps climbing",
-        ],
-        note: "Based on common pricing models in the AI reception market. No mandatory monthly subscription with ByCo.",
-      },
     },
     process: {
       heading: "How Orlane goes live for your business",
       steps: [
-        { n: "01", title: "We learn your business", desc: "Your services, hours, and how you tell an emergency from a routine request.", day: "Day 1" },
-        { n: "02", title: "Orlane goes live", desc: "Answering calls and WhatsApp messages with a voice and script built for you.", day: "Day 1-2" },
-        { n: "03", title: "We fine-tune together", desc: "Real conversations reveal small adjustments. We refine based on how it's actually used.", day: "Day 2-3" },
-        { n: "04", title: "You never miss a call again", desc: "Delivered and answering for you, start to finish.", day: "Delivered in 24-72h" },
+        { n: "01", title: "We learn your business", desc: "Your services, hours, and how you tell an emergency from a routine request.", day: "Scoping" },
+        { n: "02", title: "Orlane goes live", desc: "Answering calls and WhatsApp messages with a voice and script built for you.", day: "Configuration" },
+        { n: "03", title: "We fine-tune together", desc: "Real conversations reveal small adjustments. We refine based on how it's actually used.", day: "Testing & validation" },
+        { n: "04", title: "You never miss a call again", desc: "Delivered and answering for you, start to finish.", day: "Delivery" },
       ],
     },
     faq: {
@@ -274,31 +248,31 @@ export const content: Record<Lang, Content> = {
       items: [
         {
           q: "Why not just use a €49/month subscription tool?",
-          a: "Those tools require setup, maintenance and ongoing fees. We build it, configure it and hand it over. One payment. Runs forever. One recovered client on a Saturday night pays for the whole thing.",
+          a: "It's a fair question. With us, it's a one-time payment for the setup, with no monthly service fee from us. Usage costs for the tools (calls, messages, voice, AI) are billed directly by their providers, on accounts in your name. One recovered client on a Saturday night can cover the whole setup.",
         },
         {
           q: "Does this work for my type of business?",
-          a: "If clients call you, message you or book with you, yes. We've built systems for restaurants, clinics, law firms, salons and agencies. If you're a service business, we adapt.",
+          a: "If clients call you, message you or book with you, yes. We work with service businesses of every kind, and we adapt the system to how your business actually operates.",
         },
         {
           q: "How long until I'm up and running?",
-          a: "24 hours for Essential. 48 hours for Business and Business+. 72 hours for Premium. Not weeks. Not months.",
+          a: "1 to 2 weeks for Essential. 3 to 4 weeks for Business. 30 to 45 days for Business+. 45 days maximum for Premium. Testing and validation are included at every level. For Business, Business+ and Premium, that also includes approval from Meta and our technical partners, and from your telecom operator if we set things up on your existing number. Essential only needs our own testing and validation. Those external steps aren't something we control.",
         },
         {
           q: "What happens after delivery?",
-          a: "The system runs on its own. No action needed from your side. Premium plan includes 30 days of support and adjustments. All plans include a handover walkthrough.",
+          a: "The system runs on its own - there's nothing for you to manage after that. You're also covered by a 30-day money-back guarantee, starting once your setup is completed, no conditions. Premium adds 30 days of support and adjustments on top of that. Every plan includes a handover walkthrough.",
         },
         {
           q: "Can I see it working before I buy?",
-          a: "Yes. Call or WhatsApp +44 7576 594092 right now. Our demo receptionist is live 24/7. That's exactly what we build for you.",
+          a: "Yes, you can try the concept demo any time - call or WhatsApp +44 7576 594092 to talk to our demo receptionist. It shows how the technology works, not a system already built for your business. If you'd like to go further, use the contact form and we'll follow up.",
         },
       ],
     },
     contact: {
-      heading: "Request a Demo",
+      heading: "Contact us",
       subheading: "Tell us your biggest reception headache. We'll show you exactly what we can automate.",
       whatsapp: "Chat with us on WhatsApp",
-      responseTime: "Response within 24 hours",
+      responseTime: "Response within 72 hours",
       responseNote: "We review every request and get back to you with a clear proposal.",
       formName: "Name",
       formBusiness: "Business",
@@ -309,11 +283,12 @@ export const content: Record<Lang, Content> = {
       formThanks: "Thanks - we'll be in touch soon!",
       founderName: "Samuel Boumso",
       founderRole: "founder of ByCo Systems",
-      founderBio: "I personally support every client through the setup of their intelligent reception system.",
+      founderBio: "I support every project through the setup of its intelligent reception system.",
     },
     footer: {
       tagline: "Smart reception systems, WhatsApp automation and call tracking for service businesses.",
       rights: "All rights reserved.",
+      siege: "ByCo Systems operates online. Headquarters: Douala, Cameroon.",
     },
   },
   fr: {
@@ -324,17 +299,16 @@ export const content: Record<Lang, Content> = {
       ogDescription: "Ne manquez plus jamais un client. Des systèmes de réception intelligente actifs 24h/24 pour cliniques, salons, agences et toute entreprise de services.",
     },
     parallax: { offer: "OFFRE", services: "SERVICES", clients: "CLIENTS", demo: "DÉMO", automation: "AUTOMATISATION", guide: "GUIDE", plans: "TARIFS", process: "MÉTHODE", contact: "CONTACT" },
-    nav: { offer: "Notre offre", services: "Services", pricing: "Tarifs", demo: "Démo", process: "Méthode", contact: "Contact", cta: "Demander une démo" },
+    nav: { offer: "Notre offre", services: "Services", pricing: "Tarifs", demo: "Démo", process: "Méthode", contact: "Contact", cta: "Nous contacter" },
     hero: {
       badge: "Réception intelligente et automatisation pour entreprises de services",
-      ownershipBadge: "Vous l'achetez. Vous ne le louez pas.",
       titleLine1: "Ne manquez plus",
       titleLine2: "jamais un client.",
       titleLine3: "24/7.",
       subtitle: "Réception intelligente et automatisation pour entreprises de services : appels, WhatsApp et rendez-vous gérés 24h/24.",
-      ctaPrimary: "Demander une démo",
+      ctaPrimary: "Nous contacter",
       ctaSecondary: "Voir les offres",
-      bullets: ["Vous êtes propriétaire du système", "Automatisation WhatsApp", "Mise en place rapide - 24-72h"],
+      bullets: ["Zéro appel manqué", "Automatisation WhatsApp", "Paiement unique, mise en place sur mesure"],
     },
     stats: {
       setupLabel: "Mise en place complète, clé en main",
@@ -365,7 +339,7 @@ export const content: Record<Lang, Content> = {
     },
     whoWeServe: {
       heading: "Quand quelqu'un a besoin de vous en urgence, décroche-t-il, ou appelle-t-il le suivant sur la liste ?",
-      subheading: "Chaque appel sans réponse est un client perdu que vous ne verrez jamais. Serruriers, plombiers, vétérinaires d'urgence, professionnels de santé, et bien d'autres. Si votre métier ne tolère pas un appel manqué, ByCo Systems veille à ce que chaque demande reçoive une réponse, 24h/24.",
+      subheading: "Chaque appel sans réponse est un client perdu que vous ne verrez jamais. Cela concerne toutes les entreprises de services. Si votre métier ne tolère pas un appel manqué, ByCo Systems veille à ce que chaque demande reçoive une réponse, 24h/24.",
     },
     smartIntakeDemo: {
       heading: "Découvrez comment un accueil intelligent 24h/24 traite de vraies demandes clients",
@@ -376,7 +350,7 @@ export const content: Record<Lang, Content> = {
         { title: "Qualification intelligente", desc: "Orlane pose les bonnes questions et repère ce qui est urgent." },
         { title: "Voix et script sur-mesure", desc: "Construits pour votre entreprise, pas un assistant générique." },
         { title: "Chaque échange enregistré", desc: "ReadyFlow Manager trace chaque appel et message automatiquement." },
-        { title: "Vous êtes propriétaire", desc: "Paiement unique pour l'installation. Le suivi, si besoin, se fait sur contrat séparé." },
+        { title: "Paiement unique", desc: "Paiement unique pour la mise en place, sans frais de service mensuel de notre part. Les coûts d'usage sont facturés directement par les fournisseurs, sur des comptes à votre nom." },
       ],
       steps: [
         { n: "01", title: "Capture", desc: "L'IA collecte les demandes depuis WhatsApp, le téléphone ou votre site web instantanément." },
@@ -391,7 +365,7 @@ export const content: Record<Lang, Content> = {
       liveSubtext: "Voici une démo simplifiée que nous avons construite. Explorez-la, puis appelez ou écrivez à notre réceptionniste de démonstration.",
       exploreDemoCta: "Explorer la démo",
       whatsappCta: "Appeler ou WhatsApp +44 7576 594092",
-      liveNote: "Notre réceptionniste de démo répond 24h/24. C'est exactement ce que nous construisons pour votre entreprise.",
+      liveNote: "Notre réceptionniste de démo répond 24h/24. C'est un aperçu du concept derrière ce que nous construisons pour les entreprises de services comme la vôtre.",
       heading: "Voyez exactement à qui Orlane a parlé, et ce qui s'est passé ensuite",
       subheading: "ReadyFlow Manager enregistre automatiquement chaque appel et échange WhatsApp - inclus gratuitement dès Business, pour que rien ne se perde une fois la conversation terminée.",
       features: ["Chaque appel enregistré automatiquement", "Chaque échange WhatsApp sauvegardé", "Statut clair : nouveau, en cours, traité", "Savoir qui relancer, toujours", "Ni tableur, ni post-it", "Inclus gratuitement dès Business"],
@@ -403,7 +377,7 @@ export const content: Record<Lang, Content> = {
     },
     pricing: {
       heading: "Des tarifs simples et transparents",
-      subheading: "Paiement unique pour la mise en place. Vous devenez propriétaire du système. Le suivi, si vous le souhaitez, se fait sur contrat séparé, adapté à votre usage.",
+      subheading: "Paiement unique pour la mise en place, sans frais de service mensuel de notre part.",
       plans: [
         {
           name: "Essential",
@@ -415,7 +389,7 @@ export const content: Record<Lang, Content> = {
             "Formulaire de prise en charge en ligne - chaque visiteur peut vous joindre en un clic",
             "Système de réservation avec rappels automatiques - moins d'absences, un agenda plus rempli",
             "Tableau de bord de suivi des demandes - voyez qui vous a contacté et relancez",
-            "Mise en place en 24h",
+            "Mise en place en 1 à 2 semaines, tests et validations inclus",
           ],
           cta: "Demander cette offre",
           badge: null,
@@ -430,7 +404,7 @@ export const content: Record<Lang, Content> = {
             "Un assistant IA sur WhatsApp - répond et qualifie chaque message, 24h/24",
             "Redirection automatique - rien ne reste sans réponse",
             "🎁 ReadyFlow Manager inclus - chaque conversation enregistrée automatiquement, vous savez toujours qui relancer",
-            "Mise en place en 48h",
+            "Mise en place en 3 à 4 semaines, tests et validations inclus",
           ],
           cta: "Demander cette offre",
           badge: null,
@@ -444,7 +418,7 @@ export const content: Record<Lang, Content> = {
             "Tout Business",
             "Réception téléphonique IA, 24h/24, voix et script sur-mesure pour votre entreprise",
             "Intégration avec vos outils existants (CRM, calendrier) - rien à ressaisir",
-            "Mise en place en 48-72h",
+            "Mise en place en 30 à 45 jours, tests et validations inclus",
           ],
           cta: "Demander cette offre",
           badge: "⭐ Recommandée",
@@ -460,40 +434,23 @@ export const content: Record<Lang, Content> = {
             "Scénarios pensés autour de votre façon précise de trier les demandes",
             "30 jours de support et d'ajustements post-livraison inclus",
             "Livraison prioritaire",
-            "Mise en place en 72h",
+            "Mise en place en 45 jours maximum, tests et validations inclus",
           ],
           cta: "Demander cette offre",
           badge: null,
         },
       ],
+      guarantee: "Garantie satisfait ou remboursé de 30 jours, à compter de la mise en place achevée, sans condition.",
       footerNote: "Besoin d'un système sur mesure ?",
       footerLinkText: "Parlez-nous - nous nous adaptons à toute entreprise de services.",
-      comparison: {
-        heading: "Acheter une fois, ou louer pour toujours ?",
-        ownershipTitle: "Avec ByCo Systems",
-        ownershipPoints: [
-          "Vous payez une seule fois, à l'installation",
-          "Le système vous appartient, pour de bon",
-          "Aucun loyer à vie envers nous",
-          "Vous choisissez qui assure le suivi ensuite",
-        ],
-        subscriptionTitle: "Un abonnement classique du marché",
-        subscriptionPoints: [
-          "Vous payez chaque mois, indéfiniment",
-          "Vous ne possédez jamais le système",
-          "Arrêtez de payer, perdez l'accès",
-          "Le coût total ne cesse de grimper",
-        ],
-        note: "Comparaison basée sur les modèles de tarification courants du marché de la réception IA. Aucun abonnement mensuel obligatoire chez ByCo.",
-      },
     },
     process: {
       heading: "Comment Orlane démarre chez vous",
       steps: [
-        { n: "01", title: "Nous apprenons votre activité", desc: "Vos services, vos horaires, et comment vous distinguez une urgence d'une demande courante.", day: "Jour 1" },
-        { n: "02", title: "Orlane démarre", desc: "Elle répond aux appels et messages WhatsApp avec une voix et un script construits pour vous.", day: "Jour 1-2" },
-        { n: "03", title: "On ajuste ensemble", desc: "Les vrais échanges révèlent de petits ajustements. On affine selon l'usage réel.", day: "Jour 2-3" },
-        { n: "04", title: "Vous ne manquez plus jamais un appel", desc: "Livré et opérationnel pour vous, du début à la fin.", day: "Livré en 24-72h" },
+        { n: "01", title: "Nous apprenons votre activité", desc: "Vos services, vos horaires, et comment vous distinguez une urgence d'une demande courante.", day: "Cadrage" },
+        { n: "02", title: "Orlane démarre", desc: "Elle répond aux appels et messages WhatsApp avec une voix et un script construits pour vous.", day: "Configuration" },
+        { n: "03", title: "On ajuste ensemble", desc: "Les vrais échanges révèlent de petits ajustements. On affine selon l'usage réel.", day: "Tests et validations" },
+        { n: "04", title: "Vous ne manquez plus jamais un appel", desc: "Livré et opérationnel pour vous, du début à la fin.", day: "Livraison" },
       ],
     },
     faq: {
@@ -502,31 +459,31 @@ export const content: Record<Lang, Content> = {
       items: [
         {
           q: "Pourquoi pas un outil à 49€/mois ?",
-          a: "Ces outils demandent installation, maintenance et frais récurrents. Nous le construisons, le configurons et vous le livrons. Un seul paiement. Fonctionne indéfiniment. Un seul client récupéré un samedi soir rembourse l'investissement.",
+          a: "C'est une vraie question. Chez nous, c'est un paiement unique pour la mise en place, sans frais de service mensuel de notre part. Les coûts d'usage des outils (appels, messages, voix, IA) sont facturés directement par leurs fournisseurs, sur des comptes à votre nom. Un seul client récupéré un samedi soir peut rembourser toute la mise en place.",
         },
         {
           q: "Est-ce adapté à mon type d'activité ?",
-          a: "Si des clients vous appellent, vous écrivent ou réservent chez vous, oui. Nous avons construit des systèmes pour des restaurants, cliniques, cabinets juridiques, salons et agences. Si vous êtes une entreprise de services, nous nous adaptons.",
+          a: "Si des clients vous appellent, vous écrivent ou réservent chez vous, oui. Nous nous adressons à toutes les entreprises de services, et nous adaptons le système à votre façon de travailler.",
         },
         {
           q: "Combien de temps avant d'être opérationnel ?",
-          a: "24h pour Essential. 48h pour Business et Business+. 72h pour Premium. Pas des semaines. Pas des mois.",
+          a: "1 à 2 semaines pour Essential. 3 à 4 semaines pour Business. 30 à 45 jours pour Business+. 45 jours maximum pour Premium. Les tests et validations sont inclus à chaque niveau. Pour Business, Business+ et Premium, cela inclut aussi les validations de Meta et de nos partenaires techniques, et celle de votre opérateur télécom si le système est installé sur votre numéro existant. Essential ne demande que nos propres tests et validations. Ces étapes externes ne dépendent pas de nous.",
         },
         {
           q: "Que se passe-t-il après la livraison ?",
-          a: "Le système fonctionne seul. Aucune action requise de votre part. L'offre Premium inclut 30 jours de support et d'ajustements. Toutes les offres incluent une prise en main guidée.",
+          a: "Le système fonctionne seul, vous n'avez rien à gérer ensuite. Vous bénéficiez aussi d'une garantie satisfait ou remboursé de 30 jours, à compter de la mise en place achevée, sans condition. L'offre Premium ajoute 30 jours de support et d'ajustements. Toutes les offres incluent une prise en main guidée.",
         },
         {
           q: "Puis-je le voir fonctionner avant d'acheter ?",
-          a: "Oui. Appelez ou contactez le +44 7576 594092 sur WhatsApp dès maintenant. Notre réceptionniste de démo est active 24h/24. C'est exactement ce que nous construisons pour vous.",
+          a: "Oui, vous pouvez essayer la démonstration du concept à tout moment : appelez ou écrivez au +44 7576 594092 pour parler à notre réceptionniste de démo. Elle montre comment la technologie fonctionne, pas un système déjà construit pour votre activité. Pour aller plus loin, utilisez le formulaire de contact et nous reviendrons vers vous.",
         },
       ],
     },
     contact: {
-      heading: "Demander une démo",
+      heading: "Nous contacter",
       subheading: "Parlez-nous de votre plus gros casse-tête d'accueil. Nous vous montrerons exactement ce que nous pouvons automatiser.",
       whatsapp: "Discuter sur WhatsApp",
-      responseTime: "Réponse sous 24 heures",
+      responseTime: "Réponse sous 72 heures maximum",
       responseNote: "Nous étudions chaque demande et revenons vers vous avec une proposition claire.",
       formName: "Nom",
       formBusiness: "Entreprise",
@@ -537,11 +494,12 @@ export const content: Record<Lang, Content> = {
       formThanks: "Merci - nous revenons vers vous très vite !",
       founderName: "Samuel Boumso",
       founderRole: "fondateur de ByCo Systems",
-      founderBio: "J'accompagne personnellement chaque client dans la mise en place de son système d'accueil intelligent.",
+      founderBio: "J'accompagne chaque projet dans la mise en place de son système d'accueil intelligent.",
     },
     footer: {
       tagline: "Systèmes de réception intelligente, automatisation WhatsApp et suivi des échanges pour entreprises de services.",
       rights: "Tous droits réservés.",
+      siege: "ByCo Systems opère en ligne. Siège social : Douala, Cameroun.",
     },
   },
 };

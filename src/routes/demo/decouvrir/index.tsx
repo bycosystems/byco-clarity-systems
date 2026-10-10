@@ -358,12 +358,12 @@ const COPY: Record<Secteur, Record<Lang, Copy>> = {
   default: {
     fr: {
       eyebrowHero: "▪ Toujours disponible pour vos clients",
-      headline: "Ligne occupée ou indisponible : qui prend les autres appels ?",
-      accrocheHeadline: "Offrez-vous un accueil intelligent, au téléphone et sur WhatsApp, pour votre business.",
+      headline: "Pendant que vous travaillez, qui répond au téléphone ?",
+      accrocheHeadline: "Vous, pendant que vous travaillez : qui décroche ?",
       accrocheP1:
-        "Que ce soit une seule personne aux commandes ou toute une équipe au standard, le principe ne change pas : un client qui appelle attend une réponse tout de suite, pas un message qui patiente.",
+        "Beaucoup de petites entreprises tiennent grâce à une seule personne, toujours la même, toujours disponible pour ses clients. C'est une force, et une vraie promesse de qualité.",
       accrocheP2:
-        "Ce qui n'est jamais dit à voix haute : dès que la ligne est prise ou que personne n'est disponible, l'appel suivant tombe dans le vide. Une simple question, ou une vraie urgence.",
+        "Le revers, lui, n'est jamais dit à voix haute : quand cette personne est occupée avec un client, personne d'autre n'est là pour décrocher, ni pour une question simple, ni pour une urgence.",
       chips: [
         { label: "Devis", value: "Sur demande" },
         { label: "Urgence", value: "Prioritaire", accent: true },
@@ -371,7 +371,7 @@ const COPY: Record<Secteur, Record<Lang, Copy>> = {
         { label: "Zone", value: "Votre secteur" },
       ],
       demoIntro:
-        "C'est vous qui appelez ci-dessous : un vrai appel vers Orlane, l'agent vocal de démonstration ByCo. Une fois configuré et personnalisé pour votre business, votre agent saura restituer ce type d'information, comme dans l'exemple ci-dessous.",
+        "C'est vous qui appelez ci-dessous : un vrai appel vers Orlane, l'agent vocal de démonstration ByCo. Une fois configuré et personnalisé pour votre activité, votre agent saura restituer ce type d'information, comme dans l'exemple ci-dessous.",
       whatsappBody:
         "Dès que vous raccrochez, un récapitulatif part directement sur WhatsApp : le motif de l'appel, le numéro du client, et ce qu'il attend de vous. Rien ne se perd, même quand vous êtes occupé.",
       recapTitle: "📞 Nouvel appel reçu",
@@ -380,12 +380,12 @@ const COPY: Record<Secteur, Record<Lang, Copy>> = {
     },
     en: {
       eyebrowHero: "▪ Always available for your clients",
-      headline: "Line busy or unavailable: who takes the other calls?",
-      accrocheHeadline: "Give your business an intelligent reception — by phone and on WhatsApp.",
+      headline: "While you're working, who answers the phone?",
+      accrocheHeadline: "You, while you're working: who picks up?",
       accrocheP1:
-        "Whether it's one person running the show or a full front desk, the principle stays the same: a client who calls wants an answer right away, not a message waiting in line.",
+        "Many small businesses run on a single person, always the same one, always available for their clients. That's a strength, and a real promise of quality.",
       accrocheP2:
-        "What's never said out loud: the moment the line is busy or no one's available, the next call falls through. A simple question, or a real emergency.",
+        "The downside is never said out loud: when that person is busy with a client, no one else is there to pick up, not for a simple question, not for an emergency.",
       chips: [
         { label: "Quotes", value: "On request" },
         { label: "Emergency", value: "Priority", accent: true },
@@ -447,6 +447,7 @@ type UIStrings = {
   suiviThanks: string;
   footerLine1: string;
   footerLine2: string;
+  footerSiege: string;
 };
 
 const UI: Record<Lang, UIStrings> = {
@@ -476,10 +477,10 @@ const UI: Record<Lang, UIStrings> = {
     offerEyebrow: "Envie d'aller plus loin ?",
     offerTitleTemplate: "Le plan Business+ : {price}",
     offerDesc:
-      "Accueil IA disponible 24h/24, automatisation WhatsApp complète, réservation et confirmation automatique, suivi client automatisé, ReadyFlow Manager inclus, voix IA sur-mesure. Mise en place en 48 à 72h. Prix plein, paiement unique. Vous êtes propriétaire du système.",
+      "Accueil IA disponible 24h/24, automatisation WhatsApp complète, réservation et confirmation automatique, suivi client automatisé, ReadyFlow Manager inclus, voix IA sur-mesure. Mise en place en 30 à 45 jours, tests et validations inclus. Prix plein, paiement unique pour la mise en place, sans frais de service mensuel de notre part.",
     badgeOfferTemplate: "Plan Business+ · {price}",
-    badgeGuarantee: "Satisfait ou remboursé sous 30 jours, sans condition",
-    badgeTestimonial: "Contrepartie : un témoignage vidéo",
+    badgeGuarantee: "Satisfait ou remboursé sous 30 jours, à compter de la mise en place achevée, sans condition",
+    badgeTestimonial: "Si vous êtes satisfait, un témoignage vidéo ou un avis est le bienvenu, sans obligation.",
     offerFooterNote: "Les formules Essential, Business et Premium restent consultables sur",
     offerFooterLinkText: "le site principal ByCo Systems",
     whatsappCta: "💬 Écrire à Orlane sur WhatsApp",
@@ -494,6 +495,7 @@ const UI: Record<Lang, UIStrings> = {
     suiviThanks: "Merci, c'est bien reçu — on vous recontacte rapidement.",
     footerLine1: "Démonstration générique · adaptable à votre secteur",
     footerLine2: "Démonstration personnalisable · ByCo Systems · bycosystems.xyz",
+    footerSiege: "ByCo Systems opère en ligne. Siège social : Douala, Cameroun.",
   },
   en: {
     heroSubtitle: "An interactive demo, tailored to your business.",
@@ -521,10 +523,10 @@ const UI: Record<Lang, UIStrings> = {
     offerEyebrow: "Want to go further?",
     offerTitleTemplate: "The Business+ plan: {price}",
     offerDesc:
-      "24/7 AI reception, full WhatsApp automation, automatic booking and confirmation, automated client follow-up, ReadyFlow Manager included, custom AI voice. Setup in 48 to 72 hours. Full price, one-time payment. You own the system outright.",
+      "24/7 AI reception, full WhatsApp automation, automatic booking and confirmation, automated client follow-up, ReadyFlow Manager included, custom AI voice. Setup in 30 to 45 days, testing and validation included. Full price, one-time payment for the setup, with no monthly service fee from us.",
     badgeOfferTemplate: "Business+ plan · {price}",
-    badgeGuarantee: "Money-back guarantee within 30 days, no conditions",
-    badgeTestimonial: "In exchange: a video testimonial",
+    badgeGuarantee: "30-day money-back guarantee, starting once your setup is completed, no conditions",
+    badgeTestimonial: "If you are satisfied, a video testimonial or a review is welcome, but entirely optional.",
     offerFooterNote: "The Essential, Business and Premium plans remain available on",
     offerFooterLinkText: "the main ByCo Systems site",
     whatsappCta: "💬 Message Orlane on WhatsApp",
@@ -539,6 +541,7 @@ const UI: Record<Lang, UIStrings> = {
     suiviThanks: "Thanks, got it — we'll be in touch shortly.",
     footerLine1: "Generic demo · adaptable to your industry",
     footerLine2: "Customizable demo · ByCo Systems · bycosystems.xyz",
+    footerSiege: "ByCo Systems operates online. Headquarters: Douala, Cameroon.",
   },
 };
 
@@ -1479,6 +1482,7 @@ function Footer({ ui }: { ui: UIStrings }) {
           <div style={{ fontSize: 12, color: "rgba(255,255,255,0.55)" }}>{ui.footerLine1}</div>
           <div style={{ fontSize: 11, color: "rgba(255,255,255,0.45)" }}>{ui.footerLine2}</div>
         </div>
+        <div style={{ marginTop: 10, fontSize: 10.5, color: "rgba(255,255,255,0.3)" }}>{ui.footerSiege}</div>
       </Container>
     </Section>
   );

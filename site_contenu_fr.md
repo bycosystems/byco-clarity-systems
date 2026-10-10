@@ -4,14 +4,14 @@
 
 **Titre :** Ne manquez plus jamais un client
 **Sous-titre :** Réception intelligente et automatisation pour entreprises de services — appels, WhatsApp et rendez-vous gérés 24h/24.
-**CTA principal :** Demander une démo (lien WhatsApp direct, pas formulaire)
+**CTA principal :** Nous contacter (lien WhatsApp direct, pas formulaire)
 **CTA secondaire :** Voir les offres
 
 ## STATS (corrigées — aucune donnée inventée)
 
 | Avant (cassé) | Après |
 |---|---|
-| 0h Average setup time | **24-72h** Mise en place |
+| 0h Average setup time | **Selon la formule** (1 à 2 sem. à 45 jours max, tests et validations inclus) Mise en place |
 | 0/7 Smart phone reception | **24/7** Réception intelligente |
 | <0% Missed client rate | *(supprimé)* |
 | 0+ Industries served | **Conçu pour** cliniques, salons, agences, hôtels et plus |
@@ -29,18 +29,18 @@ Cliniques & santé · Salons & beauté · Cabinets juridiques & notaires · Agen
 ## OFFRES (texte aligné sur le script vocal Orlane)
 
 **Essential — 490 €**
-Accueil IA 24h/24 · réponses aux questions fréquentes · qualification des appels · formulaire de prise en charge en ligne · prise de messages · mise en place en 24h
+Accueil IA 24h/24 · réponses aux questions fréquentes · qualification des appels · formulaire de prise en charge en ligne · prise de messages · mise en place en 1 à 2 semaines, tests et validations inclus
 
 **Business — 990 €**
-Tout Essential + réceptionniste IA vocale complète · automatisation WhatsApp · réservation et confirmation automatique · suivi client automatisé · ReadyFlow Manager inclus · mise en place en 48h
+Tout Essential + réceptionniste IA vocale complète · automatisation WhatsApp · réservation et confirmation automatique · suivi client automatisé · ReadyFlow Manager inclus · mise en place en 3 à 4 semaines, tests et validations inclus
 
 **Business+ — 1 490 € ⭐ Recommandée**
-Tout Business + voix IA sur-mesure · automatisations multi-canaux avancées (web, WhatsApp, email) · intégration CRM/calendrier · mise en place en 48-72h
+Tout Business + voix IA sur-mesure · automatisations multi-canaux avancées (web, WhatsApp, email) · intégration CRM/calendrier · mise en place en 30 à 45 jours, tests et validations inclus
 
 **Premium — 1 990 €**
-Tout Business+ + audit complet du workflow · personnalisation avancée · 30 jours de suivi post-livraison · livraison prioritaire · mise en place en 72h
+Tout Business+ + audit complet du workflow · personnalisation avancée · 30 jours de suivi post-livraison · livraison prioritaire · mise en place en 45 jours maximum, tests et validations inclus
 
-**Mention commune :** Paiement unique pour la mise en place. Vous devenez propriétaire du système. Le suivi, si vous le souhaitez, se fait sur contrat séparé.
+**Mention commune :** Paiement unique pour la mise en place, sans frais de service mensuel de notre part.
 
 ## READYFLOW MANAGER (page dédiée)
 
@@ -59,13 +59,13 @@ Ces outils gèrent un canal isolé. Nous orchestrons voix, WhatsApp et suivi cli
 Oui — conçu pour tout métier recevant des appels et rendez-vous : santé, beauté, droit, conseil, hôtellerie.
 
 **Combien de temps pour la mise en place ?**
-24 à 72h selon la formule choisie.
+1 à 2 semaines (Essential), 3 à 4 semaines (Business), 30 à 45 jours (Business+), 45 jours maximum (Premium) — tests et validations inclus.
 
 **Dois-je changer de numéro de téléphone ?**
 Non — nous nous connectons à votre ligne existante.
 
 **Que se passe-t-il après l'achat ?**
-Configuration de votre assistant vocal et WhatsApp sous 24h, puis validation avec vous avant mise en service.
+Configuration de votre assistant vocal et WhatsApp selon le délai de la formule choisie (tests et validations inclus), puis validation avec vous avant mise en service.
 
 ## CONTACT
 
