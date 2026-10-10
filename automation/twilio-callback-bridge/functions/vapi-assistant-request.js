@@ -21,10 +21,15 @@
 // cas de doute (numero absent, secret invalide, etc.) on retombe sur
 // "europe" plutot que de renvoyer une erreur qui casserait l'appel.
 //
-// Variables d'environnement attendues (deja definies pour ce service) :
-//   CALLBACK_SHARED_SECRET  Meme secret que callback-bridge.js / voice-token.js
-//                           - transmis en query string (?secret=...) sur le
-//                           Server URL configure cote Vapi, verifie ci-dessous.
+// Variables d'environnement attendues (a definir dans la Console Twilio et
+// dans le Server URL du dashboard Vapi, pas encore fait au moment de ce
+// commit - voir README, section Rotation) :
+//   VAPI_SERVER_SECRET  Secret dedie a ce webhook, distinct de
+//                        CALLBACK_SHARED_SECRET (callback-bridge.js /
+//                        voice-token.js) - transmis en query string
+//                        (?secret=...) sur le Server URL configure cote
+//                        Vapi, verifie ci-dessous. Separe pour permettre une
+//                        rotation independante sans toucher a call-page.html.
 
 const crypto = require('crypto');
 
@@ -47,9 +52,15 @@ const FRANCOPHONE_START_PREFIXES = [
 const FIRST_MESSAGE_FR_FIRST = 'Bonjour, ByCo Systems, Orlane à votre écoute. Hello, ByCo Systems, Orlane speaking.';
 const FIRST_MESSAGE_EN_FIRST = 'Hello, ByCo Systems, Orlane speaking. Bonjour, ByCo Systems, Orlane à votre écoute.';
 
+// Refuse toujours si l'une des deux valeurs est vide/non definie : deux
+// chaines vides sont sinon "egales" pour timingSafeEqual, ce qui ferait
+// passer une requete sans secret si la variable d'environnement n'est pas
+// configuree (echec ouvert). On le verifie ici, a la source, en plus de la
+// verification explicite ci-dessous (defense en profondeur).
 function secretMatches(provided, expected) {
-  const a = Buffer.from(String(provided || ''));
-  const b = Buffer.from(String(expected || ''));
+  if (!provided || !expected) return false;
+  const a = Buffer.from(String(provided));
+  const b = Buffer.from(String(expected));
   if (a.length !== b.length) return false;
   return crypto.timingSafeEqual(a, b);
 }
@@ -115,7 +126,10 @@ exports.handler = function (context, event, callback) {
   const response = new Twilio.Response();
   response.appendHeader('Content-Type', 'application/json');
 
-  if (!secretMatches(event.secret, context.CALLBACK_SHARED_SECRET)) {
+  // Echec ferme explicite : une variable d'environnement absente/vide ne
+  // doit jamais se traduire par un acces autorise (secretMatches('', '')
+  // serait sinon vrai, deux chaines vides etant "egales").
+  if (!context.VAPI_SERVER_SECRET || !secretMatches(event.secret, context.VAPI_SERVER_SECRET)) {
     response.setStatusCode(403);
     response.setBody({ error: 'forbidden' });
     return callback(null, response);

@@ -1,5 +1,5 @@
 // Separe .env (identifiants de deploiement + config de test, jamais pousses
-// vers Twilio) de .env.runtime (seules les 4 variables ci-dessous, qui
+// vers Twilio) de .env.runtime (seules les variables ci-dessous, qui
 // deviennent les Environment Variables reelles de la Function deployee).
 require('dotenv').config();
 const fs = require('fs');
@@ -10,6 +10,7 @@ const RUNTIME_KEYS = [
   'SAMUEL_NUMBER',
   'TWILIO_NUMBER',
   'CALLBACK_SHARED_SECRET',
+  'VAPI_SERVER_SECRET',
   'VOICE_CLIENT_IDENTITY',
   'TWILIO_API_KEY_SID',
   'TWILIO_API_KEY_SECRET',
