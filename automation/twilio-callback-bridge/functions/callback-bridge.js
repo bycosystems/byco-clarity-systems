@@ -27,9 +27,15 @@ const crypto = require('crypto');
 
 const E164 = /^\+[1-9]\d{6,14}$/;
 
+// Refuse toujours si l'une des deux valeurs est vide/non definie : deux
+// chaines vides sont sinon "egales" pour timingSafeEqual, ce qui ferait
+// passer une requete sans secret si la variable d'environnement n'est pas
+// configuree (echec ouvert). On le verifie ici, a la source, en plus de la
+// verification explicite ci-dessous (defense en profondeur).
 function secretMatches(provided, expected) {
-  const a = Buffer.from(String(provided || ''));
-  const b = Buffer.from(String(expected || ''));
+  if (!provided || !expected) return false;
+  const a = Buffer.from(String(provided));
+  const b = Buffer.from(String(expected));
   if (a.length !== b.length) return false;
   return crypto.timingSafeEqual(a, b);
 }
@@ -38,7 +44,9 @@ exports.handler = async function (context, event, callback) {
   const response = new Twilio.Response();
   response.appendHeader('Content-Type', 'application/json');
 
-  if (!secretMatches(event.secret, context.CALLBACK_SHARED_SECRET)) {
+  // Echec ferme explicite : une variable d'environnement absente/vide ne
+  // doit jamais se traduire par un acces autorise.
+  if (!context.CALLBACK_SHARED_SECRET || !secretMatches(event.secret, context.CALLBACK_SHARED_SECRET)) {
     response.setStatusCode(403);
     response.setBody({ error: 'forbidden' });
     return callback(null, response);
