@@ -43,6 +43,15 @@
 // inchangée. Mécanisme volontairement séparé du logo (`?logo=`) pour
 // que chaque futur prospect n'exige qu'une ligne de configuration.
 //
+// Paramètre d'URL optionnel `?couleur=` : couleur d'accent du prospect au
+// format hexadécimal, SANS le « # » (ex. `?couleur=C2B767`, 3 ou 6
+// caractères). Valeur invalide → ignorée, page identique à aujourd'hui.
+// La couleur recolore le Hero (fond dégradé, accroche, pastille du
+// prospect, bordure de l'image), la colonne « Avec ByCo Systems » du
+// tableau, le bouton d'appel et le bouton du formulaire. Elle reste
+// toujours lisible : éclaircie ou assombrie automatiquement selon le fond
+// (contraste >= 4,5). Elle prime sur la table PROSPECT_BRANDING.
+//
 // Aucun élément nominatif : pas de nom d'entreprise, pas d'adresse,
 // pas de photo personnelle, pas de citation d'avis Google spécifique.
 //
@@ -59,12 +68,20 @@ import { useOrlaneCall } from "@/lib/useOrlaneCall";
 export const Route = createFileRoute("/demo/decouvrir/")({
   validateSearch: (
     search: Record<string, unknown>,
-  ): { secteur?: string; lang?: string; prospect?: string; image?: string; logo?: string } => ({
+  ): {
+    secteur?: string;
+    lang?: string;
+    prospect?: string;
+    image?: string;
+    logo?: string;
+    couleur?: string;
+  } => ({
     secteur: typeof search.secteur === "string" ? search.secteur : undefined,
     lang: typeof search.lang === "string" ? search.lang : undefined,
     prospect: typeof search.prospect === "string" ? search.prospect : undefined,
     image: typeof search.image === "string" ? search.image : undefined,
     logo: typeof search.logo === "string" ? search.logo : undefined,
+    couleur: typeof search.couleur === "string" ? search.couleur : undefined,
   }),
   component: DecouvrirDemo,
   head: ({ match }) => {
@@ -188,6 +205,77 @@ const PROSPECT_BRANDING: Record<string, ProspectBranding> = {
 function resolveProspectBranding(prospect: string | undefined): ProspectBranding | undefined {
   if (!prospect) return undefined;
   return PROSPECT_BRANDING[prospect.trim().toLowerCase()];
+}
+
+/* ── Couleur d'accent par lien (`?couleur=`) ──────────────────────
+   Hexadécimal 3 ou 6 caractères, avec ou sans « # » (sans « # » dans
+   une URL, car « # » y ouvre un fragment). Toute autre valeur →
+   undefined, aucun changement visuel. La couleur est ajustée pour rester
+   lisible sur le fond sombre du Hero (contraste WCAG >= 4,5 pour le
+   texte), et un fond foncé dérivé est calculé pour le dégradé.
+   ─────────────────────────────────────────────────────────────── */
+
+type Rgb = [number, number, number];
+
+function parseHexColor(raw: string | undefined): Rgb | undefined {
+  if (typeof raw !== "string") return undefined;
+  const m = /^#?([0-9a-fA-F]{3}|[0-9a-fA-F]{6})$/.exec(raw.trim());
+  if (!m) return undefined;
+  let h = m[1];
+  if (h.length === 3) h = h.split("").map((c) => c + c).join("");
+  return [parseInt(h.slice(0, 2), 16), parseInt(h.slice(2, 4), 16), parseInt(h.slice(4, 6), 16)];
+}
+
+function toHex(rgb: Rgb): string {
+  return `#${rgb.map((v) => Math.round(v).toString(16).padStart(2, "0")).join("")}`;
+}
+
+function luminance([r, g, b]: Rgb): number {
+  const f = (v: number) => {
+    const c = v / 255;
+    return c <= 0.03928 ? c / 12.92 : Math.pow((c + 0.055) / 1.055, 2.4);
+  };
+  return 0.2126 * f(r) + 0.7152 * f(g) + 0.0722 * f(b);
+}
+
+function contrastRatio(a: Rgb, b: Rgb): number {
+  const [hi, lo] = [luminance(a), luminance(b)].sort((x, y) => y - x);
+  return (hi + 0.05) / (lo + 0.05);
+}
+
+function mixRgb(a: Rgb, b: Rgb, t: number): Rgb {
+  return [a[0] + (b[0] - a[0]) * t, a[1] + (b[1] - a[1]) * t, a[2] + (b[2] - a[2]) * t];
+}
+
+type AccentTheme = {
+  base: string; // couleur d'origine (pastille, bordure)
+  onBase: string; // texte lisible posé sur la couleur d'origine
+  text: string; // version lisible sur fond sombre (texte, accroche)
+  deep: string; // version foncée pour la fin du dégradé du Hero
+  onLight: string; // version lisible sur fond clair (titres, étiquettes)
+  tint: string; // teinte très claire pour un fond de cellule ou d'en-tête
+};
+
+function resolveAccentTheme(raw: string | undefined): AccentTheme | undefined {
+  const rgb = parseHexColor(raw);
+  if (!rgb) return undefined;
+  const dark: Rgb = [20, 24, 26]; // C.noir
+  const white: Rgb = [255, 255, 255];
+  let text = rgb;
+  for (let i = 0; i < 20 && contrastRatio(text, dark) < 4.5; i++) text = mixRgb(text, white, 0.1);
+  const onBase = contrastRatio(rgb, white) >= contrastRatio(rgb, dark) ? "#fff" : C.noir;
+  const paper: Rgb = [246, 243, 238]; // C.paper
+  let onLight = rgb;
+  for (let i = 0; i < 20 && contrastRatio(onLight, paper) < 4.5; i++)
+    onLight = mixRgb(onLight, dark, 0.1);
+  return {
+    base: toHex(rgb),
+    onBase,
+    text: toHex(text),
+    deep: toHex(mixRgb(rgb, dark, 0.6)),
+    onLight: toHex(onLight),
+    tint: toHex(mixRgb(rgb, white, 0.85)),
+  };
 }
 
 /* ── Vocabulaire sectoriel ──────────────────────────────────────
@@ -675,12 +763,14 @@ function DecouvrirDemo() {
     prospect: rawProspect,
     image: rawImage,
     logo: rawLogo,
+    couleur: rawCouleur,
   } = Route.useSearch();
   const secteur = resolveSecteur(rawSecteur);
   const lang = resolveLang(rawLang);
   const prospect = resolveProspect(rawProspect);
   const image = resolveImage(rawImage);
   const logo = resolveImage(rawLogo);
+  const accent = resolveAccentTheme(rawCouleur);
   const copy = COPY[secteur][lang];
   const ui = UI[lang];
   const [called, setCalled] = useState(false);
@@ -693,13 +783,20 @@ function DecouvrirDemo() {
         rel="stylesheet"
         href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,600;0,700;1,500;1,600&family=Inter:wght@400;500;600;700&display=swap"
       />
-      <Hero copy={copy} ui={ui} prospect={prospect} image={image} logo={logo} />
+      <Hero copy={copy} ui={ui} prospect={prospect} image={image} logo={logo} accent={accent} />
       <Accroche copy={copy} ui={ui} />
-      <Comparaison ui={ui} />
-      <DemoInteractive copy={copy} ui={ui} called={called} setCalled={setCalled} marche={marche} />
+      <Comparaison ui={ui} accent={accent} />
+      <DemoInteractive
+        copy={copy}
+        ui={ui}
+        called={called}
+        setCalled={setCalled}
+        marche={marche}
+        accent={accent}
+      />
       <WhatsAppConfirmation copy={copy} ui={ui} called={called} />
       <OffreDecouverte ui={ui} price={price} />
-      <SuiviForm ui={ui} />
+      <SuiviForm ui={ui} accent={accent} />
       <Footer ui={ui} />
     </div>
   );
@@ -713,14 +810,17 @@ function Hero({
   prospect,
   image,
   logo,
+  accent,
 }: {
   copy: Copy;
   ui: UIStrings;
   prospect?: string;
   image?: string;
   logo?: string;
+  accent?: AccentTheme;
 }) {
   const branding = resolveProspectBranding(prospect);
+  const nameColor = accent?.text ?? branding?.accentColor;
   return (
     <div style={{ position: "relative", background: C.noir }}>
       <div
@@ -728,7 +828,7 @@ function Hero({
           position: "relative",
           minHeight: "clamp(300px, 44vw, 460px)",
           overflow: "hidden",
-          background: `linear-gradient(150deg, ${C.noir} 0%, ${C.noirLight} 55%, ${C.tealDeep} 100%)`,
+          background: `linear-gradient(150deg, ${C.noir} 0%, ${C.noirLight} 55%, ${accent?.deep ?? C.tealDeep} 100%)`,
         }}
       >
         <DemoTag label={ui.demoTag} />
@@ -769,21 +869,21 @@ function Hero({
                     marginBottom: 14,
                     padding: "5px 14px",
                     borderRadius: 20,
-                    background: C.teal,
-                    color: "#fff",
+                    background: accent?.base ?? C.teal,
+                    color: accent?.onBase ?? "#fff",
                     fontSize: 11.5,
                     fontWeight: 700,
                     letterSpacing: "0.04em",
                     maxWidth: "100%",
                     overflowWrap: "break-word",
                     wordBreak: "break-word",
-                    boxShadow: "0 2px 10px rgba(62,128,115,0.4)",
+                    boxShadow: accent ? "0 2px 10px rgba(0,0,0,0.35)" : "0 2px 10px rgba(62,128,115,0.4)",
                   }}
                 >
                   <TemplateWithName
                     template={ui.prospectBadgeTemplate}
                     name={prospect}
-                    accentColor={branding?.accentColor}
+                    accentColor={accent ? undefined : branding?.accentColor}
                   />
                 </div>
               )}
@@ -792,7 +892,7 @@ function Hero({
                   fontSize: 10.5,
                   letterSpacing: "0.28em",
                   textTransform: "uppercase",
-                  color: C.tealLight,
+                  color: accent?.text ?? C.tealLight,
                   marginBottom: 12,
                 }}
               >
@@ -817,7 +917,7 @@ function Hero({
                   fontFamily: SERIF,
                   fontSize: "clamp(20px, 3.4vw, 34px)",
                   fontWeight: 700,
-                  color: C.teal,
+                  color: accent?.text ?? C.teal,
                   lineHeight: 1.25,
                   maxWidth: 520,
                   overflowWrap: "break-word",
@@ -828,14 +928,14 @@ function Hero({
                   <TemplateWithName
                     template={ui.heroSubtitleProspectTemplate}
                     name={prospect}
-                    accentColor={branding?.accentColor}
+                    accentColor={nameColor}
                   />
                 ) : (
                   ui.heroSubtitle
                 )}
               </p>
             </div>
-            {image && <HeroImage src={image} />}
+            {image && <HeroImage src={image} borderColor={accent?.base} />}
           </div>
         </div>
       </div>
@@ -843,7 +943,7 @@ function Hero({
   );
 }
 
-function HeroImage({ src }: { src: string }) {
+function HeroImage({ src, borderColor }: { src: string; borderColor?: string }) {
   const [failed, setFailed] = useState(false);
   if (failed) return null;
   return (
@@ -860,7 +960,7 @@ function HeroImage({ src }: { src: string }) {
           height: "clamp(240px, 38vw, 460px)",
           objectFit: "cover",
           borderRadius: 18,
-          border: `2px solid ${C.teal}`,
+          border: `2px solid ${borderColor ?? C.teal}`,
           boxShadow: "0 20px 54px rgba(0,0,0,0.5)",
         }}
       />
@@ -994,7 +1094,7 @@ function Accroche({ copy, ui }: { copy: Copy; ui: UIStrings }) {
 
 /* ── Section 2 bis — Tableau Sans / Avec ───────────────────── */
 
-function Comparaison({ ui }: { ui: UIStrings }) {
+function Comparaison({ ui, accent }: { ui: UIStrings; accent?: AccentTheme }) {
   const cell = {
     padding: "14px 16px",
     fontSize: 14,
@@ -1006,7 +1106,7 @@ function Comparaison({ ui }: { ui: UIStrings }) {
     <Section bg={C.paperDeep}>
       <Container>
         <div style={{ maxWidth: 820, margin: "0 auto" }}>
-          <Eyebrow color={C.teal} center>
+          <Eyebrow color={accent?.onLight ?? C.teal} center>
             {ui.compareEyebrow}
           </Eyebrow>
           <h2
@@ -1048,8 +1148,8 @@ function Comparaison({ ui }: { ui: UIStrings }) {
                       fontSize: 12,
                       letterSpacing: "0.08em",
                       textTransform: "uppercase",
-                      background: C.tealBg,
-                      color: C.tealDeep,
+                      background: accent?.tint ?? C.tealBg,
+                      color: accent?.onLight ?? C.tealDeep,
                     }}
                   >
                     {ui.compareWithLabel}
@@ -1091,12 +1191,14 @@ function DemoInteractive({
   called,
   setCalled,
   marche,
+  accent,
 }: {
   copy: Copy;
   ui: UIStrings;
   called: boolean;
   setCalled: (v: boolean) => void;
   marche: Marche;
+  accent?: AccentTheme;
 }) {
   const { status, start, hangup } = useOrlaneCall(marche, () => setCalled(true));
   const buttonLabel =
@@ -1115,7 +1217,7 @@ function DemoInteractive({
     <Section bg={C.noir} id="demo">
       <Container>
         <div style={{ textAlign: "center", maxWidth: 620, margin: "0 auto 34px" }}>
-          <Eyebrow color={C.tealLight} center>
+          <Eyebrow color={accent?.text ?? C.tealLight} center>
             {ui.demoEyebrow}
           </Eyebrow>
           <h2
@@ -1182,13 +1284,13 @@ function DemoInteractive({
               borderRadius: 13,
               border: "none",
               cursor: status === "connecting" ? "wait" : "pointer",
-              background: status === "active" ? C.terracotta : C.teal,
-              color: "#fff",
+              background: status === "active" ? C.terracotta : (accent?.base ?? C.teal),
+              color: status !== "active" && accent ? accent.onBase : "#fff",
               fontSize: 15.5,
               fontWeight: 700,
               fontFamily: "inherit",
               textDecoration: "none",
-              boxShadow: `0 10px 30px rgba(62,128,115,0.4)`,
+              boxShadow: accent ? "0 10px 30px rgba(0,0,0,0.4)" : `0 10px 30px rgba(62,128,115,0.4)`,
               opacity: status === "connecting" ? 0.7 : 1,
             }}
           >
@@ -1524,7 +1626,7 @@ function OfferBadge({ children }: { children: React.ReactNode }) {
 
 const FORMSPREE_ENDPOINT = "https://formspree.io/f/mbdbpvyz";
 
-function SuiviForm({ ui }: { ui: UIStrings }) {
+function SuiviForm({ ui, accent }: { ui: UIStrings; accent?: AccentTheme }) {
   const [submitted, setSubmitted] = useState(false);
   const [sending, setSending] = useState(false);
 
@@ -1599,8 +1701,8 @@ function SuiviForm({ ui }: { ui: UIStrings }) {
                   padding: "13px 20px",
                   borderRadius: 10,
                   border: "none",
-                  background: C.teal,
-                  color: "#fff",
+                  background: accent?.base ?? C.teal,
+                  color: accent?.onBase ?? "#fff",
                   fontSize: 14.5,
                   fontWeight: 700,
                   fontFamily: "inherit",
