@@ -220,12 +220,12 @@ const COPY: Record<Secteur, Record<Lang, Copy>> = {
   sante: {
     fr: {
       eyebrowHero: "▪ Toujours disponible pour vos patients",
-      headline: "Quand votre ligne est indisponible ou occupée, où vont vos autres appels entrants ?",
-      accrocheHeadline: "Vous, en consultation : qui décroche ?",
+      headline: "Quand votre ligne est indisponible ou occupée, où vont vos autres appels entrants\u00A0?",
+      accrocheHeadline: "Vous, en consultation\u00A0: qui décroche\u00A0?",
       accrocheP1:
-        "Beaucoup de cabinets tiennent grâce à un seul praticien, toujours le même, toujours disponible pour ses patients. C'est une force, et une vraie promesse de qualité.",
+        "Un cabinet, c'est d'abord de l'attention portée au patient présent : la consultation en cours, l'examen, le soin qui ne peut pas être interrompu. C'est une force, et une vraie promesse de qualité.",
       accrocheP2:
-        "Le revers, lui, n'est jamais dit à voix haute : quand vous êtes en consultation, personne d'autre n'est là pour décrocher, ni pour une question de tarif, ni pour une urgence.",
+        "Le revers, lui, n'est jamais dit à voix haute : pendant ce temps, le téléphone sonne, et il n'y a pas toujours quelqu'un de disponible pour décrocher, ni pour une question de tarif, ni pour une urgence.",
       chips: [
         { label: "Consultation", value: "Sur demande" },
         { label: "Urgence", value: "Prioritaire", accent: true },
@@ -245,9 +245,9 @@ const COPY: Record<Secteur, Record<Lang, Copy>> = {
       headline: "When your line is unavailable or busy, where do your other incoming calls go?",
       accrocheHeadline: "You, in consultation: who picks up?",
       accrocheP1:
-        "Many practices run on a single practitioner, always the same one, always available for their patients. That's a strength, and a real promise of quality.",
+        "A practice is, first of all, attention given to the patient in front of you: the consultation in progress, the examination, the care that can't be interrupted. That's a strength, and a real promise of quality.",
       accrocheP2:
-        "The downside is never said out loud: when you're with a patient, no one else is there to pick up, not for a pricing question, not for an emergency.",
+        "The downside is never said out loud: meanwhile the phone keeps ringing, and there isn't always someone free to pick up, not for a pricing question, not for an emergency.",
       chips: [
         { label: "Consultation", value: "On request" },
         { label: "Emergency", value: "Priority", accent: true },
@@ -266,12 +266,12 @@ const COPY: Record<Secteur, Record<Lang, Copy>> = {
   urgence: {
     fr: {
       eyebrowHero: "▪ Toujours disponible pour vos clients",
-      headline: "Quand votre ligne est indisponible ou occupée, où vont vos autres appels entrants ?",
-      accrocheHeadline: "Vous, sur place : qui décroche ?",
+      headline: "Quand votre ligne est indisponible ou occupée, où vont vos autres appels entrants\u00A0?",
+      accrocheHeadline: "Vous, sur place\u00A0: qui décroche\u00A0?",
       accrocheP1:
-        "Beaucoup d'artisans tiennent grâce à une seule personne, toujours la même, toujours disponible pour dépanner. C'est une force, et une vraie promesse de réactivité.",
+        "Un bon dépannage demande toute votre attention sur l'intervention en cours : le client sur place compte sur vous. C'est une force, et une vraie promesse de réactivité.",
       accrocheP2:
-        "Le revers, lui, n'est jamais dit à voix haute : quand vous êtes sur une intervention, personne d'autre n'est là pour décrocher, ni pour une urgence, ni pour un simple devis.",
+        "Le revers, lui, n'est jamais dit à voix haute : pendant ce temps, le téléphone sonne, et il n'y a pas toujours quelqu'un de disponible pour décrocher, ni pour une urgence, ni pour un simple devis.",
       chips: [
         { label: "Dépannage", value: "Sur demande" },
         { label: "Urgence", value: "Prioritaire", accent: true },
@@ -291,9 +291,9 @@ const COPY: Record<Secteur, Record<Lang, Copy>> = {
       headline: "When your line is unavailable or busy, where do your other incoming calls go?",
       accrocheHeadline: "You, on site: who picks up?",
       accrocheP1:
-        "Many tradespeople run on a single person, always the same one, always available to help. That's a strength, and a real promise of responsiveness.",
+        "Good repair work takes your full attention on the job in progress: the client on site is counting on you. That's a strength, and a real promise of responsiveness.",
       accrocheP2:
-        "The downside is never said out loud: when you're on a job, no one else is there to pick up, not for an emergency, not for a simple quote.",
+        "The downside is never said out loud: meanwhile the phone keeps ringing, and there isn't always someone free to pick up, not for an emergency, not for a simple quote.",
       chips: [
         { label: "Callout", value: "On request" },
         { label: "Emergency", value: "Priority", accent: true },
@@ -312,8 +312,8 @@ const COPY: Record<Secteur, Record<Lang, Copy>> = {
   hotellerie: {
     fr: {
       eyebrowHero: "▪ Toujours disponible pour vos clients",
-      headline: "Quand votre standard est indisponible ou occupé, où vont vos autres appels entrants ?",
-      accrocheHeadline: "Quand la ligne est occupée, qui décroche les autres appels ?",
+      headline: "Quand votre standard est indisponible ou occupé, où vont vos autres appels entrants\u00A0?",
+      accrocheHeadline: "Quand la ligne est occupée, qui décroche les autres appels\u00A0?",
       accrocheP1:
         "Beaucoup d'hôtels tiennent sur une seule ligne de réception, qui reçoit tout à la fois : réservations, questions, urgences. C'est une organisation simple, qui fonctionne au quotidien.",
       accrocheP2:
@@ -358,12 +358,12 @@ const COPY: Record<Secteur, Record<Lang, Copy>> = {
   default: {
     fr: {
       eyebrowHero: "▪ Toujours disponible pour vos clients",
-      headline: "Quand votre standard est indisponible ou occupé, où vont vos autres appels entrants ?",
-      accrocheHeadline: "Vous, pendant que vous travaillez : qui décroche ?",
+      headline: "Quand votre standard est indisponible ou occupé, où vont vos autres appels entrants\u00A0?",
+      accrocheHeadline: "Vous, pendant que vous travaillez\u00A0: qui décroche\u00A0?",
       accrocheP1:
-        "Beaucoup de petites entreprises tiennent grâce à une seule personne, toujours la même, toujours disponible pour ses clients. C'est une force, et une vraie promesse de qualité.",
+        "Une entreprise, c'est d'abord de l'attention portée à ceux qui sont déjà là : le client devant vous, le chantier en cours, la réunion qui ne peut pas attendre. C'est une force, et une vraie promesse de qualité.",
       accrocheP2:
-        "Le revers, lui, n'est jamais dit à voix haute : quand cette personne est occupée avec un client, personne d'autre n'est là pour décrocher, ni pour une question simple, ni pour une urgence.",
+        "Le revers, lui, n'est jamais dit à voix haute : pendant ce temps, le téléphone sonne, et il n'y a pas toujours quelqu'un de disponible pour décrocher, ni pour une question simple, ni pour une urgence.",
       chips: [
         { label: "Devis", value: "Sur demande" },
         { label: "Urgence", value: "Prioritaire", accent: true },
@@ -383,9 +383,9 @@ const COPY: Record<Secteur, Record<Lang, Copy>> = {
       headline: "When your switchboard is unavailable or busy, where do your other incoming calls go?",
       accrocheHeadline: "You, while you're working: who picks up?",
       accrocheP1:
-        "Many small businesses run on a single person, always the same one, always available for their clients. That's a strength, and a real promise of quality.",
+        "A business is, first of all, attention given to those already there: the client in front of you, the job in progress, the meeting that can't wait. That's a strength, and a real promise of quality.",
       accrocheP2:
-        "The downside is never said out loud: when that person is busy with a client, no one else is there to pick up, not for a simple question, not for an emergency.",
+        "The downside is never said out loud: meanwhile the phone keeps ringing, and there isn't always someone free to pick up, not for a simple question, not for an emergency.",
       chips: [
         { label: "Quotes", value: "On request" },
         { label: "Emergency", value: "Priority", accent: true },
