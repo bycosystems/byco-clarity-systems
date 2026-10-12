@@ -220,7 +220,7 @@ const COPY: Record<Secteur, Record<Lang, Copy>> = {
   sante: {
     fr: {
       eyebrowHero: "▪ Toujours disponible pour vos patients",
-      headline: "Pendant votre consultation, qui répond au téléphone ?",
+      headline: "Quand votre ligne est indisponible ou occupée, où vont vos autres appels entrants ?",
       accrocheHeadline: "Vous, en consultation : qui décroche ?",
       accrocheP1:
         "Beaucoup de cabinets tiennent grâce à un seul praticien, toujours le même, toujours disponible pour ses patients. C'est une force, et une vraie promesse de qualité.",
@@ -242,7 +242,7 @@ const COPY: Record<Secteur, Record<Lang, Copy>> = {
     },
     en: {
       eyebrowHero: "▪ Always available for your patients",
-      headline: "While you're with a patient, who answers the phone?",
+      headline: "When your line is unavailable or busy, where do your other incoming calls go?",
       accrocheHeadline: "You, in consultation: who picks up?",
       accrocheP1:
         "Many practices run on a single practitioner, always the same one, always available for their patients. That's a strength, and a real promise of quality.",
@@ -266,7 +266,7 @@ const COPY: Record<Secteur, Record<Lang, Copy>> = {
   urgence: {
     fr: {
       eyebrowHero: "▪ Toujours disponible pour vos clients",
-      headline: "Pendant votre intervention, qui répond au téléphone ?",
+      headline: "Quand votre ligne est indisponible ou occupée, où vont vos autres appels entrants ?",
       accrocheHeadline: "Vous, sur place : qui décroche ?",
       accrocheP1:
         "Beaucoup d'artisans tiennent grâce à une seule personne, toujours la même, toujours disponible pour dépanner. C'est une force, et une vraie promesse de réactivité.",
@@ -288,7 +288,7 @@ const COPY: Record<Secteur, Record<Lang, Copy>> = {
     },
     en: {
       eyebrowHero: "▪ Always available for your clients",
-      headline: "While you're on a job, who answers the phone?",
+      headline: "When your line is unavailable or busy, where do your other incoming calls go?",
       accrocheHeadline: "You, on site: who picks up?",
       accrocheP1:
         "Many tradespeople run on a single person, always the same one, always available to help. That's a strength, and a real promise of responsiveness.",
@@ -312,7 +312,7 @@ const COPY: Record<Secteur, Record<Lang, Copy>> = {
   hotellerie: {
     fr: {
       eyebrowHero: "▪ Toujours disponible pour vos clients",
-      headline: "Quand votre standard est occupé, qui répond au téléphone ?",
+      headline: "Quand votre standard est indisponible ou occupé, où vont vos autres appels entrants ?",
       accrocheHeadline: "Quand la ligne est occupée, qui décroche les autres appels ?",
       accrocheP1:
         "Beaucoup d'hôtels tiennent sur une seule ligne de réception, qui reçoit tout à la fois : réservations, questions, urgences. C'est une organisation simple, qui fonctionne au quotidien.",
@@ -334,7 +334,7 @@ const COPY: Record<Secteur, Record<Lang, Copy>> = {
     },
     en: {
       eyebrowHero: "▪ Always available for your clients",
-      headline: "When your front desk is busy, who answers the phone?",
+      headline: "When your switchboard is unavailable or busy, where do your other incoming calls go?",
       accrocheHeadline: "When the line is busy, who answers the other calls?",
       accrocheP1:
         "Many hotels run on a single front desk line that handles everything at once: bookings, questions, emergencies. It's a simple setup that works day to day.",
@@ -358,7 +358,7 @@ const COPY: Record<Secteur, Record<Lang, Copy>> = {
   default: {
     fr: {
       eyebrowHero: "▪ Toujours disponible pour vos clients",
-      headline: "Pendant que vous travaillez, qui répond au téléphone ?",
+      headline: "Quand votre standard est indisponible ou occupé, où vont vos autres appels entrants ?",
       accrocheHeadline: "Vous, pendant que vous travaillez : qui décroche ?",
       accrocheP1:
         "Beaucoup de petites entreprises tiennent grâce à une seule personne, toujours la même, toujours disponible pour ses clients. C'est une force, et une vraie promesse de qualité.",
@@ -380,7 +380,7 @@ const COPY: Record<Secteur, Record<Lang, Copy>> = {
     },
     en: {
       eyebrowHero: "▪ Always available for your clients",
-      headline: "While you're working, who answers the phone?",
+      headline: "When your switchboard is unavailable or busy, where do your other incoming calls go?",
       accrocheHeadline: "You, while you're working: who picks up?",
       accrocheP1:
         "Many small businesses run on a single person, always the same one, always available for their clients. That's a strength, and a real promise of quality.",
@@ -410,6 +410,12 @@ type UIStrings = {
   heroSubtitleProspectTemplate: string;
   demoTag: string;
   accrocheEyebrow: string;
+  compareEyebrow: string;
+  compareTitle: string;
+  compareWithoutLabel: string;
+  compareWithLabel: string;
+  compareRows: { sans: string; avec: string }[];
+  compareNote: string;
   demoEyebrow: string;
   demoTitle: string;
   chipsLabel: string;
@@ -456,6 +462,34 @@ const UI: Record<Lang, UIStrings> = {
     heroSubtitleProspectTemplate: "Une démonstration interactive, préparée pour {name}",
     demoTag: "Démo ByCo",
     accrocheEyebrow: "Ce que votre site ne dit pas",
+    compareEyebrow: "Sans / Avec ByCo Systems",
+    compareTitle: "Ce que cela pourrait changer pour vous",
+    compareWithoutLabel: "Sans ByCo Systems",
+    compareWithLabel: "Avec ByCo Systems",
+    compareRows: [
+      {
+        sans: "Un appel resté sans réponse pourrait être un client parti composer le numéro d'un concurrent.",
+        avec: "Cet appel pourrait être pris en charge dès la première sonnerie, même quand votre équipe est déjà occupée.",
+      },
+      {
+        sans: "En dehors des horaires, les appels pourraient tomber sur un répondeur que peu de gens prennent la peine d'utiliser.",
+        avec: "Les appels pourraient être accueillis à toute heure, y compris la nuit et le week-end.",
+      },
+      {
+        sans: "Vous pourriez ne jamais savoir combien d'appels n'ont pas abouti, ni pourquoi.",
+        avec: "Chaque appel pourrait donner lieu à un récapitulatif sur WhatsApp : le motif, le numéro, ce que la personne attend.",
+      },
+      {
+        sans: "Votre équipe pourrait être interrompue en permanence par le téléphone, au détriment de la personne qui est devant elle.",
+        avec: "Votre équipe pourrait se concentrer sur le client présent, pendant qu'Orlane accueille les autres appelants.",
+      },
+      {
+        sans: "Une demande urgente pourrait attendre trop longtemps avant d'être entendue.",
+        avec: "Les demandes urgentes pourraient être repérées et signalées en priorité à la personne concernée.",
+      },
+    ],
+    compareNote:
+      "Ces situations sont des possibilités, pas des garanties. Les résultats dépendent de votre activité et de la mise en place, que nous étudions avec vous.",
     demoEyebrow: "À vous de tester",
     demoTitle: "Testez la technologie qui répondra à vos clients",
     chipsLabel: "Exemple : ce que VOTRE agent saura",
@@ -502,6 +536,34 @@ const UI: Record<Lang, UIStrings> = {
     heroSubtitleProspectTemplate: "An interactive demo, prepared for {name}",
     demoTag: "ByCo Demo",
     accrocheEyebrow: "What your website doesn't say",
+    compareEyebrow: "Without / With ByCo Systems",
+    compareTitle: "What this could change for you",
+    compareWithoutLabel: "Without ByCo Systems",
+    compareWithLabel: "With ByCo Systems",
+    compareRows: [
+      {
+        sans: "A call left unanswered could be a customer who went on to dial a competitor's number.",
+        avec: "That call could be picked up on the first ring, even when your team is already busy.",
+      },
+      {
+        sans: "Outside opening hours, calls could end up on a voicemail that few people bother to use.",
+        avec: "Calls could be answered at any hour, including nights and weekends.",
+      },
+      {
+        sans: "You might never know how many calls went unanswered, or why.",
+        avec: "Each call could produce a WhatsApp summary: the reason, the number, what the person is waiting for.",
+      },
+      {
+        sans: "Your team could be constantly interrupted by the phone, at the expense of the person standing in front of them.",
+        avec: "Your team could focus on the customer in front of them while Orlane greets the other callers.",
+      },
+      {
+        sans: "An urgent request could wait too long before being heard.",
+        avec: "Urgent requests could be spotted and flagged as a priority to the right person.",
+      },
+    ],
+    compareNote:
+      "These situations are possibilities, not guarantees. Results depend on your business and on the setup, which we study with you.",
     demoEyebrow: "Your turn to try",
     demoTitle: "Test the technology that will answer your clients",
     chipsLabel: "Example: what YOUR agent will know",
@@ -633,6 +695,7 @@ function DecouvrirDemo() {
       />
       <Hero copy={copy} ui={ui} prospect={prospect} image={image} logo={logo} />
       <Accroche copy={copy} ui={ui} />
+      <Comparaison ui={ui} />
       <DemoInteractive copy={copy} ui={ui} called={called} setCalled={setCalled} marche={marche} />
       <WhatsAppConfirmation copy={copy} ui={ui} called={called} />
       <OffreDecouverte ui={ui} price={price} />
@@ -922,6 +985,97 @@ function Accroche({ copy, ui }: { copy: Copy; ui: UIStrings }) {
           </p>
           <p style={{ fontSize: 14.5, color: C.inkSoft, lineHeight: 1.7, margin: 0 }}>
             {copy.accrocheP2}
+          </p>
+        </div>
+      </Container>
+    </Section>
+  );
+}
+
+/* ── Section 2 bis — Tableau Sans / Avec ───────────────────── */
+
+function Comparaison({ ui }: { ui: UIStrings }) {
+  const cell = {
+    padding: "14px 16px",
+    fontSize: 14,
+    lineHeight: 1.6,
+    verticalAlign: "top" as const,
+    borderTop: `1px solid ${C.line}`,
+  };
+  return (
+    <Section bg={C.paperDeep}>
+      <Container>
+        <div style={{ maxWidth: 820, margin: "0 auto" }}>
+          <Eyebrow color={C.teal} center>
+            {ui.compareEyebrow}
+          </Eyebrow>
+          <h2
+            style={{
+              fontFamily: SERIF,
+              fontSize: "clamp(24px, 3.4vw, 34px)",
+              color: C.ink,
+              fontWeight: 700,
+              lineHeight: 1.25,
+              margin: "10px 0 24px",
+              textAlign: "center",
+            }}
+          >
+            {ui.compareTitle}
+          </h2>
+          <div style={{ borderRadius: 10, overflow: "hidden", border: `1px solid ${C.line}` }}>
+            <table style={{ width: "100%", borderCollapse: "collapse", background: "#fff" }}>
+              <thead>
+                <tr>
+                  <th
+                    style={{
+                      width: "50%",
+                      padding: "12px 16px",
+                      textAlign: "left",
+                      fontSize: 12,
+                      letterSpacing: "0.08em",
+                      textTransform: "uppercase",
+                      background: C.terracottaBg,
+                      color: C.terracotta,
+                    }}
+                  >
+                    {ui.compareWithoutLabel}
+                  </th>
+                  <th
+                    style={{
+                      width: "50%",
+                      padding: "12px 16px",
+                      textAlign: "left",
+                      fontSize: 12,
+                      letterSpacing: "0.08em",
+                      textTransform: "uppercase",
+                      background: C.tealBg,
+                      color: C.tealDeep,
+                    }}
+                  >
+                    {ui.compareWithLabel}
+                  </th>
+                </tr>
+              </thead>
+              <tbody>
+                {ui.compareRows.map((row) => (
+                  <tr key={row.sans}>
+                    <td style={{ ...cell, color: C.inkSoft }}>{row.sans}</td>
+                    <td style={{ ...cell, color: C.ink, background: "#FBFDFC" }}>{row.avec}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+          <p
+            style={{
+              fontSize: 12.5,
+              color: C.inkSoft,
+              lineHeight: 1.6,
+              margin: "14px 0 0",
+              textAlign: "center",
+            }}
+          >
+            {ui.compareNote}
           </p>
         </div>
       </Container>
