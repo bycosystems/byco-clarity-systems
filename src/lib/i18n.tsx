@@ -229,7 +229,7 @@ export const content: Record<Lang, Content> = {
           badge: null,
         },
       ],
-      guarantee: "30-day money-back guarantee, starting once your setup is completed, no conditions.",
+      guarantee: "30-day guarantee from delivery: if the delivered system does not work as agreed in the specification we validated together, we fix it. If we cannot, we refund the amount paid for the setup. Usage fees billed by providers are not included.",
       footerNote: "Need a custom system?",
       footerLinkText: "Talk to us - we adapt to every service business.",
     },
@@ -260,7 +260,7 @@ export const content: Record<Lang, Content> = {
         },
         {
           q: "What happens after delivery?",
-          a: "The system runs on its own - there's nothing for you to manage after that. You're also covered by a 30-day money-back guarantee, starting once your setup is completed, no conditions. Premium adds 30 days of support and adjustments on top of that. Every plan includes a handover walkthrough.",
+          a: "The system runs on its own - there's nothing for you to manage after that. You're also covered by our 30-day guarantee from delivery: if the system does not work as agreed in the validated specification, we fix it, or we refund the setup amount if we cannot. Premium adds 30 days of support and adjustments on top of that. Every plan includes a handover walkthrough.",
         },
         {
           q: "Can I see it working before I buy?",
@@ -440,7 +440,7 @@ export const content: Record<Lang, Content> = {
           badge: null,
         },
       ],
-      guarantee: "Garantie satisfait ou remboursé de 30 jours, à compter de la mise en place achevée, sans condition.",
+      guarantee: "Garantie 30 jours à compter de la livraison : si le système livré ne fonctionne pas comme convenu dans le cahier des charges validé ensemble, nous le corrigeons. Si nous n'y parvenons pas, nous vous remboursons le montant payé pour la mise en place. Les frais d'usage facturés par les fournisseurs ne sont pas concernés.",
       footerNote: "Besoin d'un système sur mesure ?",
       footerLinkText: "Parlez-nous - nous nous adaptons à toute entreprise de services.",
     },
@@ -471,7 +471,7 @@ export const content: Record<Lang, Content> = {
         },
         {
           q: "Que se passe-t-il après la livraison ?",
-          a: "Le système fonctionne seul, vous n'avez rien à gérer ensuite. Vous bénéficiez aussi d'une garantie satisfait ou remboursé de 30 jours, à compter de la mise en place achevée, sans condition. L'offre Premium ajoute 30 jours de support et d'ajustements. Toutes les offres incluent une prise en main guidée.",
+          a: "Le système fonctionne seul, vous n'avez rien à gérer ensuite. Vous bénéficiez aussi de notre garantie de 30 jours à compter de la livraison : si le système ne fonctionne pas comme convenu dans le cahier des charges validé, nous le corrigeons, ou nous remboursons le montant de la mise en place si nous n'y parvenons pas. L'offre Premium ajoute 30 jours de support et d'ajustements. Toutes les offres incluent une prise en main guidée.",
         },
         {
           q: "Puis-je le voir fonctionner avant d'acheter ?",

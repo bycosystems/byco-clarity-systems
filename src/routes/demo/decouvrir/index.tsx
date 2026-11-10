@@ -601,7 +601,7 @@ const UI: Record<Lang, UIStrings> = {
     offerDesc:
       "Accueil IA disponible 24h/24, automatisation WhatsApp complète, réservation et confirmation automatique, suivi client automatisé, ReadyFlow Manager inclus, voix IA sur-mesure. Mise en place en 30 à 45 jours, tests et validations inclus. Prix plein, paiement unique pour la mise en place, sans frais de service mensuel de notre part.",
     badgeOfferTemplate: "Plan Business+ · {price}",
-    badgeGuarantee: "Satisfait ou remboursé sous 30 jours, à compter de la mise en place achevée, sans condition",
+    badgeGuarantee: "Garantie 30 jours à compter de la livraison : si le système ne fonctionne pas comme convenu dans le cahier validé ensemble, nous le corrigeons ou nous remboursons la mise en place. Frais d'usage des fournisseurs non inclus",
     badgeTestimonial: "Si vous êtes satisfait, un témoignage vidéo ou un avis est le bienvenu, sans obligation.",
     offerFooterNote: "Les formules Essential, Business et Premium restent consultables sur",
     offerFooterLinkText: "le site principal ByCo Systems",
@@ -675,7 +675,7 @@ const UI: Record<Lang, UIStrings> = {
     offerDesc:
       "24/7 AI reception, full WhatsApp automation, automatic booking and confirmation, automated client follow-up, ReadyFlow Manager included, custom AI voice. Setup in 30 to 45 days, testing and validation included. Full price, one-time payment for the setup, with no monthly service fee from us.",
     badgeOfferTemplate: "Business+ plan · {price}",
-    badgeGuarantee: "30-day money-back guarantee, starting once your setup is completed, no conditions",
+    badgeGuarantee: "30-day guarantee from delivery: if the system does not work as agreed in the validated specification, we fix it or refund the setup. Provider usage fees not included",
     badgeTestimonial: "If you are satisfied, a video testimonial or a review is welcome, but entirely optional.",
     offerFooterNote: "The Essential, Business and Premium plans remain available on",
     offerFooterLinkText: "the main ByCo Systems site",
