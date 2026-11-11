@@ -288,7 +288,7 @@ export const content: Record<Lang, Content> = {
     footer: {
       tagline: "Smart reception systems, WhatsApp automation and call tracking for service businesses.",
       rights: "All rights reserved.",
-      siege: "ByCo Systems operates online. Headquarters: Douala, Cameroon.",
+      siege: "ByCo Systems operates online. Headquarters: Douala, Cameroon. RCCM n° CM-DLA-01-2026-B12-00906.",
     },
   },
   fr: {
@@ -499,7 +499,7 @@ export const content: Record<Lang, Content> = {
     footer: {
       tagline: "Systèmes de réception intelligente, automatisation WhatsApp et suivi des échanges pour entreprises de services.",
       rights: "Tous droits réservés.",
-      siege: "ByCo Systems opère en ligne. Siège social : Douala, Cameroun.",
+      siege: "ByCo Systems opère en ligne. Siège social : Douala, Cameroun. RCCM n° CM-DLA-01-2026-B12-00906.",
     },
   },
 };

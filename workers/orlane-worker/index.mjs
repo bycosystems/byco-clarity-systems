@@ -2,6 +2,7 @@
 // Remplace les scenarios Make 6258639 (WhatsApp), 6175623 (appels Vapi), 7129980 (API RFM), 6999106 (recap 2 jours)
 // Liaison D1 : DB
 // Variable (texte, non secrète) : TWILIO_ACCOUNT_SID
+// v4 : le récap d'appel indique le prospect (lien de démo) et « appel web » sans numéro
 // Secrets : ANTHROPIC_KEY, TWILIO_USER, TWILIO_PASS, RESEND_KEY, HOOK_KEY
 // Cron (UTC) : 5 16 */2 * *
 // Routes : /whatsapp (Twilio), /vapi (Vapi), /interactions (RFM), toutes avec ?k=HOOK_KEY
@@ -355,9 +356,10 @@ async function handleVapi(env, body) {
   const tr = transcriptMail.includes("User:") ? transcriptMail : transcriptMail + " ⚠️ Aucune parole de l'appelant n'a été captée.";
   await mail(
     env,
-    "📞 Nouvel appel Orlane — ByCo Systems",
+    "📞 Nouvel appel Orlane : " + (s(vv.agence) || "ByCo Systems"),
     `<h2>📞 Nouvel appel reçu — Orlane</h2>
-<p><strong>Numéro appelant :</strong> ${esc(num)}</p>
+<p><strong>Prospect (lien de démo) :</strong> ${esc(vv.agence || "aucun, appel direct")}</p>
+<p><strong>Numéro appelant :</strong> ${esc(num || "appel web, aucun numéro")}</p>
 <p><strong>Début :</strong> ${esc(m.startedAt)}</p>
 <p><strong>Fin :</strong> ${esc(m.endedAt)}</p>
 <p><strong>Durée :</strong> ${esc(m.durationSeconds)} secondes</p>
