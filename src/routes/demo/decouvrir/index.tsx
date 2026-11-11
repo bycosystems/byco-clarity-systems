@@ -60,10 +60,10 @@
 // ─────────────────────────────────────────────────────────────
 
 import { createFileRoute } from "@tanstack/react-router";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useMarche } from "@/lib/market";
 import { priceFor, type Marche } from "@/lib/pricing";
-import { useOrlaneCall } from "@/lib/useOrlaneCall";
+import { trackDemo, useOrlaneCall, type OrlaneBlock } from "@/lib/useOrlaneCall";
 
 export const Route = createFileRoute("/demo/decouvrir/")({
   validateSearch: (
@@ -196,10 +196,13 @@ function resolveImage(raw: string | undefined): string | undefined {
    (indépendant de cette table, voir HeroLogo plus bas).
    ─────────────────────────────────────────────────────────────── */
 
-type ProspectBranding = { accentColor: string };
+type ProspectBranding = { accentColor: string; fullTheme?: boolean };
 
 const PROSPECT_BRANDING: Record<string, ProspectBranding> = {
   "trésor hotel": { accentColor: "#C2B767" },
+  "agence immobilière trëma": { accentColor: "#F10101", fullTheme: true },
+  "sci fragiliko": { accentColor: "#9335B6", fullTheme: true },
+  "innov immo": { accentColor: "#164D86", fullTheme: true },
 };
 
 function resolveProspectBranding(prospect: string | undefined): ProspectBranding | undefined {
@@ -447,11 +450,11 @@ const COPY: Record<Secteur, Record<Lang, Copy>> = {
     fr: {
       eyebrowHero: "▪ Toujours disponible pour vos clients",
       headline: "La nuit ou le week-end, qui répond à vos clients\u00A0?",
-      accrocheHeadline: "Vous, en visite\u00A0: qui décroche\u00A0?",
+      accrocheHeadline: "Hors réseau ou en pleine nuit\u00A0: qui décroche\u00A0?",
       accrocheP1:
-        "Une agence, c'est d'abord de l'attention portée au client présent : la visite en cours, la négociation, le dossier à finaliser. C'est une force, et une vraie promesse de sérieux.",
+        "Un client qui cherche un bien appelle rarement une seule agence. Celle qui répond la première a de bonnes chances de décrocher la visite.",
       accrocheP2:
-        "Le revers, lui, n'est jamais dit à voix haute : pendant ce temps, le téléphone sonne et les messages WhatsApp arrivent, et il n'y a pas toujours quelqu'un de disponible pour répondre, ni pour dire si un bien est encore disponible, ni pour fixer une visite.",
+        "Mais personne ne peut décrocher partout : la nuit, le week-end, dans une zone sans réseau ou le téléphone coupé. Un appel resté sans réponse part souvent chez un concurrent, et vous ne le saurez jamais.",
       chips: [
         { label: "Bien", value: "Disponible" },
         { label: "Visite", value: "Sur rendez-vous", accent: true },
@@ -469,11 +472,11 @@ const COPY: Record<Secteur, Record<Lang, Copy>> = {
     en: {
       eyebrowHero: "▪ Always available for your clients",
       headline: "At night or on weekends, who answers your clients?",
-      accrocheHeadline: "You, on a viewing: who picks up?",
+      accrocheHeadline: "Out of network or in the middle of the night: who picks up?",
       accrocheP1:
-        "An agency is, first of all, attention given to the client in front of you: the viewing in progress, the negotiation, the file to finalize. That's a strength, and a real promise of professionalism.",
+        "A client looking for a property rarely calls just one agency. The one that answers first has a good chance of getting the viewing.",
       accrocheP2:
-        "The downside is never said out loud: meanwhile the phone keeps ringing and WhatsApp messages keep arriving, and there isn't always someone free to answer, not to say whether a property is still available, not to book a viewing.",
+        "But nobody can pick up everywhere: at night, on weekends, in an area with no signal or with the phone off. A call left unanswered often goes to a competitor, and you will never know.",
       chips: [
         { label: "Property", value: "Available" },
         { label: "Viewing", value: "By appointment", accent: true },
@@ -562,6 +565,11 @@ type UIStrings = {
   afterCallTitle: string;
   waitingMessage: string;
   calledMessage: string;
+  blockedLimit: string;
+  blockedLocked: string;
+  blockedUnavailable: string;
+  blockedFormCta: string;
+  blockedWhatsappCta: string;
   notCalledMessage: string;
   sentJustNow: string;
   whatsappHeaderName: string;
@@ -638,6 +646,11 @@ const UI: Record<Lang, UIStrings> = {
     afterCallTitle: "Chaque appel devient un message WhatsApp",
     waitingMessage: "En attente de votre appel test…",
     calledMessage: "Message généré suite à votre appel test ci-dessus.",
+    blockedLimit: "Votre limite d'appels est atteinte, écrivez-nous pour la suite.",
+    blockedLocked: "Écrivez-nous pour demander un appel-test.",
+    blockedUnavailable: "L'appel-test est momentanément indisponible. Écrivez-nous, nous revenons vers vous.",
+    blockedFormCta: "Écrire via le formulaire",
+    blockedWhatsappCta: "Écrire sur WhatsApp",
     notCalledMessage: "Appelez le numéro de démo ci-dessus pour voir ce message apparaître ici.",
     sentJustNow: "Envoyé à l'instant",
     whatsappHeaderName: "Orlane · Assistant ByCo",
@@ -714,6 +727,11 @@ const UI: Record<Lang, UIStrings> = {
     afterCallTitle: "Every call becomes a WhatsApp message",
     waitingMessage: "Waiting for your test call…",
     calledMessage: "Message generated from your test call above.",
+    blockedLimit: "Your call limit has been reached, write to us for the next step.",
+    blockedLocked: "Write to us to request a test call.",
+    blockedUnavailable: "The test call is temporarily unavailable. Write to us and we will get back to you.",
+    blockedFormCta: "Write via the form",
+    blockedWhatsappCta: "Write on WhatsApp",
     notCalledMessage: "Call the demo number above to see this message appear here.",
     sentJustNow: "Sent just now",
     whatsappHeaderName: "Orlane · ByCo Assistant",
@@ -835,11 +853,26 @@ function DecouvrirDemo() {
   const prospect = resolveProspect(rawProspect);
   const image = resolveImage(rawImage);
   const logo = resolveImage(rawLogo);
-  const accent = resolveAccentTheme(rawCouleur);
+  const brandTheme = resolveProspectBranding(prospect);
+  const accent = resolveAccentTheme(rawCouleur ?? (brandTheme?.fullTheme ? brandTheme.accentColor : undefined));
+  // Clé du prospect (même normalisation que la liste blanche du Worker).
+  const prospectKey = prospect ? prospect.normalize("NFC").trim().toLowerCase() : undefined;
   const copy = COPY[secteur][lang];
   const ui = UI[lang];
   const [called, setCalled] = useState(false);
   const marche = useMarche();
+  // Ouverture du lien (une fois par session et par prospect, sans cookie).
+  useEffect(() => {
+    if (!prospectKey) return;
+    try {
+      const k = "byco-open:" + prospectKey;
+      if (window.sessionStorage.getItem(k)) return;
+      window.sessionStorage.setItem(k, "1");
+    } catch {
+      /* stockage indisponible : on suit quand même */
+    }
+    trackDemo("open", prospectKey, lang);
+  }, [prospectKey, lang]);
   const price = priceFor("Business", marche);
   const pricePlus = priceFor("Business+", marche);
 
@@ -859,9 +892,10 @@ function DecouvrirDemo() {
         setCalled={setCalled}
         marche={marche}
         accent={accent}
+        prospectKey={prospectKey}
       />
       <WhatsAppConfirmation copy={copy} ui={ui} called={called} />
-      <OffreDecouverte ui={ui} price={price} pricePlus={pricePlus} />
+      <OffreDecouverte ui={ui} price={price} pricePlus={pricePlus} prospectKey={prospectKey} />
       <SuiviForm ui={ui} accent={accent} />
       <Footer ui={ui} />
     </div>
@@ -1249,6 +1283,69 @@ function Comparaison({ ui, accent }: { ui: UIStrings; accent?: AccentTheme }) {
   );
 }
 
+/* ── Message quand l'appel-test n'est pas disponible ─────────────
+   Limite atteinte, lien non autorisé ou service indisponible : on
+   renvoie vers le formulaire (#contact) ou WhatsApp, jamais un mur. */
+
+function BlockedNotice({
+  ui,
+  blocked,
+  prospectKey,
+  accent,
+}: {
+  ui: UIStrings;
+  blocked: Exclude<OrlaneBlock, null>;
+  prospectKey?: string;
+  accent?: AccentTheme;
+}) {
+  const message =
+    blocked === "limit" ? ui.blockedLimit : blocked === "locked" ? ui.blockedLocked : ui.blockedUnavailable;
+  const linkStyle: React.CSSProperties = {
+    display: "inline-flex",
+    alignItems: "center",
+    justifyContent: "center",
+    padding: "11px 18px",
+    borderRadius: 10,
+    fontSize: 13.5,
+    fontWeight: 700,
+    textDecoration: "none",
+  };
+  return (
+    <div
+      role="status"
+      style={{
+        marginTop: 14,
+        padding: "16px 18px",
+        borderRadius: 12,
+        border: "1px solid rgba(255,255,255,0.18)",
+        background: "rgba(255,255,255,0.06)",
+        color: "#fff",
+        textAlign: "center",
+      }}
+    >
+      <p style={{ margin: "0 0 12px", fontSize: 14.5, lineHeight: 1.55 }}>{message}</p>
+      <div style={{ display: "flex", gap: 10, flexWrap: "wrap", justifyContent: "center" }}>
+        <a
+          href="#contact"
+          onClick={() => trackDemo("click_form", prospectKey)}
+          style={{ ...linkStyle, background: accent?.base ?? C.teal, color: accent?.onBase ?? "#fff" }}
+        >
+          {ui.blockedFormCta}
+        </a>
+        <a
+          href={WHATSAPP_URL}
+          target="_blank"
+          rel="noopener noreferrer"
+          onClick={() => trackDemo("click_whatsapp", prospectKey)}
+          style={{ ...linkStyle, background: C.whatsapp, color: "#fff" }}
+        >
+          {ui.blockedWhatsappCta}
+        </a>
+      </div>
+    </div>
+  );
+}
+
 /* ── Section 3 — Démo interactive ──────────────────────────── */
 
 function DemoInteractive({
@@ -1258,6 +1355,7 @@ function DemoInteractive({
   setCalled,
   marche,
   accent,
+  prospectKey,
 }: {
   copy: Copy;
   ui: UIStrings;
@@ -1265,8 +1363,9 @@ function DemoInteractive({
   setCalled: (v: boolean) => void;
   marche: Marche;
   accent?: AccentTheme;
+  prospectKey?: string;
 }) {
-  const { status, start, hangup } = useOrlaneCall(marche, () => setCalled(true));
+  const { status, blocked, start, hangup } = useOrlaneCall(marche, () => setCalled(true), prospectKey);
   const buttonLabel =
     status === "connecting"
       ? ui.callButtonConnecting
@@ -1362,6 +1461,10 @@ function DemoInteractive({
           >
             {buttonLabel}
           </button>
+
+          {blocked && (
+            <BlockedNotice ui={ui} blocked={blocked} prospectKey={prospectKey} accent={accent} />
+          )}
           <div
             style={{
               textAlign: "center",
@@ -1566,10 +1669,12 @@ function OffreDecouverte({
   ui,
   price,
   pricePlus,
+  prospectKey,
 }: {
   ui: UIStrings;
   price: string;
   pricePlus: string;
+  prospectKey?: string;
 }) {
   const offerTitle = ui.offerTitleTemplate.replace("{price}", price);
   const badgeOffer = ui.badgeOfferTemplate.replace("{price}", price);
@@ -1664,6 +1769,7 @@ function OffreDecouverte({
             href={WHATSAPP_URL}
             target="_blank"
             rel="noopener noreferrer"
+            onClick={() => trackDemo("click_whatsapp", prospectKey)}
             style={{
               display: "inline-flex",
               alignItems: "center",
@@ -1746,7 +1852,7 @@ function SuiviForm({ ui, accent }: { ui: UIStrings; accent?: AccentTheme }) {
   };
 
   return (
-    <Section bg={C.paperDeep}>
+    <Section bg={C.paperDeep} id="contact">
       <Container>
         <div style={{ maxWidth: 480, margin: "0 auto", textAlign: "center" }}>
           <Eyebrow color={C.tealDeep} center>
