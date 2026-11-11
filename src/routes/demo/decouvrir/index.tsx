@@ -284,10 +284,10 @@ function resolveAccentTheme(raw: string | undefined): AccentTheme | undefined {
    partagé, pour éviter toute duplication de page par secteur.
    ─────────────────────────────────────────────────────────────── */
 
-type Secteur = "sante" | "urgence" | "hotellerie" | "default";
+type Secteur = "sante" | "urgence" | "hotellerie" | "immobilier" | "default";
 
 function resolveSecteur(raw: string | undefined): Secteur {
-  if (raw === "sante" || raw === "urgence" || raw === "hotellerie") return raw;
+  if (raw === "sante" || raw === "urgence" || raw === "hotellerie" || raw === "immobilier") return raw;
   return "default";
 }
 
@@ -443,6 +443,52 @@ const COPY: Record<Secteur, Record<Lang, Copy>> = {
         "A client called with a general inquiry.\nNumber: +33 6 XX XX XX XX\nWould like a callback if needed.",
     },
   },
+  immobilier: {
+    fr: {
+      eyebrowHero: "▪ Toujours disponible pour vos clients",
+      headline: "La nuit ou le week-end, qui répond à vos clients\u00A0?",
+      accrocheHeadline: "Vous, en visite\u00A0: qui décroche\u00A0?",
+      accrocheP1:
+        "Une agence, c'est d'abord de l'attention portée au client présent : la visite en cours, la négociation, le dossier à finaliser. C'est une force, et une vraie promesse de sérieux.",
+      accrocheP2:
+        "Le revers, lui, n'est jamais dit à voix haute : pendant ce temps, le téléphone sonne et les messages WhatsApp arrivent, et il n'y a pas toujours quelqu'un de disponible pour répondre, ni pour dire si un bien est encore disponible, ni pour fixer une visite.",
+      chips: [
+        { label: "Bien", value: "Disponible" },
+        { label: "Visite", value: "Sur rendez-vous", accent: true },
+        { label: "Disponibilité", value: "7j/7" },
+        { label: "Zone", value: "Votre secteur" },
+      ],
+      demoIntro:
+        "C'est vous qui appelez ci-dessous : un vrai appel vers Orlane, l'agent vocal de démonstration ByCo. Une fois configuré et personnalisé pour votre agence, votre agent saura restituer ce type d'information, comme dans l'exemple ci-dessous.",
+      whatsappBody:
+        "Dès que vous raccrochez, un récapitulatif part directement sur WhatsApp : le bien concerné, le numéro du client, et ce qu'il attend de vous. Rien ne se perd, même en pleine visite.",
+      recapTitle: "📞 Nouvel appel reçu",
+      recapBody:
+        "Un client a appelé pour savoir si un terrain est toujours disponible.\nNuméro : +237 6 XX XX XX XX\nSouhaite organiser une visite.",
+    },
+    en: {
+      eyebrowHero: "▪ Always available for your clients",
+      headline: "At night or on weekends, who answers your clients?",
+      accrocheHeadline: "You, on a viewing: who picks up?",
+      accrocheP1:
+        "An agency is, first of all, attention given to the client in front of you: the viewing in progress, the negotiation, the file to finalize. That's a strength, and a real promise of professionalism.",
+      accrocheP2:
+        "The downside is never said out loud: meanwhile the phone keeps ringing and WhatsApp messages keep arriving, and there isn't always someone free to answer, not to say whether a property is still available, not to book a viewing.",
+      chips: [
+        { label: "Property", value: "Available" },
+        { label: "Viewing", value: "By appointment", accent: true },
+        { label: "Availability", value: "7 days a week" },
+        { label: "Area", value: "Your region" },
+      ],
+      demoIntro:
+        "You're the one calling below: a real call to Orlane, ByCo's demo voice agent. Once configured and customized for your agency, your agent will handle this kind of information, as shown in the example below.",
+      whatsappBody:
+        "As soon as you hang up, a summary is sent straight to WhatsApp: the property concerned, the client's number, and what they need from you. Nothing gets lost, even mid-viewing.",
+      recapTitle: "📞 New call received",
+      recapBody:
+        "A client called to ask if a plot of land is still available.\nNumber: +237 6 XX XX XX XX\nWould like to arrange a viewing.",
+    },
+  },
   default: {
     fr: {
       eyebrowHero: "▪ Toujours disponible pour vos clients",
@@ -523,6 +569,7 @@ type UIStrings = {
   prospectBadgeTemplate: string;
   offerEyebrow: string;
   offerTitleTemplate: string;
+  offerOptionTemplate: string;
   offerDesc: string;
   badgeOfferTemplate: string;
   badgeGuarantee: string;
@@ -597,13 +644,15 @@ const UI: Record<Lang, UIStrings> = {
     whatsappOnline: "en ligne",
     prospectBadgeTemplate: "Préparé pour {name}",
     offerEyebrow: "Envie d'aller plus loin ?",
-    offerTitleTemplate: "Le plan Business+ : {price}",
+    offerTitleTemplate: "Le plan Business : {price}",
+    offerOptionTemplate:
+      "En option : le plan Business+ ({pricePlus}) ajoute l'accueil téléphonique IA 24h/24, avec voix sur-mesure, et les intégrations à vos outils (CRM, agenda).",
     offerDesc:
-      "Accueil IA disponible 24h/24, automatisation WhatsApp complète, réservation et confirmation automatique, suivi client automatisé, ReadyFlow Manager inclus, voix IA sur-mesure. Mise en place en 30 à 45 jours, tests et validations inclus. Prix plein, paiement unique pour la mise en place, sans frais de service mensuel de notre part.",
-    badgeOfferTemplate: "Plan Business+ · {price}",
+      "Un assistant IA sur WhatsApp, disponible 24h/24 : il répond, qualifie chaque message et prend le rendez-vous. Site professionnel, réservation avec rappels et suivi des demandes inclus, ReadyFlow Manager inclus. Mise en place en 3 à 4 semaines, tests et validations inclus. Prix plein, paiement unique pour la mise en place, sans frais de service mensuel de notre part.",
+    badgeOfferTemplate: "Plan Business · {price}",
     badgeGuarantee: "Garantie 30 jours à compter de la livraison : si le système ne fonctionne pas comme convenu dans le cahier validé ensemble, nous le corrigeons ou nous remboursons la mise en place. Frais d'usage des fournisseurs non inclus",
     badgeTestimonial: "Si vous êtes satisfait, un témoignage vidéo ou un avis est le bienvenu, sans obligation.",
-    offerFooterNote: "Les formules Essential, Business et Premium restent consultables sur",
+    offerFooterNote: "Les formules Essential, Business+ et Premium restent consultables sur",
     offerFooterLinkText: "le site principal ByCo Systems",
     whatsappCta: "💬 Écrire à Orlane sur WhatsApp",
     whatsappCtaNote: "Même ligne Orlane, cette fois sur WhatsApp : votre message nous parvient directement.",
@@ -671,13 +720,15 @@ const UI: Record<Lang, UIStrings> = {
     whatsappOnline: "online",
     prospectBadgeTemplate: "Prepared for {name}",
     offerEyebrow: "Want to go further?",
-    offerTitleTemplate: "The Business+ plan: {price}",
+    offerTitleTemplate: "The Business plan: {price}",
+    offerOptionTemplate:
+      "Optional upgrade: the Business+ plan ({pricePlus}) adds 24/7 AI phone reception with a custom voice, plus integrations with your tools (CRM, calendar).",
     offerDesc:
-      "24/7 AI reception, full WhatsApp automation, automatic booking and confirmation, automated client follow-up, ReadyFlow Manager included, custom AI voice. Setup in 30 to 45 days, testing and validation included. Full price, one-time payment for the setup, with no monthly service fee from us.",
-    badgeOfferTemplate: "Business+ plan · {price}",
+      "An AI assistant on WhatsApp, available 24/7: it replies, qualifies every message and books the appointment. Professional website, booking with reminders and request tracking included, ReadyFlow Manager included. Setup in 3 to 4 weeks, testing and validation included. Full price, one-time payment for the setup, with no monthly service fee from us.",
+    badgeOfferTemplate: "Business plan · {price}",
     badgeGuarantee: "30-day guarantee from delivery: if the system does not work as agreed in the validated specification, we fix it or refund the setup. Provider usage fees not included",
     badgeTestimonial: "If you are satisfied, a video testimonial or a review is welcome, but entirely optional.",
-    offerFooterNote: "The Essential, Business and Premium plans remain available on",
+    offerFooterNote: "The Essential, Business+ and Premium plans remain available on",
     offerFooterLinkText: "the main ByCo Systems site",
     whatsappCta: "💬 Message Orlane on WhatsApp",
     whatsappCtaNote: "Same Orlane line, this time on WhatsApp: your message reaches us directly.",
@@ -738,6 +789,20 @@ const META: Record<Secteur, Record<Lang, { title: string; description: string; o
       ogDescription: "When your front desk is busy, who answers the phone? Test Orlane live.",
     },
   },
+  immobilier: {
+    fr: {
+      title: "Découvrir votre agent d'accueil × ByCo Systems",
+      description:
+        "Démonstration interactive de l'agent vocal ByCo pour agences immobilières : testez Orlane en direct.",
+      ogDescription: "Pendant une visite, qui répond au téléphone ? Testez Orlane en direct.",
+    },
+    en: {
+      title: "Discover your AI receptionist × ByCo Systems",
+      description:
+        "Interactive demo of the ByCo voice agent for real estate agencies: test Orlane live.",
+      ogDescription: "While you're on a viewing, who answers the phone? Test Orlane live.",
+    },
+  },
   default: {
     fr: {
       title: "Découvrir votre agent d'accueil × ByCo Systems",
@@ -775,7 +840,8 @@ function DecouvrirDemo() {
   const ui = UI[lang];
   const [called, setCalled] = useState(false);
   const marche = useMarche();
-  const price = priceFor("Business+", marche);
+  const price = priceFor("Business", marche);
+  const pricePlus = priceFor("Business+", marche);
 
   return (
     <div style={{ fontFamily: SANS, background: C.paper, color: C.ink }}>
@@ -795,7 +861,7 @@ function DecouvrirDemo() {
         accent={accent}
       />
       <WhatsAppConfirmation copy={copy} ui={ui} called={called} />
-      <OffreDecouverte ui={ui} price={price} />
+      <OffreDecouverte ui={ui} price={price} pricePlus={pricePlus} />
       <SuiviForm ui={ui} accent={accent} />
       <Footer ui={ui} />
     </div>
@@ -1496,9 +1562,18 @@ function WhatsAppMock({ copy, ui, called }: { copy: Copy; ui: UIStrings; called:
 
 /* ── Section 5 — L'offre ────────────────────────────────────── */
 
-function OffreDecouverte({ ui, price }: { ui: UIStrings; price: string }) {
+function OffreDecouverte({
+  ui,
+  price,
+  pricePlus,
+}: {
+  ui: UIStrings;
+  price: string;
+  pricePlus: string;
+}) {
   const offerTitle = ui.offerTitleTemplate.replace("{price}", price);
   const badgeOffer = ui.badgeOfferTemplate.replace("{price}", price);
+  const offerOption = ui.offerOptionTemplate.replace("{pricePlus}", pricePlus);
   return (
     <Section bg={C.noir}>
       <Container>
@@ -1537,6 +1612,17 @@ function OffreDecouverte({ ui, price }: { ui: UIStrings; price: string }) {
             }}
           >
             {ui.offerDesc}
+          </p>
+          <p
+            style={{
+              fontSize: 13.5,
+              color: C.tealLight,
+              lineHeight: 1.6,
+              maxWidth: 480,
+              margin: "0 auto 20px",
+            }}
+          >
+            {offerOption}
           </p>
 
           <div
