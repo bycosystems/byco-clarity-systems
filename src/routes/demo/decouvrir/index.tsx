@@ -83,7 +83,7 @@ export const Route = createFileRoute("/demo/decouvrir/")({
     image: typeof search.image === "string" ? search.image : undefined,
     logo: typeof search.logo === "string" ? search.logo : undefined,
     couleur: typeof search.couleur === "string" ? search.couleur : undefined,
-    rond: typeof search.rond === "string" ? search.rond : undefined,
+    rond: search.rond === 1 || search.rond === true || search.rond === "1" ? "1" : undefined,
   }),
   component: DecouvrirDemo,
   head: ({ match }) => {
