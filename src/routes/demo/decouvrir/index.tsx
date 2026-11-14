@@ -1063,7 +1063,7 @@ function HeroImage({ src, borderColor, logo }: { src: string; borderColor?: stri
         justifyContent: "center",
       }}
     >
-      <div style={{ position: "relative", maxWidth: "100%", paddingBottom: logo && !logoFailed ? 34 : 0 }}>
+      <div style={{ position: "relative", maxWidth: "100%", paddingBottom: logo && !logoFailed ? "clamp(36px, 6vw, 52px)" : 0 }}>
         <img
           src={src}
           alt=""
@@ -1090,7 +1090,7 @@ function HeroImage({ src, borderColor, logo }: { src: string; borderColor?: stri
             onError={() => setLogoFailed(true)}
             style={{
               position: "absolute",
-              left: 18,
+              right: 18,
               bottom: 0,
               width: "clamp(72px, 12vw, 104px)",
               height: "clamp(72px, 12vw, 104px)",
