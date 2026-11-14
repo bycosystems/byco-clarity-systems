@@ -62,6 +62,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
 import { useMarche } from "@/lib/market";
+import { NightScene, PremiumHero, SiteArgument, resolveAgency } from "@/components/demo/premium";
 import { priceFor, type Marche } from "@/lib/pricing";
 import { trackDemo, useOrlaneCall, type OrlaneBlock } from "@/lib/useOrlaneCall";
 
@@ -852,9 +853,10 @@ function DecouvrirDemo() {
     couleur: rawCouleur,
     rond: rawRond,
   } = Route.useSearch();
-  const secteur = resolveSecteur(rawSecteur);
-  const lang = resolveLang(rawLang);
   const prospect = resolveProspect(rawProspect);
+  const agency = resolveAgency(prospect);
+  const secteur = agency ? "immobilier" : resolveSecteur(rawSecteur);
+  const lang = resolveLang(rawLang);
   const image = resolveImage(rawImage);
   const logo = resolveImage(rawLogo);
   const brandTheme = resolveProspectBranding(prospect);
@@ -886,9 +888,18 @@ function DecouvrirDemo() {
         rel="stylesheet"
         href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,600;0,700;1,500;1,600&family=Inter:wght@400;500;600;700&display=swap"
       />
-      <Hero copy={copy} ui={ui} prospect={prospect} image={image} logo={logo} logoRond={rawRond === "1"} accent={accent} />
-      <Accroche copy={copy} ui={ui} />
-      <Comparaison ui={ui} accent={accent} />
+      {agency ? (
+        <>
+          <PremiumHero agency={agency} name={prospect ?? agency.shortName} />
+          <NightScene agency={agency} />
+        </>
+      ) : (
+        <>
+          <Hero copy={copy} ui={ui} prospect={prospect} image={image} logo={logo} logoRond={rawRond === "1"} accent={accent} />
+          <Accroche copy={copy} ui={ui} />
+          <Comparaison ui={ui} accent={accent} />
+        </>
+      )}
       <DemoInteractive
         copy={copy}
         ui={ui}
@@ -899,6 +910,7 @@ function DecouvrirDemo() {
         prospectKey={prospectKey}
       />
       <WhatsAppConfirmation copy={copy} ui={ui} called={called} />
+      {agency && <SiteArgument agency={agency} />}
       <OffreDecouverte ui={ui} price={price} pricePlus={pricePlus} prospectKey={prospectKey} />
       <SuiviForm ui={ui} accent={accent} />
       <Footer ui={ui} />
