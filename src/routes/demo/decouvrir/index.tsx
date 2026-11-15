@@ -63,6 +63,7 @@ import { createFileRoute } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
 import { useMarche } from "@/lib/market";
 import { NightScene, PaymentPlan, PremiumHero, SiteArgument, resolveAgency } from "@/components/demo/premium";
+import { Parallax } from "@/components/demo/motion";
 import { priceFor, type Marche } from "@/lib/pricing";
 import { trackDemo, useOrlaneCall, type OrlaneBlock } from "@/lib/useOrlaneCall";
 
@@ -1434,9 +1435,9 @@ function DemoInteractive({
     <Section bg={C.noir} id="demo">
       <Container>
         <div style={{ textAlign: "center", maxWidth: 620, margin: "0 auto 34px" }}>
-          <Eyebrow color={accent?.text ?? C.tealLight} center>
+          <Parallax speed={0.12}><Eyebrow color={accent?.text ?? C.tealLight} center>
             {ui.demoEyebrow}
-          </Eyebrow>
+          </Eyebrow></Parallax>
           <h2
             style={{
               fontFamily: SERIF,
@@ -1747,9 +1748,9 @@ function OffreDecouverte({
             textAlign: "center",
           }}
         >
-          <Eyebrow color={C.tealLight} center>
+          <Parallax speed={0.12}><Eyebrow color={C.tealLight} center>
             {ui.offerEyebrow}
-          </Eyebrow>
+          </Eyebrow></Parallax>
           <h2
             style={{
               fontFamily: SERIF,
@@ -1909,9 +1910,9 @@ function SuiviForm({ ui, accent }: { ui: UIStrings; accent?: AccentTheme }) {
     <Section bg={C.paperDeep} id="contact">
       <Container>
         <div style={{ maxWidth: 480, margin: "0 auto", textAlign: "center" }}>
-          <Eyebrow color={C.tealDeep} center>
+          <Parallax speed={0.12}><Eyebrow color={C.tealDeep} center>
             {ui.suiviEyebrow}
-          </Eyebrow>
+          </Eyebrow></Parallax>
           <h2
             style={{
               fontFamily: SERIF,

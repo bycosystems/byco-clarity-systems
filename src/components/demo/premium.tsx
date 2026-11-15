@@ -3,6 +3,7 @@
 // autonome avec preuve. Chaque agence a sa couleur, son logo et son visuel.
 // Pure front-end, styles inline (même approche que la page démo).
 
+import { Parallax, CountText } from "./motion";
 import { useCallback, useEffect, useRef, useState } from "react";
 import type { CSSProperties, ReactNode } from "react";
 import type { Marche } from "@/lib/pricing";
@@ -399,7 +400,7 @@ export function PremiumHero({ agency, name }: { agency: Agency; name: string }) 
               }}
             />
           </div>
-          <div
+          <Parallax speed={-0.1}><div
             style={{
               fontSize: 11,
               letterSpacing: "0.14em",
@@ -413,7 +414,7 @@ export function PremiumHero({ agency, name }: { agency: Agency; name: string }) 
             }}
           >
             Démo ByCo Systems
-          </div>
+          </div></Parallax>
         </div>
 
         <div
@@ -494,7 +495,7 @@ export function PremiumHero({ agency, name }: { agency: Agency; name: string }) 
                 className="byco-anim"
                 style={{ width: 9, height: 9, borderRadius: "50%", background: agency.accent, animation: "byco-pulse 2.2s ease-in-out infinite" }}
               />
-              Orlane, l'accueil intelligent de ByCo Systems, téléphone et WhatsApp, 24 h sur 24.
+              Orlane, l'accueil intelligent de ByCo Systems, téléphone et WhatsApp, 24 h sur 24.
             </div>
           </div>
 
@@ -602,9 +603,9 @@ export function NightScene({ agency }: { agency: Agency }) {
       </svg>
       <div style={{ ...wrap, position: "relative" }}>
         <div style={{ textAlign: "center", maxWidth: 680, margin: "0 auto" }}>
-          <div style={{ fontSize: 11, letterSpacing: "0.26em", textTransform: "uppercase", color: "#9FB6CA", fontWeight: 700 }}>
+          <Parallax speed={0.12}><div style={{ fontSize: 11, letterSpacing: "0.26em", textTransform: "uppercase", color: "#9FB6CA", fontWeight: 700 }}>
             Dimanche, 23 h 12
-          </div>
+          </div></Parallax>
           <h2 style={{ fontFamily: SERIF, fontSize: "clamp(26px, 4.4vw, 40px)", lineHeight: 1.18, fontWeight: 700, margin: "14px 0 10px", textWrap: "balance" }}>
             Pendant que vous dormez, vos clients, eux, écrivent.
           </h2>
@@ -760,9 +761,9 @@ export function SiteArgument({ agency }: { agency: Agency }) {
     <div id="site" style={{ background: "linear-gradient(180deg, #FBEBD5 0%, #F6F3EE 40%)", padding: "clamp(48px, 8vw, 88px) 0", fontFamily: SANS, color: "#1A1A1A" }}>
       <div style={wrap}>
         <div style={{ maxWidth: 700 }}>
-          <div style={{ fontSize: 10.5, letterSpacing: "0.26em", textTransform: "uppercase", color: agency.accent, fontWeight: 700 }}>
+          <Parallax speed={0.12}><div style={{ fontSize: 10.5, letterSpacing: "0.26em", textTransform: "uppercase", color: agency.accent, fontWeight: 700 }}>
             Aller plus loin
-          </div>
+          </div></Parallax>
           <h2 style={{ fontFamily: SERIF, fontSize: "clamp(26px, 4.4vw, 40px)", lineHeight: 1.16, fontWeight: 700, margin: "12px 0 12px", textWrap: "balance" }}>
             Facebook est votre vitrine. Votre site sera votre maison.
           </h2>
@@ -935,9 +936,9 @@ export function PaymentPlan({ agency, marche }: { agency: Agency; marche: Marche
     <div style={{ background: "#F6F3EE", padding: "clamp(44px, 7vw, 76px) 0", fontFamily: SANS, color: "#1A1A1A" }}>
       <div style={wrap}>
         <div style={{ maxWidth: 680, margin: "0 auto", textAlign: "center" }}>
-          <div style={{ fontSize: 10.5, letterSpacing: "0.26em", textTransform: "uppercase", color: agency.accent, fontWeight: 700 }}>
+          <Parallax speed={0.12}><div style={{ fontSize: 10.5, letterSpacing: "0.26em", textTransform: "uppercase", color: agency.accent, fontWeight: 700 }}>
             Paiement
-          </div>
+          </div></Parallax>
           <h2 style={{ fontFamily: SERIF, fontSize: "clamp(24px, 4vw, 34px)", lineHeight: 1.18, fontWeight: 700, margin: "12px 0 10px", textWrap: "balance" }}>
             Payez en 3 tranches, sans changer le prix.
           </h2>
@@ -966,10 +967,12 @@ export function PaymentPlan({ agency, marche }: { agency: Agency; marche: Marche
                 textAlign: "center",
               }}
             >
-              <div style={{ fontFamily: SERIF, fontSize: 28, fontWeight: 700, color: agency.accent }}>{pct}</div>
+              <div style={{ fontFamily: SERIF, fontSize: 28, fontWeight: 700, color: agency.accent }}>
+                <CountText text={pct} duration={2600} />
+              </div>
               <div style={{ fontSize: 14, fontWeight: 600, margin: "4px 0 4px" }}>{when}</div>
               <div style={{ fontSize: 12.5, lineHeight: 1.5, color: "#6B726F", margin: "0 0 8px" }}>{detail}</div>
-              <div style={{ fontSize: 15, color: "#10283A", fontWeight: 600 }}>{amount}</div>
+              <div style={{ fontSize: 15, color: "#10283A", fontWeight: 600 }}><CountText text={amount} duration={1100} /></div>
             </div>
           ))}
         </div>
@@ -1000,7 +1003,7 @@ export function PaymentPlan({ agency, marche }: { agency: Agency; marche: Marche
               <div key={r.name} style={{ borderTop: "1px solid #EFE9DD", padding: "12px 0", display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(min(100%, 170px), 1fr))", gap: "4px 16px", fontSize: 14 }}>
                 <div style={{ fontWeight: 600, color: "#1A1A1A" }}>{r.name}</div>
                 <div style={{ color: "#4A5552" }}>{r.mois} par mois</div>
-                <div style={{ fontWeight: 700 }}>{r.trois} sur 3 ans</div>
+                <div style={{ fontWeight: 700 }}><CountText text={r.trois} duration={1100} /> sur 3 ans</div>
               </div>
             ))}
             <div style={{ borderTop: `2px solid ${agency.accent}`, background: rgba(agency.accent, 0.06), padding: "12px 10px", display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(min(100%, 170px), 1fr))", gap: "4px 16px", fontSize: 14, borderRadius: 8 }}>
