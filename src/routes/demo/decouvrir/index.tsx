@@ -911,7 +911,7 @@ function DecouvrirDemo() {
       />
       <WhatsAppConfirmation copy={copy} ui={ui} called={called} />
       {agency && <SiteArgument agency={agency} />}
-      <OffreDecouverte ui={ui} price={price} pricePlus={pricePlus} prospectKey={prospectKey} />
+      <OffreDecouverte ui={ui} price={price} pricePlus={pricePlus} prospectKey={prospectKey} agencyMode={!!agency} />
       {agency && <PaymentPlan agency={agency} marche={marche} />}
       <SuiviForm ui={ui} accent={accent} />
       <Footer ui={ui} />
@@ -1722,11 +1722,13 @@ function OffreDecouverte({
   price,
   pricePlus,
   prospectKey,
+  agencyMode,
 }: {
   ui: UIStrings;
   price: string;
   pricePlus: string;
   prospectKey?: string;
+  agencyMode?: boolean;
 }) {
   const offerTitle = ui.offerTitleTemplate.replace("{price}", price);
   const badgeOffer = ui.badgeOfferTemplate.replace("{price}", price);
@@ -1792,7 +1794,7 @@ function OffreDecouverte({
             }}
           >
             <OfferBadge>{badgeOffer}</OfferBadge>
-            <OfferBadge>{ui.badgeGuarantee}</OfferBadge>
+            <OfferBadge>{agencyMode ? "Garantie de conformité 30 jours, paiement en 3 tranches. Frais d'usage des fournisseurs non inclus" : ui.badgeGuarantee}</OfferBadge>
             <OfferBadge>{ui.badgeTestimonial}</OfferBadge>
           </div>
 

@@ -897,14 +897,40 @@ const TOTAUX: Record<Marche, Record<"Business" | "Business+", string>> = {
   europe: { Business: "990 €", "Business+": "1 490 €" },
 };
 
+/* Tarifs publics relevés le 15/11/2026. Conversions indicatives :
+   1 USD ≈ 585 FCFA, 1 GBP ≈ 786 FCFA, 1 € = 655,957 FCFA. */
+type Compare = { name: string; mois: string; trois: string };
+const COMPARE: Record<Marche, Compare[]> = {
+  afrique_francophone: [
+    { name: "Prestataire à Dakar (WhatsApp + IA)", mois: "75 000 FCFA + 350 000 FCFA de mise en place", trois: "3 050 000 FCFA" },
+    { name: "Réceptionniste IA, offre d'entrée (États-Unis)", mois: "49 $ ≈ 28 700 FCFA", trois: "≈ 1 030 000 FCFA" },
+    { name: "Réceptionniste IA, offre courante (États-Unis)", mois: "95 à 99 $ ≈ 56 000 à 58 000 FCFA", trois: "≈ 2 000 000 à 2 080 000 FCFA" },
+    { name: "Réceptionniste IA avec WhatsApp (Royaume-Uni)", mois: "149 £ ≈ 117 000 FCFA", trois: "≈ 4 220 000 FCFA" },
+  ],
+  europe: [
+    { name: "Prestataire à Dakar (WhatsApp + IA)", mois: "≈ 114 € + 534 € de mise en place", trois: "≈ 4 650 €" },
+    { name: "Réceptionniste IA, offre d'entrée (États-Unis)", mois: "49 $ ≈ 44 €", trois: "≈ 1 570 €" },
+    { name: "Réceptionniste IA, offre courante (États-Unis)", mois: "95 à 99 $ ≈ 85 à 88 €", trois: "≈ 3 050 à 3 170 €" },
+    { name: "Réceptionniste IA avec WhatsApp (Royaume-Uni)", mois: "149 £ ≈ 179 €", trois: "≈ 6 430 €" },
+  ],
+};
+
 export function PaymentPlan({ agency, marche }: { agency: Agency; marche: Marche }) {
   const t = TRANCHES[marche];
   const tot = TOTAUX[marche];
-  const steps: Array<[string, string, string]> = [
-    ["40 %", "À la commande", t.Business[0]],
-    ["30 %", "À la mise en ligne", t.Business[1]],
-    ["30 %", "Après les 30 jours de garantie", t.Business[2]],
+  const cmp = COMPARE[marche];
+  const steps: Array<[string, string, string, string]> = [
+    ["40 %", "À la commande", "Nous démarrons la mise en place.", t.Business[0]],
+    ["30 %", "À la fin de la mise en place", "Livraison au plus tard 30 jours après la commande, avec des tests continus.", t.Business[1]],
+    ["30 %", "À la fin des 30 jours de garantie", "Dernière tranche, si tout est conforme.", t.Business[2]],
   ];
+  const card = {
+    background: "#ffffff",
+    border: "1px solid #E1DACD",
+    borderRadius: 16,
+    padding: "clamp(18px, 3vw, 26px)",
+  } as const;
+  const label = { fontSize: 12, fontWeight: 700, letterSpacing: "0.12em", textTransform: "uppercase", color: agency.accent } as const;
   return (
     <div style={{ background: "#F6F3EE", padding: "clamp(44px, 7vw, 76px) 0", fontFamily: SANS, color: "#1A1A1A" }}>
       <div style={wrap}>
@@ -923,13 +949,13 @@ export function PaymentPlan({ agency, marche }: { agency: Agency; marche: Marche
         <div
           style={{
             display: "grid",
-            gridTemplateColumns: "repeat(auto-fit, minmax(min(100%, 200px), 1fr))",
+            gridTemplateColumns: "repeat(auto-fit, minmax(min(100%, 210px), 1fr))",
             gap: 14,
-            maxWidth: 760,
+            maxWidth: 800,
             margin: "28px auto 0",
           }}
         >
-          {steps.map(([pct, when, amount], i) => (
+          {steps.map(([pct, when, detail, amount], i) => (
             <div
               key={i}
               style={{
@@ -941,7 +967,8 @@ export function PaymentPlan({ agency, marche }: { agency: Agency; marche: Marche
               }}
             >
               <div style={{ fontFamily: SERIF, fontSize: 28, fontWeight: 700, color: agency.accent }}>{pct}</div>
-              <div style={{ fontSize: 14, fontWeight: 600, margin: "4px 0 6px" }}>{when}</div>
+              <div style={{ fontSize: 14, fontWeight: 600, margin: "4px 0 4px" }}>{when}</div>
+              <div style={{ fontSize: 12.5, lineHeight: 1.5, color: "#6B726F", margin: "0 0 8px" }}>{detail}</div>
               <div style={{ fontSize: 15, color: "#10283A", fontWeight: 600 }}>{amount}</div>
             </div>
           ))}
@@ -951,21 +978,52 @@ export function PaymentPlan({ agency, marche }: { agency: Agency; marche: Marche
           Pour le plan Business+ : {t["Business+"][0]}, puis {t["Business+"][1]}, puis {t["Business+"][2]} ({tot["Business+"]} au total).
         </p>
 
-        <div
-          style={{
-            maxWidth: 760,
-            margin: "26px auto 0",
-            background: "#ffffff",
-            border: "1px solid #E1DACD",
-            borderRadius: 16,
-            padding: "clamp(18px, 3vw, 26px)",
-          }}
-        >
-          <div style={{ fontSize: 12, fontWeight: 700, letterSpacing: "0.12em", textTransform: "uppercase", color: agency.accent }}>
-            Acheter plutôt que louer
-          </div>
+        <div style={{ ...card, maxWidth: 800, margin: "26px auto 0" }}>
+          <div style={label}>Garantie de conformité 30 jours</div>
           <p style={{ fontSize: 15, lineHeight: 1.65, margin: "8px 0 0", color: "#2A3330" }}>
-            Beaucoup de systèmes comparables se louent par abonnement mensuel, et vous n'en êtes jamais propriétaire. Ici, vous payez la mise en place, puis le système est à vous : site, assistant, contenus. Les frais d'usage des fournisseurs (téléphonie, intelligence artificielle) restent à votre charge, directement auprès d'eux.
+            Avant de commencer, nous validons ensemble un cahier des charges : ce que le système doit faire, noir sur blanc. Pendant la mise en place puis les 30 jours qui suivent la livraison, nous testons en continu et corrigeons sans frais tout ce qui n'est pas conforme à ce cahier.
+          </p>
+          <ul style={{ fontSize: 14.5, lineHeight: 1.65, margin: "10px 0 0", paddingLeft: 20, color: "#2A3330" }}>
+            <li>La dernière tranche n'est due que si, au bout des 30 jours, plus aucune non-conformité n'est en attente.</li>
+            <li>Si nous ne parvenons pas à rendre le système conforme, nous vous remboursons les tranches déjà versées pour la mise en place.</li>
+            <li>Les frais d'usage des fournisseurs (téléphonie, intelligence artificielle) consommés pendant les tests ne sont pas remboursables : ils sont facturés directement par eux.</li>
+          </ul>
+        </div>
+
+        <div style={{ ...card, maxWidth: 800, margin: "18px auto 0" }}>
+          <div style={label}>Acheter plutôt que louer</div>
+          <p style={{ fontSize: 15, lineHeight: 1.65, margin: "8px 0 14px", color: "#2A3330" }}>
+            Les systèmes comparables se louent en général par abonnement mensuel, et vous n'en êtes jamais propriétaire. Ici, vous payez la mise en place, puis le système est à vous : site, assistante, contenus.
+          </p>
+          <div style={{ overflowX: "auto" }}>
+            <table style={{ width: "100%", borderCollapse: "collapse", fontSize: 13.5, minWidth: 520 }}>
+              <thead>
+                <tr style={{ textAlign: "left", color: "#6B726F" }}>
+                  <th style={{ padding: "8px 8px 8px 0", fontWeight: 600 }}>Solution ailleurs</th>
+                  <th style={{ padding: "8px", fontWeight: 600 }}>Par mois</th>
+                  <th style={{ padding: "8px 0 8px 8px", fontWeight: 600 }}>Sur 3 ans</th>
+                </tr>
+              </thead>
+              <tbody>
+                {cmp.map((r) => (
+                  <tr key={r.name} style={{ borderTop: "1px solid #EFE9DD" }}>
+                    <td style={{ padding: "10px 8px 10px 0" }}>{r.name}</td>
+                    <td style={{ padding: "10px 8px" }}>{r.mois}</td>
+                    <td style={{ padding: "10px 0 10px 8px", fontWeight: 600 }}>{r.trois}</td>
+                  </tr>
+                ))}
+                <tr style={{ borderTop: `2px solid ${agency.accent}`, background: rgba(agency.accent, 0.06) }}>
+                  <td style={{ padding: "10px 8px 10px 6px", fontWeight: 700 }}>Orlane pour {agency.shortName}</td>
+                  <td style={{ padding: "10px 8px" }}>Aucun abonnement</td>
+                  <td style={{ padding: "10px 6px 10px 8px", fontWeight: 700 }}>
+                    {tot.Business} à {tot["Business+"]}, une seule fois
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <p style={{ fontSize: 12.5, lineHeight: 1.6, color: "#6B726F", margin: "12px 0 0" }}>
+            Tarifs publics relevés le 15/11/2026, susceptibles de changer, conversions indicatives. Ces offres comprennent en général un nombre de minutes limité, sont surtout en anglais et n'incluent pas de site. Pour Orlane, les frais d'usage des fournisseurs (téléphonie, intelligence artificielle) restent à votre charge, directement auprès d'eux.
           </p>
         </div>
       </div>
