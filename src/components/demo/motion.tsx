@@ -5,12 +5,15 @@ import { useEffect, useRef, useState, type CSSProperties, type ReactNode } from 
 const reduced = () =>
   typeof window !== "undefined" && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
+/* Parallaxe horizontale liée au scroll.
+   - "left" / "right" : texte placé en marge, il glisse vers l'intérieur puis revient en place.
+   - "center" : texte centré, il fait un aller-retour horizontal. */
 export function Parallax({
-  speed = 0.12,
+  mode = "center",
   children,
   style,
 }: {
-  speed?: number;
+  mode?: "left" | "right" | "center";
   children: ReactNode;
   style?: CSSProperties;
 }) {
@@ -24,8 +27,14 @@ export function Parallax({
     const update = () => {
       frame = 0;
       const r = target.getBoundingClientRect();
-      const offset = r.top + r.height / 2 - window.innerHeight / 2;
-      el.style.transform = `translate3d(0, ${(-offset * speed).toFixed(1)}px, 0)`;
+      const vh = window.innerHeight;
+      // p : 0 quand le bloc entre par le bas, 1 quand il sort par le haut
+      const p = Math.min(1, Math.max(0, (vh - r.top) / (vh + r.height)));
+      const amp = Math.min(34, Math.max(12, window.innerWidth * 0.035));
+      let x: number;
+      if (mode === "center") x = Math.sin(p * Math.PI * 2) * amp;
+      else x = Math.sin(p * Math.PI) * amp * (mode === "left" ? 1 : -1);
+      el.style.transform = `translate3d(${x.toFixed(1)}px, 0, 0)`;
     };
     const onScroll = () => {
       if (!frame) frame = requestAnimationFrame(update);
@@ -38,7 +47,7 @@ export function Parallax({
       window.removeEventListener("resize", onScroll);
       if (frame) cancelAnimationFrame(frame);
     };
-  }, [speed]);
+  }, [mode]);
 
   return (
     <div ref={ref} style={{ display: "inline-block", maxWidth: "100%", willChange: "transform", ...style }}>

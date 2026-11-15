@@ -400,7 +400,7 @@ export function PremiumHero({ agency, name }: { agency: Agency; name: string }) 
               }}
             />
           </div>
-          <Parallax speed={-0.1}><div
+          <Parallax mode="right"><div
             style={{
               fontSize: 11,
               letterSpacing: "0.14em",
@@ -603,7 +603,7 @@ export function NightScene({ agency }: { agency: Agency }) {
       </svg>
       <div style={{ ...wrap, position: "relative" }}>
         <div style={{ textAlign: "center", maxWidth: 680, margin: "0 auto" }}>
-          <Parallax speed={0.12}><div style={{ fontSize: 11, letterSpacing: "0.26em", textTransform: "uppercase", color: "#9FB6CA", fontWeight: 700 }}>
+          <Parallax mode="center"><div style={{ fontSize: 11, letterSpacing: "0.26em", textTransform: "uppercase", color: "#9FB6CA", fontWeight: 700 }}>
             Dimanche, 23 h 12
           </div></Parallax>
           <h2 style={{ fontFamily: SERIF, fontSize: "clamp(26px, 4.4vw, 40px)", lineHeight: 1.18, fontWeight: 700, margin: "14px 0 10px", textWrap: "balance" }}>
@@ -761,7 +761,7 @@ export function SiteArgument({ agency }: { agency: Agency }) {
     <div id="site" style={{ background: "linear-gradient(180deg, #FBEBD5 0%, #F6F3EE 40%)", padding: "clamp(48px, 8vw, 88px) 0", fontFamily: SANS, color: "#1A1A1A" }}>
       <div style={wrap}>
         <div style={{ maxWidth: 700 }}>
-          <Parallax speed={0.12}><div style={{ fontSize: 10.5, letterSpacing: "0.26em", textTransform: "uppercase", color: agency.accent, fontWeight: 700 }}>
+          <Parallax mode="left"><div style={{ fontSize: 10.5, letterSpacing: "0.26em", textTransform: "uppercase", color: agency.accent, fontWeight: 700 }}>
             Aller plus loin
           </div></Parallax>
           <h2 style={{ fontFamily: SERIF, fontSize: "clamp(26px, 4.4vw, 40px)", lineHeight: 1.16, fontWeight: 700, margin: "12px 0 12px", textWrap: "balance" }}>
@@ -936,7 +936,7 @@ export function PaymentPlan({ agency, marche }: { agency: Agency; marche: Marche
     <div style={{ background: "#F6F3EE", padding: "clamp(44px, 7vw, 76px) 0", fontFamily: SANS, color: "#1A1A1A" }}>
       <div style={wrap}>
         <div style={{ maxWidth: 680, margin: "0 auto", textAlign: "center" }}>
-          <Parallax speed={0.12}><div style={{ fontSize: 10.5, letterSpacing: "0.26em", textTransform: "uppercase", color: agency.accent, fontWeight: 700 }}>
+          <Parallax mode="center"><div style={{ fontSize: 10.5, letterSpacing: "0.26em", textTransform: "uppercase", color: agency.accent, fontWeight: 700 }}>
             Paiement
           </div></Parallax>
           <h2 style={{ fontFamily: SERIF, fontSize: "clamp(24px, 4vw, 34px)", lineHeight: 1.18, fontWeight: 700, margin: "12px 0 10px", textWrap: "balance" }}>

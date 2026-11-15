@@ -1435,7 +1435,7 @@ function DemoInteractive({
     <Section bg={C.noir} id="demo">
       <Container>
         <div style={{ textAlign: "center", maxWidth: 620, margin: "0 auto 34px" }}>
-          <Parallax speed={0.12}><Eyebrow color={accent?.text ?? C.tealLight} center>
+          <Parallax mode="center"><Eyebrow color={accent?.text ?? C.tealLight} center>
             {ui.demoEyebrow}
           </Eyebrow></Parallax>
           <h2
@@ -1585,7 +1585,7 @@ function WhatsAppConfirmation({
           }}
         >
           <div style={{ flex: "1 1 320px", minWidth: 280 }}>
-            <Eyebrow color={C.tealDeep}>{ui.afterCallEyebrow}</Eyebrow>
+            <Parallax mode="left"><Eyebrow color={C.tealDeep}>{ui.afterCallEyebrow}</Eyebrow></Parallax>
             <h2
               style={{
                 fontFamily: SERIF,
@@ -1748,7 +1748,7 @@ function OffreDecouverte({
             textAlign: "center",
           }}
         >
-          <Parallax speed={0.12}><Eyebrow color={C.tealLight} center>
+          <Parallax mode="center"><Eyebrow color={C.tealLight} center>
             {ui.offerEyebrow}
           </Eyebrow></Parallax>
           <h2
@@ -1910,7 +1910,7 @@ function SuiviForm({ ui, accent }: { ui: UIStrings; accent?: AccentTheme }) {
     <Section bg={C.paperDeep} id="contact">
       <Container>
         <div style={{ maxWidth: 480, margin: "0 auto", textAlign: "center" }}>
-          <Parallax speed={0.12}><Eyebrow color={C.tealDeep} center>
+          <Parallax mode="center"><Eyebrow color={C.tealDeep} center>
             {ui.suiviEyebrow}
           </Eyebrow></Parallax>
           <h2
