@@ -902,13 +902,13 @@ const TOTAUX: Record<Marche, Record<"Business" | "Business+", string>> = {
 type Compare = { name: string; mois: string; trois: string };
 const COMPARE: Record<Marche, Compare[]> = {
   afrique_francophone: [
-    { name: "Prestataire à Dakar (WhatsApp + IA)", mois: "75 000 FCFA + 350 000 FCFA de mise en place", trois: "3 050 000 FCFA" },
+    { name: "Prestataire à Dakar (WhatsApp + IA), avec 350 000 FCFA de mise en place", mois: "75 000 FCFA", trois: "3 050 000 FCFA" },
     { name: "Réceptionniste IA, offre d'entrée (États-Unis)", mois: "49 $ ≈ 28 700 FCFA", trois: "≈ 1 030 000 FCFA" },
     { name: "Réceptionniste IA, offre courante (États-Unis)", mois: "95 à 99 $ ≈ 56 000 à 58 000 FCFA", trois: "≈ 2 000 000 à 2 080 000 FCFA" },
     { name: "Réceptionniste IA avec WhatsApp (Royaume-Uni)", mois: "149 £ ≈ 117 000 FCFA", trois: "≈ 4 220 000 FCFA" },
   ],
   europe: [
-    { name: "Prestataire à Dakar (WhatsApp + IA)", mois: "≈ 114 € + 534 € de mise en place", trois: "≈ 4 650 €" },
+    { name: "Prestataire à Dakar (WhatsApp + IA), avec ≈ 534 € de mise en place", mois: "≈ 114 €", trois: "≈ 4 650 €" },
     { name: "Réceptionniste IA, offre d'entrée (États-Unis)", mois: "49 $ ≈ 44 €", trois: "≈ 1 570 €" },
     { name: "Réceptionniste IA, offre courante (États-Unis)", mois: "95 à 99 $ ≈ 85 à 88 €", trois: "≈ 3 050 à 3 170 €" },
     { name: "Réceptionniste IA avec WhatsApp (Royaume-Uni)", mois: "149 £ ≈ 179 €", trois: "≈ 6 430 €" },
