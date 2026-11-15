@@ -3,7 +3,7 @@
 // autonome avec preuve. Chaque agence a sa couleur, son logo et son visuel.
 // Pure front-end, styles inline (même approche que la page démo).
 
-import { useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import type { CSSProperties, ReactNode } from "react";
 
 const SERIF = '"Playfair Display", Georgia, serif';
@@ -141,6 +141,142 @@ const wrap: CSSProperties = {
   padding: "0 clamp(18px, 5vw, 40px)",
 };
 
+
+/* ── Ciel réaliste (WebGL, nuages fractals, coucher de soleil) ── */
+
+const VERT = `attribute vec2 p; void main(){ gl_Position = vec4(p, 0.0, 1.0); }`;
+const FRAG = `
+precision highp float;
+uniform vec2 uRes; uniform float uTime;
+float hash(vec2 p){ p = fract(p*vec2(123.34, 456.21)); p += dot(p, p+45.32); return fract(p.x*p.y); }
+float noise(vec2 p){
+  vec2 i = floor(p), f = fract(p); f = f*f*(3.0-2.0*f);
+  return mix(mix(hash(i), hash(i+vec2(1,0)), f.x), mix(hash(i+vec2(0,1)), hash(i+vec2(1,1)), f.x), f.y);
+}
+float fbm(vec2 p){
+  float v = 0.0, a = 0.5;
+  mat2 m = mat2(1.6, 1.2, -1.2, 1.6);
+  for(int i=0;i<6;i++){ v += a*noise(p); p = m*p; a *= 0.5; }
+  return v;
+}
+void main(){
+  vec2 uv = gl_FragCoord.xy / uRes;
+  float asp = uRes.x / uRes.y;
+  vec2 q = vec2(uv.x*asp, uv.y);
+  vec2 sunPos = vec2(0.78*asp, 0.22);
+  // dégradé du ciel : bleu profond en haut, orangé à l'horizon
+  vec3 top = vec3(0.16, 0.36, 0.72);
+  vec3 mid = vec3(0.55, 0.70, 0.90);
+  vec3 hor = vec3(1.00, 0.72, 0.48);
+  float h = uv.y;
+  vec3 sky = mix(hor, mid, smoothstep(0.05, 0.50, h));
+  sky = mix(sky, top, smoothstep(0.45, 1.0, h));
+  // halo du soleil
+  float d = distance(q, sunPos);
+  sky += vec3(1.0, 0.62, 0.30) * exp(-d*2.4) * 0.55;
+  sky += vec3(1.0, 0.85, 0.6) * exp(-d*9.0) * 0.6;
+  // nuages
+  vec2 c = q*vec2(1.1, 2.4) + vec2(uTime*0.012, 0.0);
+  float n = fbm(c*1.6 + fbm(c*0.8 + 3.0)*0.8);
+  float cov = smoothstep(0.46, 0.80, n);
+  cov *= smoothstep(0.04, 0.32, h);
+  // lumière : face éclairée vers le soleil, dessous plus sombre
+  float n2 = fbm(c*1.6 + fbm(c*0.8 + 3.0)*0.8 + normalize(sunPos - q)*0.08);
+  float light = clamp((n - n2)*5.0 + 0.55, 0.0, 1.0);
+  vec3 cloudShade = mix(vec3(0.42, 0.45, 0.62), vec3(1.0, 0.80, 0.62), light);
+  cloudShade = mix(cloudShade, vec3(1.0, 0.93, 0.82), exp(-d*1.8)*0.5);
+  vec3 col = mix(sky, cloudShade, cov*0.92);
+  // bordure lumineuse des nuages face au soleil
+  col += vec3(1.0, 0.7, 0.4) * pow(cov*(1.0-cov)*4.0, 2.0) * exp(-d*1.6) * 0.25;
+  // brume d'horizon
+  col = mix(col, vec3(0.99, 0.80, 0.62), smoothstep(0.22, 0.0, h)*0.55);
+  // grain léger
+  col += (hash(gl_FragCoord.xy + uTime) - 0.5) * 0.018;
+  gl_FragColor = vec4(col, 1.0);
+}`;
+
+export function SkyShader({ onFail }: { onFail: () => void }) {
+  const ref = useRef<HTMLCanvasElement | null>(null);
+  useEffect(() => {
+    const canvas = ref.current;
+    if (!canvas) return;
+    const gl = canvas.getContext("webgl", { antialias: false, alpha: false });
+    if (!gl) {
+      onFail();
+      return;
+    }
+    const sh = (type: number, src: string) => {
+      const s = gl.createShader(type)!;
+      gl.shaderSource(s, src);
+      gl.compileShader(s);
+      return gl.getShaderParameter(s, gl.COMPILE_STATUS) ? s : null;
+    };
+    const vs = sh(gl.VERTEX_SHADER, VERT);
+    const fs = sh(gl.FRAGMENT_SHADER, FRAG);
+    if (!vs || !fs) {
+      onFail();
+      return;
+    }
+    const prog = gl.createProgram()!;
+    gl.attachShader(prog, vs);
+    gl.attachShader(prog, fs);
+    gl.linkProgram(prog);
+    if (!gl.getProgramParameter(prog, gl.LINK_STATUS)) {
+      onFail();
+      return;
+    }
+    gl.useProgram(prog);
+    const buf = gl.createBuffer();
+    gl.bindBuffer(gl.ARRAY_BUFFER, buf);
+    gl.bufferData(gl.ARRAY_BUFFER, new Float32Array([-1, -1, 1, -1, -1, 1, 1, 1]), gl.STATIC_DRAW);
+    const loc = gl.getAttribLocation(prog, "p");
+    gl.enableVertexAttribArray(loc);
+    gl.vertexAttribPointer(loc, 2, gl.FLOAT, false, 0, 0);
+    const uRes = gl.getUniformLocation(prog, "uRes");
+    const uTime = gl.getUniformLocation(prog, "uTime");
+    const still =
+      typeof window.matchMedia === "function" && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    let raf = 0;
+    let visible = true;
+    const t0 = performance.now();
+    const draw = () => {
+      const dpr = Math.min(window.devicePixelRatio || 1, 1.5);
+      const w = Math.max(1, Math.round(canvas.clientWidth * dpr * 0.6));
+      const h = Math.max(1, Math.round(canvas.clientHeight * dpr * 0.6));
+      if (canvas.width !== w || canvas.height !== h) {
+        canvas.width = w;
+        canvas.height = h;
+        gl.viewport(0, 0, w, h);
+      }
+      gl.uniform2f(uRes, w, h);
+      gl.uniform1f(uTime, still ? 20 : (performance.now() - t0) / 1000 + 20);
+      gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4);
+      if (!still && visible) raf = requestAnimationFrame(draw);
+    };
+    const io =
+      typeof IntersectionObserver !== "undefined"
+        ? new IntersectionObserver((e) => {
+            visible = e.some((x) => x.isIntersecting);
+            cancelAnimationFrame(raf);
+            if (visible) draw();
+          })
+        : null;
+    io?.observe(canvas);
+    draw();
+    return () => {
+      cancelAnimationFrame(raf);
+      io?.disconnect();
+    };
+  }, [onFail]);
+  return (
+    <canvas
+      ref={ref}
+      aria-hidden="true"
+      style={{ position: "absolute", left: 0, top: 0, width: "100%", height: "100%", display: "block" }}
+    />
+  );
+}
+
 /* ── Hero ciel ouvert ───────────────────────────────────────── */
 
 const SKYLINE_FAR: Array<[number, number, number]> = [
@@ -157,6 +293,8 @@ const SKYLINE_NEAR: Array<[number, number, number]> = [
 
 export function PremiumHero({ agency, name }: { agency: Agency; name: string }) {
   const wide = agency.visualRatio > 1.8;
+  const [glOk, setGlOk] = useState(true);
+  const failGl = useCallback(() => setGlOk(false), []);
   return (
     <div
       style={{
@@ -174,6 +312,10 @@ export function PremiumHero({ agency, name }: { agency: Agency; name: string }) 
           .byco-anim { animation: none !important; }
         }
       `}</style>
+      {glOk ? (
+        <SkyShader onFail={failGl} />
+      ) : (
+        <>
       <div
         aria-hidden="true"
         style={{
@@ -228,6 +370,9 @@ export function PremiumHero({ agency, name }: { agency: Agency; name: string }) 
           ))}
         </g>
       </svg>
+
+        </>
+      )}
 
       <div style={{ ...wrap, position: "relative", padding: "22px clamp(18px, 5vw, 40px) clamp(56px, 9vw, 96px)" }}>
         <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", gap: 12, flexWrap: "wrap" }}>
