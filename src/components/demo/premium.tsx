@@ -983,7 +983,7 @@ export function PaymentPlan({ agency, marche }: { agency: Agency; marche: Marche
           <p style={{ fontSize: 15, lineHeight: 1.65, margin: "8px 0 0", color: "#2A3330" }}>
             Avant de commencer, nous validons ensemble un cahier des charges : ce que le système doit faire, noir sur blanc. Pendant la mise en place puis les 30 jours qui suivent la livraison, nous testons en continu et corrigeons sans frais tout ce qui n'est pas conforme à ce cahier.
           </p>
-          <ul style={{ fontSize: 14.5, lineHeight: 1.65, margin: "10px 0 0", paddingLeft: 20, color: "#2A3330" }}>
+          <ul style={{ fontSize: 14.5, lineHeight: 1.65, margin: "10px 0 0", paddingLeft: 20, color: "#2A3330", listStyle: "disc" }}>
             <li>La dernière tranche n'est due que si, au bout des 30 jours, plus aucune non-conformité n'est en attente.</li>
             <li>Si nous ne parvenons pas à rendre le système conforme, nous vous remboursons les tranches déjà versées pour la mise en place.</li>
             <li>Les frais d'usage des fournisseurs (téléphonie, intelligence artificielle) consommés pendant les tests ne sont pas remboursables : ils sont facturés directement par eux.</li>
@@ -995,32 +995,19 @@ export function PaymentPlan({ agency, marche }: { agency: Agency; marche: Marche
           <p style={{ fontSize: 15, lineHeight: 1.65, margin: "8px 0 14px", color: "#2A3330" }}>
             Les systèmes comparables se louent en général par abonnement mensuel, et vous n'en êtes jamais propriétaire. Ici, vous payez la mise en place, puis le système est à vous : site, assistante, contenus.
           </p>
-          <div style={{ overflowX: "auto" }}>
-            <table style={{ width: "100%", borderCollapse: "collapse", fontSize: 13.5, minWidth: 520 }}>
-              <thead>
-                <tr style={{ textAlign: "left", color: "#6B726F" }}>
-                  <th style={{ padding: "8px 8px 8px 0", fontWeight: 600 }}>Solution ailleurs</th>
-                  <th style={{ padding: "8px", fontWeight: 600 }}>Par mois</th>
-                  <th style={{ padding: "8px 0 8px 8px", fontWeight: 600 }}>Sur 3 ans</th>
-                </tr>
-              </thead>
-              <tbody>
-                {cmp.map((r) => (
-                  <tr key={r.name} style={{ borderTop: "1px solid #EFE9DD" }}>
-                    <td style={{ padding: "10px 8px 10px 0" }}>{r.name}</td>
-                    <td style={{ padding: "10px 8px" }}>{r.mois}</td>
-                    <td style={{ padding: "10px 0 10px 8px", fontWeight: 600 }}>{r.trois}</td>
-                  </tr>
-                ))}
-                <tr style={{ borderTop: `2px solid ${agency.accent}`, background: rgba(agency.accent, 0.06) }}>
-                  <td style={{ padding: "10px 8px 10px 6px", fontWeight: 700 }}>Orlane pour {agency.shortName}</td>
-                  <td style={{ padding: "10px 8px" }}>Aucun abonnement</td>
-                  <td style={{ padding: "10px 6px 10px 8px", fontWeight: 700 }}>
-                    {tot.Business} à {tot["Business+"]}, une seule fois
-                  </td>
-                </tr>
-              </tbody>
-            </table>
+          <div>
+            {cmp.map((r) => (
+              <div key={r.name} style={{ borderTop: "1px solid #EFE9DD", padding: "12px 0", display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(min(100%, 170px), 1fr))", gap: "4px 16px", fontSize: 14 }}>
+                <div style={{ fontWeight: 600, color: "#1A1A1A" }}>{r.name}</div>
+                <div style={{ color: "#4A5552" }}>{r.mois} par mois</div>
+                <div style={{ fontWeight: 700 }}>{r.trois} sur 3 ans</div>
+              </div>
+            ))}
+            <div style={{ borderTop: `2px solid ${agency.accent}`, background: rgba(agency.accent, 0.06), padding: "12px 10px", display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(min(100%, 170px), 1fr))", gap: "4px 16px", fontSize: 14, borderRadius: 8 }}>
+              <div style={{ fontWeight: 700 }}>Orlane pour {agency.shortName}</div>
+              <div style={{ color: "#4A5552" }}>Aucun abonnement</div>
+              <div style={{ fontWeight: 700 }}>{tot.Business} à {tot["Business+"]}, une seule fois</div>
+            </div>
           </div>
           <p style={{ fontSize: 12.5, lineHeight: 1.6, color: "#6B726F", margin: "12px 0 0" }}>
             Tarifs publics relevés le 15/11/2026, susceptibles de changer, conversions indicatives. Ces offres comprennent en général un nombre de minutes limité, sont surtout en anglais et n'incluent pas de site. Pour Orlane, les frais d'usage des fournisseurs (téléphonie, intelligence artificielle) restent à votre charge, directement auprès d'eux.
