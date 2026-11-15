@@ -62,7 +62,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
 import { useMarche } from "@/lib/market";
-import { NightScene, PremiumHero, SiteArgument, resolveAgency } from "@/components/demo/premium";
+import { NightScene, PaymentPlan, PremiumHero, SiteArgument, resolveAgency } from "@/components/demo/premium";
 import { priceFor, type Marche } from "@/lib/pricing";
 import { trackDemo, useOrlaneCall, type OrlaneBlock } from "@/lib/useOrlaneCall";
 
@@ -912,6 +912,7 @@ function DecouvrirDemo() {
       <WhatsAppConfirmation copy={copy} ui={ui} called={called} />
       {agency && <SiteArgument agency={agency} />}
       <OffreDecouverte ui={ui} price={price} pricePlus={pricePlus} prospectKey={prospectKey} />
+      {agency && <PaymentPlan agency={agency} marche={marche} />}
       <SuiviForm ui={ui} accent={accent} />
       <Footer ui={ui} />
     </div>

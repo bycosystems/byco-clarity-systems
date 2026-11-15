@@ -5,6 +5,7 @@
 
 import { useCallback, useEffect, useRef, useState } from "react";
 import type { CSSProperties, ReactNode } from "react";
+import type { Marche } from "@/lib/pricing";
 
 const SERIF = '"Playfair Display", Georgia, serif';
 const SANS = '"Inter", "Helvetica Neue", system-ui, sans-serif';
@@ -873,6 +874,99 @@ export function SiteArgument({ agency }: { agency: Agency }) {
           >
             Parler de votre site
           </a>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+/* ── Paiement en 3 tranches (40 / 30 / 30), sans changer le prix ── */
+
+const TRANCHES: Record<Marche, Record<"Business" | "Business+", [string, string, string]>> = {
+  afrique_francophone: {
+    Business: ["277 960 FCFA", "208 470 FCFA", "208 470 FCFA"],
+    "Business+": ["418 320 FCFA", "313 740 FCFA", "313 740 FCFA"],
+  },
+  europe: {
+    Business: ["396 €", "297 €", "297 €"],
+    "Business+": ["596 €", "447 €", "447 €"],
+  },
+};
+const TOTAUX: Record<Marche, Record<"Business" | "Business+", string>> = {
+  afrique_francophone: { Business: "694 900 FCFA", "Business+": "1 045 800 FCFA" },
+  europe: { Business: "990 €", "Business+": "1 490 €" },
+};
+
+export function PaymentPlan({ agency, marche }: { agency: Agency; marche: Marche }) {
+  const t = TRANCHES[marche];
+  const tot = TOTAUX[marche];
+  const steps: Array<[string, string, string]> = [
+    ["40 %", "À la commande", t.Business[0]],
+    ["30 %", "À la mise en ligne", t.Business[1]],
+    ["30 %", "Après les 30 jours de garantie", t.Business[2]],
+  ];
+  return (
+    <div style={{ background: "#F6F3EE", padding: "clamp(44px, 7vw, 76px) 0", fontFamily: SANS, color: "#1A1A1A" }}>
+      <div style={wrap}>
+        <div style={{ maxWidth: 680, margin: "0 auto", textAlign: "center" }}>
+          <div style={{ fontSize: 10.5, letterSpacing: "0.26em", textTransform: "uppercase", color: agency.accent, fontWeight: 700 }}>
+            Paiement
+          </div>
+          <h2 style={{ fontFamily: SERIF, fontSize: "clamp(24px, 4vw, 34px)", lineHeight: 1.18, fontWeight: 700, margin: "12px 0 10px", textWrap: "balance" }}>
+            Payez en 3 tranches, sans changer le prix.
+          </h2>
+          <p style={{ fontSize: 15.5, lineHeight: 1.65, color: "#4A5552", margin: 0 }}>
+            Le plan Business, {tot.Business} au total, se règle en trois fois, au rythme de la mise en place.
+          </p>
+        </div>
+
+        <div
+          style={{
+            display: "grid",
+            gridTemplateColumns: "repeat(auto-fit, minmax(min(100%, 200px), 1fr))",
+            gap: 14,
+            maxWidth: 760,
+            margin: "28px auto 0",
+          }}
+        >
+          {steps.map(([pct, when, amount], i) => (
+            <div
+              key={i}
+              style={{
+                background: "#ffffff",
+                border: `1px solid ${rgba(agency.accent, 0.25)}`,
+                borderRadius: 16,
+                padding: "18px 16px",
+                textAlign: "center",
+              }}
+            >
+              <div style={{ fontFamily: SERIF, fontSize: 28, fontWeight: 700, color: agency.accent }}>{pct}</div>
+              <div style={{ fontSize: 14, fontWeight: 600, margin: "4px 0 6px" }}>{when}</div>
+              <div style={{ fontSize: 15, color: "#10283A", fontWeight: 600 }}>{amount}</div>
+            </div>
+          ))}
+        </div>
+
+        <p style={{ fontSize: 13.5, lineHeight: 1.6, color: "#6B726F", textAlign: "center", maxWidth: 620, margin: "16px auto 0" }}>
+          Pour le plan Business+ : {t["Business+"][0]}, puis {t["Business+"][1]}, puis {t["Business+"][2]} ({tot["Business+"]} au total).
+        </p>
+
+        <div
+          style={{
+            maxWidth: 760,
+            margin: "26px auto 0",
+            background: "#ffffff",
+            border: "1px solid #E1DACD",
+            borderRadius: 16,
+            padding: "clamp(18px, 3vw, 26px)",
+          }}
+        >
+          <div style={{ fontSize: 12, fontWeight: 700, letterSpacing: "0.12em", textTransform: "uppercase", color: agency.accent }}>
+            Acheter plutôt que louer
+          </div>
+          <p style={{ fontSize: 15, lineHeight: 1.65, margin: "8px 0 0", color: "#2A3330" }}>
+            Beaucoup de systèmes comparables se louent par abonnement mensuel, et vous n'en êtes jamais propriétaire. Ici, vous payez la mise en place, puis le système est à vous : site, assistant, contenus. Les frais d'usage des fournisseurs (téléphonie, intelligence artificielle) restent à votre charge, directement auprès d'eux.
+          </p>
         </div>
       </div>
     </div>
