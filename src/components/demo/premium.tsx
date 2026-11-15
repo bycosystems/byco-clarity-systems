@@ -127,7 +127,7 @@ function useInView<T extends HTMLElement>(): [React.RefObject<T | null>, boolean
           io.disconnect();
         }
       },
-      { threshold: 0.25 },
+      { threshold: 0.08 },
     );
     io.observe(el);
     return () => io.disconnect();
@@ -453,7 +453,7 @@ export function PremiumHero({ agency, name }: { agency: Agency; name: string }) 
             >
               Vos clients écrivent le soir. Qui leur répond{" "}?
             </h1>
-            <p style={{ fontSize: "clamp(15px, 2vw, 18px)", lineHeight: 1.6, color: "#2D4658", margin: "16px 0 0", maxWidth: 520 }}>
+            <p style={{ fontSize: "clamp(15px, 2vw, 18px)", lineHeight: 1.6, color: "#10283A", fontWeight: 500, margin: "16px 0 0", maxWidth: 520, textShadow: "0 1px 12px rgba(255,255,255,0.45)" }}>
               {agency.sub}
             </p>
             <div style={{ display: "flex", flexWrap: "wrap", gap: 12, marginTop: 24 }}>
@@ -488,7 +488,7 @@ export function PremiumHero({ agency, name }: { agency: Agency; name: string }) 
                 Voir la scène de nuit
               </a>
             </div>
-            <div style={{ display: "flex", alignItems: "center", gap: 10, marginTop: 22, fontSize: 13.5, color: "#2D4658" }}>
+            <div style={{ display: "flex", alignItems: "center", gap: 10, marginTop: 22, fontSize: 13.5, color: "#10283A" }}>
               <span
                 className="byco-anim"
                 style={{ width: 9, height: 9, borderRadius: "50%", background: agency.accent, animation: "byco-pulse 2.2s ease-in-out infinite" }}
