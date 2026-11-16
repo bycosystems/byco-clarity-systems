@@ -921,9 +921,9 @@ export function PaymentPlan({ agency, marche }: { agency: Agency; marche: Marche
   const tot = TOTAUX[marche];
   const cmp = COMPARE[marche];
   const steps: Array<[string, string, string, string]> = [
-    ["40 %", "À la commande", "Nous démarrons la mise en place.", t.Business[0]],
-    ["30 %", "À la fin de la mise en place", "Livraison au plus tard 30 jours après la commande, avec des tests continus.", t.Business[1]],
-    ["30 %", "À la fin des 30 jours de garantie", "Dernière tranche, si tout est conforme.", t.Business[2]],
+    ["40 %", "À la commande", "Mise en place : 30 jours (Business), 30 à 45 jours (Business+), avec tests continus.", t.Business[0]],
+    ["30 %", "À la fin déclarée de l'installation", "Démarrage des 30 jours de garantie : le système tourne seul en production.", t.Business[1]],
+    ["30 %", "À la fin des 30 jours de garantie", "Dernière tranche, si tout reste conforme.", t.Business[2]],
   ];
   const card = {
     background: "#ffffff",
@@ -984,11 +984,11 @@ export function PaymentPlan({ agency, marche }: { agency: Agency; marche: Marche
         <div style={{ ...card, maxWidth: 800, margin: "26px auto 0" }}>
           <div style={label}>Garantie de conformité 30 jours</div>
           <p style={{ fontSize: 15, lineHeight: 1.65, margin: "8px 0 0", color: "#2A3330" }}>
-            Avant de commencer, nous validons ensemble un cahier des charges : ce que le système doit faire, noir sur blanc. Pendant la mise en place puis les 30 jours qui suivent la livraison, nous testons en continu et corrigeons sans frais tout ce qui n'est pas conforme à ce cahier.
+            Avant de commencer, nous validons ensemble un cahier des charges : ce que le système doit faire, noir sur blanc. Pendant la mise en place, nous testons en continu et corrigeons sans frais tout ce qui n'est pas conforme à ce cahier. Pendant les 30 jours de garantie qui suivent la fin déclarée de l'installation, le système doit tourner seul en production, et nous corrigeons sans frais tout écart constaté.
           </p>
           <ul style={{ fontSize: 14.5, lineHeight: 1.65, margin: "10px 0 0", paddingLeft: 20, color: "#2A3330", listStyle: "disc" }}>
             <li>La dernière tranche n'est due que si, au bout des 30 jours, plus aucune non-conformité n'est en attente.</li>
-            <li>Si nous ne parvenons pas à rendre le système conforme, nous vous remboursons les tranches déjà versées pour la mise en place.</li>
+            <li>Si le système n'est pas conforme à la fin des 30 jours, la 3e tranche n'est pas versée. Les sommes déjà versées sont remboursées, déduction faite des frais réellement engagés pour la mise en place, justifiés sur demande.</li>
             <li>Les frais d'usage des fournisseurs (téléphonie, intelligence artificielle) consommés pendant les tests ne sont pas remboursables : ils sont facturés directement par eux.</li>
           </ul>
         </div>
