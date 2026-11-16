@@ -62,6 +62,8 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
 import { useMarche } from "@/lib/market";
+import { NightScene, PaymentPlan, PremiumHero, SiteArgument, resolveAgency } from "@/components/demo/premium";
+import { Parallax } from "@/components/demo/motion";
 import { priceFor, type Marche } from "@/lib/pricing";
 import { trackDemo, useOrlaneCall, type OrlaneBlock } from "@/lib/useOrlaneCall";
 
@@ -75,6 +77,7 @@ export const Route = createFileRoute("/demo/decouvrir/")({
     image?: string;
     logo?: string;
     couleur?: string;
+    rond?: string;
   } => ({
     secteur: typeof search.secteur === "string" ? search.secteur : undefined,
     lang: typeof search.lang === "string" ? search.lang : undefined,
@@ -82,6 +85,7 @@ export const Route = createFileRoute("/demo/decouvrir/")({
     image: typeof search.image === "string" ? search.image : undefined,
     logo: typeof search.logo === "string" ? search.logo : undefined,
     couleur: typeof search.couleur === "string" ? search.couleur : undefined,
+    rond: search.rond === 1 || search.rond === true || search.rond === "1" ? "1" : undefined,
   }),
   component: DecouvrirDemo,
   head: ({ match }) => {
@@ -200,9 +204,10 @@ type ProspectBranding = { accentColor: string; fullTheme?: boolean };
 
 const PROSPECT_BRANDING: Record<string, ProspectBranding> = {
   "trésor hotel": { accentColor: "#C2B767" },
-  "agence immobilière trëma": { accentColor: "#F10101", fullTheme: true },
-  "sci fragiliko": { accentColor: "#9335B6", fullTheme: true },
+  "agence immobilière trëma": { accentColor: "#C6290B", fullTheme: true },
+  "sci fragiliko": { accentColor: "#0A8A3A", fullTheme: true },
   "innov immo": { accentColor: "#164D86", fullTheme: true },
+  "concept immo": { accentColor: "#1E4FC2", fullTheme: true },
 };
 
 function resolveProspectBranding(prospect: string | undefined): ProspectBranding | undefined {
@@ -847,10 +852,12 @@ function DecouvrirDemo() {
     image: rawImage,
     logo: rawLogo,
     couleur: rawCouleur,
+    rond: rawRond,
   } = Route.useSearch();
-  const secteur = resolveSecteur(rawSecteur);
-  const lang = resolveLang(rawLang);
   const prospect = resolveProspect(rawProspect);
+  const agency = resolveAgency(prospect);
+  const secteur = agency ? "immobilier" : resolveSecteur(rawSecteur);
+  const lang = resolveLang(rawLang);
   const image = resolveImage(rawImage);
   const logo = resolveImage(rawLogo);
   const brandTheme = resolveProspectBranding(prospect);
@@ -882,9 +889,18 @@ function DecouvrirDemo() {
         rel="stylesheet"
         href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,600;0,700;1,500;1,600&family=Inter:wght@400;500;600;700&display=swap"
       />
-      <Hero copy={copy} ui={ui} prospect={prospect} image={image} logo={logo} accent={accent} />
-      <Accroche copy={copy} ui={ui} />
-      <Comparaison ui={ui} accent={accent} />
+      {agency ? (
+        <>
+          <PremiumHero agency={agency} name={prospect ?? agency.shortName} />
+          <NightScene agency={agency} />
+        </>
+      ) : (
+        <>
+          <Hero copy={copy} ui={ui} prospect={prospect} image={image} logo={logo} logoRond={rawRond === "1"} accent={accent} />
+          <Accroche copy={copy} ui={ui} />
+          <Comparaison ui={ui} accent={accent} />
+        </>
+      )}
       <DemoInteractive
         copy={copy}
         ui={ui}
@@ -895,7 +911,9 @@ function DecouvrirDemo() {
         prospectKey={prospectKey}
       />
       <WhatsAppConfirmation copy={copy} ui={ui} called={called} />
-      <OffreDecouverte ui={ui} price={price} pricePlus={pricePlus} prospectKey={prospectKey} />
+      {agency && <SiteArgument agency={agency} />}
+      <OffreDecouverte ui={ui} price={price} pricePlus={pricePlus} prospectKey={prospectKey} agencyMode={!!agency} />
+      {agency && <PaymentPlan agency={agency} marche={marche} />}
       <SuiviForm ui={ui} accent={accent} />
       <Footer ui={ui} />
     </div>
@@ -910,6 +928,7 @@ function Hero({
   prospect,
   image,
   logo,
+  logoRond,
   accent,
 }: {
   copy: Copy;
@@ -917,6 +936,7 @@ function Hero({
   prospect?: string;
   image?: string;
   logo?: string;
+  logoRond?: boolean;
   accent?: AccentTheme;
 }) {
   const branding = resolveProspectBranding(prospect);
@@ -932,7 +952,7 @@ function Hero({
         }}
       >
         <DemoTag label={ui.demoTag} />
-        {logo && <HeroLogo src={logo} />}
+        {logo && !(logoRond && image) && <HeroLogo src={logo} />}
         <div
           style={{
             position: "relative",
@@ -959,7 +979,7 @@ function Hero({
                 flex: "1 1 340px",
                 minWidth: 260,
                 maxWidth: image ? 480 : 620,
-                marginTop: logo ? 76 : 0,
+                marginTop: logo && !(logoRond && image) ? 76 : 0,
               }}
             >
               {prospect && (
@@ -1006,6 +1026,7 @@ function Hero({
                   fontWeight: 700,
                   lineHeight: 1.2,
                   margin: 0,
+                  textWrap: "balance",
                   textShadow: "0 2px 14px rgba(0,0,0,0.5)",
                 }}
               >
@@ -1035,7 +1056,7 @@ function Hero({
                 )}
               </p>
             </div>
-            {image && <HeroImage src={image} borderColor={accent?.base} />}
+            {image && <HeroImage src={image} borderColor={accent?.base} logo={logoRond ? logo : undefined} />}
           </div>
         </div>
       </div>
@@ -1043,27 +1064,59 @@ function Hero({
   );
 }
 
-function HeroImage({ src, borderColor }: { src: string; borderColor?: string }) {
+function HeroImage({ src, borderColor, logo }: { src: string; borderColor?: string; logo?: string }) {
   const [failed, setFailed] = useState(false);
+  const [logoFailed, setLogoFailed] = useState(false);
   if (failed) return null;
   return (
-    <div style={{ flex: "1 1 480px", minWidth: 300, maxWidth: 700 }}>
-      <img
-        src={src}
-        alt=""
-        loading="lazy"
-        referrerPolicy="no-referrer"
-        onError={() => setFailed(true)}
-        style={{
-          display: "block",
-          width: "100%",
-          height: "clamp(240px, 38vw, 460px)",
-          objectFit: "cover",
-          borderRadius: 18,
-          border: `2px solid ${borderColor ?? C.teal}`,
-          boxShadow: "0 20px 54px rgba(0,0,0,0.5)",
-        }}
-      />
+    <div
+      style={{
+        flex: "1 1 400px",
+        minWidth: 280,
+        display: "flex",
+        justifyContent: "center",
+      }}
+    >
+      <div style={{ position: "relative", maxWidth: "100%", paddingBottom: logo && !logoFailed ? "clamp(36px, 6vw, 52px)" : 0 }}>
+        <img
+          src={src}
+          alt=""
+          loading="lazy"
+          referrerPolicy="no-referrer"
+          onError={() => setFailed(true)}
+          style={{
+            display: "block",
+            width: "auto",
+            maxWidth: "100%",
+            height: "auto",
+            maxHeight: "clamp(240px, 38vw, 460px)",
+            borderRadius: 18,
+            border: `2px solid ${borderColor ?? C.teal}`,
+            boxShadow: "0 20px 54px rgba(0,0,0,0.5)",
+          }}
+        />
+        {logo && !logoFailed && (
+          <img
+            src={logo}
+            alt=""
+            loading="lazy"
+            referrerPolicy="no-referrer"
+            onError={() => setLogoFailed(true)}
+            style={{
+              position: "absolute",
+              right: 18,
+              bottom: 0,
+              width: "clamp(72px, 12vw, 104px)",
+              height: "clamp(72px, 12vw, 104px)",
+              borderRadius: "50%",
+              objectFit: "cover",
+              background: "#fff",
+              border: "4px solid #fff",
+              boxShadow: "0 6px 18px rgba(0,0,0,0.45)",
+            }}
+          />
+        )}
+      </div>
     </div>
   );
 }
@@ -1382,9 +1435,9 @@ function DemoInteractive({
     <Section bg={C.noir} id="demo">
       <Container>
         <div style={{ textAlign: "center", maxWidth: 620, margin: "0 auto 34px" }}>
-          <Eyebrow color={accent?.text ?? C.tealLight} center>
+          <Parallax mode="center"><Eyebrow color={accent?.text ?? C.tealLight} center>
             {ui.demoEyebrow}
-          </Eyebrow>
+          </Eyebrow></Parallax>
           <h2
             style={{
               fontFamily: SERIF,
@@ -1532,7 +1585,7 @@ function WhatsAppConfirmation({
           }}
         >
           <div style={{ flex: "1 1 320px", minWidth: 280 }}>
-            <Eyebrow color={C.tealDeep}>{ui.afterCallEyebrow}</Eyebrow>
+            <Parallax mode="left"><Eyebrow color={C.tealDeep}>{ui.afterCallEyebrow}</Eyebrow></Parallax>
             <h2
               style={{
                 fontFamily: SERIF,
@@ -1670,11 +1723,13 @@ function OffreDecouverte({
   price,
   pricePlus,
   prospectKey,
+  agencyMode,
 }: {
   ui: UIStrings;
   price: string;
   pricePlus: string;
   prospectKey?: string;
+  agencyMode?: boolean;
 }) {
   const offerTitle = ui.offerTitleTemplate.replace("{price}", price);
   const badgeOffer = ui.badgeOfferTemplate.replace("{price}", price);
@@ -1693,9 +1748,9 @@ function OffreDecouverte({
             textAlign: "center",
           }}
         >
-          <Eyebrow color={C.tealLight} center>
+          <Parallax mode="center"><Eyebrow color={C.tealLight} center>
             {ui.offerEyebrow}
-          </Eyebrow>
+          </Eyebrow></Parallax>
           <h2
             style={{
               fontFamily: SERIF,
@@ -1740,7 +1795,7 @@ function OffreDecouverte({
             }}
           >
             <OfferBadge>{badgeOffer}</OfferBadge>
-            <OfferBadge>{ui.badgeGuarantee}</OfferBadge>
+            <OfferBadge>{agencyMode ? "Garantie de conformité 30 jours, paiement en 3 tranches. Frais d'usage des fournisseurs non inclus" : ui.badgeGuarantee}</OfferBadge>
             <OfferBadge>{ui.badgeTestimonial}</OfferBadge>
           </div>
 
@@ -1855,9 +1910,9 @@ function SuiviForm({ ui, accent }: { ui: UIStrings; accent?: AccentTheme }) {
     <Section bg={C.paperDeep} id="contact">
       <Container>
         <div style={{ maxWidth: 480, margin: "0 auto", textAlign: "center" }}>
-          <Eyebrow color={C.tealDeep} center>
+          <Parallax mode="center"><Eyebrow color={C.tealDeep} center>
             {ui.suiviEyebrow}
-          </Eyebrow>
+          </Eyebrow></Parallax>
           <h2
             style={{
               fontFamily: SERIF,
