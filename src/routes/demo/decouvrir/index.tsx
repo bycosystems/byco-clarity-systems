@@ -207,10 +207,10 @@ const PROSPECT_BRANDING: Record<string, ProspectBranding> = {
   "agence immobilière trëma": { accentColor: "#C6290B", fullTheme: true },
   "sci fragiliko": { accentColor: "#0A8A3A", fullTheme: true },
   "innov immo": { accentColor: "#164D86", fullTheme: true },
-  "concept immo": { accentColor: "#1E4FC2", fullTheme: true },
+  "concept immobilier": { accentColor: "#1E4FC2", fullTheme: true },
 };
 
-const PROSPECT_ALIASES_BRANDING: Record<string, string> = { "concept immobilier": "concept immo" };
+const PROSPECT_ALIASES_BRANDING: Record<string, string> = {};
 
 function resolveProspectBranding(prospect: string | undefined): ProspectBranding | undefined {
   if (!prospect) return undefined;

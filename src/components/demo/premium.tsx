@@ -81,8 +81,8 @@ export const AGENCIES: Record<string, Agency> = {
       "Si vous le pouvez, coupez l'arrivée d'eau. J'alerte le responsable technique ce soir et il vous rappelle.",
     nightNote: "Alerte enregistrée : adresse, nature du problème et numéro du locataire.",
   },
-  "concept immo": {
-    shortName: "Concept Immo",
+  "concept immobilier": {
+    shortName: "Concept Immobilier",
     accent: "#1E4FC2",
     accentSoft: "#E4EBFA",
     logo: "/logos/concept-logo.png",
@@ -93,7 +93,7 @@ export const AGENCIES: Record<string, Agency> = {
     sub: "Architecture, rénovation, décoration : un projet commence souvent par un message envoyé tard dans la soirée.",
     nightClient: "Bonsoir, vous faites aussi la rénovation d'intérieur ?",
     nightReply:
-      "Bonsoir, je suis Orlane, l'assistante de Concept Immo. Oui, nous faisons l'architecture d'intérieur, la rénovation et la décoration. C'est pour quel type de lieu ?",
+      "Bonsoir, je suis Orlane, l'assistante de Concept Immobilier. Oui, nous faisons l'architecture d'intérieur, la rénovation et la décoration. C'est pour quel type de lieu ?",
     nightClient2: "Un appartement à Bonapriso.",
     nightReply2:
       "Merci. Je note votre demande. L'équipe vous recontacte demain pour fixer un rendez-vous.",
@@ -109,7 +109,6 @@ export function foldProspectKey(s: string): string {
 
 // Variantes de nom acceptees dans les liens ?prospect= (cle repliee -> cle repliee).
 const PROSPECT_ALIASES: Record<string, string> = {
-  "concept immobilier": "concept immo",
 };
 
 const AGENCIES_FOLDED: Record<string, Agency> = Object.fromEntries(
