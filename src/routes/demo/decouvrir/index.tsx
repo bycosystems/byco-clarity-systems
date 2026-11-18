@@ -62,7 +62,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
 import { useMarche } from "@/lib/market";
-import { NightScene, PaymentPlan, PremiumHero, SiteArgument, resolveAgency } from "@/components/demo/premium";
+import { NightScene, PaymentPlan, PremiumHero, SiteArgument, foldProspectKey, resolveAgency } from "@/components/demo/premium";
 import { Parallax } from "@/components/demo/motion";
 import { priceFor, type Marche } from "@/lib/pricing";
 import { trackDemo, useOrlaneCall, type OrlaneBlock } from "@/lib/useOrlaneCall";
@@ -210,9 +210,13 @@ const PROSPECT_BRANDING: Record<string, ProspectBranding> = {
   "concept immo": { accentColor: "#1E4FC2", fullTheme: true },
 };
 
+const PROSPECT_ALIASES_BRANDING: Record<string, string> = { "concept immobilier": "concept immo" };
+
 function resolveProspectBranding(prospect: string | undefined): ProspectBranding | undefined {
   if (!prospect) return undefined;
-  return PROSPECT_BRANDING[prospect.trim().toLowerCase()];
+  const k = foldProspectKey(prospect);
+  const entry = Object.entries(PROSPECT_BRANDING).find(([name]) => foldProspectKey(name) === (PROSPECT_ALIASES_BRANDING[k] ?? k));
+  return entry?.[1];
 }
 
 /* ── Couleur d'accent par lien (`?couleur=`) ──────────────────────

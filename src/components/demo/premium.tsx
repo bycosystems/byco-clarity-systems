@@ -101,9 +101,25 @@ export const AGENCIES: Record<string, Agency> = {
   },
 };
 
+// Cle de recherche tolerante : sans accents ni trema, espaces normalises,
+// minuscules. Trema, Trema et trema donnent la meme cle.
+export function foldProspectKey(s: string): string {
+  return s.normalize("NFD").replace(/[\u0300-\u036f]/g, "").replace(/\s+/g, " ").trim().toLowerCase();
+}
+
+// Variantes de nom acceptees dans les liens ?prospect= (cle repliee -> cle repliee).
+const PROSPECT_ALIASES: Record<string, string> = {
+  "concept immobilier": "concept immo",
+};
+
+const AGENCIES_FOLDED: Record<string, Agency> = Object.fromEntries(
+  Object.entries(AGENCIES).map(([k, v]) => [foldProspectKey(k), v]),
+);
+
 export function resolveAgency(prospect: string | undefined): Agency | undefined {
   if (!prospect) return undefined;
-  return AGENCIES[prospect.normalize("NFC").trim().toLowerCase()];
+  const k = foldProspectKey(prospect);
+  return AGENCIES_FOLDED[PROSPECT_ALIASES[k] ?? k];
 }
 
 function rgba(hex: string, a: number): string {
