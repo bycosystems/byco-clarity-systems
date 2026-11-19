@@ -26,6 +26,15 @@ export type Agency = {
   nightClient2: string;
   nightReply2: string;
   nightNote: string;
+  // Variante "relais" (agence qui a déjà un accueil humain) : tous optionnels.
+  noSite?: boolean;
+  nightTitle?: string;
+  nightSub?: string;
+  nightRelayNote?: string;
+  leftLabel?: string;
+  leftSource?: string;
+  leftNote?: string;
+  rightLabel?: string;
 };
 
 export const AGENCIES: Record<string, Agency> = {
@@ -98,6 +107,31 @@ export const AGENCIES: Record<string, Agency> = {
     nightReply2:
       "Merci. Je note votre demande. L'équipe vous recontacte demain pour fixer un rendez-vous.",
     nightNote: "Demande enregistrée : projet, lieu et numéro du client.",
+  },
+  "rental square": {
+    shortName: "Rental Square",
+    accent: "#1B2A9E",
+    accentSoft: "#E6E8F7",
+    logo: "/logos/rental-square-logo.png",
+    visual: "/logos/rental-square-accueil.jpg",
+    visualRatio: 1280 / 850,
+    noSite: true,
+    headline: "Aucun client ne doit rester sans réponse.",
+    sub: "Agent en visite, occupé ou injoignable : Orlane reprend l'appel ou le message, pour que le client ne passe pas à l'agence suivante.",
+    nightTitle: "Et si le client écrit au mauvais moment ?",
+    nightSub: "Exemple de conversation pour Rental Square. Même message, même heure, deux issues.",
+    leftLabel: "Sans relais",
+    leftSource: "WhatsApp Rental Square",
+    leftNote: "Le message reste sans réponse. Le client ouvre l'agence suivante.",
+    rightLabel: "Avec Orlane en relais",
+    nightRelayNote: "Aucune réponse de l'équipe au bout de 5 minutes. Orlane prend le relais.",
+    nightClient: "Bonsoir, je cherche un appartement meublé à Bonapriso, disponible la semaine prochaine.",
+    nightReply:
+      "Bonsoir, je suis Orlane, l'assistante de Rental Square. L'équipe n'a pas pu vous répondre tout de suite, je prends votre demande pour qu'elle vous rappelle. C'est pour quelle durée ?",
+    nightClient2: "Un mois, à partir de lundi.",
+    nightReply2:
+      "Merci. Je transmets votre demande à l'équipe avec vos dates et votre quartier. Quelqu'un vous rappelle dès que possible.",
+    nightNote: "Demande transmise : type de bien, quartier, durée et numéro du client.",
   },
 };
 
@@ -468,7 +502,7 @@ export function PremiumHero({ agency, name }: { agency: Agency; name: string }) 
                 textWrap: "balance",
               }}
             >
-              Vos clients écrivent le soir. Qui leur répond{" "}?
+              {agency.headline.replace(" ?", "\u00A0?")}
             </h1>
             <p style={{ fontSize: "clamp(15px, 2vw, 18px)", lineHeight: 1.6, color: "#10283A", fontWeight: 500, margin: "16px 0 0", maxWidth: 520, textShadow: "0 1px 12px rgba(255,255,255,0.45)" }}>
               {agency.sub}
@@ -622,10 +656,10 @@ export function NightScene({ agency }: { agency: Agency }) {
             Dimanche, 23 h 12
           </div></Parallax>
           <h2 style={{ fontFamily: SERIF, fontSize: "clamp(26px, 4.4vw, 40px)", lineHeight: 1.18, fontWeight: 700, margin: "14px 0 10px", textWrap: "balance" }}>
-            Pendant que vous dormez, vos clients, eux, écrivent.
+            {agency.nightTitle ?? "Pendant que vous dormez, vos clients, eux, écrivent."}
           </h2>
           <p style={{ fontSize: 15.5, lineHeight: 1.6, color: "#B8CADA", margin: 0 }}>
-            Exemple de conversation pour {agency.shortName}. Même message, même heure, deux issues.
+            {agency.nightSub ?? `Exemple de conversation pour ${agency.shortName}. Même message, même heure, deux issues.`}
           </p>
         </div>
 
@@ -640,9 +674,9 @@ export function NightScene({ agency }: { agency: Agency }) {
           <div style={{ background: "rgba(255,255,255,0.05)", border: "1px solid rgba(255,255,255,0.1)", borderRadius: 18, padding: 18 }}>
             <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: 14 }}>
               <span style={{ fontSize: 12, fontWeight: 700, letterSpacing: "0.12em", textTransform: "uppercase", color: "#F0A3A3" }}>
-                Sans réponse
+                {agency.leftLabel ?? "Sans réponse"}
               </span>
-              <span style={{ fontSize: 12, color: "#8FA6BA" }}>Page {agency.shortName}</span>
+              <span style={{ fontSize: 12, color: "#8FA6BA" }}>{agency.leftSource ?? `Page ${agency.shortName}`}</span>
             </div>
             <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
               <Bubble side="in" show={seen} delay={0.2} color={agency.accent}>
@@ -665,7 +699,7 @@ export function NightScene({ agency }: { agency: Agency }) {
                   color: "#F6C9C9",
                 }}
               >
-                Aucune réponse avant lundi matin. Le client ouvre la page de l'agence suivante.
+                {agency.leftNote ?? "Aucune réponse avant lundi matin. Le client ouvre la page de l'agence suivante."}
               </div>
             </div>
           </div>
@@ -681,7 +715,7 @@ export function NightScene({ agency }: { agency: Agency }) {
           >
             <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: 14 }}>
               <span style={{ fontSize: 12, fontWeight: 700, letterSpacing: "0.12em", textTransform: "uppercase", color: "#8FE0B0" }}>
-                Avec Orlane
+                {agency.rightLabel ?? "Avec Orlane"}
               </span>
               <span style={{ display: "flex", alignItems: "center", gap: 8, fontSize: 12, color: "#B8CADA" }}>
                 <span
@@ -707,7 +741,12 @@ export function NightScene({ agency }: { agency: Agency }) {
               <Bubble side="in" show={seen} delay={0.2} color={agency.accent}>
                 {agency.nightClient}
               </Bubble>
-              <Bubble side="out" show={seen} delay={1.2} color={agency.accent}>
+              {agency.nightRelayNote && (
+                <div style={{ opacity: seen ? 1 : 0, transition: "opacity .6s ease 0.9s", fontSize: 12, lineHeight: 1.5, color: "#9FB6CA", textAlign: "center", padding: "2px 8px" }}>
+                  {agency.nightRelayNote}
+                </div>
+              )}
+              <Bubble side="out" show={seen} delay={agency.nightRelayNote ? 1.9 : 1.2} color={agency.accent}>
                 {agency.nightReply}
               </Bubble>
               <Bubble side="in" show={seen} delay={2.4} color={agency.accent}>

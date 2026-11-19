@@ -208,6 +208,7 @@ const PROSPECT_BRANDING: Record<string, ProspectBranding> = {
   "sci fragiliko": { accentColor: "#0A8A3A", fullTheme: true },
   "innov immo": { accentColor: "#164D86", fullTheme: true },
   "concept immobilier": { accentColor: "#1E4FC2", fullTheme: true },
+  "rental square": { accentColor: "#1B2A9E", fullTheme: true },
 };
 
 const PROSPECT_ALIASES_BRANDING: Record<string, string> = {};
@@ -915,7 +916,7 @@ function DecouvrirDemo() {
         prospectKey={prospectKey}
       />
       <WhatsAppConfirmation copy={copy} ui={ui} called={called} />
-      {agency && <SiteArgument agency={agency} />}
+      {agency && !agency.noSite && <SiteArgument agency={agency} />}
       <OffreDecouverte ui={ui} price={price} pricePlus={pricePlus} prospectKey={prospectKey} agencyMode={!!agency} />
       {agency && <PaymentPlan agency={agency} marche={marche} />}
       <SuiviForm ui={ui} accent={accent} />
