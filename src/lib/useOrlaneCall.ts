@@ -45,6 +45,9 @@ type GateAnswer = {
   reason?: "limit" | "unknown" | "unavailable";
   name?: string;
   first_message?: string;
+  secteur?: string;
+  activite?: string;
+  langue?: string;
 };
 
 // Suivi sans cookie : envoi "beacon" en text/plain (pas de pré-requête CORS),
@@ -189,6 +192,12 @@ export function useOrlaneCall(marche: Marche, onCallEnded?: () => void, prospect
         variableValues: {
           marche,
           agence: gate.name ?? "",
+          // Mode démonstration : le brief d'Orlane lit ces cinq variables.
+          mode: "demo",
+          structure: gate.name ?? "",
+          secteur: gate.secteur || "autre",
+          activite: gate.activite || "",
+          langue: gate.langue === "en" ? "en" : "fr",
           price_essential_fr: prices.essentialFr,
           price_essential_en: prices.essentialEn,
           price_essential_digits: prices.essentialDigits,
