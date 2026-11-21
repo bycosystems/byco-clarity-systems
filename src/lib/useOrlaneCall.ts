@@ -186,6 +186,9 @@ export function useOrlaneCall(marche: Marche, onCallEnded?: () => void, prospect
               premiumEn: "one thousand nine hundred ninety euros",
               premiumDigits: "1 990 €",
             };
+      const sttParam =
+        typeof window !== "undefined" ? new URLSearchParams(window.location.search).get("stt") : null;
+      const sttMode = sttParam === "fr" || sttParam === "frk" ? sttParam : null;
       await vapi.start(ORLANE_ASSISTANT_ID, {
         // Orlane décroche au nom de l'agence (texte fourni par le Worker).
         ...(gate.first_message ? { firstMessage: gate.first_message } : {}),
@@ -211,6 +214,26 @@ export function useOrlaneCall(marche: Marche, onCallEnded?: () => void, prospect
           price_premium_en: prices.premiumEn,
           price_premium_digits: prices.premiumDigits,
         },
+        // Essai de reconnaissance vocale verrouillée sur la langue de la structure (le mode
+        // Multilingue prend parfois un français bref pour de l'anglais). Actif seulement si
+        // l'adresse de la démo porte ?stt=fr (langue seule) ou ?stt=frk (langue + mots-clés).
+        ...(sttMode
+          ? {
+              transcriber: {
+                provider: "deepgram",
+                model: "nova-3",
+                language: gate.langue === "en" ? "en" : "fr",
+                ...(sttMode === "frk"
+                  ? {
+                      keyterm: [
+                        ...(gate.name ? [gate.name] : []),
+                        "Bonapriso", "Bonanjo", "Bonamoussadi", "Bonabéri", "Deido", "Makepe", "Akwa",
+                      ],
+                    }
+                  : {}),
+              },
+            }
+          : {}),
         maxDurationSeconds: PROSPECT_CALL_MAX_SECONDS,
       });
     } catch (e) {
