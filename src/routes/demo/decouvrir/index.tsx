@@ -570,6 +570,7 @@ type UIStrings = {
   callButtonConnecting: string;
   callButtonActive: string;
   callButtonError: string;
+  micHint: string;
   callNote: string;
   afterCallEyebrow: string;
   afterCallTitle: string;
@@ -650,6 +651,7 @@ const UI: Record<Lang, UIStrings> = {
     callButtonConnecting: "Connexion en cours…",
     callButtonActive: "🔴 Raccrocher",
     callButtonError: "Appel indisponible pour le moment",
+    micHint: "Vérifiez votre micro",
     callNote:
       "Un seul effet à ce clic : un appel démarre directement dans votre navigateur avec Orlane, l'assistant de démonstration ByCo, pas un agent déjà configuré pour votre activité.",
     afterCallEyebrow: "Après l'appel",
@@ -731,6 +733,7 @@ const UI: Record<Lang, UIStrings> = {
     callButtonConnecting: "Connecting…",
     callButtonActive: "🔴 Hang up",
     callButtonError: "Call unavailable right now",
+    micHint: "Check your microphone",
     callNote:
       "This click does one thing: a call starts right in your browser with Orlane, the ByCo demo assistant, not an agent already configured for your business.",
     afterCallEyebrow: "After the call",
@@ -1423,7 +1426,7 @@ function DemoInteractive({
   accent?: AccentTheme;
   prospectKey?: string;
 }) {
-  const { status, blocked, start, hangup } = useOrlaneCall(marche, () => setCalled(true), prospectKey);
+  const { status, blocked, micHint, start, hangup } = useOrlaneCall(marche, () => setCalled(true), prospectKey);
   const buttonLabel =
     status === "connecting"
       ? ui.callButtonConnecting
@@ -1522,6 +1525,20 @@ function DemoInteractive({
 
           {blocked && (
             <BlockedNotice ui={ui} blocked={blocked} prospectKey={prospectKey} accent={accent} />
+          )}
+          {micHint && !blocked && status !== "active" && status !== "connecting" && (
+            <div
+              role="status"
+              style={{
+                textAlign: "center",
+                marginTop: 12,
+                fontSize: 14,
+                fontWeight: 600,
+                color: "#F2C14E",
+              }}
+            >
+              🎙️ {ui.micHint}
+            </div>
           )}
           <div
             style={{

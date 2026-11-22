@@ -89,11 +89,17 @@ async function askGate(prospectKey: string): Promise<GateAnswer | null> {
 export function useOrlaneCall(marche: Marche, onCallEnded?: () => void, prospectKey?: string) {
   const [status, setStatus] = useState<OrlaneCallStatus>("idle");
   const [blocked, setBlocked] = useState<OrlaneBlock>(null);
+  // true : l'appel s'est terminé sans qu'aucune parole de la personne n'ait
+  // été transcrite (micro bloqué, coupé ou muet) : la page affiche "Vérifiez votre micro".
+  const [micHint, setMicHint] = useState(false);
+  const userSpokeRef = useRef(false);
   const vapiRef = useRef<InstanceType<typeof Vapi> | null>(null);
 
   const start = useCallback(async () => {
     if (vapiRef.current) return; // déjà démarré
     setBlocked(null);
+    setMicHint(false);
+    userSpokeRef.current = false;
     // Pas de lien personnalisé : aucun appel, on oriente vers le formulaire.
     if (!prospectKey) {
       setBlocked("locked");
@@ -141,8 +147,13 @@ export function useOrlaneCall(marche: Marche, onCallEnded?: () => void, prospect
           /* comptage non bloquant */
         }
       });
+      // Une transcription de la personne = son micro fonctionne.
+      vapi.on("message", (m: { type?: string; role?: string }) => {
+        if (m && m.type === "transcript" && m.role === "user") userSpokeRef.current = true;
+      });
       vapi.on("call-end", () => {
         setStatus("ended");
+        setMicHint(!userSpokeRef.current);
         vapiRef.current = null;
         onCallEnded?.();
       });
@@ -247,5 +258,5 @@ export function useOrlaneCall(marche: Marche, onCallEnded?: () => void, prospect
     vapiRef.current?.stop();
   }, []);
 
-  return { status, blocked, start, hangup };
+  return { status, blocked, micHint, start, hangup };
 }
